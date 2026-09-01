@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from .pipelines_api import router as pipelines_router
 import backend.inference as inference_mod
 import backend.db as db
+import backend.validation as validation
 
 
 @asynccontextmanager
@@ -293,6 +294,17 @@ def list_users() -> List[Dict[str, Any]]:
     if rows is not None:
         return rows
     return []
+
+
+@app.get("/api/validation")
+def validation_report() -> Dict[str, Any]:
+    """Full statistical validation report (hindcast, KS, t-test, Sobol, bootstrap)."""
+    return validation.full_report()
+
+
+@app.get("/api/validation/hindcast")
+def validation_hindcast() -> Dict[str, Any]:
+    return validation.hindcast()
 
 
 @app.get("/api/health/database")
