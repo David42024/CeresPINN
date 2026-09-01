@@ -1,0 +1,27 @@
+# Render Blueprint for the CeresPINN backend (FastAPI + PINN).
+#
+# IMPORTANT: The root directory is the repository root ("./") so that `backend`
+# remains importable as a package (`from backend.app import app`) exactly as it is
+# run locally. Only this Python service is described here; the frontend lives on
+# Vercel.
+#
+# To enable the trained PINN later, add torch to backend/requirements.txt (or a
+# requirements-ml) and commit backend/models/cerespinn_pinn.pt, then redeploy.
+
+services:
+  - type: web
+    name: cerespinn-backend
+    runtime: python
+    plan: starter
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: bash backend/start.sh
+    healthCheckPath: /api/health
+    envVars:
+      - key: CERESPINN_DRY_RUN
+        value: "1"
+      - key: PORT
+        sync: false
+    # Uncomment when wiring the real PINN:
+    #   - key: CERESPINN_MODEL_DIR
+    #     value: backend/models
