@@ -21,6 +21,9 @@ services:
         value: "1"
       - key: PORT
         sync: false
+      # Set this in the Render dashboard to the Supabase connection string:
+      - key: DATABASE_URL
+        sync: false
     # Uncomment when wiring the real PINN:
     #   - key: CERESPINN_MODEL_DIR
     #     value: backend/models

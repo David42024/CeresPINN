@@ -1,14 +1,26 @@
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+from typing import Any, Dict, List, Optional
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Any, Dict, List, Optional
 
 from .pipelines_api import router as pipelines_router
 import backend.inference as inference_mod
+import backend.db as db
 
-app = FastAPI(title="CeresPINN Backend", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Best-effort DB init + seed; never crashes when DB is unavailable.
+    db.init_db()
+    db.seed_if_empty()
+    yield
+
+
+app = FastAPI(title="CeresPINN Backend", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -58,7 +70,11 @@ def model_status() -> Dict[str, Any]:
 
 
 @app.get("/api/fields")
-def mock_fields() -> List[Dict[str, Any]]:
+def list_fields() -> List[Dict[str, Any]]:
+    """Return fields from Postgres, falling back to the deterministic mock."""
+    rows = db.list_fields()
+    if rows is not None:
+        return rows
     return [
         {
             "id": "field-bajio-02",
@@ -85,6 +101,10 @@ def mock_fields() -> List[Dict[str, Any]]:
 
 @app.get("/api/scenarios")
 def scenarios() -> List[Dict[str, Any]]:
+    """Return climate scenarios from Postgres, falling back to the mock."""
+    rows = db.list_scenarios()
+    if rows is not None:
+        return rows
     return [
         {"id": "SSP1-2.6", "label": "Sustainable pathway", "risk": "low"},
         {"id": "SSP3-7.0", "label": "Regional rivalry", "risk": "medium"},
@@ -116,9 +136,20 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
         projected_yield = _mock_yield(payload)
         inference_mode = "mock"
 
-    return _build_simulation_response(
+    response = _build_simulation_response(
         payload, projected_yield=projected_yield, inference_mode=inference_mode,
     )
+    # Best-effort persistence of the simulation result (never blocks/fails).
+    if db.available():
+        import json as _json
+
+        db.save_simulation(
+            {
+                **response,
+                "_payload_json": _json.dumps(payload.model_dump(), ensure_ascii=False),
+            }
+        )
+    return response
 
 
 def _mock_yield(payload: SimulationRequest) -> float:
@@ -204,6 +235,18 @@ def _build_simulation_response(
 
 @app.get("/api/reports")
 def reports() -> Dict[str, Any]:
+    """Return reports from Postgres (unwrapped), falling back to the mock."""
+    rows = db.get_reports()
+    if rows:
+        # Keep the contract: expose `regions` (stored inside payload).
+        row = rows[0]
+        payload = row.get("payload", {}) or {}
+        return {
+            "title": row["title"],
+            "generated_at": row["generated_at"],
+            "summary": row["summary"],
+            "regions": payload.get("regions", []),
+        }
     return {
         "title": "CeresPINN seasonal summary",
         "generated_at": "2026-08-30T00:00:00Z",
@@ -218,9 +261,13 @@ def reports() -> Dict[str, Any]:
 
 @app.get("/api/health/database")
 def database_health() -> Dict[str, Any]:
+    """Return a live Postgres/PostGIS health report, or a mock-flag payload."""
+    d = db.health()
+    if d is not None:
+        return d
     return {
         "database": "postgres",
         "postgis": "available",
         "status": "mock-or-live",
-        "note": "Set DATABASE_URL to use a real PostgreSQL/PostGIS instance.",
+        "note": "DATABASE_URL no configurada o BD inalcanzable: se usa el mock.",
     }
