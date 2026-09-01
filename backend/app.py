@@ -259,6 +259,42 @@ def reports() -> Dict[str, Any]:
     }
 
 
+@app.get("/api/soil-profiles")
+def list_soil_profiles() -> List[Dict[str, Any]]:
+    """Soil profiles from Postgres, falling back to the known set."""
+    rows = db.list_soil_profiles()
+    if rows is not None:
+        return rows
+    return [
+        {"id": "clay_loam", "label": "Franco Arcilloso (Clay Loam)", "sandPercent": 32, "clayPercent": 34, "siltPercent": 34, "organicMatterPercent": 3.2, "bulkDensity": 1.35, "fieldCapacity": 0.32, "wiltingPoint": 0.16, "saturation": 0.48, "saturatedConductivityKs": 85, "alphaVanGenuchten": 0.015, "nVanGenuchten": 1.45},
+        {"id": "sandy_loam", "label": "Franco Arenoso (Sandy Loam)", "sandPercent": 65, "clayPercent": 12, "siltPercent": 23, "organicMatterPercent": 1.8, "bulkDensity": 1.48, "fieldCapacity": 0.22, "wiltingPoint": 0.09, "saturation": 0.41, "saturatedConductivityKs": 240, "alphaVanGenuchten": 0.026, "nVanGenuchten": 1.75},
+        {"id": "silty_clay", "label": "Arcillo Limoso (Silty Clay)", "sandPercent": 10, "clayPercent": 48, "siltPercent": 42, "organicMatterPercent": 2.7, "bulkDensity": 1.28, "fieldCapacity": 0.38, "wiltingPoint": 0.22, "saturation": 0.52, "saturatedConductivityKs": 35, "alphaVanGenuchten": 0.010, "nVanGenuchten": 1.28},
+        {"id": "loam", "label": "Franco Ideal (Loam)", "sandPercent": 40, "clayPercent": 20, "siltPercent": 40, "organicMatterPercent": 3.8, "bulkDensity": 1.32, "fieldCapacity": 0.28, "wiltingPoint": 0.13, "saturation": 0.46, "saturatedConductivityKs": 120, "alphaVanGenuchten": 0.019, "nVanGenuchten": 1.55},
+    ]
+
+
+@app.get("/api/model-registry")
+def list_model_registry() -> List[Dict[str, Any]]:
+    """Model registry from Postgres, falling back to the known set."""
+    rows = db.list_model_registry()
+    if rows is not None:
+        return rows
+    return [
+        {"version": "v2.4.1-PINN-Ensemble", "name": "PINN Ceres-Richards V2.4 (Active Production)", "architecture": "Physics-Informed Deep ResNet + Automatic Differentiation PDE Loss", "trainedDate": "2026-08-15", "epochs": 15000, "richardsWeightLambda": 0.45, "testR2": 0.942, "testRmseKgHa": 385, "active": True, "status": "production", "description": "Surrogate neural model enforcing 1D unsaturated Richards flow conservation & Priestley-Taylor ET constraints."},
+        {"version": "v2.3.0-PINN-Richards", "name": "PINN Richards Single-Soil V2.3", "architecture": "Physics-Informed MLP (6 layers x 256 units, tanh activation)", "trainedDate": "2026-06-20", "epochs": 12000, "richardsWeightLambda": 0.35, "testR2": 0.918, "testRmseKgHa": 490, "active": False, "status": "staging", "description": "Calibrated on USDA NASS 2000-2025 multi-state corn records."},
+        {"version": "v1.8.2-Vanilla-LSTM", "name": "Empirical Baseline (Non-Physics LSTM)", "architecture": "Bidirectional LSTM + Dense Output", "trainedDate": "2026-02-10", "epochs": 8000, "richardsWeightLambda": 0.0, "testR2": 0.812, "testRmseKgHa": 890, "active": False, "status": "archived", "description": "Baseline purely data-driven model without PDE physics regularization."},
+    ]
+
+
+@app.get("/api/users")
+def list_users() -> List[Dict[str, Any]]:
+    """Demo/reference users from Postgres, falling back to the known set."""
+    rows = db.list_users()
+    if rows is not None:
+        return rows
+    return []
+
+
 @app.get("/api/health/database")
 def database_health() -> Dict[str, Any]:
     """Return a live Postgres/PostGIS health report, or a mock-flag payload."""
