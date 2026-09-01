@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { 
   Play, 
@@ -20,7 +20,7 @@ import { DailySimulationRecord, SimulationResult } from '../types';
 interface ThreeFieldViewerProps {
   simulation: SimulationResult | null;
   currentDayIndex: number;
-  onDayChange: (dayIndex: number) => void;
+  onChangeDayIndex: Dispatch<SetStateAction<number>>;
 }
 
 type VisualLayerMode = 'soil_moisture' | 'biomass' | 'water_stress' | 'true_color';
@@ -29,7 +29,7 @@ type CameraViewMode = 'perspective' | 'top_down' | 'ground';
 export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   simulation,
   currentDayIndex,
-  onDayChange
+  onChangeDayIndex
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -64,7 +64,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     if (!isPlaying || !simulation) return;
 
     const interval = setInterval(() => {
-      onDayChange((prev) => {
+      onChangeDayIndex((prev) => {
         if (prev >= simulation.dailyRecords.length - 1) {
           setIsPlaying(false);
           return prev;
@@ -74,7 +74,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     }, 120 / speedMultiplier);
 
     return () => clearInterval(interval);
-  }, [isPlaying, simulation, speedMultiplier, onDayChange]);
+  }, [isPlaying, simulation, speedMultiplier, onChangeDayIndex]);
 
   // Initialize Three.js scene
   useEffect(() => {
@@ -583,7 +583,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
         <button
           onClick={() => {
             setIsPlaying(false);
-            onDayChange(0);
+            onChangeDayIndex(0);
           }}
           disabled={!simulation}
           className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all disabled:opacity-50"
@@ -609,7 +609,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             value={currentDayIndex}
             onChange={(e) => {
               setIsPlaying(false);
-              onDayChange(parseInt(e.target.value, 10));
+              onChangeDayIndex(parseInt(e.target.value, 10));
             }}
             disabled={!simulation}
             className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
