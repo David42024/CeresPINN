@@ -13,6 +13,7 @@ services:
     name: cerespinn-backend
     runtime: python
     plan: starter
+    pythonVersion: 3.12.6
     rootDir: .
     buildCommand: pip install -r backend/requirements.txt
     startCommand: bash backend/start.sh
