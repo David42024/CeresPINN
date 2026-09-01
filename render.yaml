@@ -11,12 +11,10 @@
 services:
   - type: web
     name: cerespinn-backend
-    runtime: python
+    runtime: docker
     plan: starter
-    pythonVersion: 3.12.6
+    dockerfilePath: ./Dockerfile
     rootDir: .
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: bash backend/start.sh
     healthCheckPath: /api/health
     envVars:
       - key: CERESPINN_DRY_RUN
