@@ -75,18 +75,36 @@ class NASSProvider(BaseProvider):
                 "https://quickstats.nass.usda.gov/api and export the key."
             )
 
-        params = self._build_params(year_ge, year_le)
-        resp = requests.get(_NASS_API, params=params, timeout=timeout)
-        if not resp.ok:
-            raise ExtractionError(f"NASS API HTTP {resp.status_code}: {resp.text[:200]}")
+        # The QuickStats API caps a single request at 50,000 rows. County-level
+        # CORN yields for all US states and ~35 years exceed that, so we split
+        # the period into manageable year windows and merge the results.
+        # A per-state filter can further shrink requests (sets => one request).
+        window_size = 3  # years per request (~<50k rows for county corn yield)
+        frames, all_years = [], []
+        start_win = year_ge
+        while start_win <= year_le:
+            stop_win = min(start_win + window_size - 1, year_le)
+            params = self._build_params(start_win, stop_win)
+            resp = requests.get(_NASS_API, params=params, timeout=timeout)
+            if not resp.ok:
+                raise ExtractionError(
+                    f"NASS API HTTP {resp.status_code} ({start_win}-{stop_win}): {resp.text[:200]}"
+                )
+            data = resp.json()
+            rows = data.get("data", [])
+            self.log_step(
+                f"NASS returned {len(rows)} county-year observations for {start_win}-{stop_win}"
+            )
+            records = self._rows_to_frame(rows)
+            if not records.empty:
+                frames.append(records)
+                all_years.extend(records["year"].astype(int).unique().tolist())
+            start_win = stop_win + 1
+            self.throttled()
 
-        data = resp.json()
-        rows = data.get("data", [])
-        self.log_step(f"NASS returned {len(rows)} county-year observations")
-
-        records = self._rows_to_frame(rows)
+        combined = pd.concat(frames, ignore_index=True) if frames else self._empty_frame()
         csv_path = self.out_dir / "maize_county_yield_usda.csv"
-        self.write_snapshot(csv_path, records)
+        self.write_snapshot(csv_path, combined)
 
         manifest_extra = {
             "source": _NASS_API,
@@ -94,17 +112,27 @@ class NASSProvider(BaseProvider):
             "statisticcat": self.cfg.statisticcat_desc,
             "agg_level": self.cfg.agg_level_desc,
             "period": f"{year_ge}-{year_le}",
+            "windows": f"{window_size}-year windows",
         }
-        self.write_manifest(self.out_dir, records=len(records), extra=manifest_extra)
+        self.write_manifest(self.out_dir, records=len(combined), extra=manifest_extra)
 
         summary = {
-            "fetched": len(records),
-            "years": sorted(records["year"].unique().tolist()) if len(records) else [],
+            "fetched": len(combined),
+            "years": sorted(all_years),
             "csv_path": str(csv_path),
         }
-        self.log_step(f"Wrote {len(records)} rows to {csv_path.name}")
+        self.log_step(f"Wrote {len(combined)} rows to {csv_path.name}")
         self.set_progress(1, 1, "nass::complete")
         return summary
+
+    @staticmethod
+    def _empty_frame() -> pd.DataFrame:
+        return pd.DataFrame(
+            columns=[
+                "year", "state_name", "state_alpha", "county_name",
+                "county_ansi", "Value", "unit_desc", "statisticcat_desc",
+            ]
+        )
 
     @staticmethod
     def _rows_to_frame(rows: List[Dict[str, Any]]) -> pd.DataFrame:
