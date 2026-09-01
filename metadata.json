@@ -1,0 +1,6 @@
+{
+  "name": "CeresPINN - Climate-Adaptive Maize Digital Twin",
+  "description": "Physics-informed climate and agronomic digital twin for maize resilience, CMIP6-driven simulation, FastAPI backends, and PostGIS data integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_WEB_APPLICATION"]
+}

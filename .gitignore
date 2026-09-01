@@ -1,0 +1,21 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Extracted scientific data (downloads are reproducible)
+backend/data/raw/
+backend/data/processed/
+
+# Trained model artifacts (weights are large / reproducible via training)
+backend/models/
+backend/training/__pycache__/
