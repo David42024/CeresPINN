@@ -1,172 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
   <defs>
-    <!-- Gradients -->
-    <linearGradient id="leafGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1ea86d" />
-      <stop offset="100%" stop-color="#22c55e" />
+    <!-- Minimalist Gradients -->
+    <linearGradient id="leafGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#34d399" />
     </linearGradient>
-    <linearGradient id="leafGrad2" x1="100%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#0f766e" />
-      <stop offset="100%" stop-color="#14b8a6" />
-    </linearGradient>
-    <linearGradient id="cobGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#0e7490" />
-      <stop offset="100%" stop-color="#06b6d4" />
-    </linearGradient>
-    <linearGradient id="stemGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0d9488" />
-      <stop offset="100%" stop-color="#2dd4bf" />
+    <linearGradient id="netGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0891b2" />
     </linearGradient>
   </defs>
 
   <style>
-    .leaf-line { fill: none; stroke: #22c55e; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
-    .leaf-mesh { fill: none; stroke: #10b981; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.9; }
-    .stem { fill: none; stroke: url(#stemGrad); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-    .node { fill: #06b6d4; stroke: #083344; stroke-width: 1.5; }
-    .cob-edge { fill: none; stroke: #0891b2; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-    .cob-mesh { fill: none; stroke: #06b6d4; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .leaf { fill: none; stroke: url(#leafGrad); stroke-width: 2.5; stroke-linejoin: round; }
+    .leaf-inner { fill: none; stroke: #34d399; stroke-width: 1.5; opacity: 0.8; }
+    .circuit { fill: none; stroke: #0d9488; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .net-edge { fill: none; stroke: url(#netGrad); stroke-width: 1.5; }
+    .node { fill: #06b6d4; stroke: #0369a1; stroke-width: 1.2; }
+    .circuit-node { fill: #14b8a6; stroke: #0f766e; stroke-width: 1.5; }
   </style>
 
-  <g id="ceres-pinn-logo" transform="translate(0, 20)">
+  <g transform="translate(0, 5)">
+    <!-- STEM &amp; CIRCUITS -->
+    <path class="circuit" d="M 100,125 L 100,175" />
+    <path class="circuit" d="M 100,175 L 80,195 L 80,220" />
+    <path class="circuit" d="M 100,150 L 120,170 L 120,205" />
     
-    <!-- STEM &amp; CIRCUIT NODES (Base) -->
-    <!-- Left Circuit Strand -->
-    <path class="stem" d="M 230,520 L 230,440 C 230,410 250,380 250,340 L 250,260" />
-    <circle class="node" cx="230" cy="520" r="5.5" />
-    <circle class="node" cx="230" cy="440" r="4.5" />
+    <circle class="circuit-node" cx="80" cy="220" r="3.5" />
+    <circle class="circuit-node" cx="120" cy="205" r="3.5" />
+
+    <!-- LEAVES (Low-Poly Minimalist) -->
+    <!-- Upper Left -->
+    <path class="leaf" d="M 100,125 L 40,60 L 20,110 L 80,150 Z" />
+    <path class="leaf-inner" d="M 40,60 L 80,150" />
+    <path class="leaf-inner" d="M 20,110 L 100,125" />
     
-    <!-- Right Circuit Strand -->
-    <path class="stem" d="M 250,540 L 250,470 C 250,450 265,430 265,410 L 265,360 C 265,330 250,300 250,260" />
-    <circle class="node" cx="250" cy="540" r="5.5" />
-    <circle class="node" cx="265" cy="410" r="4.5" />
-    <circle class="node" cx="265" cy="360" r="4.5" />
+    <!-- Upper Right -->
+    <path class="leaf" d="M 100,125 L 160,60 L 180,110 L 120,150 Z" />
+    <path class="leaf-inner" d="M 160,60 L 120,150" />
+    <path class="leaf-inner" d="M 180,110 L 100,125" />
 
-    <!-- Additional Branch Node -->
-    <path class="stem" d="M 250,320 L 270,300 L 270,280" />
-    <circle class="node" cx="270" cy="280" r="4.5" />
+    <!-- Lower Left -->
+    <path class="leaf" d="M 90,145 L 30,150 L 40,180 L 85,165 Z" />
+    <path class="leaf-inner" d="M 30,150 L 85,165" />
 
-    <!-- LOWER LEAVES (Poly mesh style) -->
-    <!-- Lower Left Leaf -->
-    <g id="lower-left-leaf">
-      <path class="leaf-line" d="M 245,365 C 190,360 140,290 180,225 C 210,260 235,310 245,365 Z" />
-      <!-- Mesh Inner Lines -->
-      <path class="leaf-mesh" d="M 180,225 L 205,280 L 245,365" />
-      <path class="leaf-mesh" d="M 180,225 L 220,310" />
-      <path class="leaf-mesh" d="M 160,265 L 205,280 L 225,340" />
-      <path class="leaf-mesh" d="M 160,265 L 185,310 L 205,280" />
-      <path class="leaf-mesh" d="M 185,310 L 240,350" />
-    </g>
+    <!-- Lower Right -->
+    <path class="leaf" d="M 110,145 L 170,150 L 160,180 L 115,165 Z" />
+    <path class="leaf-inner" d="M 170,150 L 115,165" />
 
-    <!-- Lower Right Leaf -->
-    <g id="lower-right-leaf">
-      <path class="leaf-line" d="M 255,375 C 290,330 335,310 320,260 C 285,280 265,320 255,375 Z" />
-      <!-- Mesh Inner Lines -->
-      <path class="leaf-mesh" d="M 320,260 L 285,305 L 255,375" />
-      <path class="leaf-mesh" d="M 320,260 L 275,335" />
-      <path class="leaf-mesh" d="M 315,285 L 285,305 L 270,355" />
-      <path class="leaf-mesh" d="M 298,300 L 260,365" />
-    </g>
-
-    <!-- UPPER HUSK / LEAVES -->
-    <!-- Left Upper Husk -->
-    <g id="upper-left-husk">
-      <path class="leaf-line" stroke="#16a34a" d="M 250,260 C 220,220 180,140 195,90 C 220,130 240,190 250,260 Z" />
-      <!-- Inner Geometry -->
-      <path class="leaf-mesh" d="M 195,90 L 222,170 L 250,260" />
-      <path class="leaf-mesh" d="M 195,90 L 235,210" />
-      <path class="leaf-mesh" d="M 205,125 L 222,170 L 242,230" />
-      <path class="leaf-mesh" d="M 215,150 L 246,245" />
-      <path class="leaf-mesh" d="M 200,160 L 222,170" />
-    </g>
-
-    <!-- Right Upper Husk -->
-    <g id="upper-right-husk">
-      <path class="leaf-line" stroke="#16a34a" d="M 250,260 C 280,220 320,140 305,90 C 280,130 260,190 250,260 Z" />
-      <!-- Inner Geometry -->
-      <path class="leaf-mesh" d="M 305,90 L 278,170 L 250,260" />
-      <path class="leaf-mesh" d="M 305,90 L 265,210" />
-      <path class="leaf-mesh" d="M 295,125 L 278,170 L 258,230" />
-      <path class="leaf-mesh" d="M 285,150 L 254,245" />
-      <path class="leaf-mesh" d="M 300,160 L 278,170" />
-    </g>
-
-    <!-- MAIZE COB / NEURAL NETWORK (CENTER TOP) -->
-    <g id="neural-cob">
-      <!-- Neural Network Connections (Edges) -->
-      <g class="cob-mesh">
-        <!-- Vertical / Diagonal Grid Lines -->
-        <line x1="250" y1="35" x2="230" y2="55" />
-        <line x1="250" y1="35" x2="270" y2="55" />
-        
-        <line x1="230" y1="55" x2="220" y2="80" />
-        <line x1="230" y1="55" x2="250" y2="75" />
-        <line x1="270" y1="55" x2="250" y2="75" />
-        <line x1="270" y1="55" x2="280" y2="80" />
-
-        <line x1="220" y1="80" x2="215" y2="110" />
-        <line x1="220" y1="80" x2="238" y2="105" />
-        <line x1="250" y1="75" x2="238" y2="105" />
-        <line x1="250" y1="75" x2="262" y2="105" />
-        <line x1="280" y1="80" x2="262" y2="105" />
-        <line x1="280" y1="80" x2="285" y2="110" />
-
-        <line x1="215" y1="110" x2="222" y2="140" />
-        <line x1="215" y1="110" x2="238" y2="105" />
-        <line x1="238" y1="105" x2="250" y2="135" />
-        <line x1="262" y1="105" x2="250" y2="135" />
-        <line x1="262" y1="105" x2="278" y2="140" />
-        <line x1="285" y1="110" x2="278" y2="140" />
-
-        <line x1="222" y1="140" x2="235" y2="170" />
-        <line x1="222" y1="140" x2="250" y2="135" />
-        <line x1="250" y1="135" x2="235" y2="170" />
-        <line x1="250" y1="135" x2="265" y2="170" />
-        <line x1="278" y1="140" x2="250" y2="135" />
-        <line x1="278" y1="140" x2="265" y2="170" />
-
-        <line x1="235" y1="170" x2="250" y2="200" />
-        <line x1="265" y1="170" x2="250" y2="200" />
-
-        <!-- Horizontal Lattice Lines -->
-        <line x1="230" y1="55" x2="270" y2="55" />
-        <line x1="220" y1="80" x2="280" y2="80" />
-        <line x1="215" y1="110" x2="285" y2="110" />
-        <line x1="222" y1="140" x2="278" y2="140" />
-        <line x1="235" y1="170" x2="265" y2="170" />
-      </g>
-
-      <!-- Neural Network Nodes (Kernels / Corn Grains) -->
-      <!-- Row 1 (Tip) -->
-      <circle class="node" cx="250" cy="35" r="5" />
+    <!-- COB NEURAL NETWORK (Minimalist Diamond) -->
+    <g class="net-edge">
+      <!-- Horizontal connections -->
+      <line x1="80" y1="50" x2="120" y2="50" />
+      <line x1="60" y1="75" x2="140" y2="75" />
+      <line x1="80" y1="100" x2="120" y2="100" />
       
-      <!-- Row 2 -->
-      <circle class="node" cx="230" cy="55" r="5" />
-      <circle class="node" cx="270" cy="55" r="5" />
-
-      <!-- Row 3 -->
-      <circle class="node" cx="220" cy="80" r="5.5" />
-      <circle class="node" cx="250" cy="75" r="5.5" />
-      <circle class="node" cx="280" cy="80" r="5.5" />
-
-      <!-- Row 4 -->
-      <circle class="node" cx="215" cy="110" r="5.5" />
-      <circle class="node" cx="238" cy="105" r="5.5" />
-      <circle class="node" cx="262" cy="105" r="5.5" />
-      <circle class="node" cx="285" cy="110" r="5.5" />
-
-      <!-- Row 5 -->
-      <circle class="node" cx="222" cy="140" r="5.5" />
-      <circle class="node" cx="250" cy="135" r="6" />
-      <circle class="node" cx="278" cy="140" r="5.5" />
-
-      <!-- Row 6 -->
-      <circle class="node" cx="235" cy="170" r="5" />
-      <circle class="node" cx="265" cy="170" r="5" />
-
-      <!-- Row 7 (Base) -->
-      <circle class="node" cx="250" cy="200" r="4.5" />
+      <!-- Diagonal Left-Down -->
+      <line x1="100" y1="25" x2="60" y2="75" />
+      <line x1="120" y1="50" x2="80" y2="100" />
+      <line x1="140" y1="75" x2="100" y2="125" />
+      
+      <!-- Diagonal Right-Down -->
+      <line x1="100" y1="25" x2="140" y2="75" />
+      <line x1="80" y1="50" x2="120" y2="100" />
+      <line x1="60" y1="75" x2="100" y2="125" />
     </g>
 
+    <!-- Nodes -->
+    <!-- Row 1 -->
+    <circle class="node" cx="100" cy="25" r="3.5" />
+    <!-- Row 2 -->
+    <circle class="node" cx="80" cy="50" r="3.5" />
+    <circle class="node" cx="120" cy="50" r="3.5" />
+    <!-- Row 3 -->
+    <circle class="node" cx="60" cy="75" r="3.5" />
+    <circle class="node" cx="100" cy="75" r="3.5" />
+    <circle class="node" cx="140" cy="75" r="3.5" />
+    <!-- Row 4 -->
+    <circle class="node" cx="80" cy="100" r="3.5" />
+    <circle class="node" cx="120" cy="100" r="3.5" />
+    <!-- Row 5 -->
+    <circle class="node" cx="100" cy="125" r="3.5" />
   </g>
 </svg>
