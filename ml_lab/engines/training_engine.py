@@ -16,11 +16,11 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler
 
-from ..core.artifact_manager import ArtifactManager
-from ..core.metrics_engine import MetricsEngine
-from ..core.model_catalog import BaseModel, get_catalog
-from ..core.model_registry import save_experiment, save_model
-from ..core.project import ProjectSpecification, ValidationStrategy
+from core.artifact_manager import ArtifactManager
+from core.metrics_engine import MetricsEngine
+from core.model_catalog import BaseModel, get_catalog
+from core.model_registry import save_experiment, save_model
+from core.project import ProjectSpecification, ValidationStrategy
 
 
 class TrainingConfig:

@@ -187,7 +187,7 @@ class ModelCatalog:
         """Register built-in models."""
         # Import model classes
         try:
-            from ..models.catalog.tabular import (
+            from models.catalog.tabular import (
                 GradientBoostingClassifierModel,
                 GradientBoostingRegressorModel,
                 LassoModel,
@@ -201,8 +201,8 @@ class ModelCatalog:
                 XGBoostClassifierModel,
                 XGBoostRegressorModel,
             )
-            from ..models.catalog.neural import MLPClassifier, MLPRegressor
-            from ..models.catalog.specialized import CeresPINNModel, GenericPINNModel
+            from models.catalog.neural import MLPClassifier, MLPRegressor
+            from models.catalog.specialized import CeresPINNModel, GenericPINNModel
             
             # Register model classes
             self._model_classes["logistic_regression"] = LogisticRegressionModel

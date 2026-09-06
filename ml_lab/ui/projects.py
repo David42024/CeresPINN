@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional
 
 import streamlit as st
 
-from ..core.model_registry import export_project, import_project
+from core.model_registry import export_project, import_project
 
 
 def render_project_form(
@@ -194,7 +194,7 @@ def render_project_list(project_analyzer: Any) -> Optional[str]:
     search_query = st.text_input("Search projects", placeholder="Search by name or description...")
     
     # Load projects from database if available
-    from ..core.model_registry import list_projects, search_projects
+    from core.model_registry import list_projects, search_projects
     
     projects = None
     if search_query:
@@ -244,7 +244,7 @@ def render_project_list(project_analyzer: Any) -> Optional[str]:
             
             with col3:
                 if st.button("Delete", key=f"delete_{project['id']}"):
-                    from ..core.model_registry import delete_project
+                    from core.model_registry import delete_project
                     if delete_project(project['id']):
                         st.success("Project deleted!")
                         st.rerun()

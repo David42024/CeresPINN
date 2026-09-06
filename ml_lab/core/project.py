@@ -133,8 +133,6 @@ class ProjectSpecification:
     project_name: str
     description: str
     domain: str
-    created_at: datetime = field(default_factory=datetime.utcnow)
-    updated_at: datetime = field(default_factory=datetime.utcnow)
     
     # Problem Definition
     problem_type: ProblemType
@@ -182,6 +180,10 @@ class ProjectSpecification:
     
     # Status
     status: str = "created"  # "created", "analyzing", "analyzed", "training", "completed"
+
+    # Timestamps (al final: tienen default y no pueden ir antes de campos requeridos)
+    created_at: datetime = field(default_factory=datetime.utcnow)
+    updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert specification to dictionary."""

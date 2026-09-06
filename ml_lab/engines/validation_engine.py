@@ -19,10 +19,10 @@ from sklearn.model_selection import (
     cross_validate,
 )
 
-from ..core.artifact_manager import ArtifactManager
-from ..core.metrics_engine import MetricsEngine
-from ..core.model_catalog import BaseModel, get_catalog
-from ..core.project import ProjectSpecification, ValidationStrategy
+from core.artifact_manager import ArtifactManager
+from core.metrics_engine import MetricsEngine
+from core.model_catalog import BaseModel, get_catalog
+from core.project import ProjectSpecification, ValidationStrategy
 
 
 class ValidationConfig:

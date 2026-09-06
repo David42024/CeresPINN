@@ -26,7 +26,7 @@ from engines.training_engine import TrainingEngine
 from engines.validation_engine import ValidationEngine
 from ui import (
     display_validation_result,
-    render_comparison as render_model_comparison_ui,
+    render_model_comparison_ui,
     render_context_analyzer,
     render_dataset_analyzer_ui,
     render_eda_report,
@@ -36,7 +36,7 @@ from ui import (
     render_model_training_ui,
     render_preprocessing_pipeline,
     render_project_form,
-    render_registry as render_model_registry_ui,
+    render_model_registry_ui,
     render_report_generator_ui,
     render_statistical_test_ui,
     render_tuning_ui,
@@ -428,6 +428,17 @@ def render_validation_page():
     
     st.markdown("---")
     st.info("Run model training first to generate validation results")
+
+
+def render_model_comparison_page():
+    """Render Model Comparison page."""
+    if not st.session_state.current_project:
+        st.warning("Please select a project first")
+        return
+
+    validation_engine = st.session_state.validation_engine
+
+    render_model_comparison_ui(validation_engine, st.session_state.current_project)
 
 
 def render_tuning_page():

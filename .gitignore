@@ -10,7 +10,8 @@ coverage/
 # Python
 __pycache__/
 *.py[cod]
-.venv/
+.venv*/
+.venv-mllab/
 
 # Extracted scientific data (downloads are reproducible)
 backend/data/raw/

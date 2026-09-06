@@ -131,7 +131,7 @@ def main():
         <h1 style="margin: 0; font-size: 2rem;">🌱 CeresPINN</h1>
         <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">Gemelo Digital Adaptativo al Clima | Maíz Resiliente a Sequías</p>
     </div>
-    """, unstable_allow_html=True)
+    """, unsafe_allow_html=True)
 
     # Database Health Indicator
     db_health = get_database_health()

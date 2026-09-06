@@ -12,8 +12,8 @@ import torch
 import torch.nn as nn
 from sklearn.base import BaseEstimator, RegressorMixin
 
-from ..core.model_catalog import BaseModel
-from ..pinn import CeresPINN, PINNConfig, cerespinn_physics_loss
+from core.model_catalog import BaseModel
+from models.pinn import CeresPINN, PINNConfig, cerespinn_physics_loss
 
 
 class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
@@ -187,7 +187,7 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
     
     def _build_model(self, input_dim: int) -> None:
         """Build the generic PINN model."""
-        from ..pinn import GenericPINN
+        from models.pinn import GenericPINN
         
         self.model = GenericPINN(
             input_dim=input_dim,
@@ -211,7 +211,7 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         """Fit the generic PINN model to training data."""
         import torch.optim as optim
         from torch.utils.data import DataLoader, TensorDataset
-        from ..pinn import generic_physics_loss
+        from models.pinn import generic_physics_loss
         
         X = self._to_tensor(X)
         y = self._to_tensor(y)

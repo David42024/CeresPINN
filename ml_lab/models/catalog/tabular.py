@@ -12,7 +12,7 @@ from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegress
 from sklearn.linear_model import LogisticRegression, LinearRegression, Ridge, Lasso
 from sklearn.svm import SVC, SVR
 
-from ..core.model_catalog import BaseModel
+from core.model_catalog import BaseModel
 
 
 class LogisticRegressionModel(BaseModel):

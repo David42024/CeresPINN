@@ -1,0 +1,24 @@
+# CeresPINN - Streamlit principal (streamlit_app.py)
+# ---------------------------------------------------------------------------
+# Uso:
+#     .venv\Scripts\Activate
+#     pip install -r requirements-streamlit.txt
+#     streamlit run streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+#
+# NOTA: fastapi>=0.133 es obligatorio. streamlit>=1.46 instala starlette>=0.46
+# (aqui 1.6.0) y fastapi==0.115.0 lo limita a starlette<0.39 -> rompe el backend.
+# FastAPI 0.133+ elimina el limite superior de starlette y convive con Streamlit.
+# ---------------------------------------------------------------------------
+
+# App principal
+streamlit==1.63.0
+plotly==7.0.0
+pandas==2.2.3
+requests==2.32.3
+
+# Backend compatible con el mismo venv (mismo starlette que Streamlit)
+fastapi==0.141.1
+starlette==1.6.0
+uvicorn==0.30.6
+pydantic==2.9.2
+python-dotenv==1.0.1

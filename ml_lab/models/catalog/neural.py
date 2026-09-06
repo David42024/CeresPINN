@@ -12,7 +12,7 @@ import torch
 import torch.nn as nn
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 
-from ..core.model_catalog import BaseModel
+from core.model_catalog import BaseModel
 
 
 class MLPConfig:
