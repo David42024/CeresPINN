@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  ml-lab:
+    build: .
+    container_name: ml-lab
+    ports:
+      - "8501:8501"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/cerespinn
+      - ARTIFACT_STORAGE_PATH=/app/artifacts
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./models:/app/models
+      - ./reports:/app/reports
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - ml-lab-network
+
+  db:
+    image: postgres:15-alpine
+    container_name: ml-lab-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=cerespinn
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - ml-lab-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ml-lab-network:
+    driver: bridge

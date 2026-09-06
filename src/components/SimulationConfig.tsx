@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Play, 
   Cpu, 
@@ -22,6 +22,7 @@ import {
   SimulationConfig 
 } from '../types';
 import { getCMIP6ClimateForcing } from '../services/pinnEngine';
+import { fetchScenarios, fetchSoilProfiles } from '../services/api';
 
 interface SimulationConfigProps {
   field: Field;
@@ -39,6 +40,33 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
   isLoading
 }) => {
   const [activeTab, setActiveTab] = useState<'climate' | 'crop' | 'irrigation' | 'soil'>('climate');
+  const [scenarios, setScenarios] = useState<any[]>([]);
+  const [soilProfiles, setSoilProfiles] = useState<any[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
+
+  useEffect(() => {
+    const loadMasterData = async () => {
+      try {
+        const [scenariosData, soilData] = await Promise.all([
+          fetchScenarios(),
+          fetchSoilProfiles()
+        ]);
+        
+        if (!scenariosData.fallback) {
+          setScenarios(scenariosData.scenarios);
+        }
+        if (!soilData.fallback) {
+          setSoilProfiles(soilData.soilProfiles);
+        }
+      } catch (error) {
+        console.warn('Failed to load master data, using fallbacks', error);
+      } finally {
+        setLoadingData(false);
+      }
+    };
+    
+    loadMasterData();
+  }, []);
 
   const forcing = getCMIP6ClimateForcing(config.scenario, config.targetYear);
 
@@ -135,70 +163,109 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
       {/* Tab 1: Climate Scenarios */}
       {activeTab === 'climate' && (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {/* SSP1-2.6 */}
-            <div
-              onClick={() => handleScenarioChange('SSP1-2.6')}
-              className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                config.scenario === 'SSP1-2.6'
-                  ? 'bg-emerald-950/40 border-emerald-500 ring-1 ring-emerald-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-bold text-[11px]">
-                  Optimista (SSP1-2.6)
-                </span>
-                <span className="text-[11px] text-emerald-400 font-mono">+1.5°C Global</span>
-              </div>
-              <p className="text-xs text-slate-300">Desarrollo sostenible con reducción agresiva de emisiones.</p>
-              <div className="mt-2 text-[11px] text-slate-400">
-                Anomalía térmica local: <span className="font-mono text-emerald-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
-              </div>
+          {loadingData ? (
+            <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center text-xs text-slate-400">
+              Cargando escenarios climáticos del backend...
             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {scenarios.length > 0 ? scenarios.map((scenario: any) => (
+                <div
+                  key={scenario.id}
+                  onClick={() => handleScenarioChange(scenario.id as ClimateScenario)}
+                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    config.scenario === scenario.id
+                      ? 'bg-emerald-950/40 border-emerald-500 ring-1 ring-emerald-500/50'
+                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className={`px-2 py-0.5 rounded-md font-bold text-[11px] ${
+                      scenario.risk === 'low' ? 'bg-emerald-500/20 text-emerald-300' :
+                      scenario.risk === 'medium' ? 'bg-amber-500/20 text-amber-300' :
+                      'bg-rose-500/20 text-rose-300'
+                    }`}>
+                      {scenario.label}
+                    </span>
+                    <span className={`text-[11px] font-mono ${
+                      scenario.risk === 'low' ? 'text-emerald-400' :
+                      scenario.risk === 'medium' ? 'text-amber-400' :
+                      'text-rose-400'
+                    }`}>
+                      {scenario.risk === 'low' ? 'Bajo' : scenario.risk === 'medium' ? 'Medio' : 'Alto'} Riesgo
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300">Escenario CMIP6 {scenario.id}</p>
+                  <div className="mt-2 text-[11px] text-slate-400">
+                    Anomalía térmica local: <span className="font-mono text-emerald-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
+                  </div>
+                </div>
+              )) : (
+                <>
+                  {/* Fallback scenarios hardcoded */}
+                  <div
+                    onClick={() => handleScenarioChange('SSP1-2.6')}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      config.scenario === 'SSP1-2.6'
+                        ? 'bg-emerald-950/40 border-emerald-500 ring-1 ring-emerald-500/50'
+                        : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-bold text-[11px]">
+                        Optimista (SSP1-2.6)
+                      </span>
+                      <span className="text-[11px] text-emerald-400 font-mono">+1.5°C Global</span>
+                    </div>
+                    <p className="text-xs text-slate-300">Desarrollo sostenible con reducción agresiva de emisiones.</p>
+                    <div className="mt-2 text-[11px] text-slate-400">
+                      Anomalía térmica local: <span className="font-mono text-emerald-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
+                    </div>
+                  </div>
 
-            {/* SSP3-7.0 */}
-            <div
-              onClick={() => handleScenarioChange('SSP3-7.0')}
-              className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                config.scenario === 'SSP3-7.0'
-                  ? 'bg-amber-950/40 border-amber-500 ring-1 ring-amber-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-bold text-[11px]">
-                  Intermedio (SSP3-7.0)
-                </span>
-                <span className="text-[11px] text-amber-400 font-mono">+2.7°C Global</span>
-              </div>
-              <p className="text-xs text-slate-300">Rivalidad regional con políticas climáticas fragmentadas.</p>
-              <div className="mt-2 text-[11px] text-slate-400">
-                Anomalía térmica local: <span className="font-mono text-amber-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
-              </div>
-            </div>
+                  <div
+                    onClick={() => handleScenarioChange('SSP3-7.0')}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      config.scenario === 'SSP3-7.0'
+                        ? 'bg-amber-950/40 border-amber-500 ring-1 ring-amber-500/50'
+                        : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-bold text-[11px]">
+                        Intermedio (SSP3-7.0)
+                      </span>
+                      <span className="text-[11px] text-amber-400 font-mono">+2.7°C Global</span>
+                    </div>
+                    <p className="text-xs text-slate-300">Rivalidad regional con políticas climáticas fragmentadas.</p>
+                    <div className="mt-2 text-[11px] text-slate-400">
+                      Anomalía térmica local: <span className="font-mono text-amber-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
+                    </div>
+                  </div>
 
-            {/* SSP5-8.5 */}
-            <div
-              onClick={() => handleScenarioChange('SSP5-8.5')}
-              className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                config.scenario === 'SSP5-8.5'
-                  ? 'bg-rose-950/40 border-rose-500 ring-1 ring-rose-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 font-bold text-[11px]">
-                  Pesimista (SSP5-8.5)
-                </span>
-                <span className="text-[11px] text-rose-400 font-mono">+4.4°C Global</span>
-              </div>
-              <p className="text-xs text-slate-300">Uso intensivo de combustibles fósiles y eventos extremos.</p>
-              <div className="mt-2 text-[11px] text-slate-400">
-                Anomalía térmica local: <span className="font-mono text-rose-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
-              </div>
+                  <div
+                    onClick={() => handleScenarioChange('SSP5-8.5')}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      config.scenario === 'SSP5-8.5'
+                        ? 'bg-rose-950/40 border-rose-500 ring-1 ring-rose-500/50'
+                        : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 font-bold text-[11px]">
+                        Pesimista (SSP5-8.5)
+                      </span>
+                      <span className="text-[11px] text-rose-400 font-mono">+4.4°C Global</span>
+                    </div>
+                    <p className="text-xs text-slate-300">Uso intensivo de combustibles fósiles y eventos extremos.</p>
+                    <div className="mt-2 text-[11px] text-slate-400">
+                      Anomalía térmica local: <span className="font-mono text-rose-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
+          )}
 
           {/* Target Year Timeline Slider */}
           <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
@@ -407,30 +474,73 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
       {/* Tab 4: Soil & Initial Moisture */}
       {activeTab === 'soil' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-300 font-semibold">
-                Humedad Inicial del Perfil (% de Capacidad de Agua Disponible)
-              </span>
-              <span className="font-mono text-emerald-400 font-bold">
-                {config.soilMoistureInitialPercent}% AWC
-              </span>
+          {loadingData ? (
+            <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center text-xs text-slate-400">
+              Cargando perfiles de suelo del backend...
             </div>
-            <input
-              type="range"
-              min={10}
-              max={100}
-              step={5}
-              value={config.soilMoistureInitialPercent}
-              onChange={(e) => onChangeConfig({ ...config, soilMoistureInitialPercent: parseInt(e.target.value, 10) || 50 })}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-            />
-            <div className="flex justify-between text-[11px] text-slate-500">
-              <span>Suelo Seco (10%)</span>
-              <span>Humedad Moderada (50%)</span>
-              <span>Capacidad de Campo (100%)</span>
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-300 font-semibold">
+                    Perfil de Suelo Actual
+                  </span>
+                  <span className="font-mono text-cyan-400 font-bold">
+                    {field.soilProfile.label}
+                  </span>
+                </div>
+                
+                {soilProfiles.length > 0 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {soilProfiles.map((profile: any) => (
+                      <div
+                        key={profile.id}
+                        className={`p-2 rounded-lg border cursor-pointer transition-all ${
+                          field.soilProfile.type === profile.id
+                            ? 'bg-cyan-950/40 border-cyan-500'
+                            : 'bg-slate-900 border-slate-700 hover:border-slate-600'
+                        }`}
+                        onClick={() => {
+                          // Update field soil profile (this would need to be handled by parent)
+                          console.log('Selected soil profile:', profile.id);
+                        }}
+                      >
+                        <div className="text-[11px] font-semibold text-slate-200">{profile.label}</div>
+                        <div className="text-[10px] text-slate-400 mt-0.5">
+                          FC: {profile.fieldCapacity} | WP: {profile.wiltingPoint}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-300 font-semibold">
+                    Humedad Inicial del Perfil (% de Capacidad de Agua Disponible)
+                  </span>
+                  <span className="font-mono text-emerald-400 font-bold">
+                    {config.soilMoistureInitialPercent}% AWC
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={10}
+                  max={100}
+                  step={5}
+                  value={config.soilMoistureInitialPercent}
+                  onChange={(e) => onChangeConfig({ ...config, soilMoistureInitialPercent: parseInt(e.target.value, 10) || 50 })}
+                  className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                />
+                <div className="flex justify-between text-[11px] text-slate-500">
+                  <span>Suelo Seco (10%)</span>
+                  <span>Humedad Moderada (50%)</span>
+                  <span>Capacidad de Campo (100%)</span>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs flex items-start gap-3">
             <Info className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Cpu, 
   RefreshCw, 
@@ -25,6 +25,7 @@ import {
 } from 'recharts';
 import { MODEL_REGISTRY_DATA } from '../data/mockData';
 import { ModelRegistryEntry } from '../types';
+import { fetchModelRegistry } from '../services/api';
 
 export const MLOpsDashboard: React.FC = () => {
   const [models, setModels] = useState<ModelRegistryEntry[]>(MODEL_REGISTRY_DATA);
@@ -33,6 +34,38 @@ export const MLOpsDashboard: React.FC = () => {
   const [lambdaPde, setLambdaPde] = useState<number>(0.45);
   const [learningRate, setLearningRate] = useState<number>(0.001);
   const [batchSize, setBatchSize] = useState<number>(64);
+  const [loadingModels, setLoadingModels] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadModelRegistry = async () => {
+      try {
+        const data = await fetchModelRegistry();
+        if (!data.fallback && data.models) {
+          // Transform backend data to ModelRegistryEntry format
+          const transformedModels = data.models.map((model: any) => ({
+            version: model.version,
+            name: model.name,
+            architecture: model.architecture,
+            trainedDate: model.trainedDate,
+            epochs: model.epochs,
+            richardsWeightLambda: model.richardsWeightLambda,
+            testR2: model.testR2,
+            testRmseKgHa: model.testRmseKgHa,
+            active: model.active,
+            status: model.status,
+            description: model.description
+          }));
+          setModels(transformedModels);
+        }
+      } catch (error) {
+        console.warn('Failed to load model registry, using fallback', error);
+      } finally {
+        setLoadingModels(false);
+      }
+    };
+    
+    loadModelRegistry();
+  }, []);
 
   // Mock PINN Loss Convergence Curve
   const lossHistoryData = [
@@ -235,57 +268,63 @@ export const MLOpsDashboard: React.FC = () => {
           Registro de Versiones (Model Registry)
         </h3>
 
-        <div className="space-y-2">
-          {models.map((model) => (
-            <div
-              key={model.version}
-              className={`p-3.5 rounded-xl border flex flex-wrap items-center justify-between gap-3 transition-all ${
-                model.active 
-                  ? 'bg-emerald-950/40 border-emerald-500 shadow-md shadow-emerald-950/40' 
-                  : 'bg-slate-950/60 border-slate-800'
-              }`}
-            >
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-bold text-slate-100">{model.name}</h4>
-                  <span className="px-2 py-0.5 rounded-md bg-slate-800 font-mono text-[10px] text-slate-300">
-                    {model.version}
-                  </span>
-                  {model.active && (
-                    <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">
-                      Activo en Producción
+        {loadingModels ? (
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center text-xs text-slate-400">
+            Cargando registro de modelos del backend...
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {models.map((model) => (
+              <div
+                key={model.version}
+                className={`p-3.5 rounded-xl border flex flex-wrap items-center justify-between gap-3 transition-all ${
+                  model.active 
+                    ? 'bg-emerald-950/40 border-emerald-500 shadow-md shadow-emerald-950/40' 
+                    : 'bg-slate-950/60 border-slate-800'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-sm font-bold text-slate-100">{model.name}</h4>
+                    <span className="px-2 py-0.5 rounded-md bg-slate-800 font-mono text-[10px] text-slate-300">
+                      {model.version}
                     </span>
+                    {model.active && (
+                      <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">
+                        Activo en Producción
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-0.5">{model.description}</p>
+                </div>
+
+                <div className="flex items-center gap-4 text-xs font-mono">
+                  <div className="text-right">
+                    <span className="text-slate-500 block text-[10px]">R² Test</span>
+                    <span className="text-emerald-400 font-bold">{model.testR2}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-slate-500 block text-[10px]">RMSE</span>
+                    <span className="text-cyan-300 font-bold">{model.testRmseKgHa} kg/ha</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-slate-500 block text-[10px]">Épocas</span>
+                    <span className="text-slate-300">{model.epochs.toLocaleString()}</span>
+                  </div>
+
+                  {!model.active && (
+                    <button
+                      onClick={() => handleSetActiveModel(model.version)}
+                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs transition-all"
+                    >
+                      Activar
+                    </button>
                   )}
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">{model.description}</p>
               </div>
-
-              <div className="flex items-center gap-4 text-xs font-mono">
-                <div className="text-right">
-                  <span className="text-slate-500 block text-[10px]">R² Test</span>
-                  <span className="text-emerald-400 font-bold">{model.testR2}</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-slate-500 block text-[10px]">RMSE</span>
-                  <span className="text-cyan-300 font-bold">{model.testRmseKgHa} kg/ha</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-slate-500 block text-[10px]">Épocas</span>
-                  <span className="text-slate-300">{model.epochs.toLocaleString()}</span>
-                </div>
-
-                {!model.active && (
-                  <button
-                    onClick={() => handleSetActiveModel(model.version)}
-                    className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs transition-all"
-                  >
-                    Activar
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

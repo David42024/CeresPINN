@@ -187,9 +187,151 @@ def init_db() -> None:
             conn.execute(text(_SCHEMA))
             for stmt in _MIGRATIONS:
                 conn.execute(text(stmt))
+            # Initialize ML Lab schema
+            _init_ml_lab_schema(conn)
             conn.commit()
     except (SQLAlchemyError, DatabaseUnavailable):
         pass
+
+
+def _init_ml_lab_schema(conn: Any) -> None:
+    """Initialize ML Lab schema tables."""
+    _ML_LAB_SCHEMA = """
+-- ML Lab Projects Table
+CREATE TABLE IF NOT EXISTS ml_lab_projects (
+    id TEXT PRIMARY KEY,
+    project_name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    domain TEXT NOT NULL,
+    problem_type TEXT NOT NULL,
+    data_type TEXT NOT NULL,
+    objective TEXT NOT NULL,
+    target_variable TEXT,
+    business_objective TEXT NOT NULL,
+    constraints TEXT NOT NULL DEFAULT '[]',
+    dataset_path TEXT,
+    dataset_source TEXT NOT NULL DEFAULT 'upload',
+    dataset_version TEXT NOT NULL DEFAULT 'v1',
+    status TEXT NOT NULL DEFAULT 'planned',
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    specification TEXT NOT NULL DEFAULT '{}'
+);
+
+-- ML Lab Datasets Table
+CREATE TABLE IF NOT EXISTS ml_lab_datasets (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    path TEXT NOT NULL,
+    rows INT NOT NULL,
+    columns INT NOT NULL,
+    memory_mb DOUBLE PRECISION NOT NULL,
+    numerical_features INT NOT NULL DEFAULT 0,
+    categorical_features INT NOT NULL DEFAULT 0,
+    temporal_features INT NOT NULL DEFAULT 0,
+    total_missing_count INT NOT NULL DEFAULT 0,
+    total_missing_percentage DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+    has_duplicates BOOLEAN NOT NULL DEFAULT FALSE,
+    has_outliers BOOLEAN NOT NULL DEFAULT FALSE,
+    target_column TEXT,
+    target_type TEXT,
+    profile TEXT NOT NULL DEFAULT '{}',
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES ml_lab_projects(id) ON DELETE CASCADE
+);
+
+-- ML Lab Experiments Table
+CREATE TABLE IF NOT EXISTS ml_lab_experiments (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    models TEXT NOT NULL DEFAULT '[]',
+    hyperparameters TEXT NOT NULL DEFAULT '{}',
+    validation_strategy TEXT NOT NULL,
+    n_splits INT NOT NULL DEFAULT 5,
+    test_size DOUBLE PRECISION NOT NULL DEFAULT 0.2,
+    status TEXT NOT NULL DEFAULT 'pending',
+    started_at TEXT,
+    completed_at TEXT,
+    error_message TEXT,
+    results TEXT NOT NULL DEFAULT '{}',
+    metrics TEXT NOT NULL DEFAULT '{}',
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES ml_lab_projects(id) ON DELETE CASCADE
+);
+
+-- ML Lab Models Table (Generalized)
+CREATE TABLE IF NOT EXISTS ml_lab_models (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    experiment_id TEXT,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL,
+    category TEXT NOT NULL,
+    version TEXT NOT NULL,
+    architecture TEXT NOT NULL,
+    framework TEXT,
+    parameters TEXT NOT NULL DEFAULT '{}',
+    training_config TEXT NOT NULL DEFAULT '{}',
+    metrics_global TEXT NOT NULL DEFAULT '{}',
+    metrics_cv TEXT NOT NULL DEFAULT '{}',
+    model_path TEXT,
+    model_size_bytes BIGINT,
+    is_active BOOLEAN NOT NULL DEFAULT FALSE,
+    is_production BOOLEAN NOT NULL DEFAULT FALSE,
+    status TEXT NOT NULL DEFAULT 'training',
+    trained_at TEXT,
+    registered_at TEXT NOT NULL,
+    description TEXT,
+    tags TEXT NOT NULL DEFAULT '[]',
+    FOREIGN KEY (project_id) REFERENCES ml_lab_projects(id) ON DELETE CASCADE,
+    FOREIGN KEY (experiment_id) REFERENCES ml_lab_experiments(id) ON DELETE SET NULL
+);
+
+-- ML Lab Artifacts Table
+CREATE TABLE IF NOT EXISTS ml_lab_artifacts (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    experiment_id TEXT,
+    model_id TEXT,
+    artifact_type TEXT NOT NULL,
+    name TEXT NOT NULL,
+    path TEXT NOT NULL,
+    size_bytes BIGINT,
+    metadata TEXT NOT NULL DEFAULT '{}',
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES ml_lab_projects(id) ON DELETE CASCADE,
+    FOREIGN KEY (experiment_id) REFERENCES ml_lab_experiments(id) ON DELETE SET NULL,
+    FOREIGN KEY (model_id) REFERENCES ml_lab_models(id) ON DELETE SET NULL
+);
+
+-- ML Lab Reports Table
+CREATE TABLE IF NOT EXISTS ml_lab_reports (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    report_type TEXT NOT NULL,
+    format TEXT NOT NULL,
+    content TEXT NOT NULL,
+    metadata TEXT NOT NULL DEFAULT '{}',
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES ml_lab_projects(id) ON DELETE CASCADE
+);
+
+-- Create indexes for performance
+CREATE INDEX IF NOT EXISTS idx_ml_lab_projects_status ON ml_lab_projects(status);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_projects_created ON ml_lab_projects(created_at);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_experiments_project ON ml_lab_experiments(project_id);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_experiments_status ON ml_lab_experiments(status);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_models_project ON ml_lab_models(project_id);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_models_active ON ml_lab_models(is_active);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_models_production ON ml_lab_models(is_production);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_artifacts_project ON ml_lab_artifacts(project_id);
+CREATE INDEX IF NOT EXISTS idx_ml_lab_artifacts_type ON ml_lab_artifacts(artifact_type);
+"""
+    conn.execute(text(_ML_LAB_SCHEMA))
 
 
 # ---------------------------------------------------------------------------

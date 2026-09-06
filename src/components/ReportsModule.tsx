@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FileText, 
   Download, 
@@ -14,6 +14,7 @@ import {
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
 import { SimulationResult, User } from '../types';
+import { fetchReports } from '../services/api';
 
 interface ReportsModuleProps {
   simulation: SimulationResult;
@@ -25,6 +26,25 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
   const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState<boolean>(false);
   const [isGeneratingExcel, setIsGeneratingExcel] = useState<boolean>(false);
+  const [reportsData, setReportsData] = useState<any>(null);
+  const [loadingReports, setLoadingReports] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadReports = async () => {
+      try {
+        const data = await fetchReports();
+        if (!data.fallback) {
+          setReportsData(data.reports);
+        }
+      } catch (error) {
+        console.warn('Failed to load reports, using fallback', error);
+      } finally {
+        setLoadingReports(false);
+      }
+    };
+    
+    loadReports();
+  }, []);
 
   const kpi = simulation.summaryKPIs;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   UserCheck, 
@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { DEMO_USERS } from '../data/mockData';
 import { User, UserRole } from '../types';
+import { fetchUsers } from '../services/api';
 
 interface UserManagementProps {
   currentUser: User;
@@ -29,6 +30,40 @@ export const UserManagement: React.FC<UserManagementProps> = ({
   const [email, setEmail] = useState<string>('');
   const [role, setRole] = useState<UserRole>('farmer');
   const [organization, setOrganization] = useState<string>('');
+  const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await fetchUsers();
+        if (!data.fallback && data.users) {
+          // Transform backend data to User format
+          const transformedUsers = data.users.map((user: any) => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            organization: user.organization,
+            region: user.region,
+            preferences: user.preferences || {
+              unitSystem: 'metric',
+              theme: 'dark',
+              autoSaveSimulations: true,
+              highContrast3D: false,
+              emailAlerts: true
+            }
+          }));
+          setUsersList(transformedUsers);
+        }
+      } catch (error) {
+        console.warn('Failed to load users, using fallback', error);
+      } finally {
+        setLoadingUsers(false);
+      }
+    };
+    
+    loadUsers();
+  }, []);
 
   const handleCreateUser = (e: React.FormEvent) => {
     e.preventDefault();
@@ -188,47 +223,53 @@ export const UserManagement: React.FC<UserManagementProps> = ({
           Usuarios con Acceso ({usersList.length})
         </div>
 
-        <div className="space-y-2">
-          {usersList.map((user) => {
-            const isSelected = user.id === currentUser.id;
-            return (
-              <div
-                key={user.id}
-                className={`p-3.5 rounded-xl border flex flex-wrap items-center justify-between gap-3 transition-all ${
-                  isSelected ? 'bg-emerald-950/30 border-emerald-500' : 'bg-slate-950/60 border-slate-800'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center font-bold text-slate-300 text-xs">
-                    {user.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-200">{user.name}</span>
-                      {getRoleBadge(user.role)}
+        {loadingUsers ? (
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center text-xs text-slate-400">
+            Cargando usuarios del backend...
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {usersList.map((user) => {
+              const isSelected = user.id === currentUser.id;
+              return (
+                <div
+                  key={user.id}
+                  className={`p-3.5 rounded-xl border flex flex-wrap items-center justify-between gap-3 transition-all ${
+                    isSelected ? 'bg-emerald-950/30 border-emerald-500' : 'bg-slate-950/60 border-slate-800'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center font-bold text-slate-300 text-xs">
+                      {user.name.charAt(0)}
                     </div>
-                    <p className="text-xs text-slate-400">{user.email} • {user.organization}</p>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-200">{user.name}</span>
+                        {getRoleBadge(user.role)}
+                      </div>
+                      <p className="text-xs text-slate-400">{user.email} • {user.organization}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {!isSelected ? (
+                      <button
+                        onClick={() => onSwitchUser(user)}
+                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-all"
+                      >
+                        Simular como este Usuario
+                      </button>
+                    ) : (
+                      <span className="px-3 py-1 text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5" /> Usuario Activo
+                      </span>
+                    )}
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  {!isSelected ? (
-                    <button
-                      onClick={() => onSwitchUser(user)}
-                      className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-all"
-                    >
-                      Simular como este Usuario
-                    </button>
-                  ) : (
-                    <span className="px-3 py-1 text-xs text-emerald-400 font-semibold flex items-center gap-1">
-                      <Check className="w-3.5 h-3.5" /> Usuario Activo
-                    </span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

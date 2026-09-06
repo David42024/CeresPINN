@@ -20,7 +20,8 @@ import {
   HelpCircle,
   Clock,
   Zap,
-  Globe
+  Globe,
+  ShieldCheck
 } from 'lucide-react';
 import { 
   Field, 
@@ -33,7 +34,7 @@ import {
   DEFAULT_SIMULATION_CONFIG, 
   DEMO_USERS 
 } from './data/mockData';
-import { simulateScenario } from './services/api';
+import { simulateScenario, fetchDatabaseHealth } from './services/api';
 import { runPINNSimulation } from './services/pinnEngine';
 import { ThreeFieldViewer } from './components/ThreeFieldViewer';
 import { MainDashboard } from './components/MainDashboard';
@@ -44,6 +45,7 @@ import { ReportsModule } from './components/ReportsModule';
 import { MLOpsDashboard } from './components/MLOpsDashboard';
 import { DataPipelinesView } from './components/DataPipelinesView';
 import { UserManagement } from './components/UserManagement';
+import { ValidationReport } from './components/ValidationReport';
 
 type ActiveTab = 
   | 'twin3d' 
@@ -54,7 +56,8 @@ type ActiveTab =
   | 'reports' 
   | 'mlops' 
   | 'pipelines' 
-  | 'users';
+  | 'users'
+  | 'validation';
 
 export const App: React.FC = () => {
   const [fields, setFields] = useState<Field[]>(DEFAULT_FIELDS);
@@ -64,6 +67,23 @@ export const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User>(DEMO_USERS[0]);
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(65); // Mid-season by default
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
+  const [dbHealth, setDbHealth] = useState<any>(null);
+
+  // Load database health on mount
+  useEffect(() => {
+    const loadDbHealth = async () => {
+      try {
+        const health = await fetchDatabaseHealth();
+        if (!health.fallback) {
+          setDbHealth(health.health);
+        }
+      } catch (error) {
+        console.error('Failed to load database health', error);
+      }
+    };
+    
+    loadDbHealth();
+  }, []);
 
   // Computed simulation result based on field and configuration
   const [simulationResult, setSimulationResult] = useState<SimulationResult>(() => 
@@ -272,6 +292,17 @@ export const App: React.FC = () => {
             <Users className="w-3.5 h-3.5" />
             Usuarios & Roles
           </button>
+
+          <button
+            id="tab-btn-validation"
+            onClick={() => setActiveTab('validation')}
+            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
+              activeTab === 'validation' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Validación Estadística
+          </button>
         </div>
       </header>
 
@@ -283,22 +314,37 @@ export const App: React.FC = () => {
             <span className="text-slate-400">
               Campo: <strong className="text-slate-200">{selectedField.name}</strong> ({selectedField.locationName})
             </span>
-            <span className="text-slate-600">|</span>
             <span className="text-slate-400">
-              Escenario: <strong className="text-emerald-400 font-mono">CMIP6 {simulationConfig.scenario} ({simulationConfig.targetYear})</strong>
+              Usuario: <strong className="text-slate-200">{currentUser.name}</strong> ({currentUser.role})
             </span>
-            <span className="text-slate-600">|</span>
             <span className="text-slate-400">
-              Suelo: <strong className="text-cyan-400">{selectedField.soilProfile.label}</strong>
+              Escenario: <strong className="text-slate-200">{simulationConfig.climateScenario}</strong>
             </span>
           </div>
-
-          <div className="flex items-center gap-3 text-slate-400 font-mono">
-            <span>Rendimiento Estimado: <strong className="text-emerald-400">{simulationResult.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha</strong></span>
+          <div className="flex items-center gap-3">
+            {dbHealth && (
+              <div className="flex items-center gap-1.5">
+                <Database className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="text-slate-400">BD:</span>
+                <span className={`px-2 py-1 rounded-lg font-mono text-[11px] ${
+                  dbHealth.status === 'healthy' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                }`}>
+                  {dbHealth.status === 'healthy' ? 'OK' : 'Mock'}
+                </span>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <span className="text-slate-400">Estado:</span>
+              <span className={`px-2 py-1 rounded-lg font-mono text-[11px] ${
+                isSimulating ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+              }`}>
+                {isSimulating ? 'Simulando...' : 'Listo'}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* TAB 1: 3D Digital Twin View */}
+        {/* TAB 1: 3D Twin & Phenology */}
         {activeTab === 'twin3d' && (
           <div className="space-y-6">
             <ThreeFieldViewer
@@ -404,6 +450,11 @@ export const App: React.FC = () => {
             currentUser={currentUser}
             onSwitchUser={setCurrentUser}
           />
+        )}
+
+        {/* TAB 10: Statistical Validation */}
+        {activeTab === 'validation' && (
+          <ValidationReport />
         )}
       </main>
 

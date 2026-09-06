@@ -288,3 +288,228 @@ export async function triggerAllPipelinesSync(): Promise<PipelineSyncResult> {
     return { ok: false, fallback: true, message: 'Backend no disponible: sincronización local simulada.' };
   }
 }
+
+// ---------------------------------------------------------------------------
+// Master Data Endpoints (Scenarios, Soil Profiles, Model Registry, Users)
+// ---------------------------------------------------------------------------
+
+export async function fetchScenarios() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/scenarios`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Scenarios API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, scenarios: payload };
+  } catch (error) {
+    console.warn('Scenarios endpoint unavailable; returning local fallback.', error);
+    return { 
+      fallback: true, 
+      scenarios: [
+        { id: 'SSP1-2.6', label: 'Sustainable pathway', risk: 'low' },
+        { id: 'SSP3-7.0', label: 'Regional rivalry', risk: 'medium' },
+        { id: 'SSP5-8.5', label: 'Fossil-fueled development', risk: 'high' },
+      ]
+    };
+  }
+}
+
+export async function fetchSoilProfiles() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/soil-profiles`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Soil profiles API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, soilProfiles: payload };
+  } catch (error) {
+    console.warn('Soil profiles endpoint unavailable; returning local fallback.', error);
+    return { fallback: true };
+  }
+}
+
+export async function fetchModelRegistry() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/model-registry`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Model registry API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, models: payload };
+  } catch (error) {
+    console.warn('Model registry endpoint unavailable; returning local fallback.', error);
+    return { fallback: true };
+  }
+}
+
+export async function fetchUsers() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/users`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Users API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, users: payload };
+  } catch (error) {
+    console.warn('Users endpoint unavailable; returning local fallback.', error);
+    return { fallback: true };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Validation Endpoints (Hindcast, KS test, t-test, Sobol, bootstrap)
+// ---------------------------------------------------------------------------
+
+export async function fetchValidationReport() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/validation`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Validation API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, report: payload };
+  } catch (error) {
+    console.warn('Validation endpoint unavailable; returning local fallback.', error);
+    return { 
+      fallback: true,
+      report: {
+        hindcast_metrics: {
+          rmse_kg_ha: 385,
+          mae_kg_ha: 298,
+          r2_score: 0.942,
+          nrmse_percent: 4.8
+        },
+        ks_test: {
+          statistic: 0.087,
+          p_value: 0.234,
+          null_rejected: false
+        },
+        paired_t_test: {
+          t_statistic: -1.45,
+          p_value: 0.147,
+          significant: false
+        },
+        sobol_sensitivity: {
+          first_order: { temperature: 0.42, precipitation: 0.31, co2: 0.18 },
+          total_order: { temperature: 0.58, precipitation: 0.45, co2: 0.25 }
+        },
+        bootstrap_ci: {
+          yield_95_ci_lower: 7650,
+          yield_95_ci_upper: 8350,
+          n_bootstrap: 1000
+        },
+        ensemble_uncertainty: {
+          mean_yield: 8000,
+          std_yield: 175,
+          ensemble_size: 32
+        }
+      }
+    };
+  }
+}
+
+export async function fetchHindcastData() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/validation/hindcast`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Hindcast API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, hindcast: payload };
+  } catch (error) {
+    console.warn('Hindcast endpoint unavailable; returning local fallback.', error);
+    return { 
+      fallback: true,
+      hindcast: {
+        years: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+        observed_yield: [8200, 7950, 8100, 7850, 8400, 8150, 8300, 8000, 8250, 8100],
+        predicted_yield: [8150, 8020, 8050, 7900, 8350, 8200, 8250, 8050, 8200, 8150],
+        residuals: [50, -70, 50, -50, 50, -50, 50, -50, 50, -50]
+      }
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Reports and Database Health Endpoints
+// ---------------------------------------------------------------------------
+
+export async function fetchReports() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/reports`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Reports API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, reports: payload };
+  } catch (error) {
+    console.warn('Reports endpoint unavailable; returning local fallback.', error);
+    return { 
+      fallback: true,
+      reports: {
+        title: "CeresPINN seasonal summary",
+        generated_at: new Date().toISOString(),
+        summary: "Yield outlook remains stable under moderate warming but degrades under severe drought stress.",
+        regions: [
+          { name: "Bajío", yield_kg_ha: 7500 },
+          { name: "Iowa", yield_kg_ha: 8400 },
+          { name: "Pampas", yield_kg_ha: 7800 },
+        ]
+      }
+    };
+  }
+}
+
+export async function fetchDatabaseHealth() {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/health/database`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Database health API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    return { fallback: false, health: payload };
+  } catch (error) {
+    console.warn('Database health endpoint unavailable; returning local fallback.', error);
+    return { 
+      fallback: true,
+      health: {
+        database: "postgres",
+        postgis: "available",
+        status: "mock-or-live",
+        note: "DATABASE_URL no configurada o BD inalcanzable: se usa el mock."
+      }
+    };
+  }
+}
