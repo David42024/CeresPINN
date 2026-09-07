@@ -55,23 +55,23 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
       {/* 4 Major KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* KPI 1: Projected Yield */}
-        <div id="kpi-projected-yield" className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl relative overflow-hidden group hover:border-emerald-500/50 transition-all">
+        <div id="kpi-projected-yield" className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden group hover:border-emerald-500/50 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Rendimiento Proyectado</span>
-            <div className="p-2 rounded-xl bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Rendimiento Proyectado</span>
+            <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-500 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-black text-slate-100 font-mono tracking-tight">
+            <span className="text-2xl font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight">
               {kpi.projectedYieldKgHa.toLocaleString()}
             </span>
-            <span className="text-xs text-slate-400 font-mono">kg/ha</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 font-mono">kg/ha</span>
           </div>
-          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-800/80">
-            <span className="text-slate-500">Potencial: {(kpi.potentialYieldKgHa / 1000).toFixed(1)} t/ha</span>
+          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
+            <span className="text-slate-500 dark:text-slate-500">Potencial: {(kpi.potentialYieldKgHa / 1000).toFixed(1)} t/ha</span>
             <span className={`font-semibold flex items-center ${
-              kpi.yieldLossDueToDroughtPercent > 20 ? 'text-rose-400' : 'text-emerald-400'
+              kpi.yieldLossDueToDroughtPercent > 20 ? 'text-rose-500 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
             }`}>
               {kpi.yieldLossDueToDroughtPercent > 20 ? <ArrowDownRight className="w-3.5 h-3.5 mr-0.5" /> : <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" />}
               {kpi.yieldLossDueToDroughtPercent > 0 ? `-${kpi.yieldLossDueToDroughtPercent}%` : 'Óptimo'}
@@ -80,62 +80,62 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
         </div>
 
         {/* KPI 2: Water Stress Index */}
-        <div id="kpi-water-stress" className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl relative overflow-hidden group hover:border-amber-500/50 transition-all">
+        <div id="kpi-water-stress" className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden group hover:border-amber-500/50 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Índice Estrés CWSI</span>
-            <div className="p-2 rounded-xl bg-amber-950/80 text-amber-400 border border-amber-800/60">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Índice Estrés CWSI</span>
+            <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60">
               <Activity className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-black text-slate-100 font-mono tracking-tight">
+            <span className="text-2xl font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight">
               {kpi.peakWaterStressIndex.toFixed(2)}
             </span>
-            <span className="text-xs text-slate-400 font-mono">Pico (0-1)</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 font-mono">Pico (0-1)</span>
           </div>
-          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-800/80">
-            <span className="text-slate-500">Días Críticos: {kpi.criticalDroughtDaysCount} d</span>
-            <span className="text-amber-400 font-semibold">Promedio: {kpi.avgWaterStressIndex}</span>
+          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
+            <span className="text-slate-500 dark:text-slate-500">Días Críticos: {kpi.criticalDroughtDaysCount} d</span>
+            <span className="text-amber-600 dark:text-amber-400 font-semibold">Promedio: {kpi.avgWaterStressIndex}</span>
           </div>
         </div>
 
         {/* KPI 3: Biomass & Canopy */}
-        <div id="kpi-biomass" className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl relative overflow-hidden group hover:border-cyan-500/50 transition-all">
+        <div id="kpi-biomass" className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden group hover:border-cyan-500/50 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Biomasa Acumulada</span>
-            <div className="p-2 rounded-xl bg-cyan-950/80 text-cyan-400 border border-cyan-800/60">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Biomasa Acumulada</span>
+            <div className="p-2 rounded-xl bg-cyan-50 dark:bg-cyan-950/80 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/60">
               <Layers className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-black text-slate-100 font-mono tracking-tight">
+            <span className="text-2xl font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight">
               {(kpi.totalBiomassKgHa / 1000).toFixed(1)}
             </span>
-            <span className="text-xs text-slate-400 font-mono">t/ha materia seca</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 font-mono">t/ha materia seca</span>
           </div>
-          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-800/80">
-            <span className="text-slate-500">Días a Madurez</span>
-            <span className="text-cyan-300 font-mono font-semibold">{kpi.daysToMaturity} días</span>
+          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
+            <span className="text-slate-500 dark:text-slate-500">Días a Madurez</span>
+            <span className="text-cyan-600 dark:text-cyan-300 font-mono font-semibold">{kpi.daysToMaturity} días</span>
           </div>
         </div>
 
         {/* KPI 4: Water Productivity */}
-        <div id="kpi-water-productivity" className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl relative overflow-hidden group hover:border-violet-500/50 transition-all">
+        <div id="kpi-water-productivity" className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-lg relative overflow-hidden group hover:border-violet-500/50 transition-all">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Productividad del Agua</span>
-            <div className="p-2 rounded-xl bg-violet-950/80 text-violet-400 border border-violet-800/60">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Productividad del Agua</span>
+            <div className="p-2 rounded-xl bg-violet-50 dark:bg-violet-950/80 text-violet-600 dark:text-violet-400 border border-violet-200 dark:border-violet-800/60">
               <Droplets className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-black text-slate-100 font-mono tracking-tight">
+            <span className="text-2xl font-black text-slate-900 dark:text-slate-100 font-mono tracking-tight">
               {kpi.waterProductivityKgM3.toFixed(2)}
             </span>
-            <span className="text-xs text-slate-400 font-mono">kg grano / m³</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 font-mono">kg grano / m³</span>
           </div>
-          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-800/80">
-            <span className="text-slate-500">Agua Total Consumida</span>
-            <span className="text-violet-300 font-mono font-semibold">{kpi.totalWaterConsumedMm} mm</span>
+          <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
+            <span className="text-slate-500 dark:text-slate-500">Agua Total Consumida</span>
+            <span className="text-violet-600 dark:text-violet-300 font-mono font-semibold">{kpi.totalWaterConsumedMm} mm</span>
           </div>
         </div>
       </div>
@@ -148,26 +148,26 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
               key={alert.id}
               className={`p-3.5 rounded-2xl border flex items-start gap-3 transition-all ${
                 alert.level === 'critical'
-                  ? 'bg-rose-950/40 border-rose-800/80 text-rose-200'
-                  : 'bg-amber-950/30 border-amber-800/60 text-amber-200'
+                  ? 'bg-rose-50/60 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800/80 text-rose-800 dark:text-rose-200'
+                  : 'bg-amber-50/60 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800/60 text-amber-800 dark:text-amber-200'
               }`}
             >
               {alert.level === 'critical' ? (
-                <ShieldAlert className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+                <ShieldAlert className="w-5 h-5 text-rose-500 dark:text-rose-400 flex-shrink-0 mt-0.5" />
               ) : (
-                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-amber-500 dark:text-amber-400 flex-shrink-0 mt-0.5" />
               )}
               <div className="flex-1">
                 <div className="flex flex-wrap items-center justify-between gap-1">
-                  <h4 className="text-sm font-bold text-slate-100">{alert.title}</h4>
-                  <span className="text-[11px] px-2 py-0.5 rounded-md bg-slate-900/80 border border-slate-800 font-mono">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{alert.title}</h4>
+                  <span className="text-[11px] px-2 py-0.5 rounded-md bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 font-mono text-slate-700 dark:text-slate-300">
                     {alert.timing}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 mt-1 leading-relaxed">{alert.description}</p>
-                <div className="mt-2 text-xs font-medium text-emerald-400 flex items-center gap-1">
+                <p className="text-xs text-slate-700 dark:text-slate-300 mt-1 leading-relaxed">{alert.description}</p>
+                <div className="mt-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                   <span>Recomendación agronómica:</span>
-                  <span className="text-slate-200">{alert.recommendedAction}</span>
+                  <span className="text-slate-800 dark:text-slate-200">{alert.recommendedAction}</span>
                 </div>
               </div>
             </div>
@@ -176,25 +176,25 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
       )}
 
       {/* Interactive Time-Series Charts Section */}
-      <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl space-y-4">
+      <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-lg space-y-4">
         {/* Chart View Switcher */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-emerald-400" />
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <BarChart3 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
               Dinámica Temporal del Gemelo Digital (Resolución Diaria)
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Evolución simulada durante los {simulation.dailyRecords.length} días del ciclo de cultivo.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
+          <div className="flex items-center gap-1.5 p-1 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
             <button
               id="btn-chart-soil-layers"
               onClick={() => setActiveChartView('soil_layers')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
-                activeChartView === 'soil_layers' ? 'bg-cyan-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                activeChartView === 'soil_layers' ? 'bg-cyan-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Humedad Suelo (3 Capas)
@@ -203,7 +203,7 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
               id="btn-chart-biomass"
               onClick={() => setActiveChartView('biomass_lai')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
-                activeChartView === 'biomass_lai' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                activeChartView === 'biomass_lai' ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Biomasa & LAI
@@ -212,7 +212,7 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
               id="btn-chart-water-fluxes"
               onClick={() => setActiveChartView('water_fluxes')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
-                activeChartView === 'water_fluxes' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                activeChartView === 'water_fluxes' ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Balance de Agua (ET vs Riego/Lluvia)
@@ -221,7 +221,7 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
               id="btn-chart-stress"
               onClick={() => setActiveChartView('stress_cwsi')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
-                activeChartView === 'stress_cwsi' ? 'bg-rose-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                activeChartView === 'stress_cwsi' ? 'bg-rose-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               Estrés CWSI & Térmico

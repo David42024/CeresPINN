@@ -81,21 +81,21 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
   };
 
   return (
-    <div id="what-if-analysis-studio" className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl space-y-5">
+    <div id="what-if-analysis-studio" className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-5">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-            <GitCompare className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <GitCompare className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             Módulo de Análisis Comparativo "¿Qué pasa si?" (What-If Studio)
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
             Evalúa y contrasta 3 estrategias agronómicas simultáneas bajo forzamiento climático PINN.
           </p>
         </div>
 
-        <div className="px-3 py-1 rounded-xl bg-emerald-950/70 border border-emerald-700/50 text-emerald-300 text-xs font-mono flex items-center gap-1.5">
-          <Zap className="w-3.5 h-3.5 text-amber-400" />
+        <div className="px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-700/50 text-emerald-800 dark:text-emerald-300 text-xs font-mono flex items-center gap-1.5">
+          <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
           Inferencia PINN en Tiempo Real
         </div>
       </div>
@@ -103,23 +103,23 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
       {/* 3 Columns: Side-by-Side Scenario Configuration & Results */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Scenario A */}
-        <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between space-y-4">
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 flex flex-col justify-between space-y-4">
           <div>
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span className="px-2.5 py-0.5 rounded-lg bg-slate-800 text-slate-200 font-bold text-xs">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <span className="px-2.5 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs">
                 Escenario A (Línea Base)
               </span>
-              <span className="text-xs font-mono text-slate-400">{configA.scenario}</span>
+              <span className="text-xs font-mono text-slate-600 dark:text-slate-400">{configA.scenario}</span>
             </div>
 
             {/* Controls */}
             <div className="space-y-3 mt-3 text-xs">
               <div>
-                <label className="block text-slate-400 mb-1">Estrategia de Riego</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Estrategia de Riego</label>
                 <select
                   value={configA.irrigationStrategy}
                   onChange={(e) => handleUpdateConfigA({ irrigationStrategy: e.target.value as IrrigationStrategy })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="rainfed">Secano Estricto</option>
                   <option value="deficit_50">Riego Deficitario (50% ETc)</option>
@@ -129,11 +129,11 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1">Variedad de Maíz</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Variedad de Maíz</label>
                 <select
                   value={configA.maizeVariety}
                   onChange={(e) => handleUpdateConfigA({ maizeVariety: e.target.value as MaizeVariety })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="short_cycle">Ciclo Corto (90-100d)</option>
                   <option value="medium_cycle">Ciclo Medio (110-120d)</option>
@@ -142,11 +142,11 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1">Escenario Climático CMIP6</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Escenario Climático CMIP6</label>
                 <select
                   value={configA.scenario}
                   onChange={(e) => handleUpdateConfigA({ scenario: e.target.value as ClimateScenario })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="SSP1-2.6">SSP1-2.6 (Optimista)</option>
                   <option value="SSP3-7.0">SSP3-7.0 (Intermedio)</option>
@@ -157,44 +157,44 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
           </div>
 
           {/* Results Summary Box */}
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2 text-xs">
+          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-400">Rendimiento:</span>
-              <strong className="text-slate-100 font-mono text-sm">{resultA.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha</strong>
+              <span className="text-slate-600 dark:text-slate-400">Rendimiento:</span>
+              <strong className="text-slate-900 dark:text-slate-100 font-mono text-sm">{resultA.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Agua Consumida:</span>
-              <strong className="text-cyan-300 font-mono">{resultA.summaryKPIs.totalWaterConsumedMm} mm</strong>
+              <span className="text-slate-600 dark:text-slate-400">Agua Consumida:</span>
+              <strong className="text-cyan-700 dark:text-cyan-300 font-mono">{resultA.summaryKPIs.totalWaterConsumedMm} mm</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Estrés Máximo CWSI:</span>
-              <strong className="text-amber-400 font-mono">{resultA.summaryKPIs.peakWaterStressIndex.toFixed(2)}</strong>
+              <span className="text-slate-600 dark:text-slate-400">Estrés Máximo CWSI:</span>
+              <strong className="text-amber-600 dark:text-amber-400 font-mono">{resultA.summaryKPIs.peakWaterStressIndex.toFixed(2)}</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Margen Neto Est.:</span>
-              <strong className="text-emerald-400 font-mono">${resultA.summaryKPIs.economicReturnUsdHa} /ha</strong>
+              <span className="text-slate-600 dark:text-slate-400">Margen Neto Est.:</span>
+              <strong className="text-emerald-600 dark:text-emerald-400 font-mono">${resultA.summaryKPIs.economicReturnUsdHa} /ha</strong>
             </div>
           </div>
         </div>
 
         {/* Scenario B */}
-        <div className="p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/40 flex flex-col justify-between space-y-4">
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-cyan-500/40 flex flex-col justify-between space-y-4">
           <div>
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span className="px-2.5 py-0.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-800 font-bold text-xs">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <span className="px-2.5 py-0.5 rounded-lg bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800 font-bold text-xs">
                 Escenario B (Optimización 1)
               </span>
-              <span className="text-xs font-mono text-cyan-400">{configB.scenario}</span>
+              <span className="text-xs font-mono text-cyan-700 dark:text-cyan-400">{configB.scenario}</span>
             </div>
 
             {/* Controls */}
             <div className="space-y-3 mt-3 text-xs">
               <div>
-                <label className="block text-slate-400 mb-1">Estrategia de Riego</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Estrategia de Riego</label>
                 <select
                   value={configB.irrigationStrategy}
                   onChange={(e) => handleUpdateConfigB({ irrigationStrategy: e.target.value as IrrigationStrategy })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="rainfed">Secano Estricto</option>
                   <option value="deficit_50">Riego Deficitario (50% ETc)</option>
@@ -204,11 +204,11 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1">Variedad de Maíz</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Variedad de Maíz</label>
                 <select
                   value={configB.maizeVariety}
                   onChange={(e) => handleUpdateConfigB({ maizeVariety: e.target.value as MaizeVariety })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="short_cycle">Ciclo Corto (90-100d)</option>
                   <option value="medium_cycle">Ciclo Medio (110-120d)</option>
@@ -217,11 +217,11 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1">Escenario Climático CMIP6</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Escenario Climático CMIP6</label>
                 <select
                   value={configB.scenario}
                   onChange={(e) => handleUpdateConfigB({ scenario: e.target.value as ClimateScenario })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="SSP1-2.6">SSP1-2.6 (Optimista)</option>
                   <option value="SSP3-7.0">SSP3-7.0 (Intermedio)</option>
@@ -232,50 +232,50 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
           </div>
 
           {/* Results Summary Box */}
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-2 text-xs">
+          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-cyan-500/30 space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-400">Rendimiento:</span>
-              <strong className="text-cyan-300 font-mono text-sm">
+              <span className="text-slate-600 dark:text-slate-400">Rendimiento:</span>
+              <strong className="text-cyan-700 dark:text-cyan-300 font-mono text-sm">
                 {resultB.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha
-                <span className="text-[11px] ml-1.5 text-emerald-400">
+                <span className="text-[11px] ml-1.5 text-emerald-600 dark:text-emerald-400">
                   ({resultB.summaryKPIs.projectedYieldKgHa >= resultA.summaryKPIs.projectedYieldKgHa ? '+' : ''}
                   {resultB.summaryKPIs.projectedYieldKgHa - resultA.summaryKPIs.projectedYieldKgHa} kg)
                 </span>
               </strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Agua Consumida:</span>
-              <strong className="text-cyan-300 font-mono">{resultB.summaryKPIs.totalWaterConsumedMm} mm</strong>
+              <span className="text-slate-600 dark:text-slate-400">Agua Consumida:</span>
+              <strong className="text-cyan-700 dark:text-cyan-300 font-mono">{resultB.summaryKPIs.totalWaterConsumedMm} mm</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Estrés Máximo CWSI:</span>
-              <strong className="text-amber-400 font-mono">{resultB.summaryKPIs.peakWaterStressIndex.toFixed(2)}</strong>
+              <span className="text-slate-600 dark:text-slate-400">Estrés Máximo CWSI:</span>
+              <strong className="text-amber-600 dark:text-amber-400 font-mono">{resultB.summaryKPIs.peakWaterStressIndex.toFixed(2)}</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Margen Neto Est.:</span>
-              <strong className="text-emerald-400 font-mono">${resultB.summaryKPIs.economicReturnUsdHa} /ha</strong>
+              <span className="text-slate-600 dark:text-slate-400">Margen Neto Est.:</span>
+              <strong className="text-emerald-600 dark:text-emerald-400 font-mono">${resultB.summaryKPIs.economicReturnUsdHa} /ha</strong>
             </div>
           </div>
         </div>
 
         {/* Scenario C */}
-        <div className="p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/40 flex flex-col justify-between space-y-4">
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-emerald-500/40 flex flex-col justify-between space-y-4">
           <div>
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span className="px-2.5 py-0.5 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-xs">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <span className="px-2.5 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold text-xs">
                 Escenario C (Sensor + Resiliencia)
               </span>
-              <span className="text-xs font-mono text-emerald-400">{configC.scenario}</span>
+              <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400">{configC.scenario}</span>
             </div>
 
             {/* Controls */}
             <div className="space-y-3 mt-3 text-xs">
               <div>
-                <label className="block text-slate-400 mb-1">Estrategia de Riego</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Estrategia de Riego</label>
                 <select
                   value={configC.irrigationStrategy}
                   onChange={(e) => handleUpdateConfigC({ irrigationStrategy: e.target.value as IrrigationStrategy })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="rainfed">Secano Estricto</option>
                   <option value="deficit_50">Riego Deficitario (50% ETc)</option>
@@ -285,11 +285,11 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1">Variedad de Maíz</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Variedad de Maíz</label>
                 <select
                   value={configC.maizeVariety}
                   onChange={(e) => handleUpdateConfigC({ maizeVariety: e.target.value as MaizeVariety })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="short_cycle">Ciclo Corto (90-100d)</option>
                   <option value="medium_cycle">Ciclo Medio (110-120d)</option>
@@ -298,11 +298,11 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1">Escenario Climático CMIP6</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1">Escenario Climático CMIP6</label>
                 <select
                   value={configC.scenario}
                   onChange={(e) => handleUpdateConfigC({ scenario: e.target.value as ClimateScenario })}
-                  className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="SSP1-2.6">SSP1-2.6 (Optimista)</option>
                   <option value="SSP3-7.0">SSP3-7.0 (Intermedio)</option>
@@ -313,28 +313,28 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
           </div>
 
           {/* Results Summary Box */}
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-2 text-xs">
+          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-emerald-500/30 space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-400">Rendimiento:</span>
-              <strong className="text-emerald-300 font-mono text-sm">
+              <span className="text-slate-600 dark:text-slate-400">Rendimiento:</span>
+              <strong className="text-emerald-700 dark:text-emerald-300 font-mono text-sm">
                 {resultC.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha
-                <span className="text-[11px] ml-1.5 text-emerald-400">
+                <span className="text-[11px] ml-1.5 text-emerald-600 dark:text-emerald-400">
                   ({resultC.summaryKPIs.projectedYieldKgHa >= resultA.summaryKPIs.projectedYieldKgHa ? '+' : ''}
                   {resultC.summaryKPIs.projectedYieldKgHa - resultA.summaryKPIs.projectedYieldKgHa} kg)
                 </span>
               </strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Agua Consumida:</span>
-              <strong className="text-cyan-300 font-mono">{resultC.summaryKPIs.totalWaterConsumedMm} mm</strong>
+              <span className="text-slate-600 dark:text-slate-400">Agua Consumida:</span>
+              <strong className="text-cyan-700 dark:text-cyan-300 font-mono">{resultC.summaryKPIs.totalWaterConsumedMm} mm</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Estrés Máximo CWSI:</span>
-              <strong className="text-emerald-400 font-mono">{resultC.summaryKPIs.peakWaterStressIndex.toFixed(2)}</strong>
+              <span className="text-slate-600 dark:text-slate-400">Estrés Máximo CWSI:</span>
+              <strong className="text-emerald-600 dark:text-emerald-400 font-mono">{resultC.summaryKPIs.peakWaterStressIndex.toFixed(2)}</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Margen Neto Est.:</span>
-              <strong className="text-emerald-400 font-mono">${resultC.summaryKPIs.economicReturnUsdHa} /ha</strong>
+              <span className="text-slate-600 dark:text-slate-400">Margen Neto Est.:</span>
+              <strong className="text-emerald-600 dark:text-emerald-400 font-mono">${resultC.summaryKPIs.economicReturnUsdHa} /ha</strong>
             </div>
           </div>
         </div>

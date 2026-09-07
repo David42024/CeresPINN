@@ -243,15 +243,15 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
   };
 
   return (
-    <div id="reports-export-module" className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl space-y-5">
+    <div id="reports-export-module" className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-5">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <FileText className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             Centro de Reportes, Informes y Exportación de Datos
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
             Generación de informes ejecutivos en PDF, dataset completo en Excel (.xlsx) y comunicación a productores.
           </p>
         </div>
@@ -259,13 +259,13 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* PDF Export Card */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between space-y-3">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 flex flex-col justify-between space-y-3">
           <div>
-            <div className="p-2.5 rounded-xl bg-rose-950/80 text-rose-400 w-fit border border-rose-800/60 mb-2">
+            <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 w-fit border border-rose-200 dark:border-rose-800/60 mb-2">
               <FileText className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-100">Informe Técnico Ejecutivo (PDF)</h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Informe Técnico Ejecutivo (PDF)</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Documento formal listo para stakeholders con resumen ejecutivo, gráficas de estrés y recomendaciones agronómicas.
             </p>
           </div>
@@ -281,13 +281,13 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         </div>
 
         {/* Excel Export Card */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between space-y-3">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 flex flex-col justify-between space-y-3">
           <div>
-            <div className="p-2.5 rounded-xl bg-emerald-950/80 text-emerald-400 w-fit border border-emerald-800/60 mb-2">
+            <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 w-fit border border-emerald-200 dark:border-emerald-800/60 mb-2">
               <FileSpreadsheet className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-100">Dataset Completo (Excel / XLSX)</h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Dataset Completo (Excel / XLSX)</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Exportación de las 28 variables diarias del modelo PINN (humedades por capa, flujos ET, biomasa, índices de estrés).
             </p>
           </div>
@@ -303,13 +303,13 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         </div>
 
         {/* Share via Email Card */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between space-y-3">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 flex flex-col justify-between space-y-3">
           <div>
-            <div className="p-2.5 rounded-xl bg-cyan-950/80 text-cyan-400 w-fit border border-cyan-800/60 mb-2">
+            <div className="p-2.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/80 text-cyan-600 dark:text-cyan-400 w-fit border border-cyan-200 dark:border-cyan-800/60 mb-2">
               <Mail className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-100">Compartir por Correo Electrónico</h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Compartir por Correo Electrónico</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
               Envía el reporte técnico agronómico y los KPIs del gemelo digital directamente a agricultores y consultores.
             </p>
           </div>
@@ -321,7 +321,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
               value={emailTo}
               onChange={(e) => setEmailTo(e.target.value)}
               placeholder="correo@ejemplo.com"
-              className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+              className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
             />
             <button
               type="submit"

@@ -392,7 +392,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   };
 
   return (
-    <div id="three-field-viewer-card" className="relative w-full h-[540px] bg-slate-900/90 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col select-none">
+    <div id="three-field-viewer-card" className="relative w-full h-[540px] bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col select-none">
       {/* 3D Canvas Viewport */}
       <div 
         ref={containerRef}
@@ -407,26 +407,26 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
         {/* Top Overlay Badges */}
         <div className="absolute top-4 left-4 z-10 flex flex-wrap items-center gap-2">
-          <div className="px-3 py-1.5 rounded-xl bg-slate-950/80 backdrop-blur-md border border-slate-700/60 flex items-center gap-2 shadow-lg">
+          <div className="px-3 py-1.5 rounded-xl bg-white/85 dark:bg-slate-950/80 backdrop-blur-md border border-slate-200 dark:border-slate-700/60 flex items-center gap-2 shadow-lg">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="text-xs font-semibold text-slate-200">
+            <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
               Gemelo Digital 3D (Zea mays L.)
             </span>
           </div>
 
           {dailyRecord && (
-            <div className="px-3 py-1.5 rounded-xl bg-emerald-950/70 backdrop-blur-md border border-emerald-700/50 text-emerald-300 text-xs font-medium flex items-center gap-1.5 shadow-lg">
-              <Activity className="w-3.5 h-3.5 text-emerald-400" />
-              Etapa: <strong className="font-bold text-white">{dailyRecord.stage}</strong> ({dailyRecord.stageCode})
+            <div className="px-3 py-1.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/70 backdrop-blur-md border border-emerald-200 dark:border-emerald-700/50 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center gap-1.5 shadow-lg">
+              <Activity className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
+              Etapa: <strong className="font-bold text-slate-900 dark:text-white">{dailyRecord.stage}</strong> ({dailyRecord.stageCode})
             </div>
           )}
 
           {dailyRecord && dailyRecord.cwsi > 0.40 && (
-            <div className="px-3 py-1.5 rounded-xl bg-amber-950/80 backdrop-blur-md border border-amber-600/60 text-amber-300 text-xs font-medium flex items-center gap-1.5 shadow-lg animate-pulse">
-              <Thermometer className="w-3.5 h-3.5 text-amber-400" />
+            <div className="px-3 py-1.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/80 backdrop-blur-md border border-amber-300 dark:border-amber-600/60 text-amber-700 dark:text-amber-300 text-xs font-medium flex items-center gap-1.5 shadow-lg animate-pulse">
+              <Thermometer className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               Estrés Hídrico: {(dailyRecord.cwsi * 100).toFixed(0)}%
             </div>
           )}
@@ -434,14 +434,14 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
         {/* Top Right: Layer Mode Selectors */}
         <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
-          <div className="p-1 rounded-xl bg-slate-950/85 backdrop-blur-md border border-slate-800 flex items-center gap-1 shadow-xl">
+          <div className="p-1 rounded-xl bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border border-slate-200 dark:border-slate-800 flex items-center gap-1 shadow-xl">
             <button
               id="btn-layer-moisture"
               onClick={() => setLayerMode('soil_moisture')}
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all ${
                 layerMode === 'soil_moisture' 
                   ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30' 
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
               }`}
               title="Humedad del Suelo (Richards PDE)"
             >
@@ -454,7 +454,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all ${
                 layerMode === 'biomass' 
                   ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30' 
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
               }`}
               title="Biomasa y Altura de Dosel"
             >
@@ -467,7 +467,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all ${
                 layerMode === 'water_stress' 
                   ? 'bg-rose-600 text-white shadow-md shadow-rose-600/30' 
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
               }`}
               title="Índice de Estrés Térmico e Hídrico"
             >
@@ -478,12 +478,12 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
           {/* Sub-depth selector when soil moisture is active */}
           {layerMode === 'soil_moisture' && (
-            <div className="p-1 rounded-xl bg-slate-950/80 backdrop-blur-md border border-slate-800 flex items-center gap-1 text-[11px]">
-              <span className="text-slate-500 px-1.5">Profundidad:</span>
+            <div className="p-1 rounded-xl bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 flex items-center gap-1 text-[11px]">
+              <span className="text-slate-500 dark:text-slate-500 px-1.5">Profundidad:</span>
               <button
                 onClick={() => setSelectedDepth('top')}
                 className={`px-2 py-0.5 rounded-md font-mono ${
-                  selectedDepth === 'top' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-slate-200'
+                  selectedDepth === 'top' ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
                 0-30 cm
@@ -491,7 +491,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               <button
                 onClick={() => setSelectedDepth('mid')}
                 className={`px-2 py-0.5 rounded-md font-mono ${
-                  selectedDepth === 'mid' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-slate-200'
+                  selectedDepth === 'mid' ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
                 30-60 cm
@@ -499,7 +499,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               <button
                 onClick={() => setSelectedDepth('deep')}
                 className={`px-2 py-0.5 rounded-md font-mono ${
-                  selectedDepth === 'deep' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-slate-200'
+                  selectedDepth === 'deep' ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
                 60-100 cm
@@ -510,21 +510,21 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
         {/* Floating HUD Information Box */}
         {dailyRecord && (
-          <div className="absolute bottom-16 left-4 z-10 p-3 rounded-2xl bg-slate-950/85 backdrop-blur-md border border-slate-800/80 shadow-2xl text-xs space-y-1.5 w-64 pointer-events-none">
-            <div className="flex items-center justify-between pb-1 border-b border-slate-800">
-              <span className="font-semibold text-slate-300 flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-emerald-400" /> {dailyRecord.date}
+          <div className="absolute bottom-16 left-4 z-10 p-3 rounded-2xl bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border border-slate-200 dark:border-slate-800/80 shadow-2xl text-xs space-y-1.5 w-64 pointer-events-none">
+            <div className="flex items-center justify-between pb-1 border-b border-slate-200 dark:border-slate-800">
+              <span className="font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" /> {dailyRecord.date}
               </span>
-              <span className="font-mono text-slate-400">DAP {dailyRecord.dap}</span>
+              <span className="font-mono text-slate-600 dark:text-slate-400">DAP {dailyRecord.dap}</span>
             </div>
             
-            <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-slate-400 pt-0.5">
-              <div>Humedad Top: <span className="font-mono text-cyan-300">{(dailyRecord.soilMoistureTop * 100).toFixed(1)}%</span></div>
-              <div>Biomasa: <span className="font-mono text-emerald-300">{(dailyRecord.biomassKgHa / 1000).toFixed(1)} t/ha</span></div>
-              <div>LAI (Área Foliar): <span className="font-mono text-slate-200">{dailyRecord.lai} m²/m²</span></div>
-              <div>Raíz: <span className="font-mono text-amber-300">{dailyRecord.rootDepthCm} cm</span></div>
-              <div>Transpiración: <span className="font-mono text-blue-300">{dailyRecord.transpirationMm} mm</span></div>
-              <div>GDD Acum: <span className="font-mono text-slate-200">{dailyRecord.gddAccumulated}°C·d</span></div>
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-slate-600 dark:text-slate-400 pt-0.5">
+              <div>Humedad Top: <span className="font-mono text-cyan-600 dark:text-cyan-300">{(dailyRecord.soilMoistureTop * 100).toFixed(1)}%</span></div>
+              <div>Biomasa: <span className="font-mono text-emerald-600 dark:text-emerald-300">{(dailyRecord.biomassKgHa / 1000).toFixed(1)} t/ha</span></div>
+              <div>LAI (Área Foliar): <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.lai} m²/m²</span></div>
+              <div>Raíz: <span className="font-mono text-amber-600 dark:text-amber-300">{dailyRecord.rootDepthCm} cm</span></div>
+              <div>Transpiración: <span className="font-mono text-blue-600 dark:text-blue-300">{dailyRecord.transpirationMm} mm</span></div>
+              <div>GDD Acum: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.gddAccumulated}°C·d</span></div>
             </div>
           </div>
         )}
@@ -536,7 +536,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             className={`p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all ${
               cameraMode === 'perspective' 
                 ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg' 
-                : 'bg-slate-950/80 text-slate-400 border-slate-800 hover:text-white'
+                : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title="Vista 3D Orbital Libre"
           >
@@ -547,7 +547,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             className={`p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all ${
               cameraMode === 'top_down' 
                 ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg' 
-                : 'bg-slate-950/80 text-slate-400 border-slate-800 hover:text-white'
+                : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title="Vista Aérea Cenital (Nadir)"
           >
@@ -558,7 +558,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             className={`p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all ${
               showWireframe 
                 ? 'bg-cyan-600 text-white border-cyan-500 shadow-lg' 
-                : 'bg-slate-950/80 text-slate-400 border-slate-800 hover:text-white'
+                : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title="Malla de Elementos Finitos (FEM)"
           >
@@ -568,7 +568,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       </div>
 
       {/* Bottom Timeline Scrubber & Playback Controls */}
-      <div className="h-16 bg-slate-950/95 border-t border-slate-800 px-4 py-2 flex items-center gap-4 z-20">
+      <div className="h-16 bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center gap-4 z-20">
         {/* Play/Pause Button */}
         <button
           id="btn-3d-play-toggle"
@@ -586,7 +586,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             onChangeDayIndex(0);
           }}
           disabled={!simulation}
-          className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all disabled:opacity-50"
+          className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50"
           title="Reiniciar a Siembra"
         >
           <RotateCcw className="w-4 h-4" />
@@ -594,9 +594,9 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
         {/* Day Slider */}
         <div className="flex-1 flex flex-col justify-center">
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-1">
+          <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
             <span>DAP 1 (Siembra)</span>
-            <span className="text-emerald-400 font-semibold">
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
               Día {currentDayIndex + 1} de {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
             </span>
             <span>Cosecha (R6)</span>
@@ -612,18 +612,18 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               onChangeDayIndex(parseInt(e.target.value, 10));
             }}
             disabled={!simulation}
-            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
+            className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
           />
         </div>
 
         {/* Speed multiplier selector */}
-        <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
           {[1, 2, 4].map((speed) => (
             <button
               key={speed}
               onClick={() => setSpeedMultiplier(speed)}
               className={`px-2 py-1 rounded-lg font-mono transition-all ${
-                speedMultiplier === speed ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-slate-200'
+                speedMultiplier === speed ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               {speed}x
