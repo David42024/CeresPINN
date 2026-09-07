@@ -85,8 +85,8 @@ export const ValidationReport: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl">
-        <div className="flex items-center justify-center py-20 text-slate-400">
+      <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl">
+        <div className="flex items-center justify-center py-20 text-slate-500 dark:text-slate-400">
           <RefreshCw className="w-6 h-6 animate-spin mr-3" />
           Cargando reporte de validación estadística...
         </div>
@@ -109,15 +109,15 @@ export const ValidationReport: React.FC = () => {
     })) : [];
 
   return (
-    <div id="validation-report" className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl space-y-5">
+    <div id="validation-report" className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-5">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-emerald-400" />
             Validación Estadística del Modelo PINN
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Hindcast histórico, pruebas KS, t-test pareado, análisis de sensibilidad Sobol y bootstrap de incertidumbre.
           </p>
         </div>
@@ -130,7 +130,7 @@ export const ValidationReport: React.FC = () => {
           )}
           <button
             onClick={handleRefresh}
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium flex items-center gap-1.5 transition-all"
+            className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium flex items-center gap-1.5 transition-all"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             Actualizar
@@ -140,27 +140,27 @@ export const ValidationReport: React.FC = () => {
 
       {/* Hindcast Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">RMSE (kg/ha)</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">RMSE (kg/ha)</span>
           <strong className="text-emerald-400 font-mono text-lg">{validationData?.hindcast_metrics?.rmse_kg_ha || 0}</strong>
         </div>
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">MAE (kg/ha)</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">MAE (kg/ha)</span>
           <strong className="text-cyan-400 font-mono text-lg">{validationData?.hindcast_metrics?.mae_kg_ha || 0}</strong>
         </div>
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">R² Score</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">R² Score</span>
           <strong className="text-violet-400 font-mono text-lg">{validationData?.hindcast_metrics?.r2_score?.toFixed(3) || 0}</strong>
         </div>
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">NRMSE (%)</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">NRMSE (%)</span>
           <strong className="text-amber-400 font-mono text-lg">{validationData?.hindcast_metrics?.nrmse_percent?.toFixed(1) || 0}%</strong>
         </div>
       </div>
 
       {/* Hindcast Chart */}
-      <div className="bg-slate-950 rounded-xl border border-slate-800 p-4 space-y-3">
-        <h3 className="text-sm font-bold text-slate-200 flex items-center gap-1.5">
+      <div className="bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+        <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
           <TrendingUp className="w-4 h-4 text-emerald-400" />
           Hindcast Histórico: Rendimiento Observado vs Predicho (2015-2024)
         </h3>
@@ -182,19 +182,19 @@ export const ValidationReport: React.FC = () => {
       {/* Statistical Tests Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* KS Test */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
-          <h3 className="text-sm font-bold text-slate-200 flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             <Activity className="w-4 h-4 text-cyan-400" />
             Prueba Kolmogorov-Smirnov
           </h3>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-400">Estadístico KS</span>
-              <span className="font-mono text-slate-200">{validationData?.ks_test?.statistic?.toFixed(3)}</span>
+              <span className="text-slate-500 dark:text-slate-400">Estadístico KS</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.ks_test?.statistic?.toFixed(3)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Valor p</span>
-              <span className="font-mono text-slate-200">{validationData?.ks_test?.p_value?.toFixed(3)}</span>
+              <span className="text-slate-500 dark:text-slate-400">Valor p</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.ks_test?.p_value?.toFixed(3)}</span>
             </div>
             <div className="flex items-center gap-2 pt-2">
               {validationData?.ks_test?.null_rejected ? (
@@ -210,19 +210,19 @@ export const ValidationReport: React.FC = () => {
         </div>
 
         {/* Paired t-test */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
-          <h3 className="text-sm font-bold text-slate-200 flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             <BarChart3 className="w-4 h-4 text-violet-400" />
             T-Test Pareado (SSP5-8.5 vs Histórico)
           </h3>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-400">Estadístico t</span>
-              <span className="font-mono text-slate-200">{validationData?.paired_t_test?.t_statistic?.toFixed(3)}</span>
+              <span className="text-slate-500 dark:text-slate-400">Estadístico t</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.paired_t_test?.t_statistic?.toFixed(3)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Valor p</span>
-              <span className="font-mono text-slate-200">{validationData?.paired_t_test?.p_value?.toFixed(3)}</span>
+              <span className="text-slate-500 dark:text-slate-400">Valor p</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.paired_t_test?.p_value?.toFixed(3)}</span>
             </div>
             <div className="flex items-center gap-2 pt-2">
               {validationData?.paired_t_test?.significant ? (
@@ -238,31 +238,31 @@ export const ValidationReport: React.FC = () => {
         </div>
 
         {/* Bootstrap CI */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
-          <h3 className="text-sm font-bold text-slate-200 flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             <Info className="w-4 h-4 text-amber-400" />
             Intervalo de Confianza Bootstrap (95%)
           </h3>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-400">Límite Inferior</span>
-              <span className="font-mono text-slate-200">{validationData?.bootstrap_ci?.yield_95_ci_lower?.toLocaleString()} kg/ha</span>
+              <span className="text-slate-500 dark:text-slate-400">Límite Inferior</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.bootstrap_ci?.yield_95_ci_lower?.toLocaleString()} kg/ha</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Límite Superior</span>
-              <span className="font-mono text-slate-200">{validationData?.bootstrap_ci?.yield_95_ci_upper?.toLocaleString()} kg/ha</span>
+              <span className="text-slate-500 dark:text-slate-400">Límite Superior</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.bootstrap_ci?.yield_95_ci_upper?.toLocaleString()} kg/ha</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-400">Muestras Bootstrap</span>
-              <span className="font-mono text-slate-200">{validationData?.bootstrap_ci?.n_bootstrap?.toLocaleString()}</span>
+              <span className="text-slate-500 dark:text-slate-400">Muestras Bootstrap</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.bootstrap_ci?.n_bootstrap?.toLocaleString()}</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Sobol Sensitivity Analysis */}
-      <div className="bg-slate-950 rounded-xl border border-slate-800 p-4 space-y-3">
-        <h3 className="text-sm font-bold text-slate-200 flex items-center gap-1.5">
+      <div className="bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+        <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
           <BarChart3 className="w-4 h-4 text-rose-400" />
           Análisis de Sensibilidad Sobol (Índices de Sobol)
         </h3>
@@ -283,16 +283,16 @@ export const ValidationReport: React.FC = () => {
 
       {/* Ensemble Uncertainty */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">Rendimiento Promedio Ensemble</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">Rendimiento Promedio Ensemble</span>
           <strong className="text-emerald-400 font-mono text-lg">{validationData?.ensemble_uncertainty?.mean_yield?.toLocaleString()} kg/ha</strong>
         </div>
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">Desviación Estándar</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">Desviación Estándar</span>
           <strong className="text-cyan-400 font-mono text-lg">{validationData?.ensemble_uncertainty?.std_yield?.toLocaleString()} kg/ha</strong>
         </div>
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
-          <span className="text-slate-500 text-[11px] block">Tamaño del Ensemble</span>
+        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">Tamaño del Ensemble</span>
           <strong className="text-violet-400 font-mono text-lg">{validationData?.ensemble_uncertainty?.ensemble_size} modelos</strong>
         </div>
       </div>

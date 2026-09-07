@@ -21,8 +21,11 @@ import {
   Clock,
   Zap,
   Globe,
-  ShieldCheck
+  ShieldCheck,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from './context/ThemeContext';
 import { 
   Field, 
   SimulationConfig, 
@@ -60,6 +63,7 @@ type ActiveTab =
   | 'validation';
 
 export const App: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
   const [fields, setFields] = useState<Field[]>(DEFAULT_FIELDS);
   const [selectedField, setSelectedField] = useState<Field>(DEFAULT_FIELDS[0]);
   const [simulationConfig, setSimulationConfig] = useState<SimulationConfig>(DEFAULT_SIMULATION_CONFIG);
@@ -131,27 +135,27 @@ export const App: React.FC = () => {
   const currentDayRecord = simulationResult.dailyRecords[currentDayIndex] || simulationResult.dailyRecords[0];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans flex flex-col selection:bg-emerald-500 selection:text-slate-950">
       {/* Top Navbar */}
-      <header id="main-header" className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+      <header id="main-header" className="sticky top-0 z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Logo & Scientific Title */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-400 p-0.5 shadow-lg shadow-emerald-500/20 flex items-center justify-center">
-              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+              <div className="w-full h-full bg-white dark:bg-slate-950 rounded-[14px] flex items-center justify-center">
                 <Sprout className="w-5 h-5 text-emerald-400" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-black tracking-tight text-slate-100 flex items-center gap-1.5">
+                <h1 className="text-base font-black tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
                   CeresPINN
-                  <span className="text-[11px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-bold">
+                  <span className="text-[11px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-bold">
                     v2.5
                   </span>
                 </h1>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
                 Gemelo Digital Adaptativo al Clima | Maíz Resiliente a Sequías
               </p>
             </div>
@@ -167,7 +171,7 @@ export const App: React.FC = () => {
                   const f = fields.find(item => item.id === e.target.value);
                   if (f) handleSelectField(f);
                 }}
-                className="bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold rounded-xl px-3 py-2 pr-8 focus:outline-none focus:border-emerald-500 cursor-pointer appearance-none"
+                className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold rounded-xl px-3 py-2 pr-8 focus:outline-none focus:border-emerald-500 cursor-pointer appearance-none"
               >
                 {fields.map(f => (
                   <option key={f.id} value={f.id}>
@@ -175,8 +179,18 @@ export const App: React.FC = () => {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
+
+            {/* Theme toggle */}
+            <button
+              id="btn-theme-toggle"
+              onClick={toggleTheme}
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all"
+              title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+            </button>
 
             {/* Run button shortcut */}
             <button
@@ -193,12 +207,12 @@ export const App: React.FC = () => {
         </div>
 
         {/* Navigation Tabs Bar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto py-1 border-t border-slate-900 text-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto py-1 border-t border-slate-100 dark:border-slate-900 text-xs">
           <button
             id="tab-btn-twin3d"
             onClick={() => setActiveTab('twin3d')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'twin3d' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'twin3d' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Activity className="w-3.5 h-3.5" />
@@ -209,7 +223,7 @@ export const App: React.FC = () => {
             id="tab-btn-dashboard"
             onClick={() => setActiveTab('dashboard')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'dashboard' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'dashboard' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -220,7 +234,7 @@ export const App: React.FC = () => {
             id="tab-btn-config"
             onClick={() => setActiveTab('config')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'config' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'config' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Sliders className="w-3.5 h-3.5" />
@@ -231,7 +245,7 @@ export const App: React.FC = () => {
             id="tab-btn-whatif"
             onClick={() => setActiveTab('whatif')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'whatif' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'whatif' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
@@ -242,7 +256,7 @@ export const App: React.FC = () => {
             id="tab-btn-map"
             onClick={() => setActiveTab('map')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'map' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'map' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
@@ -253,7 +267,7 @@ export const App: React.FC = () => {
             id="tab-btn-reports"
             onClick={() => setActiveTab('reports')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'reports' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'reports' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -264,7 +278,7 @@ export const App: React.FC = () => {
             id="tab-btn-mlops"
             onClick={() => setActiveTab('mlops')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'mlops' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'mlops' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Cpu className="w-3.5 h-3.5" />
@@ -275,7 +289,7 @@ export const App: React.FC = () => {
             id="tab-btn-pipelines"
             onClick={() => setActiveTab('pipelines')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'pipelines' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'pipelines' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Database className="w-3.5 h-3.5" />
@@ -286,7 +300,7 @@ export const App: React.FC = () => {
             id="tab-btn-users"
             onClick={() => setActiveTab('users')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'users' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'users' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Users className="w-3.5 h-3.5" />
@@ -297,7 +311,7 @@ export const App: React.FC = () => {
             id="tab-btn-validation"
             onClick={() => setActiveTab('validation')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'validation' ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'text-slate-400 hover:text-slate-200'
+              activeTab === 'validation' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -309,34 +323,34 @@ export const App: React.FC = () => {
       {/* Main App Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Status Sub-Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 text-xs">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-slate-400">
-              Campo: <strong className="text-slate-200">{selectedField.name}</strong> ({selectedField.locationName})
+            <span className="text-slate-600 dark:text-slate-400">
+              Campo: <strong className="text-slate-800 dark:text-slate-200">{selectedField.name}</strong> ({selectedField.locationName})
             </span>
-            <span className="text-slate-400">
-              Usuario: <strong className="text-slate-200">{currentUser.name}</strong> ({currentUser.role})
+            <span className="text-slate-600 dark:text-slate-400">
+              Usuario: <strong className="text-slate-800 dark:text-slate-200">{currentUser.name}</strong> ({currentUser.role})
             </span>
-            <span className="text-slate-400">
-              Escenario: <strong className="text-slate-200">{simulationConfig.climateScenario}</strong>
+            <span className="text-slate-600 dark:text-slate-400">
+              Escenario: <strong className="text-slate-800 dark:text-slate-200">{simulationConfig.climateScenario}</strong>
             </span>
           </div>
           <div className="flex items-center gap-3">
             {dbHealth && (
               <div className="flex items-center gap-1.5">
-                <Database className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="text-slate-400">BD:</span>
+                <Database className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
+                <span className="text-slate-600 dark:text-slate-400">BD:</span>
                 <span className={`px-2 py-1 rounded-lg font-mono text-[11px] ${
-                  dbHealth.status === 'healthy' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                  dbHealth.status === 'healthy' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40'
                 }`}>
                   {dbHealth.status === 'healthy' ? 'OK' : 'Mock'}
                 </span>
               </div>
             )}
             <div className="flex items-center gap-2">
-              <span className="text-slate-400">Estado:</span>
+              <span className="text-slate-600 dark:text-slate-400">Estado:</span>
               <span className={`px-2 py-1 rounded-lg font-mono text-[11px] ${
-                isSimulating ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                isSimulating ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40'
               }`}>
                 {isSimulating ? 'Simulando...' : 'Listo'}
               </span>
@@ -356,21 +370,21 @@ export const App: React.FC = () => {
 
             {/* Quick Summary KPIs beneath 3D viewport */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
-                <span className="text-slate-500 block">Etapa Fenológica</span>
-                <strong className="text-emerald-300 font-mono text-sm">{currentDayRecord.stage} ({currentDayRecord.stageCode})</strong>
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs shadow-sm">
+                <span className="text-slate-500 dark:text-slate-500 block">Etapa Fenológica</span>
+                <strong className="text-emerald-600 dark:text-emerald-300 font-mono text-sm">{currentDayRecord.stage} ({currentDayRecord.stageCode})</strong>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
-                <span className="text-slate-500 block">Índice de Área Foliar (LAI)</span>
-                <strong className="text-cyan-300 font-mono text-sm">{currentDayRecord.lai} m²/m²</strong>
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs shadow-sm">
+                <span className="text-slate-500 dark:text-slate-500 block">Índice de Área Foliar (LAI)</span>
+                <strong className="text-cyan-600 dark:text-cyan-300 font-mono text-sm">{currentDayRecord.lai} m²/m²</strong>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
-                <span className="text-slate-500 block">Humedad Suelo (0-30cm)</span>
-                <strong className="text-blue-300 font-mono text-sm">{(currentDayRecord.soilMoistureTop * 100).toFixed(1)}% vol</strong>
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs shadow-sm">
+                <span className="text-slate-500 dark:text-slate-500 block">Humedad Suelo (0-30cm)</span>
+                <strong className="text-blue-600 dark:text-blue-300 font-mono text-sm">{(currentDayRecord.soilMoistureTop * 100).toFixed(1)}% vol</strong>
               </div>
-              <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
-                <span className="text-slate-500 block">Índice de Estrés Hídrico (CWSI)</span>
-                <strong className={`font-mono text-sm ${currentDayRecord.cwsi > 0.45 ? 'text-rose-400' : 'text-emerald-400'}`}>
+              <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs shadow-sm">
+                <span className="text-slate-500 dark:text-slate-500 block">Índice de Estrés Hídrico (CWSI)</span>
+                <strong className={`font-mono text-sm ${currentDayRecord.cwsi > 0.45 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                   {currentDayRecord.cwsi.toFixed(2)}
                 </strong>
               </div>
@@ -459,7 +473,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950 py-4 text-center text-xs text-slate-500">
+      <footer className="border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-4 text-center text-xs text-slate-500 dark:text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>CeresPINN: Physics-Informed Neural Network (Richards + Priestley-Taylor + CMIP6 Downscaling)</span>
           <span className="font-mono text-[11px]">Diseñado para Investigación Agronómica y Producción de Maíz Resiliente a Sequías</span>

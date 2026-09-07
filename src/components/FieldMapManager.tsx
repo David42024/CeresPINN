@@ -156,15 +156,15 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
   };
 
   return (
-    <div id="field-manager-module" className="bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl space-y-5">
+    <div id="field-manager-module" className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-5">
       {/* Header Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             Gestión Espacial y Polígonos de Campo
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
             Definición de coordenadas geográficas, propiedades hidrofísicas de suelo y perfiles PostGIS.
           </p>
         </div>
@@ -173,7 +173,7 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
           <button
             id="btn-export-geojson"
             onClick={handleExportGeoJSON}
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-slate-700 transition-all"
+            className="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-slate-300 dark:border-slate-700 transition-all"
             title="Exportar polígonos a GeoJSON estándar"
           >
             <Download className="w-3.5 h-3.5" />
@@ -182,7 +182,7 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
 
           <label 
             id="btn-import-geojson"
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-slate-700 cursor-pointer transition-all"
+            className="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-slate-300 dark:border-slate-700 cursor-pointer transition-all"
           >
             <Upload className="w-3.5 h-3.5" />
             Importar Polígono
@@ -201,23 +201,23 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
       </div>
 
       {geoJsonUploadError && (
-        <div className="p-3 rounded-xl bg-rose-950/60 border border-rose-800 text-rose-300 text-xs flex items-center justify-between">
+        <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-center justify-between">
           <span>{geoJsonUploadError}</span>
-          <button onClick={() => setGeoJsonUploadError(null)} className="text-rose-400 font-bold">&times;</button>
+          <button onClick={() => setGeoJsonUploadError(null)} className="text-rose-600 dark:text-rose-400 font-bold">&times;</button>
         </div>
       )}
 
       {/* Modal / Inline Create Form */}
       {isCreatingField && (
-        <form onSubmit={handleCreateFieldSubmit} className="p-4 rounded-xl bg-slate-950/80 border border-emerald-500/40 space-y-4">
+        <form onSubmit={handleCreateFieldSubmit} className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-emerald-500/40 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-emerald-300 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
               <Crop className="w-4 h-4" /> Registrar Nueva Parcela o Lote Agrícola
             </h3>
             <button
               type="button"
               onClick={() => setIsCreatingField(false)}
-              className="text-xs text-slate-400 hover:text-slate-200"
+              className="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
             >
               Cancelar
             </button>
@@ -225,35 +225,35 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
             <div>
-              <label className="block text-slate-400 mb-1">Nombre del Campo / Lote</label>
+              <label className="block text-slate-600 dark:text-slate-400 mb-1">Nombre del Campo / Lote</label>
               <input
                 type="text"
                 required
                 value={newFieldName}
                 onChange={(e) => setNewFieldName(e.target.value)}
                 placeholder="Ej. Parcela La Esperanza Lote 5"
-                className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Ubicación / Municipio</label>
+              <label className="block text-slate-600 dark:text-slate-400 mb-1">Ubicación / Municipio</label>
               <input
                 type="text"
                 required
                 value={newLocationName}
                 onChange={(e) => setNewLocationName(e.target.value)}
                 placeholder="Ej. Celaya, Guanajuato"
-                className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">País</label>
+              <label className="block text-slate-600 dark:text-slate-400 mb-1">País</label>
               <select
                 value={newCountry}
                 onChange={(e) => setNewCountry(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-500"
               >
                 <option value="México">México</option>
                 <option value="Estados Unidos">Estados Unidos</option>
@@ -265,23 +265,23 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Área (Hectáreas)</label>
+              <label className="block text-slate-600 dark:text-slate-400 mb-1">Área (Hectáreas)</label>
               <input
                 type="number"
                 min={1}
                 max={5000}
                 value={newArea}
                 onChange={(e) => setNewArea(parseFloat(e.target.value) || 1)}
-                className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Tipo de Suelo (Textura & Van Genuchten)</label>
+              <label className="block text-slate-600 dark:text-slate-400 mb-1">Tipo de Suelo (Textura & Van Genuchten)</label>
               <select
                 value={newSoilKey}
                 onChange={(e) => setNewSoilKey(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-500"
               >
                 {Object.entries(SOIL_PROFILES).map(([k, s]) => (
                   <option key={k} value={k}>{s.label}</option>
@@ -290,12 +290,12 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Cultivo / Variedad Inicial</label>
+              <label className="block text-slate-600 dark:text-slate-400 mb-1">Cultivo / Variedad Inicial</label>
               <input
                 type="text"
                 value={newCrop}
                 onChange={(e) => setNewCrop(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -315,7 +315,7 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left: Saved Fields List & Metadata */}
         <div className="lg:col-span-5 space-y-3">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1">
+          <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider px-1">
             Campos Registrados ({fields.length})
           </div>
 
@@ -329,17 +329,17 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
                   onClick={() => onSelectField(field)}
                   className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
                     isSelected 
-                      ? 'bg-emerald-950/40 border-emerald-500 shadow-md shadow-emerald-950/50' 
-                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900/60'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 shadow-md shadow-emerald-900/20 dark:shadow-emerald-950/50' 
+                      : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-900/60'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <h4 className="text-sm font-bold text-slate-100 flex items-center gap-1.5">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
                         {field.name}
-                        {isSelected && <span className="p-0.5 rounded-full bg-emerald-500 text-slate-950"><Check className="w-3 h-3" /></span>}
+                        {isSelected && <span className="p-0.5 rounded-full bg-emerald-500 text-white dark:text-slate-950"><Check className="w-3 h-3" /></span>}
                       </h4>
-                      <p className="text-xs text-slate-400 mt-0.5">{field.locationName}, {field.country}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{field.locationName}, {field.country}</p>
                     </div>
 
                     {fields.length > 1 && (
@@ -348,7 +348,7 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
                           e.stopPropagation();
                           onDeleteField(field.id);
                         }}
-                        className="p-1 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-950/40 transition-all"
+                        className="p-1 rounded-lg text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all"
                         title="Eliminar campo"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -357,18 +357,18 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
                   </div>
 
                   {/* Metadata Chips */}
-                  <div className="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-slate-800/80 text-[11px]">
-                    <div className="bg-slate-900/80 p-1.5 rounded-lg border border-slate-800">
+                  <div className="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-slate-200/80 dark:border-slate-800/80 text-[11px]">
+                    <div className="bg-white dark:bg-slate-900/80 p-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
                       <span className="text-slate-500 block">Superficie</span>
-                      <strong className="text-slate-200 font-mono">{field.areaHectares} ha</strong>
+                      <strong className="text-slate-800 dark:text-slate-200 font-mono">{field.areaHectares} ha</strong>
                     </div>
-                    <div className="bg-slate-900/80 p-1.5 rounded-lg border border-slate-800">
+                    <div className="bg-white dark:bg-slate-900/80 p-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
                       <span className="text-slate-500 block">Suelo</span>
-                      <strong className="text-emerald-400 truncate block">{field.soilProfile.label.split(' ')[0]}</strong>
+                      <strong className="text-emerald-600 dark:text-emerald-400 truncate block">{field.soilProfile.label.split(' ')[0]}</strong>
                     </div>
-                    <div className="bg-slate-900/80 p-1.5 rounded-lg border border-slate-800">
+                    <div className="bg-white dark:bg-slate-900/80 p-1.5 rounded-lg border border-slate-200 dark:border-slate-800">
                       <span className="text-slate-500 block">Cap. Campo</span>
-                      <strong className="text-cyan-400 font-mono">{(field.soilProfile.fieldCapacity * 100).toFixed(0)}% vol</strong>
+                      <strong className="text-cyan-600 dark:text-cyan-400 font-mono">{(field.soilProfile.fieldCapacity * 100).toFixed(0)}% vol</strong>
                     </div>
                   </div>
                 </div>
@@ -378,23 +378,23 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
         </div>
 
         {/* Right: Interactive High-Precision GIS Map Canvas */}
-        <div className="lg:col-span-7 bg-slate-950 rounded-xl border border-slate-800 p-4 flex flex-col justify-between relative overflow-hidden min-h-[380px]">
+        <div className="lg:col-span-7 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between relative overflow-hidden min-h-[380px]">
           {/* Map Overlay Header */}
           <div className="flex items-center justify-between z-10">
-            <div className="px-3 py-1 rounded-lg bg-slate-900/80 backdrop-blur-md border border-slate-800 text-xs font-mono text-slate-300">
+            <div className="px-3 py-1 rounded-lg bg-white/85 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-800 dark:text-slate-300">
               Coordenadas: {selectedField.centerLat.toFixed(4)}°N, {selectedField.centerLng.toFixed(4)}°W
             </div>
 
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setMapZoom(Math.min(2.0, mapZoom + 0.2))}
-                className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center text-sm font-bold"
+                className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-sm font-bold"
               >
                 +
               </button>
               <button
                 onClick={() => setMapZoom(Math.max(0.6, mapZoom - 0.2))}
-                className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center text-sm font-bold"
+                className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-sm font-bold"
               >
                 -
               </button>
@@ -453,29 +453,29 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
             </svg>
 
             {/* Scale Bar */}
-            <div className="absolute bottom-2 right-2 px-2 py-1 rounded bg-slate-900/90 border border-slate-800 text-[10px] font-mono text-slate-400 flex items-center gap-1">
+            <div className="absolute bottom-2 right-2 px-2 py-1 rounded bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-[10px] font-mono text-slate-700 dark:text-slate-400 flex items-center gap-1">
               <div className="w-8 h-1 bg-emerald-500/80 rounded-sm"></div>
               <span>250 m</span>
             </div>
           </div>
 
           {/* Soil Physics Matrix Summary Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-800 text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs">
             <div>
-              <span className="text-slate-500 text-[11px] block">Materia Orgánica:</span>
-              <strong className="text-slate-200 font-mono">{selectedField.soilProfile.organicMatterPercent}%</strong>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Materia Orgánica:</span>
+              <strong className="text-slate-900 dark:text-slate-200 font-mono">{selectedField.soilProfile.organicMatterPercent}%</strong>
             </div>
             <div>
-              <span className="text-slate-500 text-[11px] block">Densidad Aparente:</span>
-              <strong className="text-slate-200 font-mono">{selectedField.soilProfile.bulkDensity} g/cm³</strong>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Densidad Aparente:</span>
+              <strong className="text-slate-900 dark:text-slate-200 font-mono">{selectedField.soilProfile.bulkDensity} g/cm³</strong>
             </div>
             <div>
-              <span className="text-slate-500 text-[11px] block">Cond. Saturada (Ks):</span>
-              <strong className="text-cyan-400 font-mono">{selectedField.soilProfile.saturatedConductivityKs} mm/día</strong>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Cond. Saturada (Ks):</span>
+              <strong className="text-cyan-700 dark:text-cyan-400 font-mono">{selectedField.soilProfile.saturatedConductivityKs} mm/día</strong>
             </div>
             <div>
-              <span className="text-slate-500 text-[11px] block">Agua Disponible:</span>
-              <strong className="text-emerald-400 font-mono">
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Agua Disponible:</span>
+              <strong className="text-emerald-700 dark:text-emerald-400 font-mono">
                 {Math.round((selectedField.soilProfile.fieldCapacity - selectedField.soilProfile.wiltingPoint) * 1000)} mm/m
               </strong>
             </div>
