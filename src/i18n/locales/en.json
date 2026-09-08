@@ -438,6 +438,44 @@
     "ensembleSize": "Ensemble Size",
     "ensembleModels": "models"
   },
+  "simConfig": {
+    "executeLoading": "Running PINN (Richards + ET)...",
+    "executeButton": "Run Digital Twin Simulation",
+    "scenarioSustainable": "Sustainable development with aggressive emissions reductions.",
+    "scenarioRivalry": "Regional rivalry with fragmented climate policies.",
+    "scenarioFossil": "Intensive fossil fuel use and extreme events.",
+    "atmosphericCo2": "Atmospheric CO₂",
+    "thermalAnomaly": "Thermal Anomaly",
+    "precipModifier": "Precipitation Modifier",
+    "heatwaveRisk": "Heatwave Risk",
+    "cycleShort": "Short Cycle (90-100 days)",
+    "cycleMedium": "Medium Cycle (110-120 days)",
+    "cycleLong": "Long Cycle (130-140 days)",
+    "irrigationRainfed": "Strict Rainfed",
+    "irrigationRainfedDesc": "No artificial irrigation. 100% dependent on rainfall.",
+    "irrigationDeficit": "Deficit Irrigation (50% ETc)",
+    "irrigationDeficitDesc": "Controlled water savings while maintaining the mild-stress threshold.",
+    "waterSavings": "~45% Water Savings",
+    "irrigationOptimal": "Optimal Irrigation (100% ETc)",
+    "irrigationOptimalDesc": "Replaces 100% of evapotranspiration without water deficit.",
+    "maxBiomass": "Maximum Biomass",
+    "maxEfficiency": "Max Efficiency",
+    "soilDry": "Dry Soil (10%)",
+    "soilModerate": "Moderate Moisture (50%)",
+    "fieldCapacity": "Field Capacity (100%)"
+  },
+  "fieldMap": {
+    "availableWater": "Available Water:",
+    "saturatedConductivity": "Saturated Cond. (Ks):",
+    "bulkDensity": "Bulk Density:",
+    "organicMatter": "Organic Matter:"
+  },
+  "dataPipelines": {
+    "source": "Source:",
+    "records": "Records:",
+    "resolution": "Resolution:",
+    "lastSync": "Last Sync:"
+  },
   "pinn": {
     "alertFloweringTitle": "Severe water stress at Flowering (VT-R1)",
     "alertFloweringDesc": "Critical water deficit of {{floweringPenaltyPercent}}% detected during pollination period, causing floral abortion and drastic harvest index reduction.",

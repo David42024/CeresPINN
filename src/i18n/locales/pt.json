@@ -438,6 +438,44 @@
     "ensembleSize": "Tamanho do Ensemble",
     "ensembleModels": "modelos"
   },
+  "simConfig": {
+    "executeLoading": "Executando PINN (Richards + ET)...",
+    "executeButton": "Executar Simulação Digital Twin",
+    "scenarioSustainable": "Desenvolvimento sustentável com redução agressiva de emissões.",
+    "scenarioRivalry": "Rivalidade regional com políticas climáticas fragmentadas.",
+    "scenarioFossil": "Uso intensivo de combustíveis fósseis e eventos extremos.",
+    "atmosphericCo2": "CO₂ Atmosférico",
+    "thermalAnomaly": "Anomalia Térmica",
+    "precipModifier": "Modificador de Precipitação",
+    "heatwaveRisk": "Risco de Onda de Calor",
+    "cycleShort": "Ciclo Curto (90-100 dias)",
+    "cycleMedium": "Ciclo Médio (110-120 dias)",
+    "cycleLong": "Ciclo Longo (130-140 dias)",
+    "irrigationRainfed": "Sequeiro Estrito",
+    "irrigationRainfedDesc": "Sem irrigação artificial. Dependência de 100% da chuva.",
+    "irrigationDeficit": "Irrigação Deficitária (50% ETc)",
+    "irrigationDeficitDesc": "Economia de água controlada mantendo o limite de estresse leve.",
+    "waterSavings": "Economia de ~45% de Água",
+    "irrigationOptimal": "Irrigação Ótima (100% ETc)",
+    "irrigationOptimalDesc": "Repõe 100% da evapotranspiração sem déficit hídrico.",
+    "maxBiomass": "Máxima Biomassa",
+    "maxEfficiency": "Máxima Eficiência",
+    "soilDry": "Solo Seco (10%)",
+    "soilModerate": "Umidade Moderada (50%)",
+    "fieldCapacity": "Capacidade de Campo (100%)"
+  },
+  "fieldMap": {
+    "availableWater": "Água Disponível:",
+    "saturatedConductivity": "Cond. Saturada (Ks):",
+    "bulkDensity": "Densidade Aparente:",
+    "organicMatter": "Matéria Orgânica:"
+  },
+  "dataPipelines": {
+    "source": "Fonte:",
+    "records": "Registros:",
+    "resolution": "Resolução:",
+    "lastSync": "Última Sync:"
+  },
   "pinn": {
     "alertFloweringTitle": "Estresse hídrico severo no Florescimento (VT-R1)",
     "alertFloweringDesc": "Foi detectado um déficit hídrico crítico de {{floweringPenaltyPercent}}% durante o período de polinização, provocando aborto floral e redução drástica do índice de colheita.",

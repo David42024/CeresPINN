@@ -111,12 +111,12 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
           {isLoading ? (
             <>
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              <span>Ejecutando PINN (Richards + ET)...</span>
+              <span>{t('simConfig.executeLoading')}</span>
             </>
           ) : (
             <>
               <Zap className="w-4 h-4 text-amber-300" />
-              <span>Ejecutar Simulación Digital Twin</span>
+              <span>{t('simConfig.executeButton')}</span>
             </>
           )}
         </button>
@@ -219,7 +219,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                       </span>
                       <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-mono">+1.5°C Global</span>
                     </div>
-                    <p className="text-xs text-slate-800 dark:text-slate-300">Desarrollo sostenible con reducción agresiva de emisiones.</p>
+                    <p className="text-xs text-slate-800 dark:text-slate-300">{t('simConfig.scenarioSustainable')}</p>
                     <div className="mt-2 text-[11px] text-slate-600 dark:text-slate-400">
                       Anomalía térmica local: <span className="font-mono text-emerald-700 dark:text-emerald-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
                     </div>
@@ -239,7 +239,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                       </span>
                       <span className="text-[11px] text-amber-600 dark:text-amber-400 font-mono">+2.7°C Global</span>
                     </div>
-                    <p className="text-xs text-slate-800 dark:text-slate-300">Rivalidad regional con políticas climáticas fragmentadas.</p>
+                    <p className="text-xs text-slate-800 dark:text-slate-300">{t('simConfig.scenarioRivalry')}</p>
                     <div className="mt-2 text-[11px] text-slate-600 dark:text-slate-400">
                       Anomalía térmica local: <span className="font-mono text-amber-700 dark:text-amber-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
                     </div>
@@ -259,7 +259,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                       </span>
                       <span className="text-[11px] text-rose-600 dark:text-rose-400 font-mono">+4.4°C Global</span>
                     </div>
-                    <p className="text-xs text-slate-800 dark:text-slate-300">Uso intensivo de combustibles fósiles y eventos extremos.</p>
+                    <p className="text-xs text-slate-800 dark:text-slate-300">{t('simConfig.scenarioFossil')}</p>
                     <div className="mt-2 text-[11px] text-slate-600 dark:text-slate-400">
                       Anomalía térmica local: <span className="font-mono text-rose-700 dark:text-rose-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
                     </div>
@@ -299,19 +299,19 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
           {/* Climatological Forcing Parameters Summary */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
             <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-              <span className="text-slate-500 text-[11px] block">CO₂ Atmosférico</span>
+              <span className="text-slate-500 text-[11px] block">{t('simConfig.atmosphericCo2')}</span>
               <strong className="text-slate-800 dark:text-slate-200 font-mono">{Math.round(forcing.co2Ppm)} ppm</strong>
             </div>
             <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-              <span className="text-slate-500 text-[11px] block">Anomalía Térmica</span>
+              <span className="text-slate-500 text-[11px] block">{t('simConfig.thermalAnomaly')}</span>
               <strong className="text-amber-600 dark:text-amber-400 font-mono">+{forcing.tempAnomalyC.toFixed(2)} °C</strong>
             </div>
             <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-              <span className="text-slate-500 text-[11px] block">Modificador Precip</span>
+              <span className="text-slate-500 text-[11px] block">{t('simConfig.precipModifier')}</span>
               <strong className="text-cyan-600 dark:text-cyan-400 font-mono">{Math.round(forcing.precipMultiplier * 100)}% de normal</strong>
             </div>
             <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-              <span className="text-slate-500 text-[11px] block">Riesgo Ola de Calor</span>
+              <span className="text-slate-500 text-[11px] block">{t('simConfig.heatwaveRisk')}</span>
               <strong className="text-rose-600 dark:text-rose-400 font-mono">{Math.round(forcing.heatwaveFrequencyRisk * 100)}% prob/semana</strong>
             </div>
           </div>
@@ -331,7 +331,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
               }`}
             >
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">Ciclo Corto (90-100 días)</h4>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('simConfig.cycleShort')}</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                 Variedad precoz para escapar de la sequía tardía. Menor requerimiento de GDD (1450 °C·d).
               </p>
@@ -349,7 +349,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
               }`}
             >
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">Ciclo Medio (110-120 días)</h4>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('simConfig.cycleMedium')}</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                 Balance óptimo entre biomasa acumulada y escape a estrés hídrico (1750 °C·d).
               </p>
@@ -367,7 +367,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
               }`}
             >
-              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">Ciclo Largo (130-140 días)</h4>
+              <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('simConfig.cycleLong')}</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                 Máximo rendimiento potencial en condiciones de alta disponibilidad hídrica (2050 °C·d).
               </p>
@@ -420,8 +420,8 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
               }`}
             >
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Secano Estricto (Rainfed)</h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Sin aporte de riego artificial. Dependencia 100% de lluvia.</p>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">{t('simConfig.irrigationRainfed')}</h4>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">{t('simConfig.irrigationRainfedDesc')}</p>
               <span className="mt-2 inline-block px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-[10px] text-slate-800 dark:text-slate-300">0 mm Riego</span>
             </div>
 
@@ -434,9 +434,9 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
               }`}
             >
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Riego Deficitario (50% ETc)</h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Ahorro hídrico controlado manteniendo el umbral de estrés leve.</p>
-              <span className="mt-2 inline-block px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 text-[10px]">Ahorro ~45% Agua</span>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">{t('simConfig.irrigationDeficit')}</h4>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">{t('simConfig.irrigationDeficitDesc')}</p>
+              <span className="mt-2 inline-block px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 text-[10px]">{t('simConfig.waterSavings')}</span>
             </div>
 
             {/* Optimal 100% */}
@@ -448,9 +448,9 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
               }`}
             >
-              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Riego Óptimo (100% ETc)</h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Repone el 100% de evapotranspiración sin déficit hídrico.</p>
-              <span className="mt-2 inline-block px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[10px]">Máxima Biomasa</span>
+              <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">{t('simConfig.irrigationOptimal')}</h4>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">{t('simConfig.irrigationOptimalDesc')}</p>
+              <span className="mt-2 inline-block px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[10px]">{t('simConfig.maxBiomass')}</span>
             </div>
 
             {/* Smart Sensor Triggered */}
@@ -464,10 +464,10 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
             >
               <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1">
                 <Sparkles className="w-3 h-3 text-violet-600 dark:text-violet-400" />
-                Sensor Inteligente (VT-R1)
+                {t('simulationConfig.smartSensor')}
               </h4>
               <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Prioriza riego en floración para proteger el índice de cosecha.</p>
-              <span className="mt-2 inline-block px-2 py-0.5 rounded bg-violet-100 dark:bg-violet-950 text-violet-800 dark:text-violet-300 text-[10px]">Máx Eficiencia</span>
+              <span className="mt-2 inline-block px-2 py-0.5 rounded bg-violet-100 dark:bg-violet-950 text-violet-800 dark:text-violet-300 text-[10px]">{t('simConfig.maxEfficiency')}</span>
             </div>
           </div>
         </div>
@@ -536,9 +536,9 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                 />
                 <div className="flex justify-between text-[11px] text-slate-500">
-                  <span>Suelo Seco (10%)</span>
-                  <span>Humedad Moderada (50%)</span>
-                  <span>Capacidad de Campo (100%)</span>
+                  <span>{t('simConfig.soilDry')}</span>
+                  <span>{t('simConfig.soilModerate')}</span>
+                  <span>{t('simConfig.fieldCapacity')}</span>
                 </div>
               </div>
             </>

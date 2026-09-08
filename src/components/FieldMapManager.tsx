@@ -464,19 +464,19 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
           {/* Soil Physics Matrix Summary Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs">
             <div>
-              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Materia Orgánica:</span>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">{t('fieldMap.organicMatter')}</span>
               <strong className="text-slate-900 dark:text-slate-200 font-mono">{selectedField.soilProfile.organicMatterPercent}%</strong>
             </div>
             <div>
-              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Densidad Aparente:</span>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">{t('fieldMap.bulkDensity')}</span>
               <strong className="text-slate-900 dark:text-slate-200 font-mono">{selectedField.soilProfile.bulkDensity} g/cm³</strong>
             </div>
             <div>
-              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Cond. Saturada (Ks):</span>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">{t('fieldMap.saturatedConductivity')}</span>
               <strong className="text-cyan-700 dark:text-cyan-400 font-mono">{selectedField.soilProfile.saturatedConductivityKs} mm/día</strong>
             </div>
             <div>
-              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">Agua Disponible:</span>
+              <span className="text-slate-600 dark:text-slate-500 text-[11px] block">{t('fieldMap.availableWater')}</span>
               <strong className="text-emerald-700 dark:text-emerald-400 font-mono">
                 {Math.round((selectedField.soilProfile.fieldCapacity - selectedField.soilProfile.wiltingPoint) * 1000)} mm/m
               </strong>

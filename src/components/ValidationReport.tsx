@@ -286,15 +286,15 @@ export const ValidationReport: React.FC = () => {
       {/* Ensemble Uncertainty */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">Rendimiento Promedio Ensemble</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.ensembleMean')}</span>
           <strong className="text-emerald-400 font-mono text-lg">{validationData?.ensemble_uncertainty?.mean_yield?.toLocaleString()} kg/ha</strong>
         </div>
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">Desviación Estándar</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.ensembleStd')}</span>
           <strong className="text-cyan-400 font-mono text-lg">{validationData?.ensemble_uncertainty?.std_yield?.toLocaleString()} kg/ha</strong>
         </div>
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">Tamaño del Ensemble</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.ensembleSize')}</span>
           <strong className="text-violet-400 font-mono text-lg">{validationData?.ensemble_uncertainty?.ensemble_size} modelos</strong>
         </div>
       </div>
