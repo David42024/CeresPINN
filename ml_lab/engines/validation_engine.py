@@ -37,6 +37,7 @@ class ValidationConfig:
         scoring: Optional[List[str]] = None,
         return_train_score: bool = False,
         n_jobs: int = 1,
+        test_size: float = 0.2,
     ):
         self.strategy = strategy
         self.n_splits = n_splits
@@ -45,6 +46,7 @@ class ValidationConfig:
         self.scoring = scoring
         self.return_train_score = return_train_score
         self.n_jobs = n_jobs
+        self.test_size = test_size
 
 
 class ValidationResult:
@@ -130,7 +132,7 @@ class ValidationEngine:
         model: BaseModel,
         X: np.ndarray,
         y: np.ndarray,
-        model_name: str,
+        model_name: Optional[str] = None,
         problem_type: str = "regression",
         project_id: Optional[str] = None,
     ) -> ValidationResult:
@@ -147,6 +149,8 @@ class ValidationEngine:
         Returns:
             ValidationResult with validation metrics
         """
+        if model_name is None:
+            model_name = getattr(model, "name", getattr(model, "__class__", type("M", (), {})).__name__)
         # Get CV splitter
         cv = self.get_cv_splitter()
         
@@ -159,9 +163,14 @@ class ValidationEngine:
         # Convert to sklearn-compatible scoring names
         sklearn_scoring = self._convert_to_sklearn_scoring(scoring_metrics, problem_type)
         
+        # Unwrap underlying estimator if model is an ML Lab wrapper
+        estimator = getattr(model, "model", model)
+        if estimator is None:
+            estimator = model
+
         # Perform cross-validation
         cv_results = cross_validate(
-            model,
+            estimator,
             X,
             y,
             cv=cv,
@@ -312,12 +321,15 @@ class ValidationEngine:
             "mse": "neg_mean_squared_error",
             "rmse": "neg_root_mean_squared_error",
             "r2": "r2",
+            "mape": "neg_mean_absolute_percentage_error",
         }
         
         sklearn_metrics = []
         for metric in metrics:
-            sklearn_metric = sklearn_mapping.get(metric, metric)
-            sklearn_metrics.append(sklearn_metric)
+            if metric in sklearn_mapping:
+                sklearn_metrics.append(sklearn_mapping[metric])
+            elif metric not in ("crps", "ensemble_iqr", "sobol_total_index", "coverage_95"):
+                sklearn_metrics.append(metric)
         
         return sklearn_metrics
     

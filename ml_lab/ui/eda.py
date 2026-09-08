@@ -34,10 +34,10 @@ def render_eda_overview(df: pd.DataFrame) -> None:
     
     # Data types
     st.markdown("### Data Types")
-    dtype_counts = df.dtypes.value_counts()
+    dtype_counts = df.dtypes.astype(str).value_counts()
     fig = px.pie(
-        values=dtype_counts.values,
-        names=dtype_counts.index,
+        values=dtype_counts.values.tolist(),
+        names=dtype_counts.index.astype(str).tolist(),
         title="Data Type Distribution",
     )
     st.plotly_chart(fig, use_container_width=True)

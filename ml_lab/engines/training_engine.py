@@ -133,13 +133,38 @@ class TrainingEngine:
         self.feature_names = feature_names or [f"feature_{i}" for i in range(X.shape[1])]
         self.target_name = target_name or "target"
         
+        # Check if target indicates continuous regression
+        y_arr = np.asarray(y)
+        is_continuous = False
+        if np.issubdtype(y_arr.dtype, np.floating) or len(np.unique(y_arr)) > 20:
+            is_continuous = True
+
+        resolved_model_name = model_name
+        if is_continuous:
+            if model_name in ("random_forest", "rf"):
+                resolved_model_name = "random_forest_regression"
+            elif model_name in ("xgboost", "xgb"):
+                resolved_model_name = "xgboost_regression"
+            elif model_name in ("gradient_boosting", "gb"):
+                resolved_model_name = "gradient_boosting_regression"
+            elif model_name in ("svm",):
+                resolved_model_name = "svm_regression"
+
         # Get model from catalog
-        model_metadata = self.catalog.get_model_metadata(model_name)
+        model_metadata = self.catalog.get_model_metadata(resolved_model_name)
+        if model_metadata is None:
+            model_metadata = self.catalog.get_model_metadata(model_name)
         if model_metadata is None:
             raise ValueError(f"Model {model_name} not found in catalog")
         
         # Create model instance
-        model = self.catalog.create_model(model_name, hyperparameters or {})
+        model = self.catalog.create_model(
+            resolved_model_name, hyperparameters or {}, feature_names=self.feature_names
+        )
+        if model is None:
+            model = self.catalog.create_model(
+                model_name, hyperparameters or {}, feature_names=self.feature_names
+            )
         
         # Preprocess data
         X_processed, y_processed = self._preprocess_data(X, y, model_metadata)
@@ -275,11 +300,15 @@ class TrainingEngine:
             Tuple of (X_train, X_test, y_train, y_test)
         """
         if validation_strategy == "train_test_split":
+            # Estratificar solo si y es discreto (clasificación): con targets
+            # continuos cada valor es único y stratify rompe el split.
+            n_unique = len(np.unique(y))
+            strat = y if (n_unique > 1 and n_unique <= max(2, len(y) // 10)) else None
             return train_test_split(
                 X, y,
                 test_size=self.config.test_size,
                 random_state=self.config.random_state,
-                stratify=y if len(np.unique(y)) > 1 and len(y) > 10 else None,
+                stratify=strat,
             )
         else:
             # For now, default to train_test_split
@@ -381,6 +410,10 @@ class TrainingEngine:
     ) -> Path:
         """Save a trained model and its metadata.
         
+        For PyTorch-based models (CeresPINN), saves the state dict as a .pt file
+        along with config and metrics as a .json file to avoid pickle module-identity
+        issues that arise in Streamlit's module reloading environment.
+        
         Args:
             model: Trained model
             project_id: Project ID
@@ -393,18 +426,60 @@ class TrainingEngine:
         if self.artifact_manager is None:
             return None
         
-        # Save model
-        model_filename = f"{model_name}_model.pkl"
-        model_path = self.artifact_manager.save_artifact(
-            project_id,
-            "models",
-            model_filename,
-            model,
-            metadata=metrics,
-        )
+        artifact_dir = self.artifact_manager.get_artifact_dir(project_id, "models")
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Detect PyTorch-based PINN models: save as .pt state_dict instead of pickle
+        # to avoid PicklingError caused by module identity mismatch in Streamlit reloads.
+        inner_torch_model = getattr(model, "model", None)
+        is_torch_model = (inner_torch_model is not None and hasattr(inner_torch_model, "state_dict"))
+        
+        if is_torch_model:
+            import torch, json
+            pt_filename = f"{model_name}_model.pt"
+            model_path = artifact_dir / pt_filename
+            
+            # Save state dict + model config as a bundle
+            pinn_config = getattr(model, "pinn_config", None)
+            save_bundle = {
+                "state_dict": inner_torch_model.state_dict(),
+                "config": {
+                    "hidden_layers": getattr(pinn_config, "hidden_layers", 3),
+                    "hidden_units": getattr(pinn_config, "hidden_units", 64),
+                    "activation": getattr(pinn_config, "activation", "tanh"),
+                    "dropout": getattr(pinn_config, "dropout", 0.0),
+                    "loss_physics_weight": getattr(pinn_config, "loss_physics_weight", 0.1),
+                    "feature_names": getattr(model, "feature_names", []),
+                    "input_dim": getattr(model, "input_dim", None),
+                    "_y_min": getattr(model, "_y_min", 0.0),
+                    "_y_span": getattr(model, "_y_span", 1.0),
+                },
+                "hyperparameters": getattr(model, "hyperparameters", {}),
+                "metrics": {k: float(v) for k, v in metrics.items()},
+            }
+            torch.save(save_bundle, model_path)
+            
+            # Save metrics as JSON for human inspection
+            meta_path = artifact_dir / f"{model_name}_metrics.json"
+            with open(meta_path, "w", encoding="utf-8") as f:
+                json.dump({"metrics": {k: float(v) for k, v in metrics.items()}}, f, indent=2)
+        else:
+            # Standard sklearn-compatible models: save with pickle
+            import pickle
+            pkl_filename = f"{model_name}_model.pkl"
+            model_path = artifact_dir / pkl_filename
+            with open(model_path, "wb") as f:
+                pickle.dump(model, f)
+            
+            # Save metrics alongside
+            import json
+            meta_path = artifact_dir / f"{model_name}_metrics.json"
+            with open(meta_path, "w", encoding="utf-8") as f:
+                json.dump({"metrics": {k: float(v) for k, v in metrics.items()}}, f, indent=2)
         
         # Save preprocessing artifacts
         if self.scaler is not None:
+            import pickle
             scaler_filename = f"{model_name}_scaler.pkl"
             self.artifact_manager.save_artifact(
                 project_id,
@@ -423,6 +498,7 @@ class TrainingEngine:
             )
         
         return model_path
+
     
     def train_multiple_models(
         self,
@@ -450,21 +526,27 @@ class TrainingEngine:
         """
         results = {}
         hyperparameters = hyperparameters or {}
+        self.last_errors: Dict[str, str] = {}
         
         for model_name in model_names:
             try:
+                model_hp = hyperparameters.get(model_name) if hyperparameters else {}
                 result = self.train_model(
                     model_name=model_name,
                     X=X,
                     y=y,
                     feature_names=feature_names,
                     target_name=target_name,
-                    hyperparameters=hyperparameters.get(model_name),
+                    hyperparameters=model_hp,
                     project_id=project_id,
                 )
                 results[model_name] = result
             except Exception as e:
-                print(f"Failed to train {model_name}: {e}")
+                import traceback
+                tb_str = traceback.format_exc()
+                err_msg = f"{type(e).__name__}: {e}"
+                self.last_errors[model_name] = f"{err_msg}\n{tb_str}"
+                print(f"Failed to train {model_name}: {err_msg}\n{tb_str}", flush=True)
                 results[model_name] = None
         
         return results
