@@ -541,6 +541,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.camPerspectiveTitle')}
+            aria-label="Cambiar a vista 3D orbital"
           >
             <Compass className="w-4 h-4" />
           </button>
@@ -552,6 +553,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.camTopDownTitle')}
+            aria-label="Cambiar a vista aérea"
           >
             <Eye className="w-4 h-4" />
           </button>
@@ -563,6 +565,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.wireframeTitle')}
+            aria-label="Alternar malla de elementos finitos"
           >
             <Layers className="w-4 h-4" />
           </button>
@@ -578,6 +581,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           disabled={!simulation}
           className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50"
           title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
+          aria-label={isPlaying ? 'Pausar simulación' : 'Reproducir ciclo fenológico'}
         >
           {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
         </button>
@@ -590,6 +594,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           disabled={!simulation}
           className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50"
           title={t('threeFieldViewer.resetTitle')}
+          aria-label="Reiniciar simulación a la siembra"
         >
           <RotateCcw className="w-4 h-4" />
         </button>

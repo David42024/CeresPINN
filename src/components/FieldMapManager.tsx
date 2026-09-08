@@ -205,7 +205,11 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
       {geoJsonUploadError && (
         <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-center justify-between">
           <span>{geoJsonUploadError}</span>
-          <button onClick={() => setGeoJsonUploadError(null)} className="text-rose-600 dark:text-rose-400 font-bold">&times;</button>
+          <button
+            onClick={() => setGeoJsonUploadError(null)}
+            className="text-rose-600 dark:text-rose-400 font-bold"
+            aria-label="Cerrar error de GeoJSON"
+          >&times;</button>
         </div>
       )}
 
@@ -391,12 +395,14 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
               <button
                 onClick={() => setMapZoom(Math.min(2.0, mapZoom + 0.2))}
                 className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-sm font-bold"
+                aria-label="Acercar mapa"
               >
                 +
               </button>
               <button
                 onClick={() => setMapZoom(Math.max(0.6, mapZoom - 0.2))}
                 className="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-sm font-bold"
+                aria-label="Alejar mapa"
               >
                 -
               </button>
@@ -406,6 +412,7 @@ export const FieldMapManager: React.FC<FieldMapManagerProps> = ({
           {/* SVG Map Canvas rendering satellite-style terrain and field boundary polygon */}
           <div className="relative flex-1 flex items-center justify-center my-2 select-none overflow-hidden">
             <svg 
+                        aria-label="Eliminar campo"
               className="w-full h-64 transition-transform duration-300 ease-out" 
               viewBox="-120 -80 240 160"
               style={{ transform: `scale(${mapZoom})` }}
