@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Database, 
   RefreshCw, 
@@ -18,6 +19,7 @@ import { listPipelines, triggerPipelineSync, getPipelineJob } from '../services/
 import { useEffect, useCallback } from 'react';
 
 export const DataPipelinesView: React.FC = () => {
+  const { t } = useTranslation();
   const [pipelines, setPipelines] = useState<IngestionPipeline[]>(INGESTION_PIPELINES);
   const [syncingId, setSyncingId] = useState<string | null>(null);
   const [backendAvailable, setBackendAvailable] = useState<boolean | null>(null);
@@ -172,19 +174,19 @@ export const DataPipelinesView: React.FC = () => {
                 {/* Technical stats */}
                 <div className="mt-3 space-y-1.5 text-[11px] pt-3 border-t border-slate-200/80 dark:border-slate-800/80 font-mono">
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                    <span>Fuente:</span>
+                    <span>{t('dataPipelines.source')}</span>
                     <span className="text-slate-800 dark:text-slate-200 truncate max-w-[170px]">{pipe.source}</span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                    <span>Resolución:</span>
+                    <span>{t('dataPipelines.resolution')}</span>
                     <span className="text-slate-800 dark:text-slate-200">{pipe.resolution}</span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                    <span>Registros:</span>
+                    <span>{t('dataPipelines.records')}</span>
                     <span className="text-cyan-700 dark:text-cyan-300 font-bold">{pipe.recordsProcessed}</span>
                   </div>
                   <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                    <span>Último Sync:</span>
+                    <span>{t('dataPipelines.lastSync')}</span>
                     <span className="text-slate-700 dark:text-slate-300">{pipe.lastSync}</span>
                   </div>
                 </div>
