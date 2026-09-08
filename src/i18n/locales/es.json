@@ -460,6 +460,7 @@
     "irrigationOptimalDesc": "Repone el 100% de evapotranspiración sin déficit hídrico.",
     "maxBiomass": "Máxima Biomasa",
     "maxEfficiency": "Máx Eficiencia",
+    "smartSensorDesc": "Prioriza riego en floración para proteger el índice de cosecha.",
     "soilDry": "Suelo Seco (10%)",
     "soilModerate": "Humedad Moderada (50%)",
     "fieldCapacity": "Capacidad de Campo (100%)"

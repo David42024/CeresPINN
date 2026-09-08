@@ -466,7 +466,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                 <Sparkles className="w-3 h-3 text-violet-600 dark:text-violet-400" />
                 {t('simulationConfig.smartSensor')}
               </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Prioriza riego en floración para proteger el índice de cosecha.</p>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">{t('simConfig.smartSensorDesc')}</p>
               <span className="mt-2 inline-block px-2 py-0.5 rounded bg-violet-100 dark:bg-violet-950 text-violet-800 dark:text-violet-300 text-[10px]">{t('simConfig.maxEfficiency')}</span>
             </div>
           </div>

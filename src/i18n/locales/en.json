@@ -460,6 +460,7 @@
     "irrigationOptimalDesc": "Replaces 100% of evapotranspiration without water deficit.",
     "maxBiomass": "Maximum Biomass",
     "maxEfficiency": "Max Efficiency",
+    "smartSensorDesc": "Prioritizes irrigation during flowering to protect the harvest index.",
     "soilDry": "Dry Soil (10%)",
     "soilModerate": "Moderate Moisture (50%)",
     "fieldCapacity": "Field Capacity (100%)"
