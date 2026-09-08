@@ -9,12 +9,24 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import numpy as np
+import pandas as pd
 import streamlit as st
+
+import importlib
 
 # Add ml_lab to path
 ml_lab_path = Path(__file__).parent
 if str(ml_lab_path) not in sys.path:
     sys.path.insert(0, str(ml_lab_path))
+
+# Ensure all ml_lab submodules are reloaded on rerun
+for mod_name in list(sys.modules.keys()):
+    if any(mod_name.startswith(p) for p in ("ui", "core", "engines", "models")):
+        try:
+            importlib.reload(sys.modules[mod_name])
+        except Exception:
+            pass
 
 from core.artifact_manager import get_artifact_manager
 from core.dataset_analyzer import DatasetAnalyzer
@@ -55,12 +67,18 @@ def set_page_config():
 
 def initialize_session_state():
     """Initialize session state variables."""
-    if "current_project" not in st.session_state:
-        st.session_state.current_project = None
-    if "current_dataset" not in st.session_state:
-        st.session_state.current_dataset = None
     if "project_analyzer" not in st.session_state:
         st.session_state.project_analyzer = ProjectAnalyzer()
+    if "current_project" not in st.session_state or st.session_state.current_project is None:
+        try:
+            projects = st.session_state.project_analyzer.list_projects()
+            st.session_state.current_project = projects[0] if projects else None
+        except Exception:
+            st.session_state.current_project = None
+    if "current_dataset" not in st.session_state:
+        st.session_state.current_dataset = None
+    if "preprocessed_df" not in st.session_state:
+        st.session_state.preprocessed_df = None
     if "dataset_analyzer" not in st.session_state:
         st.session_state.dataset_analyzer = DatasetAnalyzer()
     if "artifact_manager" not in st.session_state:
@@ -289,7 +307,7 @@ def render_new_project():
         st.rerun()
 
 
-def render_context_analyzer():
+def render_context_analyzer_page():
     """Render the context analyzer page."""
     st.title("🔍 Context Analyzer")
     st.markdown("---")
@@ -300,8 +318,12 @@ def render_context_analyzer():
     spec = render_context_analyzer(project_analyzer, st.session_state.current_project)
     
     if spec:
+        st.session_state.current_project = spec
         from ui import render_analysis_results
         render_analysis_results(spec)
+    elif st.session_state.current_project:
+        from ui import render_analysis_results
+        render_analysis_results(st.session_state.current_project)
 
 
 def render_dataset_analysis():
@@ -316,6 +338,8 @@ def render_dataset_analysis():
     
     if profile:
         st.session_state.current_dataset = profile
+        if st.session_state.current_project and hasattr(profile, "dataset_path") and profile.dataset_path:
+            st.session_state.current_project.dataset_path = profile.dataset_path
         st.success("Dataset analysis completed!")
     
     # Update spec if dataset was analyzed
@@ -336,22 +360,54 @@ def render_placeholder_page(page_name: str):
     st.markdown("This feature is under development and will be available in a future release.")
 
 
+def _resolve_active_dataset_path() -> Optional[Path]:
+    """Helper to resolve the path of the active dataset from state or defaults."""
+    if st.session_state.get("current_dataset") and getattr(st.session_state.current_dataset, "dataset_path", None):
+        p = Path(st.session_state.current_dataset.dataset_path)
+        if p.exists():
+            return p
+    if st.session_state.get("current_project") and getattr(st.session_state.current_project, "dataset_path", None):
+        p = Path(st.session_state.current_project.dataset_path)
+        if p.exists():
+            return p
+    for cand in [
+        Path("data/cerespinn_training_iowa.csv"),
+        Path("C:/Users/USERJSSV/AppData/Local/Temp/ml_lab_uploads/cerespinn_training_iowa.csv"),
+    ]:
+        if cand.exists():
+            return cand
+    return None
+
+
 def render_eda_page():
     """Render EDA page."""
-    st.title("📊 Exploratory Data Analysis")
-    st.markdown("---")
-    
-    if not st.session_state.current_dataset:
-        st.warning("Please analyze a dataset first")
+    # Ensure current_project is loaded if available
+    if not st.session_state.current_project:
+        try:
+            projects = st.session_state.project_analyzer.list_projects()
+            st.session_state.current_project = projects[0] if projects else None
+        except Exception:
+            pass
+
+    dataset_path = _resolve_active_dataset_path()
+    if not dataset_path:
+        st.warning("Please upload and analyze a dataset first in 'Dataset Analysis'.")
         return
-    
+
     # Load dataset
-    import pandas as pd
     dataset_analyzer = st.session_state.dataset_analyzer
-    df = dataset_analyzer._load_tabular(st.session_state.current_project.dataset_path)
-    
-    target_column = st.session_state.current_project.target_variable if st.session_state.current_project else None
-    
+    try:
+        df = dataset_analyzer._load_tabular(dataset_path)
+    except Exception as e:
+        st.error(f"Failed to load dataset ({dataset_path}): {e}")
+        return
+
+    target_column = None
+    if st.session_state.current_project and getattr(st.session_state.current_project, "target_variable", None):
+        target_column = st.session_state.current_project.target_variable
+    elif "yield_bu_acre" in df.columns:
+        target_column = "yield_bu_acre"
+
     render_eda_report(df, target_column)
 
 
@@ -361,18 +417,28 @@ def render_preprocessing_page():
     st.markdown("---")
     
     if not st.session_state.current_project:
-        st.warning("Please select a project first")
+        try:
+            projects = st.session_state.project_analyzer.list_projects()
+            st.session_state.current_project = projects[0] if projects else None
+        except Exception:
+            pass
+
+    if not st.session_state.current_project:
+        st.warning("Please select or configure a project first in 'Context Analyzer'")
         return
-    
-    if not st.session_state.current_dataset:
-        st.warning("Please analyze a dataset first")
+
+    dataset_path = _resolve_active_dataset_path()
+    if not dataset_path:
+        st.warning("Please upload and analyze a dataset first in 'Dataset Analysis'")
         return
-    
-    # Load dataset
-    import pandas as pd
+
     dataset_analyzer = st.session_state.dataset_analyzer
-    df = dataset_analyzer._load_tabular(st.session_state.current_project.dataset_path)
-    
+    try:
+        df = dataset_analyzer._load_tabular(dataset_path)
+    except Exception as e:
+        st.error(f"Failed to load dataset ({dataset_path}): {e}")
+        return
+
     render_preprocessing_pipeline(df, st.session_state.current_project)
 
 
@@ -382,13 +448,16 @@ def render_model_training_page():
     st.markdown("---")
     
     if not st.session_state.current_project:
-        st.warning("Please select a project first")
+        try:
+            projects = st.session_state.project_analyzer.list_projects()
+            st.session_state.current_project = projects[0] if projects else None
+        except Exception:
+            pass
+
+    if not st.session_state.current_project:
+        st.warning("Please select or configure a project first in 'Context Analyzer'")
         return
-    
-    if not st.session_state.current_dataset:
-        st.warning("Please analyze a dataset first")
-        return
-    
+
     catalog = st.session_state.model_catalog
     training_engine = st.session_state.training_engine
     
@@ -529,7 +598,7 @@ def main():
     elif page == "New Project":
         render_new_project()
     elif page == "Context Analyzer":
-        render_context_analyzer()
+        render_context_analyzer_page()
     elif page == "Dataset Analysis":
         render_dataset_analysis()
     elif page == "EDA":

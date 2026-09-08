@@ -188,21 +188,42 @@ class ProjectSpecification:
     def to_dict(self) -> Dict[str, Any]:
         """Convert specification to dictionary."""
         from dataclasses import asdict
-        return asdict(self)
+        data = asdict(self)
+
+        def serialize(value: Any) -> Any:
+            if isinstance(value, Enum):
+                return value.value
+            if isinstance(value, dict):
+                return {key: serialize(item) for key, item in value.items()}
+            if isinstance(value, list):
+                return [serialize(item) for item in value]
+            return value
+
+        return serialize(data)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ProjectSpecification":
         """Create specification from dictionary."""
         # Handle enum conversions
+        def enum_value(enum_type: type[Enum], value: str) -> Enum:
+            try:
+                return enum_type(value)
+            except ValueError:
+                # Support files written before enum values were serialized explicitly.
+                member_name = value.rsplit(".", 1)[-1]
+                return enum_type[member_name]
+
         if "problem_type" in data and isinstance(data["problem_type"], str):
-            data["problem_type"] = ProblemType(data["problem_type"])
+            data["problem_type"] = enum_value(ProblemType, data["problem_type"])
         if "data_type" in data and isinstance(data["data_type"], str):
-            data["data_type"] = DataType(data["data_type"])
+            data["data_type"] = enum_value(DataType, data["data_type"])
         if "objective" in data and isinstance(data["objective"], str):
-            data["objective"] = Objective(data["objective"])
+            data["objective"] = enum_value(Objective, data["objective"])
         if "validation" in data and "strategy" in data["validation"]:
             if isinstance(data["validation"]["strategy"], str):
-                data["validation"]["strategy"] = ValidationStrategy(data["validation"]["strategy"])
+                data["validation"]["strategy"] = enum_value(
+                    ValidationStrategy, data["validation"]["strategy"]
+                )
         
         # Handle datetime
         if "created_at" in data and isinstance(data["created_at"], str):

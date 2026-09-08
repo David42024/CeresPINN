@@ -1,0 +1,247 @@
+{
+  "project_id": "cerespinn-maize-yield-40842ec7",
+  "project_name": "cerespinn-maize-yield",
+  "description": "Predict maize yield under climate change scenarios using physics-informed neural networks (CeresPINN). Coupled bias-corrected downscaled CMIP6 projections (NASA NEX-GDDP, 5 GCMs) with CHIRPS/CHIRTS historical climate and SoilGrids 2.0. Output: continuous yield with uncertainty quantification (GCM ensemble IQR, 95% CI), flowering date, maturity date, and accumulated ET.",
+  "domain": "agriculture",
+  "problem_type": "regression",
+  "data_type": "time_series",
+  "objective": "prediction",
+  "target_variable": "yield (continuous, bushels/acre)",
+  "business_objective": "Enable climate-resilient agriculture by simulating yield impacts under 4 SSP scenarios (SSP1-2.6, SSP2-4.5, SSP3-7.0, SSP5-8.5 for 2030, 2050, 2070) and prescribing adaptation strategies (planting date, variety, irrigation).",
+  "constraints": [
+    "Must be interpretable (Sobol global sensitivity & SHAP)",
+    "Training time < 1 hour",
+    "Memory limit: 4GB",
+    "Physics terms: biomass accumulation, phenology development (GDD), water balance (ET)"
+  ],
+  "dataset_path": "data\\cerespinn_training_preprocessed.csv",
+  "dataset_source": "multi-source (CHIRPS, CHIRTS, USDA NASS, CMIP6 NASA NEX-GDDP, SoilGrids 2.0)",
+  "dataset_version": "v1.0-ficha5",
+  "features": [
+    "tmax_daily",
+    "tmin_daily",
+    "precipitation_daily",
+    "solar_radiation_downscaled",
+    "soil_clay_content",
+    "soil_sand_content",
+    "soil_organic_carbon",
+    "soil_water_capacity",
+    "gdd_accumulated",
+    "vapor_pressure_deficit_vpd",
+    "heat_stress_days_above_30c",
+    "water_deficit_index"
+  ],
+  "feature_types": {
+    "tmax_daily": "float",
+    "tmin_daily": "float",
+    "precipitation_daily": "float",
+    "solar_radiation_downscaled": "float",
+    "soil_clay_content": "float",
+    "soil_sand_content": "float",
+    "soil_organic_carbon": "float",
+    "soil_water_capacity": "float",
+    "gdd_accumulated": "float",
+    "vapor_pressure_deficit_vpd": "float",
+    "heat_stress_days_above_30c": "float",
+    "water_deficit_index": "float"
+  },
+  "categorical_features": [
+    "county_fips",
+    "state",
+    "maturity_group",
+    "ssp_scenario"
+  ],
+  "numerical_features": [
+    "tmax_daily",
+    "tmin_daily",
+    "precipitation_daily",
+    "solar_radiation_downscaled",
+    "soil_clay_content",
+    "soil_sand_content",
+    "soil_organic_carbon",
+    "soil_water_capacity",
+    "gdd_accumulated",
+    "vapor_pressure_deficit_vpd",
+    "heat_stress_days_above_30c",
+    "water_deficit_index"
+  ],
+  "temporal_features": [
+    "year",
+    "day_of_year",
+    "planting_doy",
+    "flowering_doy",
+    "maturity_doy"
+  ],
+  "classes": null,
+  "class_balance": null,
+  "preprocessing": {
+    "handle_missing": true,
+    "handle_duplicates": true,
+    "handle_outliers": true,
+    "scaling": "standard",
+    "encoding": "onehot",
+    "feature_selection": false,
+    "feature_engineering": true,
+    "custom_transformations": [
+      {
+        "name": "calc_gdd",
+        "base_temp": 10.0,
+        "max_temp": 30.0
+      },
+      {
+        "name": "calc_vpd"
+      },
+      {
+        "name": "calc_water_deficit_index"
+      },
+      {
+        "name": "bias_correction_nex_gddp"
+      }
+    ]
+  },
+  "validation": {
+    "strategy": "time_series_split",
+    "test_size": 0.2,
+    "n_splits": 5,
+    "random_state": 42,
+    "group_column": "county_fips",
+    "time_column": "year"
+  },
+  "models": [
+    {
+      "name": "cerespinn",
+      "parameters": {
+        "hidden_dim": 64,
+        "num_layers": 3,
+        "physics_weight": 0.1,
+        "physics_terms": [
+          "biomass_accumulation",
+          "phenological_development",
+          "water_balance_et"
+        ]
+      },
+      "enabled": true
+    },
+    {
+      "name": "dssat_ceres_maize",
+      "parameters": {
+        "version": "v4.8",
+        "type": "mechanistic_crop_model_baseline"
+      },
+      "enabled": true
+    },
+    {
+      "name": "xgboost",
+      "parameters": {
+        "n_estimators": 100,
+        "learning_rate": 0.05,
+        "max_depth": 6
+      },
+      "enabled": true
+    },
+    {
+      "name": "random_forest",
+      "parameters": {
+        "n_estimators": 100,
+        "max_depth": 12
+      },
+      "enabled": true
+    },
+    {
+      "name": "bi_lstm",
+      "parameters": {
+        "hidden_dim": 64,
+        "layers": 2,
+        "bidirectional": true
+      },
+      "enabled": true
+    },
+    {
+      "name": "bayesian_optimization",
+      "parameters": {
+        "layer": "prescriptive_adaptation",
+        "targets": [
+          "planting_date_shift",
+          "cultivar_maturity_group",
+          "supplemental_irrigation_50mm"
+        ]
+      },
+      "enabled": true
+    }
+  ],
+  "metrics": {
+    "primary": "rmse",
+    "secondary": [
+      "mae",
+      "r2",
+      "mape",
+      "ks_statistic",
+      "ensemble_iqr",
+      "sobol_total_index",
+      "coverage_95"
+    ],
+    "direction": "minimize"
+  },
+  "hyperparameter_tuning": {
+    "enabled": true,
+    "method": "bayesian",
+    "n_iter": 30,
+    "cv": 5,
+    "search_space": {
+      "hidden_dim": [
+        32,
+        64,
+        128
+      ],
+      "num_layers": [
+        2,
+        3,
+        4
+      ],
+      "physics_weight": [
+        0.01,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "learning_rate": [
+        0.0005,
+        0.001,
+        0.005
+      ]
+    }
+  },
+  "explainability": {
+    "enabled": true,
+    "methods": [
+      "sobol",
+      "shap",
+      "feature_importance"
+    ]
+  },
+  "statistical_tests": {
+    "enabled": true,
+    "tests": [
+      "ks_test",
+      "paired_t_test",
+      "bootstrap"
+    ],
+    "alpha": 0.05
+  },
+  "random_seed": 42,
+  "python_version": "3.11",
+  "dependencies": {
+    "torch": ">=2.0.0",
+    "scikit-learn": ">=1.3.0",
+    "xgboost": ">=2.0.0",
+    "SALib": ">=1.4.0",
+    "scipy": ">=1.11.0"
+  },
+  "project_dir": null,
+  "artifacts_dir": null,
+  "models_dir": null,
+  "reports_dir": null,
+  "status": "analyzed",
+  "created_at": "2026-09-07 22:00:00",
+  "updated_at": "2026-09-07 22:00:00"
+}

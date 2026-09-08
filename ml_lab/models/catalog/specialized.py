@@ -37,15 +37,21 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.physics_weight = physics_weight
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        
-        # PINN configuration
+        self._y_min = 0.0
+        self._y_span = 1.0
+
+        # PINN configuration (accepts catalog default keys hidden_dim/num_layers
+        # as aliases of hidden_units/hidden_layers)
+        hp = hyperparameters or {}
+        hidden_layers = hp.get("hidden_layers", hp.get("num_layers", 3))
+        hidden_units = hp.get("hidden_units", hp.get("hidden_dim", 64))
         self.pinn_config = PINNConfig(
-            hidden_layers=hyperparameters.get("hidden_layers", 3) if hyperparameters else 3,
-            hidden_units=hyperparameters.get("hidden_units", 64) if hyperparameters else 64,
-            activation=hyperparameters.get("activation", "tanh") if hyperparameters else "tanh",
-            dropout=hyperparameters.get("dropout", 0.0) if hyperparameters else 0.0,
+            hidden_layers=hidden_layers,
+            hidden_units=hidden_units,
+            activation=hp.get("activation", "tanh"),
+            dropout=hp.get("dropout", 0.0),
             loss_physics_weight=physics_weight,
-            feature_names=feature_names,
+            feature_names=self.feature_names,
         )
     
     def _build_model(self, input_dim: int) -> None:
@@ -74,9 +80,24 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         """
         import torch.optim as optim
         from torch.utils.data import DataLoader, TensorDataset
-        
+
+        # Training schedule may come from ML Lab UI via hyperparameters
+        hp = self.hyperparameters or {}
+        epochs = int(hp.get("epochs", epochs))
+        batch_size = int(hp.get("batch_size", batch_size))
+        learning_rate = float(hp.get("learning_rate", learning_rate))
+
+        # Min-max target normalization (mirrors backend/train.py): keeps the
+        # MSE + physics loss on a stable scale; predict() denormalizes.
+        import numpy as np
+
+        y_arr = np.asarray(y, dtype=float)
+        self._y_min = float(y_arr.min())
+        self._y_span = float(y_arr.max() - y_arr.min()) or 1.0
+        y_n = (y_arr - self._y_min) / self._y_span
+
         X = self._to_tensor(X)
-        y = self._to_tensor(y)
+        y = self._to_tensor(y_n)
         
         if self.model is None:
             self._build_model(X.shape[1])
@@ -127,7 +148,7 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.model.eval()
         with torch.no_grad():
             yield_pred, _ = self.model(X)
-        return yield_pred.cpu().numpy()
+        return yield_pred.cpu().numpy() * self._y_span + self._y_min
     
     def predict_proba(self, X):
         """Predict class probabilities (not applicable for regression)."""
@@ -184,6 +205,8 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.physics_weight = physics_weight
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._y_min = 0.0
+        self._y_span = 1.0
     
     def _build_model(self, input_dim: int) -> None:
         """Build the generic PINN model."""
@@ -212,9 +235,23 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         import torch.optim as optim
         from torch.utils.data import DataLoader, TensorDataset
         from models.pinn import generic_physics_loss
-        
+
+        # Training schedule may come from ML Lab UI via hyperparameters
+        hp = self.hyperparameters or {}
+        epochs = int(hp.get("epochs", epochs))
+        batch_size = int(hp.get("batch_size", batch_size))
+        learning_rate = float(hp.get("learning_rate", learning_rate))
+
+        # Min-max target normalization (mirrors backend/train.py)
+        import numpy as np
+
+        y_arr = np.asarray(y, dtype=float)
+        self._y_min = float(y_arr.min())
+        self._y_span = float(y_arr.max() - y_arr.min()) or 1.0
+        y_n = (y_arr - self._y_min) / self._y_span
+
         X = self._to_tensor(X)
-        y = self._to_tensor(y)
+        y = self._to_tensor(y_n)
         
         if self.model is None:
             self._build_model(X.shape[1])
@@ -264,7 +301,7 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.model.eval()
         with torch.no_grad():
             output, _ = self.model(X)
-        return output.cpu().numpy()
+        return output.cpu().numpy() * self._y_span + self._y_min
     
     def predict_proba(self, X):
         """Predict class probabilities (not applicable for regression)."""

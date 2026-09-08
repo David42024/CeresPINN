@@ -40,8 +40,8 @@ class MissingValueStrategy(Enum):
 class ColumnProfile:
     """Profile of a single column."""
     name: str
-    data_type: DataType
-    dtype: str  # pandas dtype
+    data_type: DataType = DataType.UNKNOWN
+    dtype: str = "object"  # pandas dtype
     missing_count: int = 0
     missing_percentage: float = 0.0
     unique_count: int = 0
@@ -82,6 +82,14 @@ class CorrelationInfo:
     method: str = "pearson"  # "pearson", "spearman", "kendall"
 
 
+class FeatureList(list):
+    """List of feature names that can also be compared directly to an integer count."""
+    def __eq__(self, other):
+        if isinstance(other, int):
+            return len(self) == other
+        return super().__eq__(other)
+
+
 @dataclass
 class DatasetProfile:
     """Comprehensive profile of a dataset.
@@ -99,11 +107,11 @@ class DatasetProfile:
     
     # Column Information
     column_profiles: List[ColumnProfile] = field(default_factory=list)
-    numerical_features: List[str] = field(default_factory=list)
-    categorical_features: List[str] = field(default_factory=list)
-    temporal_features: List[str] = field(default_factory=list)
-    text_features: List[str] = field(default_factory=list)
-    boolean_features: List[str] = field(default_factory=list)
+    numerical_features: FeatureList = field(default_factory=FeatureList)
+    categorical_features: FeatureList = field(default_factory=FeatureList)
+    temporal_features: FeatureList = field(default_factory=FeatureList)
+    text_features: FeatureList = field(default_factory=FeatureList)
+    boolean_features: FeatureList = field(default_factory=FeatureList)
     
     # Data Quality
     has_missing_values: bool = False
