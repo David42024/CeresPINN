@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Database, 
   RefreshCw, 
@@ -18,6 +19,7 @@ import { listPipelines, triggerPipelineSync, getPipelineJob } from '../services/
 import { useEffect, useCallback } from 'react';
 
 export const DataPipelinesView: React.FC = () => {
+  const { t } = useTranslation();
   const [pipelines, setPipelines] = useState<IngestionPipeline[]>(INGESTION_PIPELINES);
   const [syncingId, setSyncingId] = useState<string | null>(null);
   const [backendAvailable, setBackendAvailable] = useState<boolean | null>(null);

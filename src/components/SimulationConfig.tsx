@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Play, 
   Cpu, 
@@ -39,6 +40,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
   onRunSimulation,
   isLoading
 }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'climate' | 'crop' | 'irrigation' | 'soil'>('climate');
   const [scenarios, setScenarios] = useState<any[]>([]);
   const [soilProfiles, setSoilProfiles] = useState<any[]>([]);
@@ -147,7 +149,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
           }`}
         >
           <Droplets className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-          Estrategia de Riego
+          {t('simulationConfig.tabIrrigation')}
         </button>
         <button
           onClick={() => setActiveTab('soil')}

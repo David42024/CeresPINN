@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   ShieldCheck, 
   TrendingUp, 
@@ -24,6 +25,7 @@ import {
 import { fetchValidationReport, fetchHindcastData } from '../services/api';
 
 export const ValidationReport: React.FC = () => {
+  const { t } = useTranslation();
   const [validationData, setValidationData] = useState<any>(null);
   const [hindcastData, setHindcastData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -118,7 +120,7 @@ export const ValidationReport: React.FC = () => {
             Validación Estadística del Modelo PINN
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Hindcast histórico, pruebas KS, t-test pareado, análisis de sensibilidad Sobol y bootstrap de incertidumbre.
+            {t('validationReport.subtitle')}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -141,19 +143,19 @@ export const ValidationReport: React.FC = () => {
       {/* Hindcast Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">RMSE (kg/ha)</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.rmse')}</span>
           <strong className="text-emerald-400 font-mono text-lg">{validationData?.hindcast_metrics?.rmse_kg_ha || 0}</strong>
         </div>
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">MAE (kg/ha)</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.mae')}</span>
           <strong className="text-cyan-400 font-mono text-lg">{validationData?.hindcast_metrics?.mae_kg_ha || 0}</strong>
         </div>
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">R² Score</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.r2Score')}</span>
           <strong className="text-violet-400 font-mono text-lg">{validationData?.hindcast_metrics?.r2_score?.toFixed(3) || 0}</strong>
         </div>
         <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">
-          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">NRMSE (%)</span>
+          <span className="text-slate-500 dark:text-slate-500 text-[11px] block">{t('validationReport.nrmse')}</span>
           <strong className="text-amber-400 font-mono text-lg">{validationData?.hindcast_metrics?.nrmse_percent?.toFixed(1) || 0}%</strong>
         </div>
       </div>
@@ -162,7 +164,7 @@ export const ValidationReport: React.FC = () => {
       <div className="bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
           <TrendingUp className="w-4 h-4 text-emerald-400" />
-          Hindcast Histórico: Rendimiento Observado vs Predicho (2015-2024)
+          {t('validationReport.hindcastTitle')}
         </h3>
         <div className="h-[280px] w-full">
           <ResponsiveContainer width="100%" height="100%">
@@ -172,8 +174,8 @@ export const ValidationReport: React.FC = () => {
               <YAxis stroke="#64748b" tick={{ fontSize: 11 }} />
               <Tooltip contentStyle={{ backgroundColor: '#090d16', borderColor: '#334155', borderRadius: '12px', fontSize: '12px' }} />
               <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
-              <Line type="monotone" dataKey="observed" name="Observado" stroke="#10b981" strokeWidth={2.5} />
-              <Line type="monotone" dataKey="predicted" name="Predicho PINN" stroke="#06b6d4" strokeWidth={2.5} strokeDasharray="5 5" />
+              <Line type="monotone" dataKey="observed" name={t('validationReport.observed')} stroke="#10b981" strokeWidth={2.5} />
+              <Line type="monotone" dataKey="predicted" name={t('validationReport.predicted')} stroke="#06b6d4" strokeWidth={2.5} strokeDasharray="5 5" />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -185,15 +187,15 @@ export const ValidationReport: React.FC = () => {
         <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
           <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             <Activity className="w-4 h-4 text-cyan-400" />
-            Prueba Kolmogorov-Smirnov
+            {t('validationReport.ksTestTitle')}
           </h3>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Estadístico KS</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.ksStatistic')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.ks_test?.statistic?.toFixed(3)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Valor p</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.ksPValue')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.ks_test?.p_value?.toFixed(3)}</span>
             </div>
             <div className="flex items-center gap-2 pt-2">
@@ -203,7 +205,7 @@ export const ValidationReport: React.FC = () => {
                 <CheckCircle className="w-4 h-4 text-emerald-400" />
               )}
               <span className={validationData?.ks_test?.null_rejected ? "text-rose-400" : "text-emerald-400"}>
-                {validationData?.ks_test?.null_rejected ? "Hipótesis nula rechazada" : "Distribuciones similares"}
+                {validationData?.ks_test?.null_rejected ? t('validationReport.ksNullRejected') : t('validationReport.ksSimilarDists')}
               </span>
             </div>
           </div>
@@ -213,15 +215,15 @@ export const ValidationReport: React.FC = () => {
         <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
           <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             <BarChart3 className="w-4 h-4 text-violet-400" />
-            T-Test Pareado (SSP5-8.5 vs Histórico)
+            {t('validationReport.ttestTitle')}
           </h3>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Estadístico t</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.tStatistic')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.paired_t_test?.t_statistic?.toFixed(3)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Valor p</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.tPValue')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.paired_t_test?.p_value?.toFixed(3)}</span>
             </div>
             <div className="flex items-center gap-2 pt-2">
@@ -231,7 +233,7 @@ export const ValidationReport: React.FC = () => {
                 <CheckCircle className="w-4 h-4 text-emerald-400" />
               )}
               <span className={validationData?.paired_t_test?.significant ? "text-rose-400" : "text-emerald-400"}>
-                {validationData?.paired_t_test?.significant ? "Diferencia significativa" : "Sin diferencia significativa"}
+                {validationData?.paired_t_test?.significant ? t('validationReport.tSignificant') : t('validationReport.tNoDifference')}
               </span>
             </div>
           </div>
@@ -241,19 +243,19 @@ export const ValidationReport: React.FC = () => {
         <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
           <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             <Info className="w-4 h-4 text-amber-400" />
-            Intervalo de Confianza Bootstrap (95%)
+            {t('validationReport.bootstrapTitle')}
           </h3>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Límite Inferior</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.lowerBound')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.bootstrap_ci?.yield_95_ci_lower?.toLocaleString()} kg/ha</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Límite Superior</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.upperBound')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.bootstrap_ci?.yield_95_ci_upper?.toLocaleString()} kg/ha</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500 dark:text-slate-400">Muestras Bootstrap</span>
+              <span className="text-slate-500 dark:text-slate-400">{t('validationReport.bootstrapSamples')}</span>
               <span className="font-mono text-slate-800 dark:text-slate-200">{validationData?.bootstrap_ci?.n_bootstrap?.toLocaleString()}</span>
             </div>
           </div>
@@ -264,7 +266,7 @@ export const ValidationReport: React.FC = () => {
       <div className="bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
           <BarChart3 className="w-4 h-4 text-rose-400" />
-          Análisis de Sensibilidad Sobol (Índices de Sobol)
+          {t('validationReport.sobolTitle')}
         </h3>
         <div className="h-[240px] w-full">
           <ResponsiveContainer width="100%" height="100%">

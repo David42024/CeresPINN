@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   FileText, 
   Download, 
@@ -22,6 +23,7 @@ interface ReportsModuleProps {
 }
 
 export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, currentUser }) => {
+  const { t } = useTranslation();
   const [emailTo, setEmailTo] = useState<string>(currentUser.email || '');
   const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState<boolean>(false);
@@ -249,10 +251,10 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         <div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <FileText className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            Centro de Reportes, Informes y Exportación de Datos
+            {t('reportsModule.title')}
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-            Generación de informes ejecutivos en PDF, dataset completo en Excel (.xlsx) y comunicación a productores.
+            {t('reportsModule.subtitle')}
           </p>
         </div>
       </div>
@@ -264,9 +266,9 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 w-fit border border-rose-200 dark:border-rose-800/60 mb-2">
               <FileText className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Informe Técnico Ejecutivo (PDF)</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('reportsModule.pdfTitle')}</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-              Documento formal listo para stakeholders con resumen ejecutivo, gráficas de estrés y recomendaciones agronómicas.
+              {t('reportsModule.pdfDesc')}
             </p>
           </div>
           <button
@@ -276,7 +278,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             className="w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-rose-600/20 disabled:opacity-50"
           >
             <Download className="w-3.5 h-3.5" />
-            {isGeneratingPdf ? 'Generando PDF...' : 'Descargar Informe PDF'}
+            {isGeneratingPdf ? t('reportsModule.btnGeneratingPdf') : t('reportsModule.btnDownloadPdf')}
           </button>
         </div>
 
@@ -286,9 +288,9 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 w-fit border border-emerald-200 dark:border-emerald-800/60 mb-2">
               <FileSpreadsheet className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Dataset Completo (Excel / XLSX)</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('reportsModule.excelTitle')}</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-              Exportación de las 28 variables diarias del modelo PINN (humedades por capa, flujos ET, biomasa, índices de estrés).
+              {t('reportsModule.excelDesc')}
             </p>
           </div>
           <button
@@ -298,7 +300,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             className="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-emerald-600/20 disabled:opacity-50"
           >
             <Download className="w-3.5 h-3.5" />
-            {isGeneratingExcel ? 'Procesando XLSX...' : 'Descargar Dataset Excel'}
+            {isGeneratingExcel ? t('reportsModule.btnGeneratingExcel') : t('reportsModule.btnDownloadExcel')}
           </button>
         </div>
 
@@ -308,9 +310,9 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             <div className="p-2.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/80 text-cyan-600 dark:text-cyan-400 w-fit border border-cyan-200 dark:border-cyan-800/60 mb-2">
               <Mail className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Compartir por Correo Electrónico</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('reportsModule.emailTitle')}</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-              Envía el reporte técnico agronómico y los KPIs del gemelo digital directamente a agricultores y consultores.
+              {t('reportsModule.emailDesc')}
             </p>
           </div>
 
@@ -320,7 +322,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
               required
               value={emailTo}
               onChange={(e) => setEmailTo(e.target.value)}
-              placeholder="correo@ejemplo.com"
+              placeholder={t('reportsModule.emailPlaceholder')}
               className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
             />
             <button
@@ -330,12 +332,12 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
               {isEmailSent ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-white" />
-                  ¡Reporte Enviado con Éxito!
+                  {t('reportsModule.btnEmailSent')}
                 </>
               ) : (
                 <>
                   <Share2 className="w-3.5 h-3.5" />
-                  Enviar Reporte por Email
+                  {t('reportsModule.btnSendEmail')}
                 </>
               )}
             </button>

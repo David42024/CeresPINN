@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Cpu, 
   RefreshCw, 
@@ -28,6 +29,7 @@ import { ModelRegistryEntry } from '../types';
 import { fetchModelRegistry } from '../services/api';
 
 export const MLOpsDashboard: React.FC = () => {
+  const { t } = useTranslation();
   const [models, setModels] = useState<ModelRegistryEntry[]>(MODEL_REGISTRY_DATA);
   const [isRetraining, setIsRetraining] = useState<boolean>(false);
   const [retrainEpoch, setRetrainEpoch] = useState<number>(0);
@@ -127,17 +129,17 @@ export const MLOpsDashboard: React.FC = () => {
         <div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Cpu className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            Administración del Modelo PINN & MLOps Registry
+            {t('mlOpsDashboard.title')}
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-            Supervisión de pérdidas PDE (Richards flow residual), re-entrenamiento continuo y versionado de pesos neuronales.
+            {t('mlOpsDashboard.subtitle')}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <span className="px-3 py-1 rounded-xl bg-violet-50 dark:bg-violet-950/80 border border-violet-200 dark:border-violet-800/60 text-violet-700 dark:text-violet-300 text-xs font-mono flex items-center gap-1.5">
             <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-300" />
-            Motor de Inferencia: PyTorch / LibTorch C++ JIT
+            {t('mlOpsDashboard.engineBadge')}
           </span>
         </div>
       </div>
@@ -149,7 +151,7 @@ export const MLOpsDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
               <TrendingDown className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              Descomposición de Funciones de Pérdida PINN (Training Convergence)
+              {t('mlOpsDashboard.lossChartTitle')}
             </h3>
             <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400">R² = 0.942 | RMSE = 385 kg/ha</span>
           </div>
@@ -158,14 +160,14 @@ export const MLOpsDashboard: React.FC = () => {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={lossHistoryData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="epoch" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: 'Épocas', position: 'insideBottom', fill: '#64748b', fontSize: 11 }} />
+                <XAxis dataKey="epoch" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: t('mlOpsDashboard.epochsLabel'), position: 'insideBottom', fill: '#64748b', fontSize: 11 }} />
                 <YAxis stroke="#64748b" tick={{ fontSize: 11 }} />
                 <Tooltip contentStyle={{ backgroundColor: '#090d16', borderColor: '#334155', borderRadius: '12px', fontSize: '12px' }} />
                 <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
-                <Line type="monotone" dataKey="totalLoss" name="Loss Total L_total" stroke="#f43f5e" strokeWidth={2.5} />
-                <Line type="monotone" dataKey="pdeLoss" name="Residual PDE Richards (λ·L_pde)" stroke="#06b6d4" strokeWidth={2} />
-                <Line type="monotone" dataKey="dataLoss" name="Datos Empíricos NASS (L_data)" stroke="#10b981" strokeWidth={1.8} />
-                <Line type="monotone" dataKey="boundaryLoss" name="Cond. Contorno (L_bc)" stroke="#a855f7" strokeWidth={1.5} strokeDasharray="3 3" />
+                <Line type="monotone" dataKey="totalLoss" name={t('mlOpsDashboard.totalLoss')} stroke="#f43f5e" strokeWidth={2.5} />
+                <Line type="monotone" dataKey="pdeLoss" name={t('mlOpsDashboard.pdeLoss')} stroke="#06b6d4" strokeWidth={2} />
+                <Line type="monotone" dataKey="dataLoss" name={t('mlOpsDashboard.dataLoss')} stroke="#10b981" strokeWidth={1.8} />
+                <Line type="monotone" dataKey="boundaryLoss" name={t('mlOpsDashboard.bcLoss')} stroke="#a855f7" strokeWidth={1.5} strokeDasharray="3 3" />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -180,13 +182,13 @@ export const MLOpsDashboard: React.FC = () => {
           <div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5 mb-3">
               <Sliders className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              Re-entrenar Red Neuronal PINN
+              {t('mlOpsDashboard.retrainTitle')}
             </h3>
 
             <div className="space-y-3 text-xs">
               <div>
                 <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-1">
-                  <span>Peso Regularizador Richards (λ_PDE)</span>
+                  <span>{t('mlOpsDashboard.richardsWeight')}</span>
                   <span className="font-mono text-cyan-700 dark:text-cyan-300 font-bold">{lambdaPde}</span>
                 </div>
                 <input
@@ -202,7 +204,7 @@ export const MLOpsDashboard: React.FC = () => {
 
               <div>
                 <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-1">
-                  <span>Tasa de Aprendizaje (Learning Rate η)</span>
+                  <span>{t('mlOpsDashboard.learningRate')}</span>
                   <span className="font-mono text-emerald-700 dark:text-emerald-300 font-bold">{learningRate}</span>
                 </div>
                 <select
@@ -210,15 +212,15 @@ export const MLOpsDashboard: React.FC = () => {
                   onChange={(e) => setLearningRate(parseFloat(e.target.value))}
                   className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
-                  <option value={0.005}>0.005 (Rápido)</option>
-                  <option value={0.001}>0.001 (Estándar AdamW)</option>
-                  <option value={0.0001}>0.0001 (Fine-Tuning Fino)</option>
+                  <option value={0.005}>{t('mlOpsDashboard.learningRateFast')}</option>
+                  <option value={0.001}>{t('mlOpsDashboard.learningRateStd')}</option>
+                  <option value={0.0001}>{t('mlOpsDashboard.learningRateFine')}</option>
                 </select>
               </div>
 
               <div>
                 <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-1">
-                  <span>Tamaño de Batch</span>
+                  <span>{t('mlOpsDashboard.batchSize')}</span>
                   <span className="font-mono text-violet-700 dark:text-violet-300 font-bold">{batchSize}</span>
                 </div>
                 <select
@@ -227,7 +229,7 @@ export const MLOpsDashboard: React.FC = () => {
                   className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value={32}>32</option>
-                  <option value={64}>64 (Óptimo GPU)</option>
+                  <option value={64}>{t('mlOpsDashboard.batchSize64Opt')}</option>
                   <option value={128}>128</option>
                 </select>
               </div>
@@ -238,7 +240,7 @@ export const MLOpsDashboard: React.FC = () => {
             {isRetraining && (
               <div className="space-y-1.5 mb-3">
                 <div className="flex justify-between text-[11px] font-mono text-emerald-700 dark:text-emerald-400">
-                  <span>Optimizando Tensores PyTorch...</span>
+                  <span>{t('mlOpsDashboard.optimizingTensors')}</span>
                   <span>{retrainEpoch}%</span>
                 </div>
                 <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
@@ -256,7 +258,7 @@ export const MLOpsDashboard: React.FC = () => {
               className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all disabled:opacity-50"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isRetraining ? 'animate-spin' : ''}`} />
-              {isRetraining ? 'Entrenando Épocas...' : 'Iniciar Re-entrenamiento PINN'}
+              {isRetraining ? t('mlOpsDashboard.btnTrainingEpochs') : t('mlOpsDashboard.btnStartRetrain')}
             </button>
           </div>
         </div>
@@ -265,12 +267,12 @@ export const MLOpsDashboard: React.FC = () => {
       {/* Model Registry List */}
       <div className="space-y-3">
         <h3 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-          Registro de Versiones (Model Registry)
+          {t('mlOpsDashboard.modelRegistry')}
         </h3>
 
         {loadingModels ? (
           <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-600 dark:text-slate-400">
-            Cargando registro de modelos del backend...
+            {t('mlOpsDashboard.loadingModels')}
           </div>
         ) : (
           <div className="space-y-2">
@@ -291,7 +293,7 @@ export const MLOpsDashboard: React.FC = () => {
                     </span>
                     {model.active && (
                       <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold">
-                        Activo en Producción
+                        {t('mlOpsDashboard.activeProd')}
                       </span>
                     )}
                   </div>
@@ -300,15 +302,15 @@ export const MLOpsDashboard: React.FC = () => {
 
                 <div className="flex items-center gap-4 text-xs font-mono">
                   <div className="text-right">
-                    <span className="text-slate-500 dark:text-slate-500 block text-[10px]">R² Test</span>
+                    <span className="text-slate-500 dark:text-slate-500 block text-[10px]">{t('mlOpsDashboard.r2Test')}</span>
                     <span className="text-emerald-700 dark:text-emerald-400 font-bold">{model.testR2}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-slate-500 dark:text-slate-500 block text-[10px]">RMSE</span>
+                    <span className="text-slate-500 dark:text-slate-500 block text-[10px]">{t('mlOpsDashboard.rmse')}</span>
                     <span className="text-cyan-700 dark:text-cyan-300 font-bold">{model.testRmseKgHa} kg/ha</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-slate-500 dark:text-slate-500 block text-[10px]">Épocas</span>
+                    <span className="text-slate-500 dark:text-slate-500 block text-[10px]">{t('mlOpsDashboard.epochs')}</span>
                     <span className="text-slate-700 dark:text-slate-300">{model.epochs.toLocaleString()}</span>
                   </div>
 
@@ -317,7 +319,7 @@ export const MLOpsDashboard: React.FC = () => {
                       onClick={() => handleSetActiveModel(model.version)}
                       className="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs transition-all"
                     >
-                      Activar
+                      {t('mlOpsDashboard.activateBtn')}
                     </button>
                   )}
                 </div>

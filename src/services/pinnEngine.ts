@@ -7,6 +7,7 @@ import {
   SimulationResult, 
   SoilProfile 
 } from '../types';
+import i18next from '../i18n';
 
 /**
  * CeresPINN - Physics-Informed Neural Network Simulation Engine
@@ -425,10 +426,10 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
     alerts.push({
       id: 'alert-flowering-drought',
       level: 'critical',
-      title: 'Estrés hídrico severo en Floración (VT-R1)',
-      description: `Se detectó un déficit hídrico crítico de ${Math.round(floweringPenalty * 100)}% durante el período de polinización, provocando aborto floral y reducción drástica del índice de cosecha.`,
-      timing: 'Días 55-75 tras siembra',
-      recommendedAction: 'Aplicar riego de auxilio de al menos 30-40 mm 5 días antes de la floración o adelantar fecha de siembra.'
+      title: i18next.t('pinn.alertFloweringTitle'),
+      description: i18next.t('pinn.alertFloweringDesc', { floweringPenaltyPercent: Math.round(floweringPenalty * 100) }),
+      timing: i18next.t('pinn.alertFloweringTiming'),
+      recommendedAction: i18next.t('pinn.alertFloweringAction')
     });
   }
 
@@ -436,10 +437,10 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
     alerts.push({
       id: 'alert-soil-depletion',
       level: 'warning',
-      title: 'Agotamiento de reserva hídrica en perfil profundo (60-100 cm)',
-      description: `La humedad del suelo cayó por debajo del punto de marchitez permanente (${(wp * 100).toFixed(1)}%) en el horizonte radicular profundo.`,
-      timing: 'Fase de llenado de grano (R3-R5)',
-      recommendedAction: 'Considerar labranza vertical o incorporación de materia orgánica para mejorar la retención hídrica profunda.'
+      title: i18next.t('pinn.alertSoilTitle'),
+      description: i18next.t('pinn.alertSoilDesc', { wpPercent: (wp * 100).toFixed(1) }),
+      timing: i18next.t('pinn.alertSoilTiming'),
+      recommendedAction: i18next.t('pinn.alertSoilAction')
     });
   }
 
@@ -447,23 +448,23 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
     alerts.push({
       id: 'alert-cmip6-heat',
       level: 'warning',
-      title: `Impacto térmico CMIP6 [${config.scenario}] proyectado`,
-      description: `El calentamiento proyectado para el año ${config.targetYear} incrementa el VPD foliar y acelera la tasa de senescencia en un 18%.`,
-      timing: 'Ciclo completo',
-      recommendedAction: 'Evaluar híbridos de maíz con genética de estomas resilientes y floración nocturna.'
+      title: i18next.t('pinn.alertThermalTitle', { scenario: config.scenario }),
+      description: i18next.t('pinn.alertThermalDesc', { targetYear: config.targetYear }),
+      timing: i18next.t('pinn.alertThermalTiming'),
+      recommendedAction: i18next.t('pinn.alertThermalAction')
     });
   }
 
   // Agronomic Recommendations
   const recommendations: string[] = [
-    `Rendimiento simulado de **${projectedYield.toLocaleString()} kg/ha** bajo escenario climático **${config.scenario}** (Año ${config.targetYear}).`,
+    i18next.t('pinn.recYieldResult', { projectedYield: projectedYield.toLocaleString(), scenario: config.scenario, targetYear: config.targetYear }),
     config.irrigationStrategy === 'rainfed' 
-      ? 'Bajo régimen de secano, la productividad del agua se ve fuertemente limitada por la variabilidad de precipitación estival. Se recomienda evaluar riego deficitario estratégico.'
-      : `Estrategia de riego (${config.irrigationStrategy}): Se aplicaron **${Math.round(totalIrrigation)} mm** con una productividad del agua de **${waterProductivity} kg/m³**.`,
+      ? i18next.t('pinn.recIrrigationRainfed')
+      : i18next.t('pinn.recIrrigationStrategy', { strategy: config.irrigationStrategy, totalIrrigation: Math.round(totalIrrigation), waterProductivity }),
     floweringStressAccum > 2.5 
-      ? 'Ajustar la fecha de siembra en ±12 a 18 días para evitar que el pico de floración (VT) coincida con la canícula / sequía intraestival.'
-      : 'La ventana de siembra seleccionada sincroniza adecuadamente la fase crítica de polinización con la humedad disponible.',
-    `Manejo de suelo: Para la textura **${soil.label}**, la capacidad de agua disponible es de ${Math.round((fc - wp) * 1000)} mm/m. La labranza conservacionista con cobertura vegetal podría reducir la evaporación directa en 25-35 mm.`
+      ? i18next.t('pinn.recFloweringAdjust')
+      : i18next.t('pinn.recFloweringGood'),
+    i18next.t('pinn.recSoilManagement', { soilLabel: soil.label, awc: Math.round((fc - wp) * 1000) })
   ];
 
   return {

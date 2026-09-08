@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as THREE from 'three';
 import { 
   Play, 
@@ -31,6 +32,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   currentDayIndex,
   onChangeDayIndex
 }) => {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -413,21 +415,21 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
             <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-              Gemelo Digital 3D (Zea mays L.)
+              {t('threeFieldViewer.badge3dTwin')}
             </span>
           </div>
 
           {dailyRecord && (
             <div className="px-3 py-1.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/70 backdrop-blur-md border border-emerald-200 dark:border-emerald-700/50 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center gap-1.5 shadow-lg">
               <Activity className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-              Etapa: <strong className="font-bold text-slate-900 dark:text-white">{dailyRecord.stage}</strong> ({dailyRecord.stageCode})
+              {t('threeFieldViewer.stageLabel')}: <strong className="font-bold text-slate-900 dark:text-white">{dailyRecord.stage}</strong> ({dailyRecord.stageCode})
             </div>
           )}
 
           {dailyRecord && dailyRecord.cwsi > 0.40 && (
             <div className="px-3 py-1.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/80 backdrop-blur-md border border-amber-300 dark:border-amber-600/60 text-amber-700 dark:text-amber-300 text-xs font-medium flex items-center gap-1.5 shadow-lg animate-pulse">
               <Thermometer className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
-              Estrés Hídrico: {(dailyRecord.cwsi * 100).toFixed(0)}%
+              {t('threeFieldViewer.waterStressBadge')}: {(dailyRecord.cwsi * 100).toFixed(0)}%
             </div>
           )}
         </div>
@@ -443,10 +445,10 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                   ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/30' 
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
               }`}
-              title="Humedad del Suelo (Richards PDE)"
+              title={t('threeFieldViewer.layerMoistureTitle')}
             >
               <Droplets className="w-3.5 h-3.5" />
-              Humedad Suelo
+              {t('threeFieldViewer.layerMoistureBtn')}
             </button>
             <button
               id="btn-layer-biomass"
@@ -456,10 +458,10 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                   ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30' 
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
               }`}
-              title="Biomasa y Altura de Dosel"
+              title={t('threeFieldViewer.layerBiomassTitle')}
             >
               <Layers className="w-3.5 h-3.5" />
-              Biomasa
+              {t('threeFieldViewer.layerBiomassBtn')}
             </button>
             <button
               id="btn-layer-stress"
@@ -469,24 +471,24 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                   ? 'bg-rose-600 text-white shadow-md shadow-rose-600/30' 
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
               }`}
-              title="Índice de Estrés Térmico e Hídrico"
+              title={t('threeFieldViewer.layerStressTitle')}
             >
               <Thermometer className="w-3.5 h-3.5" />
-              Estrés CWSI
+              {t('threeFieldViewer.layerStressBtn')}
             </button>
           </div>
 
           {/* Sub-depth selector when soil moisture is active */}
           {layerMode === 'soil_moisture' && (
             <div className="p-1 rounded-xl bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 flex items-center gap-1 text-[11px]">
-              <span className="text-slate-500 dark:text-slate-500 px-1.5">Profundidad:</span>
+              <span className="text-slate-500 dark:text-slate-500 px-1.5">{t('threeFieldViewer.depthLabel')}</span>
               <button
                 onClick={() => setSelectedDepth('top')}
                 className={`px-2 py-0.5 rounded-md font-mono ${
                   selectedDepth === 'top' ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                0-30 cm
+                {t('threeFieldViewer.depthTop')}
               </button>
               <button
                 onClick={() => setSelectedDepth('mid')}
@@ -494,7 +496,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                   selectedDepth === 'mid' ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                30-60 cm
+                {t('threeFieldViewer.depthMid')}
               </button>
               <button
                 onClick={() => setSelectedDepth('deep')}
@@ -502,7 +504,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                   selectedDepth === 'deep' ? 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                60-100 cm
+                {t('threeFieldViewer.depthDeep')}
               </button>
             </div>
           )}
@@ -519,12 +521,12 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             </div>
             
             <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-slate-600 dark:text-slate-400 pt-0.5">
-              <div>Humedad Top: <span className="font-mono text-cyan-600 dark:text-cyan-300">{(dailyRecord.soilMoistureTop * 100).toFixed(1)}%</span></div>
-              <div>Biomasa: <span className="font-mono text-emerald-600 dark:text-emerald-300">{(dailyRecord.biomassKgHa / 1000).toFixed(1)} t/ha</span></div>
-              <div>LAI (Área Foliar): <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.lai} m²/m²</span></div>
-              <div>Raíz: <span className="font-mono text-amber-600 dark:text-amber-300">{dailyRecord.rootDepthCm} cm</span></div>
-              <div>Transpiración: <span className="font-mono text-blue-600 dark:text-blue-300">{dailyRecord.transpirationMm} mm</span></div>
-              <div>GDD Acum: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.gddAccumulated}°C·d</span></div>
+              <div>{t('threeFieldViewer.humedadTop')}: <span className="font-mono text-cyan-600 dark:text-cyan-300">{(dailyRecord.soilMoistureTop * 100).toFixed(1)}%</span></div>
+              <div>{t('threeFieldViewer.biomasa')}: <span className="font-mono text-emerald-600 dark:text-emerald-300">{(dailyRecord.biomassKgHa / 1000).toFixed(1)} t/ha</span></div>
+              <div>{t('threeFieldViewer.laiArea')}: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.lai} m²/m²</span></div>
+              <div>{t('threeFieldViewer.root')}: <span className="font-mono text-amber-600 dark:text-amber-300">{dailyRecord.rootDepthCm} cm</span></div>
+              <div>{t('threeFieldViewer.transpiration')}: <span className="font-mono text-blue-600 dark:text-blue-300">{dailyRecord.transpirationMm} mm</span></div>
+              <div>{t('threeFieldViewer.gdd')}: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.gddAccumulated}°C·d</span></div>
             </div>
           </div>
         )}
@@ -538,7 +540,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg' 
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
-            title="Vista 3D Orbital Libre"
+            title={t('threeFieldViewer.camPerspectiveTitle')}
           >
             <Compass className="w-4 h-4" />
           </button>
@@ -549,7 +551,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 ? 'bg-emerald-600 text-white border-emerald-500 shadow-lg' 
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
-            title="Vista Aérea Cenital (Nadir)"
+            title={t('threeFieldViewer.camTopDownTitle')}
           >
             <Eye className="w-4 h-4" />
           </button>
@@ -560,7 +562,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 ? 'bg-cyan-600 text-white border-cyan-500 shadow-lg' 
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
-            title="Malla de Elementos Finitos (FEM)"
+            title={t('threeFieldViewer.wireframeTitle')}
           >
             <Layers className="w-4 h-4" />
           </button>
@@ -575,7 +577,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           onClick={() => setIsPlaying(!isPlaying)}
           disabled={!simulation}
           className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50"
-          title={isPlaying ? 'Pausar Simulación' : 'Reproducir Ciclo Fenológico'}
+          title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
         >
           {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
         </button>
@@ -587,7 +589,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           }}
           disabled={!simulation}
           className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50"
-          title="Reiniciar a Siembra"
+          title={t('threeFieldViewer.resetTitle')}
         >
           <RotateCcw className="w-4 h-4" />
         </button>
@@ -595,11 +597,11 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
         {/* Day Slider */}
         <div className="flex-1 flex flex-col justify-center">
           <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
-            <span>DAP 1 (Siembra)</span>
+            <span>{t('threeFieldViewer.sliderPlanting')}</span>
             <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-              Día {currentDayIndex + 1} de {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
+              {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} {t('threeFieldViewer.sliderOf')} {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
             </span>
-            <span>Cosecha (R6)</span>
+            <span>{t('threeFieldViewer.sliderHarvest')}</span>
           </div>
           <input
             id="slider-timeline-dap"
