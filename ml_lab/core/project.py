@@ -219,11 +219,32 @@ class ProjectSpecification:
             data["data_type"] = enum_value(DataType, data["data_type"])
         if "objective" in data and isinstance(data["objective"], str):
             data["objective"] = enum_value(Objective, data["objective"])
-        if "validation" in data and "strategy" in data["validation"]:
-            if isinstance(data["validation"]["strategy"], str):
+        
+        # Handle nested dataclass objects
+        if "preprocessing" in data and isinstance(data["preprocessing"], dict):
+            data["preprocessing"] = PreprocessingConfig(**data["preprocessing"])
+        
+        if "validation" in data and isinstance(data["validation"], dict):
+            if "strategy" in data["validation"] and isinstance(data["validation"]["strategy"], str):
                 data["validation"]["strategy"] = enum_value(
                     ValidationStrategy, data["validation"]["strategy"]
                 )
+            data["validation"] = ValidationConfig(**data["validation"])
+        
+        if "metrics" in data and isinstance(data["metrics"], dict):
+            data["metrics"] = MetricConfig(**data["metrics"])
+        
+        if "hyperparameter_tuning" in data and isinstance(data["hyperparameter_tuning"], dict):
+            data["hyperparameter_tuning"] = HyperparameterConfig(**data["hyperparameter_tuning"])
+        
+        if "explainability" in data and isinstance(data["explainability"], dict):
+            data["explainability"] = ExplainabilityConfig(**data["explainability"])
+        
+        if "statistical_tests" in data and isinstance(data["statistical_tests"], dict):
+            data["statistical_tests"] = StatisticalTestConfig(**data["statistical_tests"])
+        
+        if "models" in data and isinstance(data["models"], list):
+            data["models"] = [ModelConfig(**model) if isinstance(model, dict) else model for model in data["models"]]
         
         # Handle datetime
         if "created_at" in data and isinstance(data["created_at"], str):

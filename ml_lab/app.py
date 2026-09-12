@@ -93,6 +93,19 @@ def initialize_session_state():
         st.session_state.statistical_engine = get_statistical_engine()
     if "report_generator" not in st.session_state:
         st.session_state.report_generator = get_report_generator(get_artifact_manager())
+        
+    # Ensure current_project is fully deserialized (Streamlit can sometimes mangle dataclasses to dicts across reruns)
+    cp = st.session_state.get("current_project")
+    if cp is not None:
+        if isinstance(cp, dict):
+            from core.project import ProjectSpecification
+            st.session_state.current_project = ProjectSpecification.from_dict(cp)
+        elif isinstance(getattr(cp, 'models', None), list) and len(cp.models) > 0 and isinstance(cp.models[0], dict):
+            from core.project import ProjectSpecification
+            st.session_state.current_project = ProjectSpecification.from_dict(cp.to_dict())
+        elif hasattr(cp, 'validation') and isinstance(cp.validation, dict):
+            from core.project import ProjectSpecification
+            st.session_state.current_project = ProjectSpecification.from_dict(cp.to_dict())
 
 
 def render_sidebar():
@@ -488,6 +501,7 @@ def render_validation_page():
         return
     
     validation_engine = st.session_state.validation_engine
+    training_engine = st.session_state.training_engine
     
     # Show validation configuration
     st.subheader("Validation Configuration")
@@ -496,7 +510,102 @@ def render_validation_page():
     st.write(f"**Test Size:** {st.session_state.current_project.validation.test_size}")
     
     st.markdown("---")
-    st.info("Run model training first to generate validation results")
+    
+    # Botón para ejecutar validación nueva con datos actuales
+    if st.button("🔄 Run New Validation with Current Training Data"):
+        with st.spinner("Running validation with current training data..."):
+            try:
+                import pandas as pd
+                from pathlib import Path
+                
+                # Cargar el modelo entrenado más reciente
+                project_id = st.session_state.current_project.project_id
+                model = training_engine.load_model(project_id, "cerespinn")
+                
+                # Cargar los datos de entrenamiento actuales (misma lógica que en models.py)
+                target = getattr(st.session_state.current_project, "target_variable", None)
+                df = None
+                
+                # Intentar cargar desde el dataset preprocesado o el original
+                for cand in [Path("data/cerespinn_training_preprocessed.csv"), Path("data/cerespinn_training_iowa.csv")]:
+                    if cand.exists():
+                        df = pd.read_csv(cand)
+                        break
+                
+                if df is None:
+                    st.error("No dataset found. Please apply preprocessing or analyze a dataset first.")
+                else:
+                    # Auto-detect target column if not specified
+                    if target is None or target not in df.columns:
+                        # Try common target column names
+                        for possible_target in ["yield_bu_acre", "yield (continuous, bushels/acre)", "yield", "target"]:
+                            if possible_target in df.columns:
+                                target = possible_target
+                                break
+                        if target is None or target not in df.columns:
+                            st.error(f"Target variable not found in dataset columns. Available columns: {list(df.columns)}")
+                            df = None
+                    
+                    if df is not None:
+                        # Preparar X y y para validación
+                        feature_cols = [c for c in df.columns if c != target]
+                        numeric = df[feature_cols].select_dtypes(include=[np.number])
+                        frame = pd.concat([numeric, df[[target]]], axis=1).dropna()
+                        
+                        if frame.empty or len(numeric.columns) == 0:
+                            st.error("No usable numeric data after dropping missing values.")
+                        else:
+                            X = frame[numeric.columns].to_numpy(dtype=float)
+                            y = pd.to_numeric(frame[target], errors="coerce").dropna().to_numpy(dtype=float)
+                            X = X[: len(y)]
+                            
+                            # Ejecutar validación con el modelo y datos actuales
+                            validation_result = validation_engine.validate_model(
+                                model=model,
+                                X=X,
+                            y=y,
+                            model_name="cerespinn",
+                            problem_type="regression",
+                            project_id=project_id,
+                        )
+                        
+                        st.success("✅ Validation completed successfully!")
+                        st.rerun()
+            except Exception as e:
+                st.error(f"Validation failed: {e}")
+    
+    # Cargar resultados de validación para el modelo cerespinn (único modelo entrenado)
+    # Esto evita mostrar métricas de runs anteriores con peor desempeño
+    try:
+        validation_engine = st.session_state.validation_engine
+        project_id = st.session_state.current_project.project_id
+        # Cargar específicamente los metrics de cerespinn
+        validation_result = validation_engine.load_validation_result(
+            project_id, "cerespinn"
+        )
+        # Si no hay resultados, validation_result será None
+
+        if validation_result and validation_result.metrics:
+            st.subheader("Validation Results")
+            st.success(f"Model: {validation_result.model_name}")
+            metric_columns = st.columns(3)
+            metric_keys = (
+                ("R2", "r2", False),
+                ("MAE", "neg_mean_absolute_error", True),
+                ("RMSE", "neg_root_mean_squared_error", True),
+            )
+            for column, (label, metric_name, negate) in zip(metric_columns, metric_keys):
+                metric = validation_result.metrics.get(metric_name, {})
+                value = metric.get("mean", 0) or 0
+                if negate:
+                    value = abs(value)
+                with column:
+                    st.metric(label, f"{value:.4f}")
+            st.info("Using results from previous training. Click 'Run New Validation' to validate with current data.")
+        else:
+            st.info("Run model training first to generate validation results")
+    except Exception as e:
+        st.info("Run model training first to generate validation results")
 
 
 def render_model_comparison_page():

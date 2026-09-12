@@ -1,0 +1,20 @@
+{
+  "data": {
+    "name": "cerespinn-maize-yield_exp_20260908_163453",
+    "status": "completed",
+    "completed_at": "2026-09-08T21:48:14.548669",
+    "model_results": {
+      "cerespinn": {
+        "status": "success",
+        "metrics": {
+          "mae": 13.432099,
+          "rmse": 17.718034,
+          "r2": 0.674223,
+          "mape": 0.086077
+        },
+        "model_path": "C:\\Users\\USERJSSV\\Downloads\\cerespinn---climate-adaptive-maize-digital-twin\\projects\\cerespinn-maize-yield-40842ec7\\models\\cerespinn_model.pt"
+      }
+    }
+  },
+  "metadata": {}
+}

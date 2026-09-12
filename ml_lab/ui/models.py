@@ -447,6 +447,10 @@ def render_model_training_ui(spec: Any, catalog: Any, training_engine: Any) -> N
                                 project_id=proj_id,
                             )
                         st.session_state["training_results"] = results
+                        validation_engine = st.session_state.validation_engine
+                        validation_engine.config.strategy = training_config["validation"]["strategy"]
+                        validation_engine.config.n_splits = int(training_config["validation"]["n_splits"])
+                        validation_engine.config.test_size = float(training_config["validation"]["test_size"])
                         for m, res in results.items():
                             if res is None:
                                 err_detail = getattr(training_engine, "last_errors", {}).get(m, "Error desconocido durante la ejecución.")
@@ -456,6 +460,37 @@ def render_model_training_ui(spec: Any, catalog: Any, training_engine: Any) -> N
                             else:
                                 st.success(f"✅ **{m}** entrenado exitosamente.")
                                 st.json(res.metrics)
+                                try:
+                                    validation_result = validation_engine.validate_model(
+                                        model=res.model,
+                                        X=X,
+                                        y=y,
+                                        model_name=m,
+                                        problem_type=prob_type,
+                                        project_id=proj_id,
+                                    )
+                                    st.success(f"✅ Validación guardada para **{m}**.")
+                                    st.json(validation_result.metrics)
+                                except Exception as validation_error:
+                                    st.warning(f"El modelo {m} se entrenó, pero no se pudo validar: {validation_error}")
+                                model_path = getattr(res, "model_path", None)
+                                if model_path and Path(model_path).exists():
+                                    st.caption(f"Guardado en: `{model_path}`")
+                                    st.session_state.setdefault("trained_models", {})[m] = {
+                                        "name": m,
+                                        "status": "trained",
+                                        "model_path": str(model_path),
+                                        "metrics": res.metrics,
+                                        "trained_at": res.trained_at.isoformat(),
+                                    }
+                                    st.session_state.artifact_manager.save_artifact(
+                                        proj_id,
+                                        "models",
+                                        f"{m}_metadata.json",
+                                        st.session_state["trained_models"][m],
+                                    )
+                                else:
+                                    st.warning(f"{m} terminó, pero no se encontró el archivo del modelo.")
                         
                         st.info("💡 **Siguiente paso según la FICHA 5:** Dirígete a la pestaña **'Validation'** para verificar el Hindcast histórico (1990–2020) y a **'Statistical Tests'** para ejecutar el test KS, t-test pareado y el análisis de sensibilidad de Sobol.")
     

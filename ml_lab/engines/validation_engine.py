@@ -163,8 +163,9 @@ class ValidationEngine:
         # Convert to sklearn-compatible scoring names
         sklearn_scoring = self._convert_to_sklearn_scoring(scoring_metrics, problem_type)
         
-        # Unwrap underlying estimator if model is an ML Lab wrapper
-        estimator = getattr(model, "model", model)
+        # Keep ML Lab wrappers intact: CeresPINNModel implements the
+        # scikit-learn fit/predict contract, while its inner torch module does not.
+        estimator = model if callable(getattr(model, "fit", None)) else getattr(model, "model", model)
         if estimator is None:
             estimator = model
 

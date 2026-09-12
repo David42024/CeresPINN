@@ -237,10 +237,10 @@
     "SALib": ">=1.4.0",
     "scipy": ">=1.11.0"
   },
-  "project_dir": null,
-  "artifacts_dir": null,
-  "models_dir": null,
-  "reports_dir": null,
+  "project_dir": "C:\\Users\\USERJSSV\\Downloads\\cerespinn---climate-adaptive-maize-digital-twin\\projects\\cerespinn-maize-yield-40842ec7",
+  "artifacts_dir": "C:\\Users\\USERJSSV\\Downloads\\cerespinn---climate-adaptive-maize-digital-twin\\projects\\cerespinn-maize-yield-40842ec7",
+  "models_dir": "C:\\Users\\USERJSSV\\Downloads\\cerespinn---climate-adaptive-maize-digital-twin\\projects\\cerespinn-maize-yield-40842ec7\\models",
+  "reports_dir": "C:\\Users\\USERJSSV\\Downloads\\cerespinn---climate-adaptive-maize-digital-twin\\projects\\cerespinn-maize-yield-40842ec7\\reports",
   "status": "analyzed",
   "created_at": "2026-09-07 22:00:00",
   "updated_at": "2026-09-07 22:00:00"

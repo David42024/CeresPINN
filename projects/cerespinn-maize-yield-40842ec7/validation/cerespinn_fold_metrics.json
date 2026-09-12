@@ -1,0 +1,35 @@
+{
+  "data": [
+    {
+      "neg_mean_absolute_error": -26.488446697138706,
+      "neg_root_mean_squared_error": -31.843486630659154,
+      "r2": -0.30356461158659687,
+      "neg_mean_absolute_percentage_error": -0.15007606152517672
+    },
+    {
+      "neg_mean_absolute_error": -26.32830946278486,
+      "neg_root_mean_squared_error": -33.61077099147854,
+      "r2": -0.1001152441180313,
+      "neg_mean_absolute_percentage_error": -0.19136622474527698
+    },
+    {
+      "neg_mean_absolute_error": -22.97059695026935,
+      "neg_root_mean_squared_error": -28.543272022938456,
+      "r2": -0.04736690627164619,
+      "neg_mean_absolute_percentage_error": -0.137293345514176
+    },
+    {
+      "neg_mean_absolute_error": -26.027510359450797,
+      "neg_root_mean_squared_error": -33.10043590764856,
+      "r2": -0.06696128050705252,
+      "neg_mean_absolute_percentage_error": -0.187681394759606
+    },
+    {
+      "neg_mean_absolute_error": -23.541724876651692,
+      "neg_root_mean_squared_error": -29.031106130434775,
+      "r2": -0.08347401815166844,
+      "neg_mean_absolute_percentage_error": -0.13897978124126792
+    }
+  ],
+  "metadata": {}
+}

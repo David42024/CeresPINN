@@ -31,18 +31,21 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         feature_names: Optional[List[str]] = None,
         physics_weight: float = 0.1,
     ):
-        super().__init__(hyperparameters)
+        # Store parameters exactly as passed for sklearn compatibility
+        # Don't call super().__init__ to avoid parameter modification
+        self.hyperparameters = hyperparameters
         self.input_dim = input_dim
-        self.feature_names = feature_names or []
+        self.feature_names = feature_names
         self.physics_weight = physics_weight
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self._y_min = 0.0
         self._y_span = 1.0
+        self.is_fitted = False
 
         # PINN configuration (accepts catalog default keys hidden_dim/num_layers
         # as aliases of hidden_units/hidden_layers)
-        hp = hyperparameters or {}
+        hp = self.hyperparameters if self.hyperparameters is not None else {}
         hidden_layers = hp.get("hidden_layers", hp.get("num_layers", 3))
         hidden_units = hp.get("hidden_units", hp.get("hidden_dim", 64))
         self.pinn_config = PINNConfig(
@@ -51,7 +54,7 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
             activation=hp.get("activation", "tanh"),
             dropout=hp.get("dropout", 0.0),
             loss_physics_weight=physics_weight,
-            feature_names=self.feature_names,
+            feature_names=self.feature_names if self.feature_names else [],
         )
     
     def _build_model(self, input_dim: int) -> None:
@@ -181,6 +184,48 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         if isinstance(data, np.ndarray):
             return torch.FloatTensor(data).to(self.device)
         return torch.FloatTensor(data).to(self.device)
+    
+    def get_params(self, deep=True):
+        """Get parameters for sklearn compatibility (required for cloning)."""
+        params = {
+            "hyperparameters": self.hyperparameters,
+            "input_dim": self.input_dim,
+            "feature_names": self.feature_names,
+            "physics_weight": self.physics_weight,
+        }
+        if deep:
+            # Return deep copies of mutable parameters
+            import copy
+            params = {k: copy.deepcopy(v) for k, v in params.items()}
+        return params
+    
+    def set_params(self, **params):
+        """Set parameters for sklearn compatibility (required for cloning)."""
+        for key, value in params.items():
+            if key == "hyperparameters":
+                self.hyperparameters = value
+                # Rebuild pinn_config if hyperparameters change
+                if self.hyperparameters is not None:
+                    hp = self.hyperparameters
+                    hidden_layers = hp.get("hidden_layers", hp.get("num_layers", 3))
+                    hidden_units = hp.get("hidden_units", hp.get("hidden_dim", 64))
+                    self.pinn_config = PINNConfig(
+                        hidden_layers=hidden_layers,
+                        hidden_units=hidden_units,
+                        activation=hp.get("activation", "tanh"),
+                        dropout=hp.get("dropout", 0.0),
+                        loss_physics_weight=self.physics_weight,
+                        feature_names=self.feature_names,
+                    )
+            elif key == "input_dim":
+                self.input_dim = value
+            elif key == "feature_names":
+                self.feature_names = value
+            elif key == "physics_weight":
+                self.physics_weight = value
+                if hasattr(self, "pinn_config"):
+                    self.pinn_config.loss_physics_weight = value
+        return self
 
 
 class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
