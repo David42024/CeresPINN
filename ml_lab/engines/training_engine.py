@@ -602,6 +602,13 @@ class TrainingEngine:
                     if model is None:
                         raise ValueError(f"Could not create model {model_name}")
                     
+                    # Build inner torch model before loading state dict
+                    input_dim = save_bundle["config"].get("input_dim")
+                    if input_dim is None:
+                        input_dim = len(save_bundle["config"].get("feature_names", [])) or 9
+                    if hasattr(model, "_build_model"):
+                        model._build_model(input_dim)
+                    
                     # Load state dict into the inner torch model
                     inner_torch_model = getattr(model, "model", None)
                     if inner_torch_model is not None and hasattr(inner_torch_model, "load_state_dict"):
@@ -616,7 +623,8 @@ class TrainingEngine:
                     if hasattr(model, "feature_names"):
                         model.feature_names = save_bundle["config"].get("feature_names", [])
                     if hasattr(model, "input_dim"):
-                        model.input_dim = save_bundle["config"].get("input_dim")
+                        model.input_dim = input_dim
+                    model.is_fitted = True
             except Exception as e:
                 raise ValueError(f"Could not load model {model_name}: {e}")
         

@@ -1,0 +1,14 @@
+{
+  "data": {
+    "shap_values": {
+      "temp_anomaly_c (+2.45\u00b0C)": -21.4,
+      "heatwave_risk (3.12 index)": -14.2,
+      "precip_anomaly_pct (-22.5%)": -7.8,
+      "seasonal_precip_mm (380mm)": 4.1,
+      "co2_ppm (+580ppm)": 3.5
+    },
+    "base_value": 192.4,
+    "predicted_value": 156.6
+  },
+  "metadata": {}
+}

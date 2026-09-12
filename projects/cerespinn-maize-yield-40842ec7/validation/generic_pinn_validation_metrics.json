@@ -1,0 +1,62 @@
+{
+  "data": {
+    "r2": {
+      "mean": 0.6214,
+      "std": 0.0145,
+      "min": 0.6012,
+      "max": 0.6385,
+      "values": [
+        0.621,
+        0.6385,
+        0.624,
+        0.6012,
+        0.6223
+      ]
+    },
+    "neg_root_mean_squared_error": {
+      "mean": -19.12,
+      "std": 0.35,
+      "min": -19.62,
+      "max": -18.7,
+      "values": [
+        -19.1,
+        -18.7,
+        -19.05,
+        -19.62,
+        -19.13
+      ]
+    },
+    "neg_mean_absolute_error": {
+      "mean": -14.85,
+      "std": 0.28,
+      "min": -15.22,
+      "max": -14.45,
+      "values": [
+        -14.8,
+        -14.45,
+        -14.78,
+        -15.22,
+        -15.0
+      ]
+    },
+    "neg_mean_absolute_percentage_error": {
+      "mean": -0.0945,
+      "std": 0.0028,
+      "min": -0.098,
+      "max": -0.091,
+      "values": [
+        -0.094,
+        -0.091,
+        -0.094,
+        -0.098,
+        -0.095
+      ]
+    }
+  },
+  "metadata": {
+    "model_name": "generic_pinn",
+    "display_name": "Generic PINN (Hybrid MLP)",
+    "family": "H\u00edbrido #2 (PINN Gen\u00e9rico)",
+    "train_time_sec": 28.5
+  }
+}

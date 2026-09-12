@@ -4,12 +4,12 @@
     "status": "trained",
     "model_path": "C:\\Users\\USERJSSV\\Downloads\\cerespinn---climate-adaptive-maize-digital-twin\\projects\\cerespinn-maize-yield-40842ec7\\models\\cerespinn_model.pt",
     "metrics": {
-      "mae": 14.756173818751218,
-      "rmse": 19.40433042847306,
-      "r2": 0.6046352984757393,
-      "mape": 0.09658746889043511
+      "mae": 14.956595985008633,
+      "rmse": 19.330541441497537,
+      "r2": 0.6076364936639841,
+      "mape": 0.09575665118906887
     },
-    "trained_at": "2026-09-09T00:01:08.916681"
+    "trained_at": "2026-09-12T20:37:03.888916"
   },
   "metadata": {}
 }

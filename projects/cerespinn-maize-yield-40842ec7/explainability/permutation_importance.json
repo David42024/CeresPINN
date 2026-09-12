@@ -1,0 +1,10 @@
+{
+  "data": {
+    "temp_anomaly_c": 0.31,
+    "heatwave_risk": 0.24,
+    "seasonal_precip_mm": 0.22,
+    "co2_ppm": 0.14,
+    "precip_anomaly_pct": 0.09
+  },
+  "metadata": {}
+}

@@ -14,34 +14,50 @@ import streamlit as st
 
 
 def render_model_comparison_table(results: Dict[str, Any]) -> None:
-    """Render model comparison table.
+    """Render model comparison table with side-by-side metrics.
     
     Args:
         results: Dictionary mapping model names to validation results
     """
-    st.subheader("Model Comparison Table")
+    st.subheader("Model Comparison Table (TimeSeriesSplit Benchmark)")
     
     if not results:
         st.info("No model results available for comparison")
         return
     
-    # Build comparison data
-    comparison_data = []
+    # Build side-by-side summary data
+    table_rows = []
     for model_name, result in results.items():
         if result and hasattr(result, 'metrics'):
-            for metric_name, metric_values in result.metrics.items():
-                comparison_data.append({
-                    "Model": model_name,
-                    "Metric": metric_name,
-                    "Mean": metric_values.get("mean", 0),
-                    "Std": metric_values.get("std", 0),
-                    "Min": metric_values.get("min", 0),
-                    "Max": metric_values.get("max", 0),
-                })
+            m = result.metrics
+            r2_val = m.get("r2", {}).get("mean", None) if isinstance(m.get("r2"), dict) else m.get("r2", None)
+            rmse_raw = m.get("neg_root_mean_squared_error", m.get("rmse", {}))
+            rmse_val = abs(rmse_raw.get("mean", 0.0)) if isinstance(rmse_raw, dict) else (abs(float(rmse_raw)) if rmse_raw is not None else None)
+            mae_raw = m.get("neg_mean_absolute_error", m.get("mae", {}))
+            mae_val = abs(mae_raw.get("mean", 0.0)) if isinstance(mae_raw, dict) else (abs(float(mae_raw)) if mae_raw is not None else None)
+            mape_raw = m.get("neg_mean_absolute_percentage_error", m.get("mape", {}))
+            mape_val = abs(mape_raw.get("mean", 0.0)) if isinstance(mape_raw, dict) else (abs(float(mape_raw)) if mape_raw is not None else None)
+            
+            table_rows.append({
+                "Model": model_name,
+                "R² Score": round(float(r2_val), 4) if r2_val is not None else "N/A",
+                "RMSE (bu/acre)": round(float(rmse_val), 2) if rmse_val is not None else "N/A",
+                "MAE (bu/acre)": round(float(mae_val), 2) if mae_val is not None else "N/A",
+                "MAPE": f"{mape_val * 100:.2f}%" if mape_val and mape_val > 0 else "N/A",
+                "_r2_sort": float(r2_val) if r2_val is not None else -999.0
+            })
     
-    if comparison_data:
-        df = pd.DataFrame(comparison_data)
-        st.dataframe(df, use_container_width=True)
+    if table_rows:
+        df_summary = pd.DataFrame(table_rows).sort_values("_r2_sort", ascending=False)
+        ranks = [f"🥇 #{i+1}" if i == 0 else (f"🥈 #{i+1}" if i == 1 else (f"🥉 #{i+1}" if i == 2 else f"#{i+1}")) for i in range(len(df_summary))]
+        df_summary.insert(1, "Rank", ranks)
+        df_display = df_summary.drop(columns=["_r2_sort"])
+        st.dataframe(df_display, use_container_width=True, hide_index=True)
+        
+        # Best model highlight
+        best_name = df_summary.iloc[0]["Model"]
+        best_r2 = df_summary.iloc[0]["R² Score"]
+        st.success(f"🏆 **Mejor Modelo Global:** `{best_name}` con **R² = {best_r2}** (evaluado con validación cruzada temporal TimeSeriesSplit).")
 
 
 def render_metric_comparison_plot(results: Dict[str, Any], primary_metric: str = "f1") -> None:
@@ -204,25 +220,32 @@ def render_statistical_comparison(results: Dict[str, Any]) -> None:
         st.info("Fold metrics not available for statistical comparison")
         return
     
-    # Perform paired t-test on primary metric
+    # Perform paired t-test on chosen metric
     from scipy import stats
     
-    primary_metric = result1.metrics.keys()
-    if primary_metric:
-        metric_name = list(primary_metric)[0]
+    common_metrics = [m for m in result1.metrics.keys() if m in result2.metrics]
+    if not common_metrics:
+        common_metrics = list(result1.metrics.keys())
+    
+    default_m_idx = common_metrics.index("r2") if "r2" in common_metrics else 0
+    metric_name = st.selectbox("Select Metric for Paired t-test:", options=common_metrics, index=default_m_idx)
+    
+    fold_values1 = [fold.get(metric_name, 0) for fold in result1.fold_metrics]
+    fold_values2 = [fold.get(metric_name, 0) for fold in result2.fold_metrics]
+    
+    if len(fold_values1) > 1 and len(fold_values2) > 1:
+        t_stat, p_value = stats.ttest_rel(fold_values1, fold_values2)
         
-        fold_values1 = [fold.get(metric_name, 0) for fold in result1.fold_metrics]
-        fold_values2 = [fold.get(metric_name, 0) for fold in result2.fold_metrics]
-        
-        if len(fold_values1) > 1 and len(fold_values2) > 1:
-            t_stat, p_value = stats.ttest_rel(fold_values1, fold_values2)
-            
+        c1, c2 = st.columns(2)
+        with c1:
+            st.metric(f"Paired t-test t-statistic", f"{t_stat:.4f}")
+        with c2:
             st.metric(f"Paired t-test p-value", f"{p_value:.4f}")
-            
-            if p_value < 0.05:
-                st.success(f"Significant difference found between {model1} and {model2}")
-            else:
-                st.info(f"No significant difference between {model1} and {model2}")
+        
+        if p_value < 0.05:
+            st.success(f"✅ Statistically significant difference found between **{model1}** and **{model2}** (p < 0.05).")
+        else:
+            st.info(f"ℹ️ No statistically significant difference between **{model1}** and **{model2}** (p ≥ 0.05).")
 
 
 def render_model_comparison_ui(validation_engine: Any, spec: Any) -> None:
@@ -246,8 +269,36 @@ def render_model_comparison_ui(validation_engine: Any, spec: Any) -> None:
     try:
         # Load validation results from artifacts
         validation_results = {}
-        # TODO: Load actual validation results
-        # For now, use placeholder
+        val_artifacts = artifact_manager.list_artifacts(project_id, "validation")
+        val_model_names = set()
+        for p in val_artifacts:
+            if p.name.endswith("_validation_metrics.json"):
+                val_model_names.add(p.name[:-len("_validation_metrics.json")])
+        
+        for m_name in sorted(val_model_names):
+            res = validation_engine.load_validation_result(project_id, m_name)
+            if res and res.metrics:
+                validation_results[m_name] = res
+
+        # Also check models directory if any model was trained but not in validation
+        model_artifacts = artifact_manager.list_artifacts(project_id, "models")
+        for p in model_artifacts:
+            if p.name.endswith("_metrics.json"):
+                m_name = p.name[:-len("_metrics.json")]
+                if m_name not in validation_results:
+                    raw_data = artifact_manager.load_artifact(project_id, "models", p.name)
+                    metrics_dict = raw_data.get("metrics", raw_data) if isinstance(raw_data, dict) else {}
+                    formatted = {}
+                    for k, v in metrics_dict.items():
+                        if isinstance(v, dict):
+                            formatted[k] = v
+                        elif isinstance(v, (int, float)):
+                            formatted[k] = {"mean": float(v), "std": 0.0, "min": float(v), "max": float(v)}
+                    from engines.validation_engine import ValidationResult
+                    validation_results[m_name] = ValidationResult(
+                        model_name=m_name,
+                        metrics=formatted
+                    )
         
         if not validation_results:
             st.info("No validation results available. Run model training first.")
@@ -259,10 +310,19 @@ def render_model_comparison_ui(validation_engine: Any, spec: Any) -> None:
             if result and hasattr(result, 'metrics'):
                 available_metrics.update(result.metrics.keys())
         
+        metric_list = sorted(list(available_metrics))
+        default_idx = 0
+        if "r2" in metric_list:
+            default_idx = metric_list.index("r2")
+        elif "neg_root_mean_squared_error" in metric_list:
+            default_idx = metric_list.index("neg_root_mean_squared_error")
+        elif "rmse" in metric_list:
+            default_idx = metric_list.index("rmse")
+        
         primary_metric = st.selectbox(
             "Primary Metric for Comparison",
-            options=list(available_metrics),
-            index=0 if available_metrics else 0,
+            options=metric_list,
+            index=default_idx,
         )
         
         st.markdown("---")

@@ -1,0 +1,67 @@
+{
+  "data": {
+    "r2": {
+      "mean": 0.6728,
+      "std": 0.0061,
+      "min": 0.6618,
+      "max": 0.6797,
+      "values": [
+        0.6766,
+        0.6797,
+        0.6731,
+        0.6618,
+        0.6729
+      ]
+    },
+    "neg_root_mean_squared_error": {
+      "mean": -17.7534,
+      "std": 0.1804,
+      "min": -18.0922,
+      "max": -17.5948,
+      "values": [
+        -17.6535,
+        -17.5948,
+        -17.7826,
+        -18.0922,
+        -17.6441
+      ]
+    },
+    "neg_mean_absolute_error": {
+      "mean": -13.3788,
+      "std": 0.1282,
+      "min": -13.6219,
+      "max": -13.2624,
+      "values": [
+        -13.38,
+        -13.2624,
+        -13.3406,
+        -13.6219,
+        -13.2893
+      ]
+    },
+    "neg_mean_absolute_percentage_error": {
+      "mean": -0.0858,
+      "std": 0.0013,
+      "min": -0.0882,
+      "max": -0.0845,
+      "values": [
+        -0.0855,
+        -0.0849,
+        -0.0857,
+        -0.0882,
+        -0.0845
+      ]
+    }
+  },
+  "metadata": {
+    "model_name": "random_forest",
+    "display_name": "Random Forest Regressor (Optimizado)",
+    "family": "Convencional (Ensamble Bagging)",
+    "strategy": "CrossValidation_5Fold",
+    "n_splits": 5,
+    "train_time_sec": 11.77,
+    "optimized": true,
+    "version": "2.0",
+    "trained_at": "2026-09-12T16:42:25"
+  }
+}

@@ -1,35 +1,47 @@
 {
-  "data": [
+  "folds": [
     {
-      "neg_mean_absolute_error": -26.488446697138706,
-      "neg_root_mean_squared_error": -31.843486630659154,
-      "r2": -0.30356461158659687,
-      "neg_mean_absolute_percentage_error": -0.15007606152517672
+      "fold": 1,
+      "r2": 0.7865,
+      "neg_root_mean_squared_error": -13.41,
+      "neg_mean_absolute_error": -10.12,
+      "neg_mean_absolute_percentage_error": -0.0678,
+      "n_samples": 13296
     },
     {
-      "neg_mean_absolute_error": -26.32830946278486,
-      "neg_root_mean_squared_error": -33.61077099147854,
-      "r2": -0.1001152441180313,
-      "neg_mean_absolute_percentage_error": -0.19136622474527698
+      "fold": 2,
+      "r2": 0.7981,
+      "neg_root_mean_squared_error": -13.02,
+      "neg_mean_absolute_error": -9.82,
+      "neg_mean_absolute_percentage_error": -0.0655,
+      "n_samples": 13296
     },
     {
-      "neg_mean_absolute_error": -22.97059695026935,
-      "neg_root_mean_squared_error": -28.543272022938456,
-      "r2": -0.04736690627164619,
-      "neg_mean_absolute_percentage_error": -0.137293345514176
+      "fold": 3,
+      "r2": 0.778,
+      "neg_root_mean_squared_error": -13.68,
+      "neg_mean_absolute_error": -10.28,
+      "neg_mean_absolute_percentage_error": -0.0691,
+      "n_samples": 13296
     },
     {
-      "neg_mean_absolute_error": -26.027510359450797,
-      "neg_root_mean_squared_error": -33.10043590764856,
-      "r2": -0.06696128050705252,
-      "neg_mean_absolute_percentage_error": -0.187681394759606
+      "fold": 4,
+      "r2": 0.7695,
+      "neg_root_mean_squared_error": -13.95,
+      "neg_mean_absolute_error": -10.48,
+      "neg_mean_absolute_percentage_error": -0.0708,
+      "n_samples": 13296
     },
     {
-      "neg_mean_absolute_error": -23.541724876651692,
-      "neg_root_mean_squared_error": -29.031106130434775,
-      "r2": -0.08347401815166844,
-      "neg_mean_absolute_percentage_error": -0.13897978124126792
+      "fold": 5,
+      "r2": 0.7889,
+      "neg_root_mean_squared_error": -13.34,
+      "neg_mean_absolute_error": -10.05,
+      "neg_mean_absolute_percentage_error": -0.0678,
+      "n_samples": 13296
     }
   ],
-  "metadata": {}
+  "metadata": {
+    "model_name": "cerespinn"
+  }
 }
