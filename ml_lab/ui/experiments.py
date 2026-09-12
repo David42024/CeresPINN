@@ -33,21 +33,45 @@ def render_experiment_list(artifact_manager: Any, project_id: str) -> List[Dict[
             st.info("No experiments run yet")
             return []
         
-        # Load experiment metadata
+        # Discover experiments from either metadata or result artifacts. Metadata
+        # can be empty because save_artifact stores the experiment config as data.
         experiment_data = []
+        experiment_names = set()
         for exp_path in experiments:
+            if not exp_path.is_file():
+                continue
+            name = exp_path.name
+            if name.endswith("_metadata.json"):
+                experiment_names.add(name[:-len("_metadata.json")])
+            elif name.endswith("_results.json"):
+                experiment_names.add(name[:-len("_results.json")])
+
+        for experiment_name in sorted(experiment_names, reverse=True):
+            row = {"name": experiment_name}
+            metadata_name = f"{experiment_name}_metadata.json"
+            results_name = f"{experiment_name}_results.json"
+
             try:
-                metadata = artifact_manager.get_artifact_metadata(project_id, "experiments", exp_path.name)
-                if metadata:
-                    experiment_data.append({
-                        "name": exp_path.name,
-                        **metadata,
-                    })
-            except Exception:
-                experiment_data.append({
-                    "name": exp_path.name,
-                    "status": "unknown",
-                })
+                metadata = artifact_manager.load_artifact(
+                    project_id, "experiments", metadata_name
+                )
+                if isinstance(metadata, dict):
+                    row.update(metadata)
+            except (FileNotFoundError, TypeError, ValueError):
+                pass
+
+            try:
+                result = artifact_manager.load_artifact(
+                    project_id, "experiments", results_name
+                )
+                if isinstance(result, dict):
+                    row.setdefault("status", result.get("status", "unknown"))
+                    row.setdefault("completed_at", result.get("completed_at"))
+                    row["model_results"] = result.get("model_results", {})
+            except (FileNotFoundError, TypeError, ValueError):
+                row.setdefault("status", "pending")
+
+            experiment_data.append(row)
         
         if experiment_data:
             # Display as table
@@ -207,8 +231,8 @@ def render_experiment_comparison(artifact_manager: Any, project_id: str) -> None
     results = []
     for exp_name in selected_experiments:
         try:
-            result_path = Path(exp_name.replace("_metadata.json", "_results.json"))
-            result = artifact_manager.load_artifact(project_id, "experiments", result_path.name)
+            result_name = f"{exp_name}_results.json"
+            result = artifact_manager.load_artifact(project_id, "experiments", result_name)
             if result:
                 results.append({"experiment": exp_name, **result})
         except Exception:
@@ -225,7 +249,9 @@ def render_experiment_comparison(artifact_manager: Any, project_id: str) -> None
     # Plot comparison
     if len(results) > 0:
         # Get metric columns
-        metric_cols = [col for col in comparison_df.columns if col not in ["experiment", "model"]]
+        metric_cols = [
+            col for col in comparison_df.columns if col not in ["experiment", "model"]
+        ]
         
         if metric_cols:
             # Melt for plotting
@@ -301,6 +327,24 @@ def render_experiment_tracking(spec: Any, artifact_manager: Any) -> None:
     
     project_id = spec.project_id
     
+    # ✅ Mostrar experimento recién completado si existe en session state
+    if st.session_state.get("experiment_just_completed", False):
+        exp_name = st.session_state.get("last_completed_exp", "")
+        metrics = st.session_state.get("last_completed_metrics", {})
+        if exp_name and metrics:
+            st.success(f"🎉 Experimento **{exp_name}** completado exitosamente!")
+            st.metric("R²", f"{metrics.get('r2', 0):.4f}")
+            st.metric("MAE", f"{metrics.get('mae', 0):.2f}")
+            st.metric("RMSE", f"{metrics.get('rmse', 0):.2f}")
+            st.metric("MAPE", f"{metrics.get('mape', 0):.2%}")
+            st.markdown("---")
+            st.info("💡 **Next step (FICHA 5):** Go to **'Validation'** for Hindcast verification (1990–2020) and **'Statistical Tests'** for KS test, paired t-test, and Sobol sensitivity analysis.")
+            # Reset the flag
+            st.session_state.experiment_just_completed = False
+            st.session_state.last_completed_exp = ""
+            st.session_state.last_completed_metrics = {}
+    # Si no hay experimento completado recientemente, continuar normalmente
+    
     # Tabs
     tab1, tab2, tab3 = st.tabs(["Experiments", "New Experiment", "Comparison"])
     
@@ -331,8 +375,151 @@ def render_experiment_tracking(spec: Any, artifact_manager: Any) -> None:
             
             st.success(f"Experiment '{config['name']}' created!")
             
-            # TODO: Trigger experiment execution
-            st.info("Experiment execution coming soon!")
+            # ── Execute the experiment ──────────────────────────────
+            import numpy as np
+            import pandas as pd
+            from pathlib import Path as _Path
+
+            training_engine = st.session_state.get("training_engine")
+            if training_engine is None:
+                st.error("Training engine not initialised. Please go to Model Training first.")
+            else:
+                # 1. Load dataset (same logic as model training UI)
+                dataset_path = getattr(spec, "dataset_path", None)
+                target = getattr(spec, "target_variable", None)
+
+                df = None
+                if st.session_state.get("preprocessed_df") is not None:
+                    df = st.session_state["preprocessed_df"]
+                elif dataset_path:
+                    try:
+                        df = pd.read_csv(dataset_path)
+                    except Exception:
+                        df = None
+                else:
+                    for cand in [_Path("data/cerespinn_training_preprocessed.csv"),
+                                 _Path("data/cerespinn_training_iowa.csv")]:
+                        if cand.exists():
+                            df = pd.read_csv(cand)
+                            break
+
+                if df is None:
+                    st.error("No dataset found. Please preprocess or upload a dataset first.")
+                else:
+                    # Resolve target column
+                    if not target or target not in df.columns:
+                        if "yield_bu_acre" in df.columns:
+                            target = "yield_bu_acre"
+                        else:
+                            st.error(f"Target variable '{target}' not found in dataset columns.")
+                            df = None
+
+                    if df is not None:
+                        feature_cols = [c for c in df.columns if c != target]
+                        numeric = df[feature_cols].select_dtypes(include=[np.number])
+                        frame = pd.concat([numeric, df[[target]]], axis=1).dropna()
+
+                        if frame.empty or len(numeric.columns) == 0:
+                            st.error("No usable numeric data after dropping missing values.")
+                        else:
+                            X = frame[numeric.columns].to_numpy(dtype=float)
+                            y = pd.to_numeric(frame[target], errors="coerce").dropna().to_numpy(dtype=float)
+                            X = X[: len(y)]
+                            feature_names = list(numeric.columns)
+
+                            # Merge hyperparameters from experiment config
+                            merged_hp = {}
+                            exp_hp = config.get("hyperparameters", {})
+                            for m in config["models"]:
+                                base = {}
+                                # Collect any dotted-key hyperparams (e.g. "cerespinn.hidden_dim")
+                                for k, v in exp_hp.items():
+                                    if k.startswith(f"{m}."):
+                                        base[k.split(".", 1)[1]] = v
+                                merged_hp[m] = base
+
+                            # Update training engine config from experiment validation settings
+                            val_cfg = config.get("validation", {})
+                            training_engine.config.validation_strategy = val_cfg.get("strategy", "time_series_split")
+                            training_engine.config.n_splits = val_cfg.get("n_splits", 5)
+                            training_engine.config.test_size = val_cfg.get("test_size", 0.2)
+
+                            exp_name = config["name"]
+
+                            with st.spinner(f"🔬 Running experiment **{exp_name}** …"):
+                                results = training_engine.train_multiple_models(
+                                    model_names=config["models"],
+                                    X=X,
+                                    y=y,
+                                    feature_names=feature_names,
+                                    target_name=target,
+                                    hyperparameters=merged_hp,
+                                    project_id=project_id,
+                                )
+
+                            # 2. Collect results and save
+                            experiment_results = {
+                                "name": exp_name,
+                                "status": "completed",
+                                "completed_at": datetime.utcnow().isoformat(),
+                                "model_results": {},
+                            }
+                            any_success = False
+
+                            for m, res in results.items():
+                                if res is None:
+                                    err_detail = getattr(training_engine, "last_errors", {}).get(m, "Unknown error")
+                                    experiment_results["model_results"][m] = {
+                                        "status": "failed",
+                                        "error": str(err_detail)[:500],
+                                    }
+                                    st.error(f"❌ **{m}**: Training failed.")
+                                    with st.expander(f"Error details ({m})", expanded=False):
+                                        st.code(err_detail)
+                                else:
+                                    any_success = True
+                                    experiment_results["model_results"][m] = {
+                                        "status": "success",
+                                        "metrics": {k: round(float(v), 6) for k, v in res.metrics.items()},
+                                        "model_path": str(res.model_path) if res.model_path else None,
+                                    }
+                                    st.success(f"✅ **{m}** trained successfully.")
+                                    st.json(res.metrics)
+
+                            if not any_success:
+                                experiment_results["status"] = "failed"
+
+                            # Persist results
+                            artifact_manager.save_artifact(
+                                project_id,
+                                "experiments",
+                                f"{exp_name}_results.json",
+                                experiment_results,
+                            )
+
+                            # Update metadata status
+                            config["status"] = experiment_results["status"]
+                            config["completed_at"] = experiment_results["completed_at"]
+                            artifact_manager.save_artifact(
+                                project_id,
+                                "experiments",
+                                f"{config['name']}_metadata.json",
+                                config,
+                            )
+
+                            # ✅ FORZAR REFRESH para que se vea la lista actualizada
+                            # Esto recarga la UI para mostrar el experimento recién entrenado
+                            st.session_state.experiment_just_completed = True
+                            st.session_state.last_completed_exp = exp_name
+                            st.session_state.last_completed_metrics = res.metrics if any_success else {}
+                            st.rerun()
+
+                            if any_success:
+                                st.balloons()
+                                st.success(f"✅ **{m}** entrenado exitosamente")
+                                st.json(res.metrics)
+                                st.info("💡 **Next step (FICHA 5):** Go to **'Validation'** for Hindcast verification (1990–2020) and **'Statistical Tests'** for KS test, paired t-test, and Sobol sensitivity analysis.")
     
     with tab3:
         render_experiment_comparison(artifact_manager, project_id)
+

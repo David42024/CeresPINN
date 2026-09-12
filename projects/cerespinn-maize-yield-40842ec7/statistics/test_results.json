@@ -1,0 +1,45 @@
+{
+  "data": {
+    "tests": {
+      "ks_test": {
+        "test": "Kolmogorov-Smirnov (two-sample)",
+        "statistic": 0.665,
+        "p_value": 0.0,
+        "alpha": 0.05,
+        "null_hypothesis": "distributions are equal",
+        "reject_null": true,
+        "n_sample1": 3000,
+        "n_sample2": 3000
+      },
+      "paired_t_test": {
+        "test": "Paired t-test (one-sample on differences)",
+        "statistic": 72.4452,
+        "p_value": 0.0,
+        "alpha": 0.05,
+        "significant": true,
+        "mean_difference": 36.988,
+        "mean_sample1": 192.9696,
+        "mean_sample2": 155.9816,
+        "n_samples": 3000
+      },
+      "bootstrap_ci": {
+        "test": "Bootstrap confidence interval",
+        "mean": 155.9816,
+        "std": 21.5853,
+        "ci_lower": 155.2439,
+        "ci_upper": 156.7695,
+        "confidence_level": 0.95,
+        "n_bootstrap": 1000,
+        "n_samples": 3000
+      }
+    },
+    "mean_baseline": 192.4,
+    "mean_ssp585": 156.8,
+    "yield_drop_pct": 18.5,
+    "h1_validated": true,
+    "sample_size_hist": 3000,
+    "sample_size_ssp": 3000,
+    "paired_t_p_value": 0.0
+  },
+  "metadata": {}
+}

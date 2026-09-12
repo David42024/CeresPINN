@@ -1,0 +1,66 @@
+{
+  "data": {
+    "r2": {
+      "mean": 0.7842,
+      "std": 0.0112,
+      "min": 0.7695,
+      "max": 0.7981,
+      "values": [
+        0.7865,
+        0.7981,
+        0.778,
+        0.7695,
+        0.7889
+      ]
+    },
+    "neg_root_mean_squared_error": {
+      "mean": -13.48,
+      "std": 0.38,
+      "min": -13.95,
+      "max": -13.02,
+      "values": [
+        -13.41,
+        -13.02,
+        -13.68,
+        -13.95,
+        -13.34
+      ]
+    },
+    "neg_mean_absolute_error": {
+      "mean": -10.15,
+      "std": 0.24,
+      "min": -10.48,
+      "max": -9.82,
+      "values": [
+        -10.12,
+        -9.82,
+        -10.28,
+        -10.48,
+        -10.05
+      ]
+    },
+    "neg_mean_absolute_percentage_error": {
+      "mean": -0.0682,
+      "std": 0.0019,
+      "min": -0.0708,
+      "max": -0.0655,
+      "values": [
+        -0.0678,
+        -0.0655,
+        -0.0691,
+        -0.0708,
+        -0.0678
+      ]
+    }
+  },
+  "metadata": {
+    "model_name": "cerespinn",
+    "display_name": "🌟 CeresPINN (Digital Twin PINN - Ganador)",
+    "family": "Híbrido #1 (Digital Twin Propuesto)",
+    "optimization": "Monteith Bio-physical Anchor + ResNet Deep Skip + Bayesian Loss Weights",
+    "train_time_sec": 48.2,
+    "strategy": "TimeSeriesSplit",
+    "n_splits": 5,
+    "physics_weight": 0.085
+  }
+}

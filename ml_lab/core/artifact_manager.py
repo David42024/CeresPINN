@@ -133,6 +133,9 @@ class ArtifactManager:
         elif artifact_name.endswith(".pt"):
             import torch
             torch.save(data, artifact_path)
+        elif artifact_name.endswith(".html") or artifact_name.endswith(".md"):
+            with open(artifact_path, "w", encoding="utf-8") as f:
+                f.write(str(data))
         else:
             # Default to JSON
             artifact_dict = {"data": data, "metadata": metadata or {}}
@@ -167,7 +170,9 @@ class ArtifactManager:
         if artifact_name.endswith(".json"):
             with open(artifact_path, "r", encoding="utf-8") as f:
                 artifact_dict = json.load(f)
-            return artifact_dict.get("data", artifact_dict)
+            if isinstance(artifact_dict, dict):
+                return artifact_dict.get("data", artifact_dict)
+            return artifact_dict
         elif artifact_name.endswith(".csv"):
             import pandas as pd
             return pd.read_csv(artifact_path)
@@ -181,6 +186,9 @@ class ArtifactManager:
         elif artifact_name.endswith(".pt"):
             import torch
             return torch.load(artifact_path, map_location="cpu")
+        elif artifact_name.endswith(".html") or artifact_name.endswith(".md"):
+            with open(artifact_path, "r", encoding="utf-8") as f:
+                return f.read()
         else:
             # Try to load as JSON
             with open(artifact_path, "r", encoding="utf-8") as f:
@@ -209,6 +217,28 @@ class ArtifactManager:
         
         return list(artifact_dir.glob("*"))
     
+    def get_artifact_metadata(
+        self, project_id: str, artifact_type: str, artifact_name: str
+    ) -> Optional[Dict[str, Any]]:
+        """Get metadata for an artifact."""
+        try:
+            artifact_dir = self.get_artifact_dir(project_id, artifact_type)
+            if artifact_name.endswith(".json"):
+                artifact_path = artifact_dir / artifact_name
+                if artifact_path.exists():
+                    with open(artifact_path, "r", encoding="utf-8") as f:
+                        content = json.load(f)
+                        return content.get("data", content)
+            else:
+                meta_path = artifact_dir / f"{Path(artifact_name).stem}_metadata.json"
+                if meta_path.exists():
+                    with open(meta_path, "r", encoding="utf-8") as f:
+                        content = json.load(f)
+                        return content.get("data", content)
+            return None
+        except Exception:
+            return None
+
     def delete_artifact(
         self, project_id: str, artifact_type: str, artifact_name: str
     ) -> None:

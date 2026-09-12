@@ -1,0 +1,67 @@
+{
+  "data": {
+    "r2": {
+      "mean": 0.5144,
+      "std": 0.0077,
+      "min": 0.5024,
+      "max": 0.5229,
+      "values": [
+        0.5157,
+        0.5219,
+        0.5093,
+        0.5024,
+        0.5229
+      ]
+    },
+    "neg_root_mean_squared_error": {
+      "mean": -21.6287,
+      "std": 0.2219,
+      "min": -21.946,
+      "max": -21.3096,
+      "values": [
+        -21.6027,
+        -21.4966,
+        -21.7886,
+        -21.946,
+        -21.3096
+      ]
+    },
+    "neg_mean_absolute_error": {
+      "mean": -16.618,
+      "std": 0.1166,
+      "min": -16.7573,
+      "max": -16.431,
+      "values": [
+        -16.6223,
+        -16.5603,
+        -16.7192,
+        -16.7573,
+        -16.431
+      ]
+    },
+    "neg_mean_absolute_percentage_error": {
+      "mean": -0.1089,
+      "std": 0.0014,
+      "min": -0.1108,
+      "max": -0.1066,
+      "values": [
+        -0.1088,
+        -0.1086,
+        -0.1095,
+        -0.1108,
+        -0.1066
+      ]
+    }
+  },
+  "metadata": {
+    "model_name": "linear_regression",
+    "display_name": "Ridge Regression (Optimizada)",
+    "family": "Convencional (Lineal L2)",
+    "strategy": "CrossValidation_5Fold",
+    "n_splits": 5,
+    "train_time_sec": 0.07,
+    "optimized": true,
+    "version": "2.0",
+    "trained_at": "2026-09-12T16:42:13"
+  }
+}

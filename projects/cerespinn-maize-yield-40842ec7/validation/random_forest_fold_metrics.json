@@ -1,0 +1,65 @@
+{
+  "data": [
+    {
+      "fold": 1,
+      "r2": 0.6766,
+      "neg_root_mean_squared_error": -17.6535,
+      "neg_mean_absolute_error": -13.38,
+      "neg_mean_absolute_percentage_error": -0.0855,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 2.92
+    },
+    {
+      "fold": 2,
+      "r2": 0.6797,
+      "neg_root_mean_squared_error": -17.5948,
+      "neg_mean_absolute_error": -13.2624,
+      "neg_mean_absolute_percentage_error": -0.0849,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 2.45
+    },
+    {
+      "fold": 3,
+      "r2": 0.6731,
+      "neg_root_mean_squared_error": -17.7826,
+      "neg_mean_absolute_error": -13.3406,
+      "neg_mean_absolute_percentage_error": -0.0857,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 2.73
+    },
+    {
+      "fold": 4,
+      "r2": 0.6618,
+      "neg_root_mean_squared_error": -18.0922,
+      "neg_mean_absolute_error": -13.6219,
+      "neg_mean_absolute_percentage_error": -0.0882,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 2.63
+    },
+    {
+      "fold": 5,
+      "r2": 0.6729,
+      "neg_root_mean_squared_error": -17.6441,
+      "neg_mean_absolute_error": -13.2893,
+      "neg_mean_absolute_percentage_error": -0.0845,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 0.99
+    }
+  ],
+  "metadata": {
+    "model_name": "random_forest",
+    "display_name": "Random Forest Regressor (Optimizado)",
+    "family": "Convencional (Ensamble Bagging)",
+    "strategy": "CrossValidation_5Fold",
+    "n_splits": 5,
+    "train_time_sec": 11.77,
+    "optimized": true,
+    "version": "2.0",
+    "trained_at": "2026-09-12T16:42:25"
+  }
+}

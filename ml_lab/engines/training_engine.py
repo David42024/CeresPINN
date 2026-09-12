@@ -570,9 +570,66 @@ class TrainingEngine:
         if self.artifact_manager is None:
             raise ValueError("Artifact manager not configured")
         
-        # Load model
-        model_filename = f"{model_name}_model.pkl"
-        model = self.artifact_manager.load_artifact(project_id, "models", model_filename)
+        # Try to load model - first try .pkl (sklearn), then .pt (PyTorch)
+        model = None
+        try:
+            model_filename = f"{model_name}_model.pkl"
+            model = self.artifact_manager.load_artifact(project_id, "models", model_filename)
+        except Exception:
+            # Try PyTorch .pt format
+            try:
+                import torch
+                pt_filename = f"{model_name}_model.pt"
+                artifact_dir = self.artifact_manager.get_artifact_dir(project_id, "models")
+                pt_path = artifact_dir / pt_filename
+                
+                if pt_path.exists():
+                    # Load PyTorch state dict bundle
+                    save_bundle = torch.load(pt_path, weights_only=False)
+                    
+                    # Reconstruct CeresPINN model from saved bundle
+                    from core.model_catalog import get_catalog
+                    catalog = get_catalog()
+                    
+                    # Get model metadata to create instance
+                    model_metadata = catalog.get_model_metadata(model_name)
+                    if model_metadata is None:
+                        raise ValueError(f"Model {model_name} not found in catalog")
+                    
+                    # Create model instance
+                    model = catalog.create_model(model_name, {}, feature_names=save_bundle["config"].get("feature_names", []))
+                    
+                    if model is None:
+                        raise ValueError(f"Could not create model {model_name}")
+                    
+                    # Build inner torch model before loading state dict
+                    input_dim = save_bundle["config"].get("input_dim")
+                    if input_dim is None:
+                        input_dim = len(save_bundle["config"].get("feature_names", [])) or 9
+                    if hasattr(model, "_build_model"):
+                        model._build_model(input_dim)
+                    
+                    # Load state dict into the inner torch model
+                    inner_torch_model = getattr(model, "model", None)
+                    if inner_torch_model is not None and hasattr(inner_torch_model, "load_state_dict"):
+                        inner_torch_model.load_state_dict(save_bundle["state_dict"])
+                        inner_torch_model.eval()
+                    
+                    # Restore model attributes
+                    if hasattr(model, "_y_min"):
+                        model._y_min = save_bundle["config"].get("_y_min", 0.0)
+                    if hasattr(model, "_y_span"):
+                        model._y_span = save_bundle["config"].get("_y_span", 1.0)
+                    if hasattr(model, "feature_names"):
+                        model.feature_names = save_bundle["config"].get("feature_names", [])
+                    if hasattr(model, "input_dim"):
+                        model.input_dim = input_dim
+                    model.is_fitted = True
+            except Exception as e:
+                raise ValueError(f"Could not load model {model_name}: {e}")
+        
+        if model is None:
+            raise ValueError(f"Model {model_name} not found in artifacts")
         
         # Load preprocessing artifacts
         if load_preprocessing:

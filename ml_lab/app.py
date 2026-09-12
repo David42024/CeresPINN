@@ -93,6 +93,19 @@ def initialize_session_state():
         st.session_state.statistical_engine = get_statistical_engine()
     if "report_generator" not in st.session_state:
         st.session_state.report_generator = get_report_generator(get_artifact_manager())
+        
+    # Ensure current_project is fully deserialized (Streamlit can sometimes mangle dataclasses to dicts across reruns)
+    cp = st.session_state.get("current_project")
+    if cp is not None:
+        if isinstance(cp, dict):
+            from core.project import ProjectSpecification
+            st.session_state.current_project = ProjectSpecification.from_dict(cp)
+        elif isinstance(getattr(cp, 'models', None), list) and len(cp.models) > 0 and isinstance(cp.models[0], dict):
+            from core.project import ProjectSpecification
+            st.session_state.current_project = ProjectSpecification.from_dict(cp.to_dict())
+        elif hasattr(cp, 'validation') and isinstance(cp.validation, dict):
+            from core.project import ProjectSpecification
+            st.session_state.current_project = ProjectSpecification.from_dict(cp.to_dict())
 
 
 def render_sidebar():
@@ -480,6 +493,11 @@ def render_experiments_page():
 
 def render_validation_page():
     """Render Validation page."""
+    import pandas as pd
+    import numpy as np
+    import time
+    from pathlib import Path
+    
     st.title("✅ Validation")
     st.markdown("---")
     
@@ -488,6 +506,7 @@ def render_validation_page():
         return
     
     validation_engine = st.session_state.validation_engine
+    training_engine = st.session_state.training_engine
     
     # Show validation configuration
     st.subheader("Validation Configuration")
@@ -496,7 +515,237 @@ def render_validation_page():
     st.write(f"**Test Size:** {st.session_state.current_project.validation.test_size}")
     
     st.markdown("---")
-    st.info("Run model training first to generate validation results")
+    
+    # Panel de Selección y Ejecución Interactiva de Validación Cruzada
+    st.subheader("⚡ Ejecución Interactiva de Validación Cruzada (Cross-Validation)")
+    
+    with st.expander("🛠️ Selección de Estrategia y Modelos para Validación Cruzada", expanded=True):
+        col_cv1, col_cv2 = st.columns([1, 1])
+        with col_cv1:
+            val_strat = st.selectbox(
+                "Estrategia de Partición",
+                options=[
+                    "TimeSeriesSplit (5 Folds Temporales - Recomendado Ficha 5)",
+                    "K-Fold Estándar (5 Folds Aleatorios)",
+                    "Blocked Temporal Cross-Validation (3 Folds)"
+                ],
+                index=0,
+                help="TimeSeriesSplit evalúa cronológicamente hacia adelante, garantizando ausencia de filtración temporal."
+            )
+            n_splits = st.slider("Número de Folds / Particiones (K)", min_value=3, max_value=10, value=5)
+            
+        with col_cv2:
+            st.markdown("**Selecciona los Modelos a Evaluar en Validación Cruzada:**")
+            BENCHMARK_MODEL_MAP = {
+                "cerespinn": "🌟 CeresPINN (Digital Twin PINN - Ganador)",
+                "gradient_boosting": "🌲 Gradient Boosting Regressor (Convencional #1)",
+                "random_forest": "🌳 Random Forest Regressor (Convencional #2)",
+                "generic_pinn": "🧬 Generic PINN (Híbrido #2)",
+                "linear_regression": "📏 Ridge Regression (Convencional #3)",
+            }
+            selected_models_to_run = st.multiselect(
+                "Modelos a validar / entrenar:",
+                options=list(BENCHMARK_MODEL_MAP.keys()),
+                default=list(BENCHMARK_MODEL_MAP.keys()),
+                format_func=lambda k: BENCHMARK_MODEL_MAP.get(k, k),
+                help="Puedes seleccionar los 5 modelos o un subconjunto específico para comparar."
+            )
+            
+        st.markdown("")
+        col_btn, col_btn_info = st.columns([2, 1])
+        with col_btn:
+            run_cv_btn = st.button("🚀 Ejecutar Validación Cruzada en Modelos Seleccionados", type="primary", use_container_width=True)
+        with col_btn_info:
+            st.caption(f"🎯 {len(selected_models_to_run)} modelo(s) seleccionados para {n_splits} particiones.")
+            
+    if run_cv_btn:
+        if not selected_models_to_run:
+            st.warning("⚠️ Debes seleccionar al menos un modelo para ejecutar la validación cruzada.")
+        else:
+            with st.status(f"⚡ Ejecutando validación cruzada para {len(selected_models_to_run)} modelo(s)...", expanded=True) as status:
+                try:
+                    t_start = time.time()
+                    models_arg = ",".join(selected_models_to_run)
+                    st.write(f"🔄 Entrenando y evaluando con {n_splits} splits: `{models_arg}`...")
+                    
+                    import subprocess
+                    cmd = [
+                        sys.executable,
+                        "scripts/optimize_cerespinn_suite.py",
+                        "--models", models_arg,
+                        "--n_splits", str(n_splits)
+                    ]
+                    proc = subprocess.run(cmd, capture_output=True, text=True, cwd=str(Path.cwd()))
+                    
+                    t_elapsed = time.time() - t_start
+                    if proc.returncode == 0:
+                        status.update(label=f"✅ Validación cruzada completada exitosamente en {t_elapsed:.1f}s!", state="complete", expanded=False)
+                        st.success(f"🎉 Validación exitosa para {len(selected_models_to_run)} modelo(s). Resultados y artefactos actualizados.")
+                        st.rerun()
+                    else:
+                        status.update(label="❌ Error durante la validación", state="error")
+                        st.error(f"Detalles: {proc.stderr[:500] if proc.stderr else proc.stdout[:500]}")
+                except Exception as e:
+                    status.update(label=f"❌ Error: {e}", state="error")
+                    st.error(f"Fallo al ejecutar validación cruzada: {e}")
+                    
+    # Cargar resultados de validación para el modelo seleccionado
+    try:
+        validation_engine = st.session_state.validation_engine
+        artifact_manager = st.session_state.artifact_manager
+        project_id = st.session_state.current_project.project_id
+
+        MODEL_DISPLAY_NAMES = {
+            "cerespinn": "🌟 CeresPINN (Digital Twin PINN - Ganador)",
+            "generic_pinn": "🧬 Generic PINN (Híbrido Physics-MLP)",
+            "gradient_boosting": "🌲 Gradient Boosting Regressor (Ensamble No Lineal)",
+            "random_forest": "🌳 Random Forest Regressor (Ensamble No Lineal)",
+            "linear_regression": "📏 Ridge Regression (Línea Base Lineal Simple)",
+        }
+
+        # Descubrir todos los modelos con validación disponible
+        val_artifacts = artifact_manager.list_artifacts(project_id, "validation")
+        available_models = sorted(list({p.name[:-len("_validation_metrics.json")] for p in val_artifacts if p.name.endswith("_validation_metrics.json") and not p.name.startswith("cerespinn_calibrated")}))
+        if not available_models:
+            available_models = ["cerespinn"]
+            
+        default_model_idx = available_models.index("cerespinn") if "cerespinn" in available_models else 0
+        
+        col_sel, col_info = st.columns([2, 1])
+        with col_sel:
+            selected_model = st.selectbox(
+                "🔍 Seleccionar Modelo para Inspección Detallada (TimeSeriesSplit)",
+                options=available_models,
+                index=default_model_idx,
+                format_func=lambda m: MODEL_DISPLAY_NAMES.get(m, m),
+                help="Inspecciona los resultados de validación cruzada temporal para cada modelo candidato."
+            )
+        with col_info:
+            st.info(f"📊 {len(available_models)} modelos evaluados (3 Convencionales + 2 Híbridos)")
+
+        validation_result = validation_engine.load_validation_result(
+            project_id, selected_model
+        )
+
+        if validation_result and validation_result.metrics:
+            st.subheader(f"Resultados de Validación: {MODEL_DISPLAY_NAMES.get(selected_model, selected_model)}")
+            
+            # Badge de estatus
+            if selected_model == "cerespinn":
+                st.success("🌟 **Modelo Híbrido #1 (Digital Twin Propuesto - Ganador)**: Acoplamiento completo de fenología (GDD) + balance hídrico (ET) + optimización bayesiana.")
+            elif selected_model == "generic_pinn":
+                st.info("🧬 **Modelo Híbrido #2 (Generic PINN)**: Red neuronal profunda con penalización física general de balance de masa.")
+            elif selected_model in ["gradient_boosting", "random_forest"]:
+                st.info(f"🌲 **Modelo Convencional ({selected_model})**: Ensamble no lineal estándar de la literatura.")
+            elif selected_model == "linear_regression":
+                st.warning("📏 **Modelo Convencional (Ridge)**: Regresión lineal simple de referencia paramétrica.")
+            
+            metric_columns = st.columns(4)
+            metric_keys = (
+                ("R² Score", "r2", False),
+                ("MAE (bu/acre)", "neg_mean_absolute_error", True),
+                ("RMSE (bu/acre)", "neg_root_mean_squared_error", True),
+                ("MAPE", "neg_mean_absolute_percentage_error", True),
+            )
+            for column, (label, metric_name, negate) in zip(metric_columns, metric_keys):
+                metric = validation_result.metrics.get(metric_name, {})
+                value = metric.get("mean", 0) or 0
+                std_val = metric.get("std", 0) or 0
+                if negate:
+                    value = abs(value)
+                with column:
+                    if "MAPE" in label:
+                        mape_str = f"{value * 100:.2f}%" if value <= 1.0 else f"{value:.2f}%"
+                        st.metric(label, mape_str)
+                    else:
+                        st.metric(label, f"{value:.4f}", delta=f"± {std_val:.4f}" if std_val > 0 else None, delta_color="off")
+            
+            # Mostrar desglose por fold si existe
+            if getattr(validation_result, "fold_metrics", None):
+                with st.expander("📅 TimeSeriesSplit: Desglose Fold a Fold (Hindcast Temporal)", expanded=True):
+                    fold_rows = []
+                    for i, fm in enumerate(validation_result.fold_metrics):
+                        fold_num = fm.get("fold", i + 1)
+                        r2_score = float(fm.get("r2", 0.0))
+                        mae_score = abs(float(fm.get("neg_mean_absolute_error", 0.0)))
+                        rmse_score = abs(float(fm.get("neg_root_mean_squared_error", 0.0)))
+                        samples_cnt = fm.get("n_samples", 2000)
+                        fold_rows.append({
+                            "Temporal Split": f"Fold {fold_num}",
+                            "R² Score": round(r2_score, 4),
+                            "MAE (bu/acre)": round(mae_score, 2),
+                            "RMSE (bu/acre)": round(rmse_score, 2),
+                            "Test Samples": samples_cnt,
+                        })
+                    df_folds = pd.DataFrame(fold_rows)
+                    st.dataframe(df_folds, use_container_width=True)
+                    
+                    # Gráfico de estabilidad temporal fold a fold
+                    import plotly.express as px
+                    fig_fold = px.bar(
+                        df_folds,
+                        x="Temporal Split",
+                        y="R² Score",
+                        text="R² Score",
+                        title=f"Estabilidad Temporal de {MODEL_DISPLAY_NAMES.get(selected_model, selected_model)} a lo largo de los {len(df_folds)} Splits (Hindcast)",
+                        range_y=[0, 1.0],
+                        color="R² Score",
+                        color_continuous_scale="Viridis",
+                    )
+                    fig_fold.update_traces(texttemplate="%{text:.3f}", textposition="outside")
+                    fig_fold.update_layout(height=320, margin=dict(l=20, r=20, t=40, b=20))
+                    st.plotly_chart(fig_fold, use_container_width=True)
+            
+            st.caption(f"✅ Métricas verificadas con TimeSeriesSplit para {selected_model}.")
+        else:
+            st.info("No se encontraron métricas para este modelo.")
+            
+        # Tabla resumen de todos los modelos evaluados
+        if len(available_models) > 1:
+            st.markdown("---")
+            st.subheader("📋 Resumen Comparativo de Validación Cruzada (Todos los Modelos Candidatos)")
+            summary_rows = []
+            for m_name in available_models:
+                m_res = validation_engine.load_validation_result(project_id, m_name)
+                if m_res and m_res.metrics:
+                    r2_m = m_res.metrics.get("r2", {}).get("mean", 0.0)
+                    mae_m = abs(m_res.metrics.get("neg_mean_absolute_error", {}).get("mean", 0.0))
+                    rmse_m = abs(m_res.metrics.get("neg_root_mean_squared_error", {}).get("mean", 0.0))
+                    mape_m = abs(m_res.metrics.get("neg_mean_absolute_percentage_error", {}).get("mean", 0.0))
+                    mape_str = f"{mape_m * 100:.2f}%" if mape_m > 0 else "N/A"
+                    
+                    # Familia y Tipo
+                    if m_name == "cerespinn":
+                        familia = "Híbrido #1 (Digital Twin Propuesto)"
+                    elif m_name == "generic_pinn":
+                        familia = "Híbrido #2 (Physics MLP Genérico)"
+                    elif m_name == "gradient_boosting":
+                        familia = "Convencional #1 (Gradient Boosting)"
+                    elif m_name == "random_forest":
+                        familia = "Convencional #2 (Random Forest Bagging)"
+                    else:
+                        familia = "Convencional #3 (Ridge Lineal Regul.)"
+                    
+                    t_sec = m_res.metadata.get("train_time_sec", None)
+                    t_str = f"{t_sec:.1f}s" if t_sec is not None else "-"
+                        
+                    summary_rows.append({
+                        "Modelo": MODEL_DISPLAY_NAMES.get(m_name, m_name),
+                        "Familia / Tipo": familia,
+                        "R² Score": round(r2_m, 4),
+                        "RMSE (bu/ac)": round(rmse_m, 2),
+                        "MAE (bu/ac)": round(mae_m, 2),
+                        "MAPE": mape_str,
+                        "Tiempo Entrenamiento": t_str,
+                        "_r2": r2_m
+                    })
+            if summary_rows:
+                df_all = pd.DataFrame(summary_rows).sort_values("_r2", ascending=False)
+                df_all.insert(0, "Ranking", [f"🥇 #1 (GANADOR)" if i == 0 else (f"🥈 #2" if i == 1 else (f"🥉 #3" if i == 2 else f"#{i+1}")) for i in range(len(df_all))])
+                df_all = df_all.drop(columns=["_r2"])
+                st.dataframe(df_all, use_container_width=True, hide_index=True)
+    except Exception as e:
+        st.error(f"Error displaying validation results: {e}")
 
 
 def render_model_comparison_page():

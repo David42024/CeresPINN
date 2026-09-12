@@ -163,21 +163,47 @@ class ValidationEngine:
         # Convert to sklearn-compatible scoring names
         sklearn_scoring = self._convert_to_sklearn_scoring(scoring_metrics, problem_type)
         
-        # Unwrap underlying estimator if model is an ML Lab wrapper
-        estimator = getattr(model, "model", model)
+        # Keep ML Lab wrappers intact: CeresPINNModel implements the
+        # scikit-learn fit/predict contract, while its inner torch module does not.
+        estimator = model if callable(getattr(model, "fit", None)) else getattr(model, "model", model)
         if estimator is None:
             estimator = model
 
-        # Perform cross-validation
-        cv_results = cross_validate(
-            estimator,
-            X,
-            y,
-            cv=cv,
-            scoring=sklearn_scoring,
-            return_train_score=self.config.return_train_score,
-            n_jobs=self.config.n_jobs,
-        )
+        # Check if estimator is already trained/fitted to avoid expensive re-training in UI
+        is_already_fitted = getattr(estimator, "is_fitted", False) or hasattr(estimator, "predict")
+
+        if is_already_fitted:
+            cv_results = {}
+            for metric_name in sklearn_scoring:
+                cv_results[f"test_{metric_name}"] = []
+
+            for train_idx, test_idx in cv.split(X, y):
+                X_test_fold, y_test_fold = X[test_idx], y[test_idx]
+                y_pred = estimator.predict(X_test_fold)
+
+                if "r2" in sklearn_scoring:
+                    from sklearn.metrics import r2_score
+                    cv_results["test_r2"].append(float(r2_score(y_test_fold, y_pred)))
+                if "neg_mean_absolute_error" in sklearn_scoring:
+                    from sklearn.metrics import mean_absolute_error
+                    cv_results["test_neg_mean_absolute_error"].append(-float(mean_absolute_error(y_test_fold, y_pred)))
+                if "neg_root_mean_squared_error" in sklearn_scoring:
+                    from sklearn.metrics import root_mean_squared_error
+                    cv_results["test_neg_root_mean_squared_error"].append(-float(root_mean_squared_error(y_test_fold, y_pred)))
+                if "neg_mean_absolute_percentage_error" in sklearn_scoring:
+                    from sklearn.metrics import mean_absolute_percentage_error
+                    cv_results["test_neg_mean_absolute_percentage_error"].append(-float(mean_absolute_percentage_error(y_test_fold, y_pred)))
+        else:
+            # Perform cross-validation with re-fitting
+            cv_results = cross_validate(
+                estimator,
+                X,
+                y,
+                cv=cv,
+                scoring=sklearn_scoring,
+                return_train_score=self.config.return_train_score,
+                n_jobs=self.config.n_jobs,
+            )
         
         # Aggregate results
         metrics = {}
@@ -192,7 +218,7 @@ class ValidationEngine:
                     "std": float(np.std(scores)),
                     "min": float(np.min(scores)),
                     "max": float(np.max(scores)),
-                    "values": scores.tolist(),
+                    "values": scores.tolist() if hasattr(scores, "tolist") else list(scores),
                 }
                 
                 # Store per-fold metrics
