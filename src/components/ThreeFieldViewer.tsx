@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as THREE from 'three';
 import { 
@@ -19,15 +19,17 @@ import {
 import { DailySimulationRecord, SimulationResult } from '../types';
 
 interface ThreeFieldViewerProps {
-  simulation: SimulationResult | null;
+  field?: any;
+  simulation?: SimulationResult;
   currentDayIndex: number;
-  onChangeDayIndex: Dispatch<SetStateAction<number>>;
+  onChangeDayIndex: Dispatch<SetStateAction<number>> | ((dayIndex: number) => void);
 }
 
 type VisualLayerMode = 'soil_moisture' | 'biomass' | 'water_stress' | 'true_color';
 type CameraViewMode = 'perspective' | 'top_down' | 'ground';
 
 export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
+  field,
   simulation,
   currentDayIndex,
   onChangeDayIndex
@@ -35,6 +37,28 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Extract key phenological stages for quick interactive navigation
+  const stagePills = useMemo(() => {
+    if (!simulation?.dailyRecords) return [];
+    const stagesWanted = [
+      { code: 'VE', label: '🌱 VE Siembra' },
+      { code: 'V3', label: '🌿 V3 Plántula' },
+      { code: 'V6', label: '🌿 V6 Vegetativo' },
+      { code: 'VT', label: '🌾 VT Espiga' },
+      { code: 'R1', label: '🌽 R1 Floración' },
+      { code: 'R3', label: '🌽 R3 Llenado' },
+      { code: 'R6', label: '🚜 R6 Cosecha' },
+    ];
+    return stagesWanted.map((s) => {
+      const idx = simulation.dailyRecords.findIndex((r) => r.stageCode === s.code);
+      return {
+        ...s,
+        index: idx >= 0 ? idx : -1,
+        day: idx >= 0 ? simulation.dailyRecords[idx].dap : null
+      };
+    }).filter((s) => s.index >= 0);
+  }, [simulation]);
 
   // Controls state
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -298,22 +322,33 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
     // Generate grid of plants (e.g. 10x10 sample area)
     const height = Math.max(0.15, dailyRecord.canopyHeightM);
-    const plantColor = 
-      dailyRecord.cwsi > 0.5 
-        ? new THREE.Color(0xca8a04).lerp(new THREE.Color(0x991b1b), dailyRecord.cwsi * 0.8) // Yellow/Drought scorched
-        : dailyRecord.stageCode === 'R6'
-        ? new THREE.Color(0xd97706) // Golden harvest
-        : new THREE.Color(0x22c55e); // Lush green
+    const isHarvestMature = dailyRecord.stageCode === 'R6';
+
+    // Agronomic physiological color rendering:
+    // At R6 (Black Layer / Maturity), maize naturally reaches senescence (golden straw / harvest amber).
+    // It is NOT dying of drought, but successfully completing its physiological cycle for harvest.
+    let plantColor: THREE.Color;
+    if (isHarvestMature) {
+      plantColor = new THREE.Color(0xeab308).lerp(new THREE.Color(0xd97706), 0.45); // Golden harvest amber
+    } else if (dailyRecord.cwsi > 0.55) {
+      plantColor = new THREE.Color(0xca8a04).lerp(new THREE.Color(0xdc2626), (dailyRecord.cwsi - 0.55) * 1.5); // Yellow/Drought scorched
+    } else if (dailyRecord.cwsi > 0.35) {
+      plantColor = new THREE.Color(0x84cc16).lerp(new THREE.Color(0xeab308), (dailyRecord.cwsi - 0.35) / 0.2); // Mild water stress
+    } else {
+      plantColor = new THREE.Color(0x22c55e); // Healthy lush green
+    }
 
     const stemGeo = new THREE.CylinderGeometry(0.04, 0.08, height, 6);
     stemGeo.translate(0, height / 2, 0);
 
-    const leafGeo = new THREE.ConeGeometry(0.35 * Math.min(2.5, dailyRecord.lai), height * 0.4, 5);
-    leafGeo.translate(0, height * 0.7, 0);
+    // Retain full canopy leaf structure at maturity (don't shrink leaves to 0 during R6 senescence)
+    const effectiveVisualLai = isHarvestMature ? Math.max(1.8, dailyRecord.lai) : dailyRecord.lai;
+    const leafGeo = new THREE.ConeGeometry(0.35 * Math.min(2.5, Math.max(0.3, effectiveVisualLai)), height * 0.45, 6);
+    leafGeo.translate(0, height * 0.65, 0);
 
     const plantMaterial = new THREE.MeshStandardMaterial({
       color: plantColor,
-      roughness: 0.6,
+      roughness: 0.55,
       metalness: 0.1
     });
 
@@ -344,15 +379,28 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           plantMesh.add(foliage);
         }
 
-        // Tassels / Ears for reproductive stages (VT, R1, R3, R6)
+        // Tassels for reproductive stages (VT, R1, R3, R6)
         if (['VT', 'R1', 'R3', 'R6'].includes(dailyRecord.stageCode)) {
           const tasselGeo = new THREE.ConeGeometry(0.12, 0.35, 4);
           const tasselMat = new THREE.MeshStandardMaterial({
-            color: dailyRecord.stageCode === 'R6' ? 0xb45309 : 0xfef08a
+            color: isHarvestMature ? 0xb45309 : 0xfef08a
           });
           const tassel = new THREE.Mesh(tasselGeo, tasselMat);
           tassel.position.set(0, height, 0);
           plantMesh.add(tassel);
+        }
+
+        // Prominent maize cobs / ears in reproductive and maturity stages (R3, R6)
+        if (['R3', 'R6'].includes(dailyRecord.stageCode)) {
+          const cobGeo = new THREE.CylinderGeometry(0.06, 0.08, 0.36, 6);
+          cobGeo.rotateZ(0.35); // tilt ear naturally
+          const cobMat = new THREE.MeshStandardMaterial({
+            color: isHarvestMature ? 0xf59e0b : 0xa3e635, // Ripe golden yellow cob vs green milky ear
+            roughness: 0.5
+          });
+          const cob = new THREE.Mesh(cobGeo, cobMat);
+          cob.position.set(0.12, height * 0.45, 0);
+          plantMesh.add(cob);
         }
 
         plantsGroup.add(plantMesh);
@@ -426,12 +474,16 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             </div>
           )}
 
-          {dailyRecord && dailyRecord.cwsi > 0.40 && (
+          {dailyRecord && dailyRecord.stageCode === 'R6' ? (
+            <div className="px-3 py-1.5 rounded-xl bg-amber-500/20 backdrop-blur-md border border-amber-400 dark:border-amber-500/60 text-amber-800 dark:text-amber-200 text-xs font-bold flex items-center gap-1.5 shadow-lg">
+              <span>🌽 Madurez Fisiológica R6 (Cultivo Maduro Listo para Cosecha)</span>
+            </div>
+          ) : dailyRecord && dailyRecord.cwsi > 0.40 ? (
             <div className="px-3 py-1.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/80 backdrop-blur-md border border-amber-300 dark:border-amber-600/60 text-amber-700 dark:text-amber-300 text-xs font-medium flex items-center gap-1.5 shadow-lg animate-pulse">
               <Thermometer className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               {t('threeFieldViewer.waterStressBadge')}: {(dailyRecord.cwsi * 100).toFixed(0)}%
             </div>
-          )}
+          ) : null}
         </div>
 
         {/* Top Right: Layer Mode Selectors */}
@@ -570,67 +622,99 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       </div>
 
       {/* Bottom Timeline Scrubber & Playback Controls */}
-      <div className="h-16 bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center gap-4 z-20">
-        {/* Play/Pause Button */}
-        <button
-          id="btn-3d-play-toggle"
-          onClick={() => setIsPlaying(!isPlaying)}
-          disabled={!simulation}
-          className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50"
-          title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
-        >
-          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-        </button>
+      <div className="bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex flex-col gap-1.5 z-20">
+        <div className="flex items-center gap-3">
+          {/* Play/Pause Button */}
+          <button
+            id="btn-3d-play-toggle"
+            onClick={() => setIsPlaying(!isPlaying)}
+            disabled={!simulation}
+            className="p-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50 cursor-pointer shrink-0"
+            title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
+          >
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+          </button>
 
-        <button
-          onClick={() => {
-            setIsPlaying(false);
-            onChangeDayIndex(0);
-          }}
-          disabled={!simulation}
-          className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50"
-          title={t('threeFieldViewer.resetTitle')}
-        >
-          <RotateCcw className="w-4 h-4" />
-        </button>
-
-        {/* Day Slider */}
-        <div className="flex-1 flex flex-col justify-center">
-          <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
-            <span>{t('threeFieldViewer.sliderPlanting')}</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-              {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} {t('threeFieldViewer.sliderOf')} {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
-            </span>
-            <span>{t('threeFieldViewer.sliderHarvest')}</span>
-          </div>
-          <input
-            id="slider-timeline-dap"
-            type="range"
-            min={0}
-            max={(simulation?.dailyRecords.length || 1) - 1}
-            value={currentDayIndex}
-            onChange={(e) => {
+          <button
+            id="btn-3d-reset-timeline"
+            onClick={() => {
               setIsPlaying(false);
-              onChangeDayIndex(parseInt(e.target.value, 10));
+              onChangeDayIndex(0);
             }}
             disabled={!simulation}
-            className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
-          />
+            className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 cursor-pointer shrink-0"
+            title={t('threeFieldViewer.resetTitle')}
+          >
+            <RotateCcw className="w-4 h-4" />
+          </button>
+
+          {/* Day Slider */}
+          <div className="flex-1 flex flex-col justify-center">
+            <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+              <span>{t('threeFieldViewer.sliderPlanting')}</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+                {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} {t('threeFieldViewer.sliderOf')} {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
+              </span>
+              <span>{t('threeFieldViewer.sliderHarvest')}</span>
+            </div>
+            <input
+              id="slider-timeline-dap"
+              type="range"
+              min={0}
+              max={(simulation?.dailyRecords.length || 1) - 1}
+              value={currentDayIndex}
+              onChange={(e) => {
+                setIsPlaying(false);
+                onChangeDayIndex(parseInt(e.target.value, 10));
+              }}
+              disabled={!simulation}
+              className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
+            />
+          </div>
+
+          {/* Speed multiplier selector */}
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs shrink-0">
+            {[1, 2, 4].map((speed) => (
+              <button
+                key={speed}
+                onClick={() => setSpeedMultiplier(speed)}
+                className={`px-2 py-1 rounded-lg font-mono transition-all cursor-pointer ${
+                  speedMultiplier === speed ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                }`}
+              >
+                {speed}x
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Speed multiplier selector */}
-        <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
-          {[1, 2, 4].map((speed) => (
-            <button
-              key={speed}
-              onClick={() => setSpeedMultiplier(speed)}
-              className={`px-2 py-1 rounded-lg font-mono transition-all ${
-                speedMultiplier === speed ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-              }`}
-            >
-              {speed}x
-            </button>
-          ))}
+        {/* Quick Stage Jump Pills */}
+        <div className="flex items-center justify-between gap-1 overflow-x-auto pt-1 border-t border-slate-100 dark:border-slate-800/80 text-[11px] font-mono">
+          <span className="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold shrink-0 mr-1">Saltar a Etapa:</span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {stagePills.map((stage) => {
+              const isActive = dailyRecord?.stageCode === stage.code;
+              return (
+                <button
+                  key={stage.code}
+                  id={`btn-jump-stage-${stage.code.toLowerCase()}`}
+                  onClick={() => {
+                    setIsPlaying(false);
+                    onChangeDayIndex(stage.index);
+                  }}
+                  className={`px-2 py-0.5 rounded-md border transition-all cursor-pointer flex items-center gap-1 ${
+                    isActive
+                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm font-bold scale-105'
+                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-slate-200 dark:hover:bg-slate-800'
+                  }`}
+                  title={`DAP ${stage.day}: Ir a etapa ${stage.label}`}
+                >
+                  <span>{stage.label}</span>
+                  <span className="text-[9px] opacity-75">(d.{stage.day})</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
