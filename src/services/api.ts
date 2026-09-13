@@ -1,5 +1,6 @@
 import type { DailySimulationRecord, Field, SimulationConfig, SimulationResult } from '../types';
 import { runPINNSimulation } from './pinnEngine';
+import { DEFAULT_FIELDS, SOIL_PROFILES } from '../data/mockData';
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
 
@@ -315,6 +316,44 @@ export async function fetchScenarios() {
         { id: 'SSP5-8.5', label: 'Fossil-fueled development', risk: 'high' },
       ]
     };
+  }
+}
+
+export async function fetchFields(): Promise<{ fallback: boolean; fields: Field[] }> {
+  try {
+    const response = await fetchWithTimeout(
+      `${API_BASE}/api/fields`,
+      { method: 'GET' },
+      FALLBACK_TIMEOUT_MS,
+    );
+    if (!response.ok) {
+      throw new Error(`Fields API returned ${response.status}`);
+    }
+    const payload = await response.json();
+    if (Array.isArray(payload) && payload.length > 0) {
+      const fields: Field[] = payload.map((item: any) => {
+        const defaultField = DEFAULT_FIELDS.find(f => f.id === item.id) || DEFAULT_FIELDS[0];
+        return {
+          id: item.id || defaultField.id,
+          name: item.name || defaultField.name,
+          locationName: item.location_name || item.locationName || defaultField.locationName,
+          country: item.country || defaultField.country,
+          centerLat: item.center_lat ?? item.centerLat ?? defaultField.centerLat,
+          centerLng: item.center_lng ?? item.centerLng ?? defaultField.centerLng,
+          areaHectares: item.area_hectares ?? item.areaHectares ?? defaultField.areaHectares,
+          altitudeMeters: item.altitude_meters ?? item.altitudeMeters ?? defaultField.altitudeMeters,
+          currentCrop: item.current_crop || item.currentCrop || defaultField.currentCrop,
+          soilProfile: defaultField.soilProfile || SOIL_PROFILES.clay_loam,
+          notes: item.notes || defaultField.notes,
+          polygon: defaultField.polygon,
+        };
+      });
+      return { fallback: false, fields };
+    }
+    return { fallback: true, fields: DEFAULT_FIELDS };
+  } catch (error) {
+    console.warn('Fields endpoint unavailable; returning local fallback.', error);
+    return { fallback: true, fields: DEFAULT_FIELDS };
   }
 }
 

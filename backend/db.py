@@ -23,6 +23,10 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
 _DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+if not _DATABASE_URL:
+    _default_db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "data", "cerespinn.db"))
+    os.makedirs(os.path.dirname(_default_db_path), exist_ok=True)
+    _DATABASE_URL = f"sqlite:///{_default_db_path}"
 
 
 class DatabaseUnavailable(Exception):
@@ -42,7 +46,12 @@ def get_engine() -> Optional[Engine]:
     if not _DATABASE_URL:
         return None
     try:
-        _engine = create_engine(_DATABASE_URL, pool_pre_ping=True, pool_recycle=600)
+        connect_args = {"check_same_thread": False} if "sqlite" in _DATABASE_URL else {}
+        _engine = create_engine(
+            _DATABASE_URL,
+            pool_pre_ping=True,
+            connect_args=connect_args
+        )
         # Force a round-trip so a misconfigured URL surfaces immediately.
         with _engine.connect():
             pass
@@ -176,21 +185,31 @@ def init_db() -> None:
     """Create tables (and backfill new columns) if the database is configured. Never raises."""
     if not available():
         return
-    _MIGRATIONS = [
-        "ALTER TABLE fields ADD COLUMN IF NOT EXISTS altitude_meters DOUBLE PRECISION NOT NULL DEFAULT 0",
-        "ALTER TABLE fields ADD COLUMN IF NOT EXISTS soil_profile TEXT NOT NULL DEFAULT '{}'",
-        "ALTER TABLE fields ADD COLUMN IF NOT EXISTS polygon TEXT NOT NULL DEFAULT '{}'",
-        "ALTER TABLE fields ADD COLUMN IF NOT EXISTS notes TEXT",
-    ]
     try:
         with _connect() as conn:
-            conn.execute(text(_SCHEMA))
-            for stmt in _MIGRATIONS:
-                conn.execute(text(stmt))
-            # Initialize ML Lab schema
-            _init_ml_lab_schema(conn)
-            conn.commit()
-    except (SQLAlchemyError, DatabaseUnavailable):
+            engine = get_engine()
+            if engine and "sqlite" in str(engine.url):
+                raw_conn = conn.connection.dbapi_connection
+                cursor = raw_conn.cursor()
+                cursor.executescript(_SCHEMA)
+                try:
+                    cursor.executescript(_ML_LAB_SCHEMA)
+                except Exception:
+                    pass
+                raw_conn.commit()
+            else:
+                conn.execute(text(_SCHEMA))
+                _MIGRATIONS = [
+                    "ALTER TABLE fields ADD COLUMN IF NOT EXISTS altitude_meters DOUBLE PRECISION NOT NULL DEFAULT 0",
+                    "ALTER TABLE fields ADD COLUMN IF NOT EXISTS soil_profile TEXT NOT NULL DEFAULT '{}'",
+                    "ALTER TABLE fields ADD COLUMN IF NOT EXISTS polygon TEXT NOT NULL DEFAULT '{}'",
+                    "ALTER TABLE fields ADD COLUMN IF NOT EXISTS notes TEXT",
+                ]
+                for stmt in _MIGRATIONS:
+                    conn.execute(text(stmt))
+                _init_ml_lab_schema(conn)
+                conn.commit()
+    except (SQLAlchemyError, DatabaseUnavailable, Exception):
         pass
 
 
@@ -878,15 +897,31 @@ def health() -> Optional[Dict[str, Any]]:
         return None
     try:
         with _connect() as conn:
+            engine = get_engine()
+            if engine and "sqlite" in str(engine.url):
+                ver = conn.execute(text("SELECT sqlite_version()")).scalar()
+                tables_res = conn.execute(text("SELECT name FROM sqlite_master WHERE type='table'")).fetchall()
+                tables = [r[0] for r in tables_res]
+                fields_count = conn.execute(text("SELECT count(*) FROM fields")).scalar() or 0
+                return {
+                    "database": "sqlite",
+                    "postgis": "simulated",
+                    "status": "connected",
+                    "version": f"SQLite {ver}",
+                    "tables": tables,
+                    "fields_count": fields_count,
+                    "database_file": "backend/data/cerespinn.db",
+                    "note": "Base de datos SQLite local conectada y poblada con esquemas y seeds."
+                }
             version = conn.execute(text("SELECT version()")).scalar()
             postgis = conn.execute(
                 text("SELECT postgis_version()")
             ).scalar()  # raises if PostGIS missing
-        return {
-            "database": "postgres",
-            "postgis": postgis if isinstance(postgis, str) else "available",
-            "status": "connected",
-            "version": version[:60] if isinstance(version, str) else str(version),
-        }
-    except (SQLAlchemyError, DatabaseUnavailable):
+            return {
+                "database": "postgres",
+                "postgis": postgis if isinstance(postgis, str) else "available",
+                "status": "connected",
+                "version": version[:60] if isinstance(version, str) else str(version),
+            }
+    except (SQLAlchemyError, DatabaseUnavailable, Exception):
         return None

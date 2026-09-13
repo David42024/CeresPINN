@@ -95,10 +95,10 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
         <div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Sliders className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            Configuración de Simulación & Forzamiento PINN
+            Configuración de Simulación & Forzamiento Biofísico PINN
           </h2>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-            Parámetros climáticos CMIP6, fenología varietal y balance hídrico Richards para <strong className="text-slate-800 dark:text-slate-200">{field.name}</strong>.
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 max-w-2xl">
+            <strong>¿Para qué sirve?</strong> Permite parametrizar el forzamiento climático CMIP6, la fenología varietal, el balance hídrico 1D de Richards y el perfil edáfico de <strong className="text-slate-800 dark:text-slate-200">{field.name}</strong>.
           </p>
         </div>
 
@@ -552,6 +552,31 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
           </div>
         </div>
       )}
+
+      {/* Bottom Sticky Action Bar */}
+      <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <span className="text-xs text-slate-500">
+          Al guardar cambios, la simulación de CeresPINN se re-ejecutará con los nuevos parámetros agronómicos y climáticos.
+        </span>
+        <button
+          id="btn-execute-simulation-bottom"
+          onClick={onRunSimulation}
+          disabled={isLoading}
+          className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-emerald-600/30 transition-all disabled:opacity-50 cursor-pointer"
+        >
+          {isLoading ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>Simulando CeresPINN...</span>
+            </>
+          ) : (
+            <>
+              <Zap className="w-4 h-4 text-amber-300" />
+              <span>⚡ Guardar y Re-ejecutar Simulación PINN</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 };
