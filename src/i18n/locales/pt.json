@@ -39,7 +39,9 @@
     "emailLabel": "E-mail",
     "passwordLabel": "Senha",
     "submit": "Entrar",
-    "error": "E-mail ou senha incorretos."
+    "error": "E-mail ou senha incorretos.",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha"
   },
   "mainDashboard": {
     "kpiProjectedYield": "Rendimento Projetado",

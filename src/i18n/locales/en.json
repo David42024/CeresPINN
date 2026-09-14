@@ -39,7 +39,9 @@
     "emailLabel": "Email",
     "passwordLabel": "Password",
     "submit": "Sign in",
-    "error": "Incorrect email or password."
+    "error": "Incorrect email or password.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "mainDashboard": {
     "kpiProjectedYield": "Projected Yield",

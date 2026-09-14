@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LockKeyhole, Mail, Sprout } from 'lucide-react';
+import { Eye, EyeOff, Loader2, LockKeyhole, Mail, Sprout } from 'lucide-react';
 import { DEMO_USERS } from '../data/mockData';
 import { User } from '../types';
 
@@ -20,18 +20,25 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hasError, setHasError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
     const normalizedEmail = email.trim().toLowerCase();
     const user = DEMO_USERS.find((demoUser) => demoUser.email === normalizedEmail);
 
     if (user && DEMO_CREDENTIALS[normalizedEmail] === password) {
+      setIsSubmitting(false);
       onLoginSuccess(user);
       return;
     }
 
     setHasError(true);
+    setIsSubmitting(false);
   };
 
   return (
@@ -65,6 +72,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                   }}
                   autoComplete="email"
                   required
+                  disabled={isSubmitting}
                   className="w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
                 />
               </div>
@@ -75,7 +83,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               <div className="relative">
                 <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(event) => {
                     setPassword(event.target.value);
@@ -83,8 +91,18 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                   }}
                   autoComplete="current-password"
                   required
-                  className="w-full pl-10 pr-3 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
+                  disabled={isSubmitting}
+                  className="w-full pl-10 pr-11 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  disabled={isSubmitting}
+                  aria-label={showPassword ? t('login.hidePassword') : t('login.showPassword')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors disabled:opacity-50"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
             </label>
           </div>
@@ -95,9 +113,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
           <button
             type="submit"
+            disabled={isSubmitting}
             className="mt-6 w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[.99] text-white font-bold text-sm shadow-lg shadow-emerald-600/25 transition-all"
           >
-            {t('login.submit')}
+            {isSubmitting ? <Loader2 className="mx-auto w-5 h-5 animate-spin" aria-hidden="true" /> : t('login.submit')}
           </button>
         </form>
       </div>
