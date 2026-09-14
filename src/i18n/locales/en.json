@@ -41,7 +41,12 @@
     "submit": "Sign in",
     "error": "Incorrect email or password.",
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "tagline": "Climate digital twins for physics-informed agronomic decisions.",
+    "feature1": "Crop phenology",
+    "feature2": "Soil moisture",
+    "feature3": "Climate scenarios",
+    "feature4": "Thermal stress"
   },
   "mainDashboard": {
     "kpiProjectedYield": "Projected Yield",

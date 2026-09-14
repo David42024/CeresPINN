@@ -41,7 +41,12 @@
     "submit": "Entrar",
     "error": "E-mail ou senha incorretos.",
     "showPassword": "Mostrar senha",
-    "hidePassword": "Ocultar senha"
+    "hidePassword": "Ocultar senha",
+    "tagline": "Gêmeos digitais climáticos para decisões agronômicas guiadas pela física.",
+    "feature1": "Fenologia da cultura",
+    "feature2": "Umidade do solo",
+    "feature3": "Cenários climáticos",
+    "feature4": "Estresse térmico"
   },
   "mainDashboard": {
     "kpiProjectedYield": "Rendimento Projetado",
