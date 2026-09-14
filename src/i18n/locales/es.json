@@ -31,7 +31,15 @@
     "kpiCwsi": "Índice de Estrés Hídrico (CWSI)",
     "footerTitle": "CeresPINN: Physics-Informed Neural Network (Richards + Priestley-Taylor + CMIP6 Downscaling)",
     "footerSubtitle": "Diseñado para Investigación Agronómica y Producción de Maíz Resiliente a Sequías",
-    "langSelectorTitle": "Seleccionar idioma"
+    "langSelectorTitle": "Seleccionar idioma",
+    "logout": "Cerrar sesión"
+  },
+  "login": {
+    "title": "Inicia sesión para acceder a tu gemelo digital",
+    "emailLabel": "Correo electrónico",
+    "passwordLabel": "Contraseña",
+    "submit": "Iniciar sesión",
+    "error": "Correo o contraseña incorrectos."
   },
   "mainDashboard": {
     "kpiProjectedYield": "Rendimiento Proyectado",

@@ -24,7 +24,8 @@ import {
   Globe,
   ShieldCheck,
   Sun,
-  Moon
+  Moon,
+  LogOut
 } from 'lucide-react';
 import { useTheme } from './context/ThemeContext';
 import { 
@@ -50,6 +51,7 @@ import { MLOpsDashboard } from './components/MLOpsDashboard';
 import { DataPipelinesView } from './components/DataPipelinesView';
 import { UserManagement } from './components/UserManagement';
 import { ValidationReport } from './components/ValidationReport';
+import { LoginScreen } from './components/LoginScreen';
 
 type ActiveTab = 
   | 'twin3d' 
@@ -70,10 +72,18 @@ export const App: React.FC = () => {
   const [selectedField, setSelectedField] = useState<Field>(DEFAULT_FIELDS[0]);
   const [simulationConfig, setSimulationConfig] = useState<SimulationConfig>(DEFAULT_SIMULATION_CONFIG);
   const [activeTab, setActiveTab] = useState<ActiveTab>('twin3d');
-  const [currentUser, setCurrentUser] = useState<User>(DEMO_USERS[0]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(65); // Mid-season by default
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
   const [dbHealth, setDbHealth] = useState<any>(null);
+
+  useEffect(() => {
+    const loggedUserId = localStorage.getItem('loggedUserId');
+    const loggedUser = DEMO_USERS.find((user) => user.id === loggedUserId);
+    if (loggedUser) {
+      setCurrentUser(loggedUser);
+    }
+  }, []);
 
   // Load database health on mount
   useEffect(() => {
@@ -134,7 +144,21 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleLoginSuccess = (user: User) => {
+    localStorage.setItem('loggedUserId', user.id);
+    setCurrentUser(user);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedUserId');
+    setCurrentUser(null);
+  };
+
   const currentDayRecord = simulationResult.dailyRecords[currentDayIndex] || simulationResult.dailyRecords[0];
+
+  if (!currentUser) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans flex flex-col selection:bg-emerald-500 selection:text-slate-950">
@@ -225,6 +249,15 @@ export const App: React.FC = () => {
             >
               <Zap className={`w-3.5 h-3.5 text-amber-300 ${isSimulating ? 'animate-spin' : ''}`} />
               <span className="hidden md:inline">{isSimulating ? t('app.quickRunExecuting') : t('app.quickRunLabel')}</span>
+            </button>
+            <button
+              id="btn-logout"
+              onClick={handleLogout}
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition-all"
+              title={t('app.logout')}
+              aria-label={t('app.logout')}
+            >
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
         </div>
