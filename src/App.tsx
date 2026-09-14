@@ -355,7 +355,7 @@ export const App: React.FC = () => {
               {t('app.statusBarUser')} <strong className="text-slate-800 dark:text-slate-200">{currentUser.name}</strong> ({currentUser.role})
             </span>
             <span className="text-slate-600 dark:text-slate-400">
-              {t('app.statusBarScenario')} <strong className="text-slate-800 dark:text-slate-200">{simulationConfig.climateScenario}</strong>
+              {t('app.statusBarScenario')} <strong className="text-slate-800 dark:text-slate-200">{simulationConfig.scenario}</strong>
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -385,7 +385,6 @@ export const App: React.FC = () => {
         {activeTab === 'twin3d' && (
           <div className="space-y-6">
             <ThreeFieldViewer
-              field={selectedField}
               simulation={simulationResult}
               currentDayIndex={currentDayIndex}
               onChangeDayIndex={setCurrentDayIndex}
