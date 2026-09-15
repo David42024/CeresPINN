@@ -648,7 +648,7 @@ _USERS_SEED: List[Dict[str, Any]] = [
     {
         "id": "usr-admin-1",
         "name": "Dra. Elena Vasconcelos",
-        "email": "elena.vasconcelos@agriclimate-twin.org",
+        "email": "admin@agri.com",
         "role": "admin",
         "avatar_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
         "organization": "Centro Internacional de Modelado Climático Agrícola",

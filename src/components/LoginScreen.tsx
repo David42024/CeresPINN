@@ -6,7 +6,7 @@ import { DEMO_USERS } from '../data/mockData';
 import { User } from '../types';
 
 const DEMO_CREDENTIALS: Record<string, string> = {
-  'elena.vasconcelos@agriclimate-twin.org': 'Ceres2026!',
+  'admin@agri.com': 'Ceres2026!',
   'm.vance@agri-ai-lab.edu': 'Ceres2026!',
   'carlos.mendez@agrovalle.com': 'Ceres2026!',
   'sofia.morales@climateresilient.tech': 'Ceres2026!'
