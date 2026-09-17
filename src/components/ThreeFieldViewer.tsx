@@ -652,32 +652,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
         </button>
 
         {/* Day Slider */}
-        <div className="flex-1 flex flex-col justify-center">
-          <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
-            <span>{t('threeFieldViewer.sliderPlanting')}</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-              {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} {t('threeFieldViewer.sliderOf')} {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
-            </span>
-            <span>{t('threeFieldViewer.sliderHarvest')}</span>
-          </div>
-          <input
-            id="slider-timeline-dap"
-            type="range"
-            min={0}
-            max={(simulation?.dailyRecords.length || 1) - 1}
-            value={currentDayIndex}
-            onChange={(e) => {
-              setIsPlaying(false);
-              onChangeDayIndex(0);
-            }}
-            disabled={!simulation}
-            className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 cursor-pointer shrink-0"
-            title={t('threeFieldViewer.resetTitle')}
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
-
-          {/* Day Slider */}
+        <div className="flex-1 flex items-center gap-3">
           <div className="flex-1 flex flex-col justify-center">
             <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
               <span>{t('threeFieldViewer.sliderPlanting')}</span>
