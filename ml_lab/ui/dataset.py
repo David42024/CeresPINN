@@ -8,6 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -292,6 +293,8 @@ def render_dataset_statistics(df: pd.DataFrame) -> None:
     Args:
         df: DataFrame to analyze
     """
+    import numpy as np
+    
     st.subheader("Statistical Summary")
     
     # Numerical columns
@@ -443,15 +446,36 @@ def render_dataset_analyzer_ui(dataset_analyzer: Any, spec: Optional[Any] = None
     
     # Analyze button
     st.markdown("---")
-    if st.button("Run Full Analysis", type="primary"):
+    st.subheader("Dataset Profiling & Target Configuration")
+    target_options = list(df.columns)
+    default_idx = len(target_options) - 1
+    if "yield_bu_acre" in target_options:
+        default_idx = target_options.index("yield_bu_acre")
+    elif spec and spec.target_variable in target_options:
+        default_idx = target_options.index(spec.target_variable)
+    
+    col_t1, col_t2 = st.columns([3, 1])
+    with col_t1:
+        chosen_target = st.selectbox(
+            "Target Variable (Objetivo de predicción):",
+            options=target_options,
+            index=default_idx,
+            help="Columna objetivo para las recomendaciones de modelos, métricas y validación",
+        )
+    with col_t2:
+        st.write("")
+        st.write("")
+        run_analysis = st.button("Run Full Analysis", type="primary", use_container_width=True)
+    
+    if run_analysis:
         with st.spinner("Analyzing dataset..."):
-            target_column = spec.target_variable if spec else None
-            profile = dataset_analyzer.analyze(dataset_path, target_column)
+            profile = dataset_analyzer.analyze(dataset_path, chosen_target)
         
         render_dataset_analysis(profile)
         
         # Update spec if provided
         if spec:
+            spec.target_variable = chosen_target
             from core.project_analyzer import ProjectAnalyzer
             project_analyzer = ProjectAnalyzer()
             spec = project_analyzer.refine_from_dataset(spec, profile)
@@ -475,9 +499,13 @@ def render_dataset_analyzer_ui(dataset_analyzer: Any, spec: Optional[Any] = None
     with col4:
         if st.button("Full Analysis"):
             with st.spinner("Analyzing dataset..."):
-                target_column = spec.target_variable if spec else None
-                profile = dataset_analyzer.analyze(dataset_path, target_column)
+                profile = dataset_analyzer.analyze(dataset_path, chosen_target)
             render_dataset_analysis(profile)
+            if spec:
+                spec.target_variable = chosen_target
+                from core.project_analyzer import ProjectAnalyzer
+                project_analyzer = ProjectAnalyzer()
+                spec = project_analyzer.refine_from_dataset(spec, profile)
             return profile
     
     return None

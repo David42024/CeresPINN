@@ -52,6 +52,51 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # API Functions with fallback
+def normalize_validation(raw):
+    """Normaliza el reporte real (/api/validation) al formato que consume la UI.
+
+    Backend: hindcast.metrics.{rmse_kg_ha, mae_kg_ha, r2} + by_year[];
+             sobol_sensitivity.{parameters[], first_order[], total[]}.
+    Mock/UI: hindcast_metrics.{rmse_kg_ha, mae_kg_ha, r2_score, nrmse_percent};
+             sobol_sensitivity.{first_order{}, total_order{}}.
+    """
+    data = dict(raw or {})
+
+    if "hindcast_metrics" not in data:
+        h = data.get("hindcast", {}) or {}
+        m = h.get("metrics", {}) or {}
+        rmse = float(m.get("rmse_kg_ha") or 0)
+        mae = float(m.get("mae_kg_ha") or 0)
+        r2 = m.get("r2", m.get("r2_score", 0)) or 0
+        by_year = h.get("by_year", []) or []
+        obs = [r.get("observed_kg_ha") for r in by_year if r.get("observed_kg_ha")]
+        mean_obs = sum(obs) / len(obs) if obs else 0
+        nrmse = round(rmse / mean_obs * 100, 1) if mean_obs else 0
+        data["hindcast_metrics"] = {
+            "rmse_kg_ha": m.get("rmse_kg_ha", 0),
+            "mae_kg_ha": m.get("mae_kg_ha", 0),
+            "r2_score": float(r2),
+            "nrmse_percent": nrmse,
+        }
+
+    sob = data.get("sobol_sensitivity", {}) or {}
+    if isinstance(sob.get("first_order"), list):
+        params = sob.get("parameters", []) or []
+        data["sobol_sensitivity"] = {
+            "first_order": dict(zip(params, sob.get("first_order", []))),
+            "total_order": dict(zip(params, sob.get("total", []))),
+        }
+    elif "total" in sob and "total_order" not in sob:
+        data["sobol_sensitivity"] = {**sob, "total_order": sob.get("total", {})}
+
+    return data
+
+
+def display_name(item):
+    """Nombre a mostrar: el backend usa 'label', el mock usa 'name'."""
+    if isinstance(item, dict):
+        return item.get("name") or item.get("label") or item.get("id") or str(item)
+    return str(item)
 def fetch_with_timeout(url, timeout=4):
     try:
         response = requests.get(url, timeout=timeout)
@@ -97,7 +142,7 @@ def get_model_registry():
 def get_validation_report():
     data = fetch_with_timeout(f"{API_BASE_URL}/api/validation")
     if data:
-        return data
+        return normalize_validation(data)
     return {
         "hindcast_metrics": {
             "rmse_kg_ha": 385,
@@ -191,8 +236,8 @@ def main():
         
         col1, col2 = st.columns(2)
         with col1:
-            st.selectbox("Escenario Climático", [s["name"] for s in scenarios], key="scenario")
-            st.selectbox("Perfil de Suelo", [s["name"] for s in soil_profiles], key="soil")
+            st.selectbox("Escenario Climático", [display_name(s) for s in scenarios], key="scenario")
+            st.selectbox("Perfil de Suelo", [display_name(s) for s in soil_profiles], key="soil")
             st.slider("Fecha de Siembra", 1, 120, 45, key="planting")
         
         with col2:

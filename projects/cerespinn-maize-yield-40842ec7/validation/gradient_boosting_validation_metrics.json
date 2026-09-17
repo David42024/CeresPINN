@@ -1,0 +1,67 @@
+{
+  "data": {
+    "r2": {
+      "mean": 0.6729,
+      "std": 0.006,
+      "min": 0.6619,
+      "max": 0.6797,
+      "values": [
+        0.6766,
+        0.6797,
+        0.6732,
+        0.6619,
+        0.673
+      ]
+    },
+    "neg_root_mean_squared_error": {
+      "mean": -17.7522,
+      "std": 0.1801,
+      "min": -18.0905,
+      "max": -17.5939,
+      "values": [
+        -17.6538,
+        -17.5939,
+        -17.7811,
+        -18.0905,
+        -17.6418
+      ]
+    },
+    "neg_mean_absolute_error": {
+      "mean": -13.3778,
+      "std": 0.1293,
+      "min": -13.6224,
+      "max": -13.2597,
+      "values": [
+        -13.3791,
+        -13.2597,
+        -13.3425,
+        -13.6224,
+        -13.2855
+      ]
+    },
+    "neg_mean_absolute_percentage_error": {
+      "mean": -0.0858,
+      "std": 0.0013,
+      "min": -0.0882,
+      "max": -0.0845,
+      "values": [
+        -0.0855,
+        -0.0849,
+        -0.0857,
+        -0.0882,
+        -0.0845
+      ]
+    }
+  },
+  "metadata": {
+    "model_name": "gradient_boosting",
+    "display_name": "Gradient Boosting Regressor (Optimizado)",
+    "family": "Convencional (Ensamble Boosting)",
+    "strategy": "CrossValidation_5Fold",
+    "n_splits": 5,
+    "train_time_sec": 35.85,
+    "optimized": true,
+    "version": "2.0",
+    "trained_at": "2026-09-12T16:43:01"
+  }
+}

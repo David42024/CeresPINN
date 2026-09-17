@@ -1,0 +1,26 @@
+{
+  "data": {
+    "name": "cerespinn_v1",
+    "type": "pytorch",
+    "path": "projects/cerespinn-maize-yield-40842ec7/models/cerespinn_model.pt",
+    "version": "1.0.0-ficha5",
+    "description": "Climate-Adaptive PINN Digital Twin for Maize",
+    "framework": "PyTorch / CeresPINN",
+    "training_date": "2026-09-12",
+    "metrics": {
+      "r2": 0.6686,
+      "rmse": 17.8674,
+      "mae": 13.6028,
+      "mape": 0.0958
+    },
+    "tags": [
+      "production",
+      "pinn",
+      "cmip6",
+      "climate-adaptive",
+      "maize"
+    ],
+    "status": "production"
+  },
+  "metadata": {}
+}

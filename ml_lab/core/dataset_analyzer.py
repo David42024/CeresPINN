@@ -94,21 +94,58 @@ class DatasetAnalyzer:
                     return "image"
         return "tabular"  # Default
     
+    def analyze_tabular(
+        self, dataset: Union[Path, pd.DataFrame], target_column: Optional[str] = None
+    ) -> DatasetProfile:
+        """Analyze a tabular dataset (DataFrame or Path)."""
+        return self._analyze_tabular(dataset, target_column)
+
     def _analyze_tabular(
-        self, dataset_path: Path, target_column: Optional[str]
+        self, dataset_or_path: Union[Path, pd.DataFrame], target_column: Optional[str] = None
     ) -> DatasetProfile:
         """Analyze a tabular dataset."""
         # Load dataset
-        df = self._load_tabular(dataset_path)
+        if isinstance(dataset_or_path, pd.DataFrame):
+            df = dataset_or_path.copy()
+            dataset_path = Path("dataset.csv")
+            dataset_name = "dataset"
+        else:
+            dataset_path = dataset_or_path
+            dataset_name = dataset_path.stem
+            df = self._load_tabular(dataset_path)
         
         # Sample if too large
         if len(df) > self.sample_size:
             df = df.sample(n=self.sample_size, random_state=42)
         
+        # Auto-detect or resolve target column
+        resolved_target = None
+        if target_column and target_column in df.columns:
+            resolved_target = target_column
+        elif target_column:
+            t_clean = target_column.strip().lower()
+            for col in df.columns:
+                c_clean = col.strip().lower()
+                if c_clean == t_clean or t_clean in c_clean or c_clean.startswith(t_clean):
+                    resolved_target = col
+                    break
+
+        if resolved_target is None:
+            candidate_targets = ["yield_bu_acre", "yield", "crop_yield", "target", "label", "outcome", "class"]
+            for cand in candidate_targets:
+                for col in df.columns:
+                    c_clean = col.strip().lower()
+                    if c_clean == cand or cand in c_clean:
+                        resolved_target = col
+                        break
+                if resolved_target:
+                    break
+        target_column = resolved_target
+
         # Create profile
         profile = DatasetProfile(
             dataset_path=dataset_path,
-            dataset_name=dataset_path.stem,
+            dataset_name=dataset_name,
             rows=len(df),
             columns=len(df.columns),
             memory_mb=df.memory_usage(deep=True).sum() / 1024 / 1024,
@@ -143,9 +180,9 @@ class DatasetAnalyzer:
             profile.total_missing_count / (profile.rows * profile.columns) * 100
         )
         
-        profile.has_duplicates = df.duplicated().any()
-        profile.duplicate_count = df.duplicated().sum()
-        profile.duplicate_percentage = (profile.duplicate_count / profile.rows) * 100
+        profile.has_duplicates = bool(df.duplicated().any())
+        profile.duplicate_count = int(df.duplicated().sum())
+        profile.duplicate_percentage = float((profile.duplicate_count / profile.rows) * 100)
         
         profile.has_constant_features = any(
             col.is_constant for col in profile.column_profiles
@@ -159,14 +196,15 @@ class DatasetAnalyzer:
             target_profile = profile.get_column_profile(target_column)
             profile.target_type = target_profile.data_type
             
-            if target_profile.data_type == DataType.CATEGORICAL:
+            if target_profile.data_type in (DataType.CATEGORICAL, DataType.NUMERICAL):
                 profile.target_classes = target_profile.categories
                 profile.target_distribution = target_profile.category_distribution
                 # Check imbalance
-                if target_profile.category_distribution:
+                if target_profile.category_distribution and len(target_profile.category_distribution) > 1:
                     counts = list(target_profile.category_distribution.values())
-                    profile.is_imbalanced = max(counts) / min(counts) > 2
-                    profile.imbalance_ratio = min(counts) / max(counts)
+                    if min(counts) > 0:
+                        profile.is_imbalanced = bool(max(counts) / min(counts) >= 1.5)
+                        profile.imbalance_ratio = float(min(counts) / max(counts))
         
         # Analyze correlations (for numerical features)
         if len(profile.numerical_features) > 1:
@@ -218,6 +256,7 @@ class DatasetAnalyzer:
         """Analyze a single column."""
         profile = ColumnProfile(
             name=column_name,
+            data_type=DataType.UNKNOWN,
             dtype=str(series.dtype),
         )
         
@@ -229,7 +268,22 @@ class DatasetAnalyzer:
         profile.unique_count = series.nunique()
         
         # Determine data type
-        if pd.api.types.is_numeric_dtype(series):
+        col_lower = column_name.strip().lower()
+        is_temporal_name = col_lower in ("year", "date", "time", "timestamp", "datetime", "yr") or col_lower.endswith(("_year", "_date"))
+        
+        if is_temporal_name:
+            profile.data_type = DataType.TEMPORAL
+            if pd.api.types.is_numeric_dtype(series):
+                profile.min_value = series.min()
+                profile.max_value = series.max()
+                profile.mean_value = series.mean()
+                profile.median_value = series.median()
+                profile.std_value = series.std()
+            elif pd.api.types.is_datetime64_any_dtype(series):
+                profile.min_date = series.min()
+                profile.max_date = series.max()
+            profile.is_constant = profile.unique_count == 1
+        elif pd.api.types.is_numeric_dtype(series):
             profile.data_type = DataType.NUMERICAL
             profile.min_value = series.min()
             profile.max_value = series.max()
@@ -270,7 +324,7 @@ class DatasetAnalyzer:
             
         elif pd.api.types.is_string_dtype(series) or series.dtype == object:
             # Check if it's categorical or text
-            if profile.unique_count / len(series) < 0.1:
+            if profile.unique_count <= 50 or (profile.unique_count / len(series) < 0.5):
                 profile.data_type = DataType.CATEGORICAL
                 profile.categories = series.dropna().unique().tolist()
                 profile.category_distribution = series.value_counts().to_dict()
@@ -342,32 +396,40 @@ class DatasetAnalyzer:
     
     def _recommend_models(self, profile: DatasetProfile) -> List[str]:
         """Recommended models based on dataset characteristics."""
-        models = []
+        target_name = (profile.target_column or "").lower()
+        is_yield_or_physics = "yield" in target_name or any(
+            "yield" in c.name.lower() for c in profile.column_profiles
+        )
         
-        # Default recommendations for tabular data
-        if profile.numerical_features and profile.categorical_features:
-            models.extend(["random_forest", "xgboost", "gradient_boosting"])
-        elif profile.numerical_features:
-            models.extend(["linear_regression", "random_forest", "xgboost"])
-        elif profile.categorical_features:
-            models.extend(["random_forest", "xgboost", "logistic_regression"])
-        
-        # Add simple models for baseline
-        models.insert(0, "logistic_regression" if profile.categorical_features else "linear_regression")
-        
-        return models
+        if profile.target_type == DataType.NUMERICAL or is_yield_or_physics:
+            if is_yield_or_physics:
+                return ["cerespinn", "xgboost", "random_forest", "gradient_boosting", "linear_regression"]
+            return ["xgboost", "random_forest", "gradient_boosting", "linear_regression"]
+        elif profile.target_type == DataType.CATEGORICAL:
+            return ["xgboost", "random_forest", "gradient_boosting", "logistic_regression"]
+        else:
+            if is_yield_or_physics:
+                return ["cerespinn", "xgboost", "random_forest", "gradient_boosting", "linear_regression"]
+            return ["random_forest", "xgboost", "linear_regression"]
     
     def _recommend_metrics(self, profile: DatasetProfile) -> List[str]:
         """Recommended metrics based on dataset characteristics."""
-        if profile.target_type == DataType.CATEGORICAL:
+        target_name = (profile.target_column or "").lower()
+        is_yield_or_physics = "yield" in target_name or any(
+            "yield" in c.name.lower() for c in profile.column_profiles
+        )
+        
+        if profile.target_type == DataType.NUMERICAL or is_yield_or_physics:
+            if is_yield_or_physics:
+                return ["rmse", "mae", "r2", "crps", "ensemble_iqr"]
+            return ["rmse", "mae", "r2"]
+        elif profile.target_type == DataType.CATEGORICAL:
             if profile.is_imbalanced:
                 return ["f1", "precision", "recall", "roc_auc"]
             else:
                 return ["accuracy", "f1", "precision", "recall"]
-        elif profile.target_type == DataType.NUMERICAL:
-            return ["mae", "rmse", "r2"]
         else:
-            return ["accuracy"]
+            return ["rmse", "mae", "r2"]
     
     def _identify_issues(self, profile: DatasetProfile) -> List[str]:
         """Identify critical issues in the dataset."""

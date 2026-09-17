@@ -232,11 +232,12 @@ def render_missing_value_strategy(df: pd.DataFrame) -> Dict[str, Any]:
     return config
 
 
-def render_scaling_config(df: pd.DataFrame) -> Dict[str, Any]:
-    """Render scaling configuration.
+def render_scaling_config(df: pd.DataFrame, target_column: Optional[str] = None) -> Dict[str, Any]:
+    """Render scaling configuration with intelligent defaults.
     
     Args:
         df: DataFrame to analyze
+        target_column: Optional target column to exclude from feature scaling
     
     Returns:
         Dictionary with scaling configuration
@@ -249,13 +250,30 @@ def render_scaling_config(df: pd.DataFrame) -> Dict[str, Any]:
         st.info("No numerical columns found")
         return {}
     
-    st.info(f"Found {len(numerical_cols)} numerical columns")
+    # Exclude target column, temporal index, and constant columns from default feature scaling
+    def is_target_or_temporal(col: str) -> bool:
+        c_low = col.lower()
+        if target_column and target_column.lower() in c_low:
+            return True
+        if "yield" in c_low or c_low in ("year", "yr", "date", "time"):
+            return True
+        return False
+
+    default_cols = [
+        c for c in numerical_cols 
+        if not is_target_or_temporal(c) and df[c].nunique() > 1
+    ]
+    if not default_cols:
+        default_cols = [c for c in numerical_cols if not is_target_or_temporal(c)]
+    
+    st.info(f"Found {len(numerical_cols)} numerical columns. Recommended features to scale: {len(default_cols)}")
     
     # Select columns to scale
     cols_to_scale = st.multiselect(
-        "Select columns to scale",
+        "Select feature columns to scale (excluding target variable):",
         options=numerical_cols,
-        default=numerical_cols,
+        default=default_cols,
+        help="The target variable and temporal columns should typically remain unscaled or scaled separately."
     )
     
     if not cols_to_scale:
@@ -264,8 +282,8 @@ def render_scaling_config(df: pd.DataFrame) -> Dict[str, Any]:
     # Scaling method
     method = st.selectbox(
         "Scaling Method",
-        options=["standard", "minmax", "robust", "maxabs", "normalizer"],
-        help="Method for scaling features"
+        options=["standard", "minmax", "robust", "maxabs"],
+        help="Method for scaling features (StandardScaler is recommended for PINN/ML)."
     )
     
     config = {
@@ -302,7 +320,7 @@ def render_encoding_config(df: pd.DataFrame) -> Dict[str, Any]:
         st.info("No categorical columns found")
         return {}
     
-    st.info(f"Found {len(categorical_cols)} categorical columns")
+    st.info(f"Found {len(categorical_cols)} categorical column(s): {', '.join(categorical_cols)}")
     
     # Select columns to encode
     cols_to_encode = st.multiselect(
@@ -317,8 +335,8 @@ def render_encoding_config(df: pd.DataFrame) -> Dict[str, Any]:
     # Encoding method
     method = st.selectbox(
         "Encoding Method",
-        options=["onehot", "label", "target", "ordinal"],
-        help="Method for encoding categorical features"
+        options=["onehot", "label", "ordinal"],
+        help="One-hot encoding creates binary indicator columns (ideal for CMIP6 scenarios)."
     )
     
     config = {
@@ -326,29 +344,28 @@ def render_encoding_config(df: pd.DataFrame) -> Dict[str, Any]:
         "columns": cols_to_encode,
     }
     
-    # Per-column override
-    if method != "onehot":
-        with st.expander("Configure per-column methods"):
-            for col in cols_to_encode:
-                col_method = st.selectbox(
-                    f"{col}",
-                    options=["use_default", "onehot", "label", "target"],
-                    key=f"encode_{col}",
-                )
-                
-                if col_method != "use_default":
-                    if col not in config:
-                        config["per_column"] = {}
-                    config["per_column"][col] = col_method
-    
     return config
 
 
-def render_outlier_config(df: pd.DataFrame) -> Dict[str, Any]:
-    """Render outlier handling configuration.
+def render_constant_features_config(df: pd.DataFrame) -> Dict[str, Any]:
+    """Render constant feature removal configuration."""
+    st.subheader("Constant & Zero-Variance Features")
+    constant_cols = [col for col in df.columns if df[col].nunique() <= 1]
+    if constant_cols:
+        st.warning(f"Detected {len(constant_cols)} constant column(s) with zero variance: **{', '.join(constant_cols)}** (e.g. seasonal_cdd). Keeping constant features causes numerical singularity.")
+        drop_constants = st.checkbox("Remove constant features from training set", value=True)
+        return {"drop_constants": drop_constants, "columns": constant_cols}
+    else:
+        st.info("No constant features found.")
+        return {"drop_constants": False, "columns": []}
+
+
+def render_outlier_config(df: pd.DataFrame, target_column: Optional[str] = None) -> Dict[str, Any]:
+    """Render outlier handling configuration with domain safeguards.
     
     Args:
         df: DataFrame to analyze
+        target_column: Optional target column
     
     Returns:
         Dictionary with outlier configuration
@@ -362,50 +379,130 @@ def render_outlier_config(df: pd.DataFrame) -> Dict[str, Any]:
         return {}
     
     # Detection method
-    detection_method = st.selectbox(
-        "Detection Method",
-        options=["iqr", "zscore", "isolation_forest", "local_outlier_factor"],
-        help="Method for detecting outliers"
-    )
+    col_d1, col_d2 = st.columns(2)
+    with col_d1:
+        detection_method = st.selectbox(
+            "Detection Method",
+            options=["iqr", "zscore"],
+            help="Method for detecting outliers"
+        )
+    with col_d2:
+        handling_strategy = st.selectbox(
+            "Handling Strategy",
+            options=["ignore", "cap", "remove"],
+            index=0,
+            help="In climate and crop yield data, extreme drought events (e.g. 2012) are physically real. 'ignore' or 'cap' is recommended over deleting rows."
+        )
     
-    config = {"detection_method": detection_method}
+    config = {
+        "detection_method": detection_method,
+        "handling_strategy": handling_strategy,
+    }
     
-    # Method-specific parameters
     if detection_method == "iqr":
-        iqr_multiplier = st.slider("IQR Multiplier", 1.0, 3.0, 1.5)
-        config["iqr_multiplier"] = iqr_multiplier
+        config["iqr_multiplier"] = st.slider("IQR Multiplier", 1.0, 3.0, 1.5)
+    elif detection_method == "zscore":
+        config["z_threshold"] = st.slider("Z-Score Threshold", 1.0, 5.0, 3.0)
     
-    if detection_method == "zscore":
-        z_threshold = st.slider("Z-Score Threshold", 1.0, 5.0, 3.0)
-        config["z_threshold"] = z_threshold
+    # Default columns to check (exclude target and constant)
+    default_cols = [
+        c for c in numerical_cols 
+        if c != target_column and df[c].nunique() > 1 and c.lower() not in ("year", "yr", "date")
+    ]
     
-    if detection_method == "isolation_forest":
-        contamination = st.slider("Contamination", 0.01, 0.5, 0.1)
-        config["contamination"] = contamination
-    
-    # Handling strategy
-    handling_strategy = st.selectbox(
-        "Handling Strategy",
-        options=["remove", "cap", "transform", "ignore"],
-        help="How to handle detected outliers"
-    )
-    
-    config["handling_strategy"] = handling_strategy
-    
-    # Select columns
     cols_to_check = st.multiselect(
-        "Select columns to check for outliers",
+        "Select feature columns to check for outliers (excluding target to preserve climate extremes):",
         options=numerical_cols,
-        default=numerical_cols,
+        default=default_cols,
     )
-    
     config["columns"] = cols_to_check
     
     return config
 
 
+def apply_preprocessing_pipeline(
+    df: pd.DataFrame,
+    config: Dict[str, Any],
+) -> pd.DataFrame:
+    """Execute the configured preprocessing transformations on the dataframe."""
+    import numpy as np
+    from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, LabelEncoder
+
+    df_proc = df.copy()
+
+    # 1. Drop constant features
+    if config.get("constants", {}).get("drop_constants") and config["constants"].get("columns"):
+        cols_to_drop = [c for c in config["constants"]["columns"] if c in df_proc.columns]
+        if cols_to_drop:
+            df_proc = df_proc.drop(columns=cols_to_drop)
+
+    # 2. Handle missing values
+    missing_cfg = config.get("missing", {})
+    if missing_cfg and df_proc.isna().sum().sum() > 0:
+        strat = missing_cfg.get("strategy", "mean")
+        if strat == "drop_rows":
+            df_proc = df_proc.dropna()
+        elif strat == "drop_cols":
+            df_proc = df_proc.dropna(axis=1)
+        elif strat == "mean":
+            num_cols = df_proc.select_dtypes(include=[np.number]).columns
+            df_proc[num_cols] = df_proc[num_cols].fillna(df_proc[num_cols].mean())
+        elif strat == "median":
+            num_cols = df_proc.select_dtypes(include=[np.number]).columns
+            df_proc[num_cols] = df_proc[num_cols].fillna(df_proc[num_cols].median())
+
+    # 3. Handle outliers
+    outliers_cfg = config.get("outliers", {})
+    h_strat = outliers_cfg.get("handling_strategy", "ignore")
+    outlier_cols = outliers_cfg.get("columns", [])
+    if h_strat != "ignore" and outlier_cols:
+        for col in outlier_cols:
+            if col in df_proc.columns and pd.api.types.is_numeric_dtype(df_proc[col]):
+                q1 = df_proc[col].quantile(0.25)
+                q3 = df_proc[col].quantile(0.75)
+                iqr = q3 - q1
+                mult = outliers_cfg.get("iqr_multiplier", 1.5)
+                lower = q1 - mult * iqr
+                upper = q3 + mult * iqr
+                if h_strat == "cap":
+                    df_proc[col] = df_proc[col].clip(lower=lower, upper=upper)
+                elif h_strat == "remove":
+                    df_proc = df_proc[(df_proc[col] >= lower) & (df_proc[col] <= upper)]
+
+    # 4. Categorical encoding
+    encoding_cfg = config.get("encoding", {})
+    enc_cols = [c for c in encoding_cfg.get("columns", []) if c in df_proc.columns]
+    enc_method = encoding_cfg.get("method", "onehot")
+    if enc_cols:
+        if enc_method == "onehot":
+            df_proc = pd.get_dummies(df_proc, columns=enc_cols, drop_first=False, dtype=float)
+        elif enc_method in ("label", "ordinal"):
+            for col in enc_cols:
+                le = LabelEncoder()
+                df_proc[col] = le.fit_transform(df_proc[col].astype(str))
+
+    # 5. Feature scaling
+    scaling_cfg = config.get("scaling", {})
+    scale_cols = [c for c in scaling_cfg.get("columns", []) if c in df_proc.columns]
+    scale_method = scaling_cfg.get("method", "standard")
+    if scale_cols:
+        if scale_method == "standard":
+            scaler = StandardScaler()
+        elif scale_method == "minmax":
+            scaler = MinMaxScaler(feature_range=scaling_cfg.get("feature_range", (0.0, 1.0)))
+        elif scale_method == "robust":
+            scaler = RobustScaler()
+        else:
+            scaler = StandardScaler()
+
+        scaled_vals = scaler.fit_transform(df_proc[scale_cols])
+        df_proc[scale_cols] = scaled_vals
+
+    return df_proc
+
+
 def render_preprocessing_pipeline(df: pd.DataFrame, spec: Any) -> Dict[str, Any]:
-    """Render complete preprocessing pipeline configuration.
+    """Render complete preprocessing pipeline configuration and execution.
     
     Args:
         df: DataFrame to preprocess
@@ -417,37 +514,47 @@ def render_preprocessing_pipeline(df: pd.DataFrame, spec: Any) -> Dict[str, Any]
     st.title("🔧 Preprocessing Pipeline")
     st.markdown("---")
     
+    target_column = getattr(spec, "target_variable", None)
+    if not target_column and "yield_bu_acre" in df.columns:
+        target_column = "yield_bu_acre"
+    
     config = {}
     
+    # Constant features
+    with st.expander("Constant & Zero-Variance Features", expanded=True):
+        config["constants"] = render_constant_features_config(df)
+    
     # Missing values
-    with st.expander("Missing Values", expanded=True):
+    with st.expander("Missing Values", expanded=False):
         config["missing"] = render_missing_value_strategy(df)
     
     # Scaling
-    with st.expander("Feature Scaling"):
-        config["scaling"] = render_scaling_config(df)
+    with st.expander("Feature Scaling", expanded=True):
+        config["scaling"] = render_scaling_config(df, target_column)
     
     # Encoding
-    with st.expander("Categorical Encoding"):
+    with st.expander("Categorical Encoding", expanded=True):
         config["encoding"] = render_encoding_config(df)
     
     # Outliers
-    with st.expander("Outlier Handling"):
-        config["outliers"] = render_outlier_config(df)
+    with st.expander("Outlier Handling", expanded=False):
+        config["outliers"] = render_outlier_config(df, target_column)
     
     # Summary
     st.markdown("---")
     st.subheader("Pipeline Summary")
     
     summary = []
+    if config.get("constants", {}).get("drop_constants"):
+        summary.append(f"Drop constant features: {', '.join(config['constants']['columns'])}")
     if config.get("missing"):
-        summary.append(f"Missing values: {config['missing'].get('strategy', 'N/A')}")
+        summary.append(f"Missing values: {config['missing'].get('strategy', 'None')}")
     if config.get("scaling"):
-        summary.append(f"Scaling: {config['scaling'].get('method', 'N/A')} on {len(config['scaling'].get('columns', []))} columns")
+        summary.append(f"Scaling: {config['scaling'].get('method', 'None')} on {len(config['scaling'].get('columns', []))} feature columns")
     if config.get("encoding"):
-        summary.append(f"Encoding: {config['encoding'].get('method', 'N/A')} on {len(config['encoding'].get('columns', []))} columns")
+        summary.append(f"Encoding: {config['encoding'].get('method', 'None')} on {len(config['encoding'].get('columns', []))} categorical columns")
     if config.get("outliers"):
-        summary.append(f"Outliers: {config['outliers'].get('detection_method', 'N/A')}")
+        summary.append(f"Outliers: {config['outliers'].get('handling_strategy', 'ignore')} ({config['outliers'].get('detection_method', 'iqr')})")
     
     for item in summary:
         st.write(f"• {item}")
@@ -455,8 +562,40 @@ def render_preprocessing_pipeline(df: pd.DataFrame, spec: Any) -> Dict[str, Any]
     # Apply button
     st.markdown("---")
     if st.button("Apply Preprocessing Pipeline", type="primary"):
-        st.success("Preprocessing pipeline applied!")
-        # TODO: Actually apply preprocessing
+        with st.spinner("Executing transformations..."):
+            df_preprocessed = apply_preprocessing_pipeline(df, config)
+        
+        st.session_state["preprocessed_df"] = df_preprocessed
+        st.session_state["preprocessing_config"] = config
+        
+        # Save to preprocessed file
+        from pathlib import Path
+        save_dir = Path("data")
+        save_dir.mkdir(exist_ok=True)
+        preprocessed_path = save_dir / "cerespinn_training_preprocessed.csv"
+        df_preprocessed.to_csv(preprocessed_path, index=False)
+        
+        if spec:
+            spec.dataset_path = str(preprocessed_path)
+            if hasattr(st.session_state, "artifact_manager"):
+                st.session_state.artifact_manager.save_project_specification(spec)
+        
+        st.success(f"✅ Preprocessing pipeline applied successfully! Cleaned dataset saved to `{preprocessed_path}`.")
+        
+        # Display Before vs After
+        st.markdown("### Preprocessing Results")
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            st.metric("Original Shape", f"{df.shape[0]} × {df.shape[1]}")
+        with c2:
+            st.metric("Cleaned Shape", f"{df_preprocessed.shape[0]} × {df_preprocessed.shape[1]}")
+        with c3:
+            st.metric("Features Encoded", len(config.get("encoding", {}).get("columns", [])))
+        with c4:
+            st.metric("Features Scaled", len(config.get("scaling", {}).get("columns", [])))
+        
+        st.dataframe(df_preprocessed.head(10), use_container_width=True)
+        st.info("💡 The preprocessed dataset is now linked and ready for **Model Training**.")
         return config
     
     return config

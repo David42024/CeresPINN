@@ -91,12 +91,12 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
             <GitCompare className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             Módulo de Análisis Comparativo "¿Qué pasa si?" (What-If Studio)
           </h2>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-            Evalúa y contrasta 3 estrategias agronómicas simultáneas bajo forzamiento climático PINN.
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 max-w-3xl">
+            <strong>¿Para qué sirve?</strong> Evalúa y contrasta 3 estrategias agronómicas simultáneas bajo forzamiento climático PINN. Permite comparar la Línea Base con dos alternativas de adaptación (ej. riego deficitario o variedad de ciclo corto para escape de sequía) observando la brecha de rendimiento (Δ kg/ha) y la productividad del agua en tiempo real.
           </p>
         </div>
 
-        <div className="px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-700/50 text-emerald-800 dark:text-emerald-300 text-xs font-mono flex items-center gap-1.5">
+        <div className="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-700/50 text-emerald-800 dark:text-emerald-300 text-xs font-mono flex items-center gap-1.5">
           <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
           Inferencia PINN en Tiempo Real
         </div>

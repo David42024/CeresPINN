@@ -163,21 +163,31 @@ class ModelCatalog:
         
         return [m.name for m in candidates]
     
-    def instantiate_model(self, name: str, hyperparameters: Optional[Dict[str, Any]] = None) -> Optional[BaseModel]:
+    def instantiate_model(self, name: str, hyperparameters: Optional[Dict[str, Any]] = None, **kwargs: Any) -> Optional[BaseModel]:
         """Instantiate a model by name.
-        
+
         Args:
             name: Model name
             hyperparameters: Optional hyperparameters
-        
+            **kwargs: Extra constructor args forwarded to models that accept
+                them (e.g. feature_names for CeresPINN). Models that only
+                accept `hyperparameters` (sklearn wrappers) fall back cleanly.
+
         Returns:
             Instantiated model or None if not found
         """
         if name not in self._model_classes:
             return None
-        
+
         model_class = self._model_classes[name]
-        return model_class(hyperparameters=hyperparameters)
+        try:
+            return model_class(hyperparameters=hyperparameters, **kwargs)
+        except TypeError:
+            return model_class(hyperparameters=hyperparameters)
+
+    def create_model(self, name: str, hyperparameters: Optional[Dict[str, Any]] = None, **kwargs: Any) -> Optional[BaseModel]:
+        """Alias of instantiate_model (name used by docs and TrainingEngine)."""
+        return self.instantiate_model(name, hyperparameters, **kwargs)
     
     def list_all_models(self) -> List[str]:
         """List all registered model names."""
@@ -211,12 +221,16 @@ class ModelCatalog:
             self._model_classes["lasso"] = LassoModel
             self._model_classes["random_forest"] = RandomForestClassifierModel
             self._model_classes["random_forest_regression"] = RandomForestRegressorModel
+            self._model_classes["random_forest_regressor"] = RandomForestRegressorModel
             self._model_classes["gradient_boosting"] = GradientBoostingClassifierModel
             self._model_classes["gradient_boosting_regression"] = GradientBoostingRegressorModel
+            self._model_classes["gradient_boosting_regressor"] = GradientBoostingRegressorModel
             self._model_classes["svm"] = SVMClassifierModel
             self._model_classes["svm_regression"] = SVMRegressorModel
+            self._model_classes["svm_regressor"] = SVMRegressorModel
             self._model_classes["xgboost"] = XGBoostClassifierModel
             self._model_classes["xgboost_regression"] = XGBoostRegressorModel
+            self._model_classes["xgboost_regressor"] = XGBoostRegressorModel
             self._model_classes["mlp_classifier"] = MLPClassifier
             self._model_classes["mlp_regressor"] = MLPRegressor
             self._model_classes["cerespinn"] = CeresPINNModel
@@ -249,7 +263,7 @@ class ModelCatalog:
             category=ModelCategory.CLASSIFICATION,
             description="Ensemble of decision trees for classification and regression",
             supported_problem_types=["binary_classification", "multiclass_classification", "regression"],
-            supported_data_types=["tabular"],
+            supported_data_types=["tabular", "time_series"],
             requires_scaling=False,
             handles_missing=False,
             handles_categorical=False,
@@ -267,7 +281,7 @@ class ModelCatalog:
             category=ModelCategory.CLASSIFICATION,
             description="Gradient boosting trees for classification and regression",
             supported_problem_types=["binary_classification", "multiclass_classification", "regression"],
-            supported_data_types=["tabular"],
+            supported_data_types=["tabular", "time_series"],
             requires_scaling=False,
             handles_missing=True,
             handles_categorical=False,
@@ -285,7 +299,7 @@ class ModelCatalog:
             category=ModelCategory.CLASSIFICATION,
             description="Support Vector Machine for classification and regression",
             supported_problem_types=["binary_classification", "multiclass_classification", "regression"],
-            supported_data_types=["tabular"],
+            supported_data_types=["tabular", "time_series"],
             requires_scaling=True,
             handles_missing=False,
             handles_categorical=False,
@@ -303,7 +317,7 @@ class ModelCatalog:
             category=ModelCategory.CLASSIFICATION,
             description="Gradient boosting machines for classification and regression",
             supported_problem_types=["binary_classification", "multiclass_classification", "regression"],
-            supported_data_types=["tabular"],
+            supported_data_types=["tabular", "time_series"],
             requires_scaling=False,
             handles_missing=False,
             handles_categorical=False,
@@ -322,7 +336,7 @@ class ModelCatalog:
             category=ModelCategory.REGRESSION,
             description="Linear regression model",
             supported_problem_types=["regression"],
-            supported_data_types=["tabular"],
+            supported_data_types=["tabular", "time_series"],
             requires_scaling=True,
             handles_missing=False,
             handles_categorical=False,
@@ -452,8 +466,26 @@ class ModelCatalog:
             name="cerespinn",
             category=ModelCategory.SPECIALIZED,
             description="Physics-Informed Neural Network for climate-adaptive maize yield prediction",
-            supported_problem_types=["regression"],
-            supported_data_types=["tabular"],
+            supported_problem_types=["regression", "time_series_forecasting"],
+            supported_data_types=["tabular", "time_series"],
+            requires_scaling=True,
+            handles_missing=False,
+            handles_categorical=False,
+            interpretable=False,
+            fast_training=False,
+            fast_inference=True,
+            memory_efficient=False,
+            default_hyperparameters={"hidden_dim": 64, "num_layers": 3},
+            hyperparameter_search_space={"hidden_dim": [32, 64, 128], "num_layers": [2, 3, 4]},
+            dependencies=["torch"],
+        ))
+
+        self.register_model(ModelMetadata(
+            name="generic_pinn",
+            category=ModelCategory.SPECIALIZED,
+            description="Generic Physics-Informed Neural Network",
+            supported_problem_types=["regression", "time_series_forecasting"],
+            supported_data_types=["tabular", "time_series"],
             requires_scaling=True,
             handles_missing=False,
             handles_categorical=False,

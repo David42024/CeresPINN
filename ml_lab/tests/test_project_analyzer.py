@@ -176,5 +176,28 @@ def test_update_project(project_analyzer):
     assert retrieved.target_variable == "yield"
 
 
+def test_cerespinn_context_analyzer_scenario(project_analyzer):
+    """Test the exact CeresPINN scenario from Context Analyzer."""
+    spec = project_analyzer.analyze(
+        project_name="cerespinn-maize-yield",
+        description="Predict maize yield under climate change scenarios using physics-informed neural networks. Input: historical climate data (CHIRPS, CHIRTS) + CMIP6 projections (SSP scenarios). Output: continuous yield values with uncertainty quantification.",
+        domain="agriculture",
+        business_objective="Enable climate-resilient agriculture by simulating yield impacts under different SSP scenarios (2026-2050) and prescribing adaptation strategies (planting date, variety, irrigation).",
+        constraints=["Must be interpretable", "Training time < 1 hour", "Memory limit: 4GB"],
+        target_variable="yield",
+    )
+    
+    assert spec.problem_type == ProblemType.REGRESSION
+    assert spec.data_type == DataType.TIME_SERIES
+    assert spec.objective == Objective.PREDICTION
+    assert spec.validation.strategy == ValidationStrategy.TIME_SERIES_SPLIT
+    assert spec.preprocessing.scaling == "standard"
+    assert spec.preprocessing.feature_engineering is True
+    assert any(m.name == "cerespinn" for m in spec.models)
+    assert any(m.name == "xgboost" for m in spec.models)
+    assert "crps" in spec.metrics.secondary
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+

@@ -1,0 +1,65 @@
+{
+  "data": [
+    {
+      "fold": 1,
+      "r2": 0.5034,
+      "neg_root_mean_squared_error": -21.8762,
+      "neg_mean_absolute_error": -17.5204,
+      "neg_mean_absolute_percentage_error": -0.1082,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 8.41
+    },
+    {
+      "fold": 2,
+      "r2": 0.5028,
+      "neg_root_mean_squared_error": -21.9208,
+      "neg_mean_absolute_error": -17.4678,
+      "neg_mean_absolute_percentage_error": -0.1073,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 8.5
+    },
+    {
+      "fold": 3,
+      "r2": 0.4939,
+      "neg_root_mean_squared_error": -22.1268,
+      "neg_mean_absolute_error": -17.539,
+      "neg_mean_absolute_percentage_error": -0.1081,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 7.99
+    },
+    {
+      "fold": 4,
+      "r2": 0.4933,
+      "neg_root_mean_squared_error": -22.1459,
+      "neg_mean_absolute_error": -17.4014,
+      "neg_mean_absolute_percentage_error": -0.109,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 8.42
+    },
+    {
+      "fold": 5,
+      "r2": 0.5045,
+      "neg_root_mean_squared_error": -21.7148,
+      "neg_mean_absolute_error": -17.1291,
+      "neg_mean_absolute_percentage_error": -0.1049,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 8.34
+    }
+  ],
+  "metadata": {
+    "model_name": "generic_pinn",
+    "display_name": "Generic PINN (Hybrid Physics-MLP)",
+    "family": "H\u00edbrido (PINN Gen\u00e9rico)",
+    "strategy": "CrossValidation_5Fold",
+    "n_splits": 5,
+    "train_time_sec": 41.69,
+    "optimized": true,
+    "version": "2.0",
+    "trained_at": "2026-09-12T16:43:43"
+  }
+}

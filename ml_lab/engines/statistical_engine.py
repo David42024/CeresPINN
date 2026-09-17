@@ -19,16 +19,16 @@ class StatisticalTest:
         self,
         name: str,
         description: str,
-        test_fn: Callable,
-        applicable_problem_types: List[str],
+        test_fn: Optional[Callable] = None,
+        applicable_problem_types: Optional[List[str]] = None,
         requires_observations: bool = True,
         requires_projections: bool = False,
         alpha: float = 0.05,
     ):
         self.name = name
         self.description = description
-        self.test_fn = test_fn
-        self.applicable_problem_types = applicable_problem_types
+        self.test_fn = test_fn or (lambda **kwargs: {})
+        self.applicable_problem_types = applicable_problem_types or ["regression", "classification"]
         self.requires_observations = requires_observations
         self.requires_projections = requires_projections
         self.alpha = alpha
@@ -99,7 +99,12 @@ class StatisticalEngine:
         if test is None:
             raise ValueError(f"Test not found: {test_name}")
         
-        return test.test_fn(alpha=test.alpha, **kwargs)
+        alpha = kwargs.pop("alpha", test.alpha)
+        return test.test_fn(alpha=alpha, **kwargs)
+    
+    def get_test_metadata(self, name: str) -> Optional[StatisticalTest]:
+        """Get metadata for a test (alias of get_test)."""
+        return self.get_test(name)
     
     def run_tests(
         self,

@@ -67,8 +67,10 @@ class NEXGDDPProvider(BaseProvider):
         return sorted({y for y in range(start_year, end_year + 1, step)})
 
     def _build_object_url(self, scenario: str, model: str, variable: str, year: int) -> str:
+        # Verified 2026-09: NEX-GDDP-CMIP6 keys use grid label `gr`
+        # (e.g. ..._r1i1p1f1_gr_2015_v2.0.nc), not `gn`.
         fname = (
-            f"{variable}_day_{model}_{scenario}_r1i1p1f1_gn_"
+            f"{variable}_day_{model}_{scenario}_r1i1p1f1_gr_"
             f"{year}_{_NEX_SUFFIX}.nc"
         )
         rel = f"{_NEX_VERSION}/{model}/{scenario}/r1i1p1f1/{variable}/{urllib.parse.quote(fname)}"
