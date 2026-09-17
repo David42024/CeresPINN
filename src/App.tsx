@@ -657,7 +657,7 @@ export const App: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
                   <div>
-                    <span className="text-slate-500 dark:text-slate-400 block text-[11px]">Rendimiento CeresPINN Calculado</span>
+                    <span className="text-slate-500 dark:text-slate-400 block text-[11px]">Rendimiento CeresPINN Calculado (Clima {simulationResult.config.targetYear})</span>
                     <strong className="text-slate-900 dark:text-slate-100 font-mono text-base">
                       {simulationResult.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha
                     </strong>
