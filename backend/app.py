@@ -133,6 +133,7 @@ def scenarios() -> List[Dict[str, Any]]:
         return rows
     return [
         {"id": "SSP1-2.6", "label": "Sustainable pathway (Sostenible)", "risk": "low"},
+        {"id": "SSP2-4.5", "label": "Middle of the road (Moderado)", "risk": "medium-low"},
         {"id": "SSP3-7.0", "label": "Regional rivalry (Intermedio Alto)", "risk": "medium"},
         {"id": "SSP5-8.5", "label": "Fossil-fueled development (Extremo)", "risk": "high"},
     ]

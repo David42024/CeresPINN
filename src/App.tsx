@@ -25,7 +25,9 @@ import {
   ShieldCheck,
   Sun,
   Moon,
-  LogOut
+  LogOut,
+  AlertTriangle,
+  RefreshCw
 } from 'lucide-react';
 import { useTheme } from './context/ThemeContext';
 import { 
@@ -53,6 +55,8 @@ import { DataPipelinesView } from './components/DataPipelinesView';
 import { UserManagement } from './components/UserManagement';
 import { ValidationReport } from './components/ValidationReport';
 import { LoginScreen } from './components/LoginScreen';
+import { AdaptationPanel } from './components/AdaptationPanel';
+import { VulnerabilityMap } from './components/VulnerabilityMap';
 
 type ActiveTab = 
   | 'twin3d' 
@@ -64,7 +68,8 @@ type ActiveTab =
   | 'mlops' 
   | 'pipelines' 
   | 'users'
-  | 'validation';
+  | 'validation'
+  | 'vulnerability';
 
 export const App: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -450,6 +455,17 @@ export const App: React.FC = () => {
             <ShieldCheck className="w-3.5 h-3.5" />
             {t('app.tabValidation')}
           </button>
+
+          <button
+            id="tab-btn-vulnerability"
+            onClick={() => setActiveTab('vulnerability')}
+            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
+              activeTab === 'vulnerability' ? 'bg-slate-100 dark:bg-slate-800 text-rose-600 dark:text-rose-400 border-b-2 border-rose-500 dark:border-rose-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+            }`}
+          >
+            <AlertTriangle className="w-3.5 h-3.5" />
+            Vulnerabilidad
+          </button>
         </div>
       </header>
 
@@ -577,8 +593,8 @@ export const App: React.FC = () => {
                     value={simulationConfig.scenario}
                     onChange={(e) => {
                       const sc = e.target.value as any;
-                      const anom = sc === 'SSP1-2.6' ? 0.9 : sc === 'SSP5-8.5' ? 2.6 : 1.8;
-                      const precip = sc === 'SSP1-2.6' ? -2.0 : sc === 'SSP5-8.5' ? -25.0 : -12.0;
+                      const anom = sc === 'SSP1-2.6' ? 0.9 : sc === 'SSP2-4.5' ? 1.4 : sc === 'SSP5-8.5' ? 2.6 : 1.8;
+                      const precip = sc === 'SSP1-2.6' ? -2.0 : sc === 'SSP2-4.5' ? -8.0 : sc === 'SSP5-8.5' ? -25.0 : -12.0;
                       setSimulationConfig(prev => ({ 
                         ...prev, 
                         scenario: sc,
@@ -589,6 +605,7 @@ export const App: React.FC = () => {
                     className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-medium text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500"
                   >
                     <option value="SSP1-2.6">🟢 SSP1-2.6 (Sostenible +0.9°C)</option>
+                    <option value="SSP2-4.5">🔵 SSP2-4.5 (Moderado +1.4°C)</option>
                     <option value="SSP3-7.0">🟡 SSP3-7.0 (Intermedio +1.8°C)</option>
                     <option value="SSP5-8.5">🔴 SSP5-8.5 (Fósil Extremo +2.6°C)</option>
                   </select>
@@ -684,11 +701,30 @@ export const App: React.FC = () => {
 
         {/* TAB 2: Dashboard & KPIs */}
         {activeTab === 'dashboard' && (
-          <MainDashboard
-            simulation={simulationResult}
-            currentDayIndex={currentDayIndex}
-            onSelectDayIndex={setCurrentDayIndex}
-          />
+          <div className="space-y-6">
+            <MainDashboard
+              simulation={simulationResult}
+              currentDayIndex={currentDayIndex}
+              onSelectDayIndex={setCurrentDayIndex}
+            />
+            <AdaptationPanel
+              simulation={simulationResult}
+              field={selectedField}
+              baseConfig={simulationConfig}
+              onApplyStrategy={(cfg) => {
+                const merged = { ...simulationConfig, ...cfg };
+                setSimulationConfig(merged);
+                void (async () => {
+                  try {
+                    const res = await simulateScenario(selectedField, merged);
+                    setSimulationResult(res);
+                  } catch {
+                    setSimulationResult(runPINNSimulation(selectedField, merged));
+                  }
+                })();
+              }}
+            />
+          </div>
         )}
 
         {/* TAB 3: Simulation & Climate Config */}
@@ -759,6 +795,14 @@ export const App: React.FC = () => {
         {/* TAB 10: Statistical Validation */}
         {activeTab === 'validation' && (
           <ValidationReport />
+        )}
+
+        {/* TAB 11: Vulnerability Map */}
+        {activeTab === 'vulnerability' && (
+          <VulnerabilityMap
+            fields={fields}
+            currentConfig={simulationConfig}
+          />
         )}
       </main>
 

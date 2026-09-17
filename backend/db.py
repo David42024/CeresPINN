@@ -566,6 +566,7 @@ _FIELDS_SEED: List[Dict[str, Any]] = _field_seed()
 
 _SCENARIOS_SEED: List[Dict[str, Any]] = [
     {"id": "SSP1-2.6", "label": "Sustainable pathway", "risk": "low"},
+    {"id": "SSP2-4.5", "label": "Middle of the road", "risk": "medium-low"},
     {"id": "SSP3-7.0", "label": "Regional rivalry", "risk": "medium"},
     {"id": "SSP5-8.5", "label": "Fossil-fueled development", "risk": "high"},
 ]

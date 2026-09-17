@@ -151,6 +151,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
                   className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="SSP1-2.6">{t('whatIfStudio.optSSP1')}</option>
+                  <option value="SSP2-4.5">🔵 SSP2-4.5 (Moderado +1.4°C)</option>
                   <option value="SSP3-7.0">{t('whatIfStudio.optSSP3')}</option>
                   <option value="SSP5-8.5">{t('whatIfStudio.optSSP5')}</option>
                 </select>
@@ -226,6 +227,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
                   className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="SSP1-2.6">{t('whatIfStudio.optSSP1')}</option>
+                  <option value="SSP2-4.5">🔵 SSP2-4.5 (Moderado +1.4°C)</option>
                   <option value="SSP3-7.0">{t('whatIfStudio.optSSP3')}</option>
                   <option value="SSP5-8.5">{t('whatIfStudio.optSSP5')}</option>
                 </select>
@@ -307,6 +309,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
                   className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200"
                 >
                   <option value="SSP1-2.6">{t('whatIfStudio.optSSP1')}</option>
+                  <option value="SSP2-4.5">🔵 SSP2-4.5 (Moderado +1.4°C)</option>
                   <option value="SSP3-7.0">{t('whatIfStudio.optSSP3')}</option>
                   <option value="SSP5-8.5">{t('whatIfStudio.optSSP5')}</option>
                 </select>

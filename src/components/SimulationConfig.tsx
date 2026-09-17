@@ -226,6 +226,26 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
                   </div>
 
                   <div
+                    onClick={() => handleScenarioChange('SSP2-4.5')}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      config.scenario === 'SSP2-4.5'
+                        ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 ring-1 ring-blue-500/50'
+                        : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-800 dark:text-blue-300 font-bold text-[11px]">
+                        Moderado (SSP2-4.5)
+                      </span>
+                      <span className="text-[11px] text-blue-600 dark:text-blue-400 font-mono">+2.7°C Global</span>
+                    </div>
+                    <p className="text-xs text-slate-800 dark:text-slate-300">Middle of the road — emisiones intermedias estabilizadas</p>
+                    <div className="mt-2 text-[11px] text-slate-600 dark:text-slate-400">
+                      Anomalía térmica local: <span className="font-mono text-blue-700 dark:text-blue-300">+{forcing.tempAnomalyC.toFixed(1)}°C</span>
+                    </div>
+                  </div>
+
+                  <div
                     onClick={() => handleScenarioChange('SSP3-7.0')}
                     className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
                       config.scenario === 'SSP3-7.0'
@@ -274,7 +294,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-800 dark:text-slate-300 font-semibold flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                Horizonte Temporal de Proyección (2026 - 2050)
+                Horizonte Temporal de Proyección (2026 - 2070)
               </span>
               <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-mono font-bold">
                 Año {config.targetYear}
@@ -283,7 +303,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
             <input
               type="range"
               min={2026}
-              max={2050}
+              max={2070}
               step={1}
               value={config.targetYear}
               onChange={(e) => handleYearChange(parseInt(e.target.value, 10))}
@@ -291,8 +311,9 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
             />
             <div className="flex justify-between text-[11px] font-mono text-slate-500">
               <span>2026 (Presente)</span>
-              <span>2035 (Medio Plazo)</span>
-              <span>2050 (Horizonte IPCC)</span>
+              <span>2035 (Medio)</span>
+              <span>2050 (IPCC AR6)</span>
+              <span>2070 (Largo Plazo)</span>
             </div>
           </div>
 
