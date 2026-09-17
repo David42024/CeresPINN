@@ -15,7 +15,8 @@ import {
   Sparkles,
   ArrowUpRight,
   ArrowDownRight,
-  ShieldCheck
+  ShieldCheck,
+  Info
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
