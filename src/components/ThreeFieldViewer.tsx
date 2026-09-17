@@ -625,43 +625,116 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       </div>
 
       {/* Bottom Timeline Scrubber & Playback Controls */}
-      <div className="bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-col gap-2.5 z-20">
-        <div className="flex items-center gap-4 w-full">
-        {/* Play/Pause Button */}
-        <button
-          id="btn-3d-play-toggle"
-          onClick={() => setIsPlaying(!isPlaying)}
-          disabled={!simulation}
-          className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50"
-          title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
-          aria-label={isPlaying ? 'Pausar simulación' : 'Reproducir ciclo fenológico'}
-        >
-          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-        </button>
+      <div className="bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-col gap-3 z-20">
+        {/* Top Control Bar: Playback controls, status badge, speed selector */}
+        <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+          {/* Play/Pause & Reset Buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              id="btn-3d-play-toggle"
+              onClick={() => setIsPlaying(!isPlaying)}
+              disabled={!simulation}
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/25 flex items-center gap-2 text-xs font-semibold disabled:opacity-50 cursor-pointer"
+              title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
+              aria-label={isPlaying ? 'Pausar simulación' : 'Reproducir ciclo fenológico'}
+            >
+              {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white" />}
+              <span>{isPlaying ? 'Pausar' : 'Reproducir'}</span>
+            </button>
 
-        <button
-          onClick={() => {
-            setIsPlaying(false);
-            onChangeDayIndex(0);
-          }}
-          disabled={!simulation}
-          className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50"
-          title={t('threeFieldViewer.resetTitle')}
-          aria-label="Reiniciar simulación a la siembra"
-        >
-          <RotateCcw className="w-4 h-4" />
-        </button>
+            <button
+              onClick={() => {
+                setIsPlaying(false);
+                onChangeDayIndex(0);
+              }}
+              disabled={!simulation}
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 cursor-pointer"
+              title={t('threeFieldViewer.resetTitle')}
+              aria-label="Reiniciar simulación a la siembra"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          </div>
 
-        {/* Day Slider */}
-        <div className="flex-1 flex items-center gap-3">
-          <div className="flex-1 flex flex-col justify-center min-w-0">
-            <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-slate-600 dark:text-slate-400 mb-1.5 px-1 truncate">
-              <span className="hidden sm:inline">{t('threeFieldViewer.sliderPlanting')}</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap mx-auto">
-                {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} / {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
-              </span>
-              <span className="hidden sm:inline">{t('threeFieldViewer.sliderHarvest')}</span>
+          {/* Center Informational Status Badge - Guaranteed single line, never wraps into columns */}
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono shadow-inner">
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap">
+              {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} de {simulation?.dailyRecords.length || 120}
+            </span>
+            <span className="text-slate-400 dark:text-slate-600">•</span>
+            <span className="text-slate-600 dark:text-slate-300 whitespace-nowrap">
+              {dailyRecord?.date || '--'}
+            </span>
+            <span className="text-slate-400 dark:text-slate-600">•</span>
+            <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold text-[11px] whitespace-nowrap">
+              {dailyRecord?.stage || 'VE'} ({dailyRecord?.stageCode || 'VE'})
+            </span>
+          </div>
+
+          {/* Speed multiplier selector */}
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs shrink-0">
+            {[1, 2, 4].map((speed) => (
+              <button
+                key={speed}
+                onClick={() => setSpeedMultiplier(speed)}
+                className={`px-2 py-1 rounded-lg font-mono transition-all cursor-pointer ${
+                  speedMultiplier === speed 
+                    ? 'bg-emerald-600 text-white font-bold shadow-sm' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                }`}
+              >
+                {speed}x
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Dedicated Full-Width Timeline Progress Line & Scrubber */}
+        <div className="w-full flex flex-col gap-1.5">
+          {/* Labels above slider */}
+          <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 px-1">
+            <span className="flex items-center gap-1 font-semibold text-slate-600 dark:text-slate-300">
+              🌱 {t('threeFieldViewer.sliderPlanting')} (DAP 1)
+            </span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              Progreso del Ciclo: {Math.round(((currentDayIndex) / Math.max(1, (simulation?.dailyRecords.length || 1) - 1)) * 100)}%
+            </span>
+            <span className="flex items-center gap-1 font-semibold text-slate-600 dark:text-slate-300">
+              🚜 {t('threeFieldViewer.sliderHarvest')} (DAP {simulation?.dailyRecords.length || 120})
+            </span>
+          </div>
+
+          {/* Progress Bar Container with Glowing Elapsed Fill Line & Tick Marks */}
+          <div className="relative w-full py-2 flex items-center">
+            {/* Background Track */}
+            <div className="absolute left-0 right-0 h-2.5 bg-slate-200 dark:bg-slate-800/90 rounded-full overflow-hidden border border-slate-300/40 dark:border-slate-700/50">
+              {/* Glowing Elapsed Progress Fill Line */}
+              <div 
+                className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 rounded-full shadow-[0_0_12px_rgba(16,185,129,0.7)] transition-all duration-100"
+                style={{
+                  width: `${Math.min(100, Math.max(0, ((currentDayIndex) / Math.max(1, (simulation?.dailyRecords.length || 1) - 1)) * 100))}%`
+                }}
+              />
             </div>
+
+            {/* Stage Milestone Tick Marks along the timeline */}
+            <div className="absolute left-0 right-0 h-2.5 pointer-events-none px-1">
+              {stagePills.map((stage) => {
+                const total = Math.max(1, (simulation?.dailyRecords.length || 1) - 1);
+                const pct = Math.min(100, Math.max(0, (stage.index / total) * 100));
+                return (
+                  <div
+                    key={stage.code}
+                    className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col items-center"
+                    style={{ left: `${pct}%` }}
+                  >
+                    <div className="w-1 h-3.5 bg-slate-400 dark:bg-slate-500 rounded-full shadow-xs" />
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Interactive Native Range Slider on top */}
             <input
               id="slider-timeline-dap"
               type="range"
@@ -673,30 +746,16 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 onChangeDayIndex(parseInt(e.target.value, 10));
               }}
               disabled={!simulation}
-              className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all"
+              className="relative w-full h-2.5 appearance-none bg-transparent cursor-pointer z-10 accent-emerald-500 focus:outline-none"
             />
           </div>
-
-          {/* Speed multiplier selector */}
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs shrink-0">
-            {[1, 2, 4].map((speed) => (
-              <button
-                key={speed}
-                onClick={() => setSpeedMultiplier(speed)}
-                className={`px-2 py-1 rounded-lg font-mono transition-all cursor-pointer ${
-                  speedMultiplier === speed ? 'bg-emerald-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                {speed}x
-              </button>
-            ))}
-          </div>
         </div>
-      </div>
 
-      {/* Quick Stage Jump Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] font-mono no-scrollbar w-full">
-          <span className="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold shrink-0 mr-1">Saltar a Etapa:</span>
+        {/* Quick Stage Jump Pills - Separate Dedicated Row */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-0.5 text-[11px] font-mono no-scrollbar w-full border-t border-slate-100 dark:border-slate-800/60 pt-2">
+          <span className="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold shrink-0 mr-1">
+            Saltar a Etapa:
+          </span>
           <div className="flex items-center gap-1.5 flex-wrap">
             {stagePills.map((stage) => {
               const isActive = dailyRecord?.stageCode === stage.code;
@@ -708,15 +767,15 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                     setIsPlaying(false);
                     onChangeDayIndex(stage.index);
                   }}
-                  className={`px-2 py-0.5 rounded-md border transition-all cursor-pointer flex items-center gap-1 ${
+                  className={`px-2.5 py-1 rounded-lg border transition-all cursor-pointer flex items-center gap-1 text-xs ${
                     isActive
-                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm font-bold scale-105'
+                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30 font-bold scale-105'
                       : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-slate-200 dark:hover:bg-slate-800'
                   }`}
                   title={`DAP ${stage.day}: Ir a etapa ${stage.label}`}
                 >
                   <span>{stage.label}</span>
-                  <span className="text-[9px] opacity-75">(d.{stage.day})</span>
+                  <span className="text-[10px] opacity-75">(d.{stage.day})</span>
                 </button>
               );
             })}
