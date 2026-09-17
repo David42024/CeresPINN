@@ -546,7 +546,7 @@ export const App: React.FC = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
                 {/* Variedad de Maíz */}
                 <div>
                   <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1.5">
@@ -611,6 +611,24 @@ export const App: React.FC = () => {
                   </select>
                 </div>
 
+                {/* Año Objetivo */}
+                <div>
+                  <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1.5">
+                    Año Objetivo IPCC
+                  </label>
+                  <select
+                    id="select-twin-year"
+                    value={simulationConfig.targetYear}
+                    onChange={(e) => setSimulationConfig(prev => ({ ...prev, targetYear: parseInt(e.target.value, 10) }))}
+                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-medium text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500"
+                  >
+                    <option value={2026}>📅 2026 (Presente)</option>
+                    <option value={2030}>📅 2030 (Corto Plazo)</option>
+                    <option value={2040}>📅 2040 (Medio Plazo)</option>
+                    <option value={2050}>📅 2050 (Horizonte AR6)</option>
+                    <option value={2070}>📅 2070 (Largo Plazo)</option>
+                  </select>
+                </div>
                 {/* Botón de Ejecución Directa */}
                 <div className="flex flex-col justify-end">
                   <button
