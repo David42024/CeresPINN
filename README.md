@@ -20,6 +20,8 @@ CeresPINN is designed to address critical gaps identified in recent agro-climati
 - Simulation: PINN-inspired agronomic climate engine
 - Data: NetCDF / CMIP6-compatible climate inputs
 - Persistence: PostgreSQL with PostGIS (real database, optional mock fallback)
+- AI Assistant: Google Gemini API (google-genai)
+- Auth: Demo login (frontend-only, fixed credentials)
 
 ## Local development
 
@@ -68,6 +70,16 @@ The frontend proxies `/api/*` to `http://localhost:8000`.
 
 PostgreSQL with PostGIS is supported via the `DATABASE_URL` environment variable. If the database is unavailable, the backend falls back to a mock in-memory flow so the app remains operable during local development.
 
-## Important note
+## AI Assistant & Authentication
 
-This project intentionally does not depend on Gemini APIs. The AI layer is replaced by a local scientific simulation backend and a real data layer.
+- **Chatbot:** A floating chatbot assistant powered by the Google Gemini API
+  (google-genai) is available across the app. It answers questions about the
+  platform and, when a simulation is active, about the current simulation
+  results/context. The core PINN-based simulation engine itself remains a
+  local, physics-informed scientific model — Gemini is only used for the
+  conversational assistant layer, not for the crop/climate predictions.
+- **Login:** A demo login screen validates against a fixed set of demo
+  credentials on the frontend (matching the existing DEMO_USERS roles:
+  admin, researcher, farmer, consultant). This is for demonstration/
+  presentation purposes; there is no password field yet in the `users`
+  database table.

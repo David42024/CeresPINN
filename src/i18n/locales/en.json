@@ -31,7 +31,22 @@
     "kpiCwsi": "Crop Water Stress Index (CWSI)",
     "footerTitle": "CeresPINN: Physics-Informed Neural Network (Richards + Priestley-Taylor + CMIP6 Downscaling)",
     "footerSubtitle": "Designed for Agronomic Research and Drought-Resilient Maize Production",
-    "langSelectorTitle": "Select language"
+    "langSelectorTitle": "Select language",
+    "logout": "Log out"
+  },
+  "login": {
+    "title": "Sign in to access your digital twin",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "submit": "Sign in",
+    "error": "Incorrect email or password.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "tagline": "Climate digital twins for physics-informed agronomic decisions.",
+    "feature1": "Crop phenology",
+    "feature2": "Soil moisture",
+    "feature3": "Climate scenarios",
+    "feature4": "Thermal stress"
   },
   "mainDashboard": {
     "kpiProjectedYield": "Projected Yield",

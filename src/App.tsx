@@ -25,7 +25,7 @@ import {
   ShieldCheck,
   Sun,
   Moon,
-  RefreshCw
+  LogOut
 } from 'lucide-react';
 import { useTheme } from './context/ThemeContext';
 import { 
@@ -52,6 +52,7 @@ import { MLOpsDashboard } from './components/MLOpsDashboard';
 import { DataPipelinesView } from './components/DataPipelinesView';
 import { UserManagement } from './components/UserManagement';
 import { ValidationReport } from './components/ValidationReport';
+import { LoginScreen } from './components/LoginScreen';
 
 type ActiveTab = 
   | 'twin3d' 
@@ -72,14 +73,22 @@ export const App: React.FC = () => {
   const [selectedField, setSelectedField] = useState<Field>(DEFAULT_FIELDS[0]);
   const [simulationConfig, setSimulationConfig] = useState<SimulationConfig>(DEFAULT_SIMULATION_CONFIG);
   const [activeTab, setActiveTab] = useState<ActiveTab>('twin3d');
-  const [currentUser, setCurrentUser] = useState<User>(DEMO_USERS[0]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(65); // Mid-season by default
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
   const [dbHealth, setDbHealth] = useState<any>(null);
   const [modelOnline, setModelOnline] = useState<boolean>(true);
   const [previousYield, setPreviousYield] = useState<number | null>(null);
 
-  // Load backend data (fields, users, model status, initial simulation) on mount
+  useEffect(() => {
+    const loggedUserId = localStorage.getItem('loggedUserId');
+    const loggedUser = DEMO_USERS.find((user) => user.id === loggedUserId);
+    if (loggedUser) {
+      setCurrentUser(loggedUser);
+    }
+  }, []);
+
+  // Load database health on mount
   useEffect(() => {
     let isMounted = true;
 
@@ -210,6 +219,22 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleLoginSuccess = (user: User) => {
+    localStorage.setItem('loggedUserId', user.id);
+    setCurrentUser(user);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedUserId');
+    setCurrentUser(null);
+  };
+
+  const currentDayRecord = simulationResult.dailyRecords[currentDayIndex] || simulationResult.dailyRecords[0];
+
+  if (!currentUser) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans flex flex-col selection:bg-emerald-500 selection:text-slate-950">
       {/* Top Navbar */}
@@ -268,6 +293,7 @@ export const App: React.FC = () => {
               onClick={toggleTheme}
               className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all"
               title={theme === 'dark' ? t('app.themeToggleToLight') : t('app.themeToggleToDark')}
+              aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
             >
               {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
             </button>
@@ -281,7 +307,7 @@ export const App: React.FC = () => {
                   localStorage.setItem('lang', code);
                 }}
                 value={i18n.language ?? 'es'}
-                className="p-2 pl-8 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all cursor-pointer appearance-none text-xs font-bold"
+                className="p-2 pl-8 pr-8 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all cursor-pointer appearance-none text-xs font-bold"
                 title={t('app.langSelectorTitle')}
               >
                 <option value="es">ES</option>
@@ -289,6 +315,7 @@ export const App: React.FC = () => {
                 <option value="pt">PT</option>
               </select>
               <Globe className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
 
             {/* Run button shortcut */}
@@ -302,6 +329,15 @@ export const App: React.FC = () => {
               <Zap className={`w-3.5 h-3.5 text-amber-300 ${isSimulating ? 'animate-spin' : ''}`} />
               <span className="hidden md:inline">{isSimulating ? t('app.quickRunExecuting') : t('app.quickRunLabel')}</span>
             </button>
+            <button
+              id="btn-logout"
+              onClick={handleLogout}
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition-all"
+              title={t('app.logout')}
+              aria-label={t('app.logout')}
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
@@ -311,7 +347,7 @@ export const App: React.FC = () => {
             id="tab-btn-twin3d"
             onClick={() => setActiveTab('twin3d')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'twin3d' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'twin3d' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Activity className="w-3.5 h-3.5" />
@@ -322,7 +358,7 @@ export const App: React.FC = () => {
             id="tab-btn-dashboard"
             onClick={() => setActiveTab('dashboard')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'dashboard' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'dashboard' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -333,7 +369,7 @@ export const App: React.FC = () => {
             id="tab-btn-config"
             onClick={() => setActiveTab('config')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'config' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'config' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Sliders className="w-3.5 h-3.5" />
@@ -344,7 +380,7 @@ export const App: React.FC = () => {
             id="tab-btn-whatif"
             onClick={() => setActiveTab('whatif')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'whatif' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'whatif' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
@@ -355,7 +391,7 @@ export const App: React.FC = () => {
             id="tab-btn-map"
             onClick={() => setActiveTab('map')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'map' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'map' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
@@ -366,7 +402,7 @@ export const App: React.FC = () => {
             id="tab-btn-reports"
             onClick={() => setActiveTab('reports')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'reports' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'reports' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -377,7 +413,7 @@ export const App: React.FC = () => {
             id="tab-btn-mlops"
             onClick={() => setActiveTab('mlops')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'mlops' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'mlops' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Cpu className="w-3.5 h-3.5" />
@@ -388,7 +424,7 @@ export const App: React.FC = () => {
             id="tab-btn-pipelines"
             onClick={() => setActiveTab('pipelines')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'pipelines' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'pipelines' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Database className="w-3.5 h-3.5" />
@@ -399,7 +435,7 @@ export const App: React.FC = () => {
             id="tab-btn-users"
             onClick={() => setActiveTab('users')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'users' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'users' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <Users className="w-3.5 h-3.5" />
@@ -410,7 +446,7 @@ export const App: React.FC = () => {
             id="tab-btn-validation"
             onClick={() => setActiveTab('validation')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'validation' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-slate-700' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'validation' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -619,7 +655,6 @@ export const App: React.FC = () => {
             </div>
 
             <ThreeFieldViewer
-              field={selectedField}
               simulation={simulationResult}
               currentDayIndex={currentDayIndex}
               onChangeDayIndex={setCurrentDayIndex}

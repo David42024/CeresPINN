@@ -593,6 +593,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.camPerspectiveTitle')}
+            aria-label="Cambiar a vista 3D orbital"
           >
             <Compass className="w-4 h-4" />
           </button>
@@ -604,6 +605,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.camTopDownTitle')}
+            aria-label="Cambiar a vista aérea"
           >
             <Eye className="w-4 h-4" />
           </button>
@@ -615,6 +617,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.wireframeTitle')}
+            aria-label="Alternar malla de elementos finitos"
           >
             <Layers className="w-4 h-4" />
           </button>
@@ -622,22 +625,48 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       </div>
 
       {/* Bottom Timeline Scrubber & Playback Controls */}
-      <div className="bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex flex-col gap-1.5 z-20">
-        <div className="flex items-center gap-3">
-          {/* Play/Pause Button */}
-          <button
-            id="btn-3d-play-toggle"
-            onClick={() => setIsPlaying(!isPlaying)}
-            disabled={!simulation}
-            className="p-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50 cursor-pointer shrink-0"
-            title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
-          >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-          </button>
+      <div className="h-16 bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center gap-4 z-20">
+        {/* Play/Pause Button */}
+        <button
+          id="btn-3d-play-toggle"
+          onClick={() => setIsPlaying(!isPlaying)}
+          disabled={!simulation}
+          className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/30 disabled:opacity-50"
+          title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
+          aria-label={isPlaying ? 'Pausar simulación' : 'Reproducir ciclo fenológico'}
+        >
+          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+        </button>
 
-          <button
-            id="btn-3d-reset-timeline"
-            onClick={() => {
+        <button
+          onClick={() => {
+            setIsPlaying(false);
+            onChangeDayIndex(0);
+          }}
+          disabled={!simulation}
+          className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50"
+          title={t('threeFieldViewer.resetTitle')}
+          aria-label="Reiniciar simulación a la siembra"
+        >
+          <RotateCcw className="w-4 h-4" />
+        </button>
+
+        {/* Day Slider */}
+        <div className="flex-1 flex flex-col justify-center">
+          <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
+            <span>{t('threeFieldViewer.sliderPlanting')}</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+              {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} {t('threeFieldViewer.sliderOf')} {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
+            </span>
+            <span>{t('threeFieldViewer.sliderHarvest')}</span>
+          </div>
+          <input
+            id="slider-timeline-dap"
+            type="range"
+            min={0}
+            max={(simulation?.dailyRecords.length || 1) - 1}
+            value={currentDayIndex}
+            onChange={(e) => {
               setIsPlaying(false);
               onChangeDayIndex(0);
             }}
