@@ -625,7 +625,8 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       </div>
 
       {/* Bottom Timeline Scrubber & Playback Controls */}
-      <div className="h-16 bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center gap-4 z-20">
+      <div className="bg-white/95 dark:bg-slate-950/95 border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-col gap-2.5 z-20">
+        <div className="flex items-center gap-4 w-full">
         {/* Play/Pause Button */}
         <button
           id="btn-3d-play-toggle"
@@ -653,13 +654,13 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
         {/* Day Slider */}
         <div className="flex-1 flex items-center gap-3">
-          <div className="flex-1 flex flex-col justify-center">
-            <div className="flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400 mb-1">
-              <span>{t('threeFieldViewer.sliderPlanting')}</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-                {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} {t('threeFieldViewer.sliderOf')} {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
+          <div className="flex-1 flex flex-col justify-center min-w-0">
+            <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-slate-600 dark:text-slate-400 mb-1.5 px-1 truncate">
+              <span className="hidden sm:inline">{t('threeFieldViewer.sliderPlanting')}</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap mx-auto">
+                {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} / {simulation?.dailyRecords.length || 120} ({dailyRecord?.date || '--'})
               </span>
-              <span>{t('threeFieldViewer.sliderHarvest')}</span>
+              <span className="hidden sm:inline">{t('threeFieldViewer.sliderHarvest')}</span>
             </div>
             <input
               id="slider-timeline-dap"
@@ -691,9 +692,10 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Quick Stage Jump Pills */}
-        <div className="flex items-center justify-between gap-1 overflow-x-auto pt-1 border-t border-slate-100 dark:border-slate-800/80 text-[11px] font-mono">
+      {/* Quick Stage Jump Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] font-mono no-scrollbar w-full">
           <span className="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold shrink-0 mr-1">Saltar a Etapa:</span>
           <div className="flex items-center gap-1.5 flex-wrap">
             {stagePills.map((stage) => {
