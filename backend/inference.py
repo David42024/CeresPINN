@@ -225,6 +225,9 @@ class PinnInference:
         except ValueError:
             planting_date = datetime(2026, 5, 15)
             
+        # Ensure the calendar date reflects the target simulation year
+        planting_date = planting_date.replace(year=int(year))
+            
         temp_anom = float(payload.get("temperature_anomaly_c", 1.85))
         precip_anom = float(payload.get("precipitation_anomaly_percent", -12.0)) / 100.0
         
