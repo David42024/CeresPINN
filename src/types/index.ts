@@ -53,9 +53,9 @@ export interface Field {
   notes?: string;
 }
 
-export type ClimateScenario = 'SSP1-2.6' | 'SSP3-7.0' | 'SSP5-8.5';
+export type ClimateScenario = 'SSP1-2.6' | 'SSP2-4.5' | 'SSP3-7.0' | 'SSP5-8.5';
 export type MaizeVariety = 'short_cycle' | 'medium_cycle' | 'long_cycle';
-export type IrrigationStrategy = 'rainfed' | 'deficit_50' | 'optimal_100' | 'smart_sensor';
+export type IrrigationStrategy = 'rainfed' | 'deficit_50' | 'deficit_75' | 'optimal_100' | 'smart_sensor';
 
 export interface SimulationConfig {
   id: string;

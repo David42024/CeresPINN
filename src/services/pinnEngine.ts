@@ -22,7 +22,7 @@ const VARIETY_GDD_REQUIREMENTS: Record<MaizeVariety, { totalGdd: number; days: n
   long_cycle: { totalGdd: 2050, days: 135, maxLai: 6.0, baseYieldPotential: 16000 }
 };
 
-// CMIP6 Scenario Climate Forcing Multipliers (2026-2050 baseline adjustment)
+// CMIP6 Scenario Climate Forcing Multipliers (2026-2070 baseline adjustment)
 export function getCMIP6ClimateForcing(scenario: ClimateScenario, year: number) {
   const yearsFromBase = Math.max(0, year - 2026);
   switch (scenario) {
@@ -33,6 +33,14 @@ export function getCMIP6ClimateForcing(scenario: ClimateScenario, year: number) 
         precipMultiplier: 0.98 + Math.sin(yearsFromBase * 0.5) * 0.04,
         heatwaveFrequencyRisk: 0.15,
         vpdMultiplier: 1.05
+      };
+    case 'SSP2-4.5': // Middle of the road
+      return {
+        co2Ppm: 462 + yearsFromBase * 2.1,
+        tempAnomalyC: 1.4 + yearsFromBase * 0.045,
+        precipMultiplier: 0.94 - yearsFromBase * 0.003,
+        heatwaveFrequencyRisk: 0.28,
+        vpdMultiplier: 1.13
       };
     case 'SSP3-7.0': // Regional rivalry / Moderate-high emissions
       return {

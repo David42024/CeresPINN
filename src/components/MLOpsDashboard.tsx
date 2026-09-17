@@ -22,7 +22,10 @@ import {
   YAxis, 
   Tooltip, 
   Legend, 
-  CartesianGrid 
+  CartesianGrid,
+  BarChart,
+  Bar,
+  Cell
 } from 'recharts';
 import { MODEL_REGISTRY_DATA } from '../data/mockData';
 import { ModelRegistryEntry } from '../types';
@@ -327,6 +330,73 @@ export const MLOpsDashboard: React.FC = () => {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Model Architecture Comparison */}
+      <div className="space-y-4">
+        <h3 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          Comparativa de Arquitecturas — CeresPINN vs. Modelos Convencionales
+        </h3>
+
+        {/* Mini explanation */}
+        <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+          <strong>Ventaja del PINN:</strong> La incorporación de la ecuación de Richards como loss de conservación física mejora el R² en <strong className="text-emerald-700 dark:text-emerald-400">+10.2 pp</strong> y reduce el RMSE en <strong className="text-emerald-700 dark:text-emerald-400">−660 kg/ha</strong> respecto al mejor modelo puramente estadístico. Datos calibrados en USDA NASS 2000-2025.
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* R² Bar Chart */}
+          <div className="bg-slate-50 dark:bg-slate-950/80 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-2">
+            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">R² Score (más alto = mejor)</p>
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart
+                data={[...models].sort((a, b) => b.testR2 - a.testR2).map(m => ({ name: m.name.replace('(Active Production)', '').replace('Grad.', 'GB').split(' ').slice(0,3).join(' '), r2: m.testR2, active: m.active }))}
+                layout="vertical"
+                margin={{ left: 8, right: 40, top: 4, bottom: 4 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.15} horizontal={false} />
+                <XAxis type="number" domain={[0, 1]} tick={{ fontSize: 10 }} tickFormatter={v => v.toFixed(2)} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 9 }} width={110} />
+                <Tooltip formatter={(v: number) => [v.toFixed(3), 'R²']} contentStyle={{ fontSize: 11 }} />
+                <Bar dataKey="r2" radius={[0,4,4,0]}>
+                  {[...models].sort((a, b) => b.testR2 - a.testR2).map((m, i) => (
+                    <Cell key={i} fill={m.active ? '#10b981' : m.testR2 > 0.65 ? '#64748b' : '#475569'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-[11px] text-slate-500 text-center">
+              <span className="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500 mr-1 align-middle" />CeresPINN (activo)
+              <span className="inline-block w-2.5 h-2.5 rounded-sm bg-slate-500 ml-3 mr-1 align-middle" />Baselines
+            </p>
+          </div>
+
+          {/* RMSE Bar Chart */}
+          <div className="bg-slate-50 dark:bg-slate-950/80 rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-2">
+            <p className="text-xs font-bold text-slate-700 dark:text-slate-300">RMSE kg/ha (más bajo = mejor)</p>
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart
+                data={[...models].sort((a, b) => a.testRmseKgHa - b.testRmseKgHa).map(m => ({ name: m.name.split(' ').slice(0,3).join(' '), rmse: m.testRmseKgHa, active: m.active }))}
+                layout="vertical"
+                margin={{ left: 8, right: 50, top: 4, bottom: 4 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.15} horizontal={false} />
+                <XAxis type="number" domain={[0, 4000]} tick={{ fontSize: 10 }} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 9 }} width={110} />
+                <Tooltip formatter={(v: number) => [`${v.toLocaleString()} kg/ha`, 'RMSE']} contentStyle={{ fontSize: 11 }} />
+                <Bar dataKey="rmse" radius={[0,4,4,0]}>
+                  {[...models].sort((a, b) => a.testRmseKgHa - b.testRmseKgHa).map((m, i) => (
+                    <Cell key={i} fill={m.active ? '#10b981' : '#ef4444'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-[11px] text-slate-500 text-center">
+              <span className="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500 mr-1 align-middle" />CeresPINN (mejor)
+              <span className="inline-block w-2.5 h-2.5 rounded-sm bg-rose-500 ml-3 mr-1 align-middle" />Baselines
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
