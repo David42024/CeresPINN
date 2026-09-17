@@ -187,6 +187,8 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
 
   const dailyRecords: DailySimulationRecord[] = [];
   const plantingDateObj = new Date(config.plantingDate);
+  // Aseguramos que la fecha proyectada coincida con el año objetivo climático
+  plantingDateObj.setFullYear(config.targetYear);
 
   let gddAccum = 0;
   let totalBiomass = 45; // kg/ha seedling base
