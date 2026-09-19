@@ -48,6 +48,17 @@
     "feature3": "Cenários climáticos",
     "feature4": "Estresse térmico"
   },
+  "chatbot": {
+    "title": "Assistente CeresPINN",
+    "subtitle": "Agricultura de precisão",
+    "welcome": "Olá. Posso ajudar você a interpretar a simulação e seus resultados.",
+    "placeholder": "Digite sua pergunta...",
+    "send": "Enviar mensagem",
+    "open": "Abrir assistente",
+    "close": "Fechar assistente",
+    "loading": "Gerando resposta",
+    "error": "Não consegui responder agora. Tente novamente."
+  },
   "mainDashboard": {
     "kpiProjectedYield": "Rendimento Projetado",
     "kpiPotential": "Potencial:",

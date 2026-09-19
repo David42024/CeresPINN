@@ -48,6 +48,17 @@
     "feature3": "Climate scenarios",
     "feature4": "Thermal stress"
   },
+  "chatbot": {
+    "title": "CeresPINN Assistant",
+    "subtitle": "Precision agriculture",
+    "welcome": "Hello. I can help you interpret the simulation and its results.",
+    "placeholder": "Ask a question...",
+    "send": "Send message",
+    "open": "Open assistant",
+    "close": "Close assistant",
+    "loading": "Generating response",
+    "error": "I could not answer right now. Please try again."
+  },
   "mainDashboard": {
     "kpiProjectedYield": "Projected Yield",
     "kpiPotential": "Potential:",

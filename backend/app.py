@@ -1,16 +1,21 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+import os
+import time
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from dotenv import load_dotenv
 
 from .pipelines_api import router as pipelines_router
 import backend.inference as inference_mod
 import backend.db as db
 import backend.validation as validation
+
+load_dotenv()
 
 
 @asynccontextmanager
@@ -46,6 +51,11 @@ class SimulationRequest(BaseModel):
     carbon_dioxide_ppm: float
     temperature_anomaly_c: float
     precipitation_anomaly_percent: float
+
+
+class ChatbotRequest(BaseModel):
+    message: str
+    context: Optional[dict] = None
 
 
 @app.get("/api/health")
@@ -151,6 +161,62 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
             }
         )
     return response
+
+
+@app.post("/api/chatbot")
+def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
+    from google import genai
+    from google.genai.types import GenerateContentConfig, ThinkingConfig
+
+    system_prompt = (
+        "Eres el asistente conversacional de CeresPINN, una plataforma de "
+        "agricultura de precisión. Reglas estrictas: "
+        "1) Responde en máximo 2-3 oraciones cortas, lenguaje simple, como "
+        "un chat de WhatsApp, no como un informe técnico. "
+        "2) NUNCA uses markdown: nada de asteriscos, símbolos #, guiones de "
+        "lista, numeración, ni bloques de código. Solo texto plano corrido. "
+        "3) Solo entra en detalle técnico (fórmulas, nombres de variables, "
+        "ecuaciones) si el usuario lo pide explícitamente con palabras como "
+        "'detalle técnico', 'ecuación', 'fórmula' o similar. "
+        "4) Si no tienes contexto suficiente para responder algo específico "
+        "de la simulación, dilo brevemente en vez de inventar. "
+        "Responde en un máximo aproximado de 60 palabras. No uses fórmulas "
+        "matemáticas, notación LaTeX (nada de símbolos $ o \\frac), ni "
+        "símbolos de markdown."
+    )
+    contents = (
+        f"{system_prompt}\n\n"
+        f"Contexto de la simulación actual: {payload.context}\n"
+        f"Pregunta del usuario: {payload.message}"
+    )
+    max_retries = 3
+    last_error = None
+
+    for attempt in range(max_retries):
+        try:
+            client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+            response = client.models.generate_content(
+                model="gemini-flash-latest",
+                contents=contents,
+                config=GenerateContentConfig(
+                    max_output_tokens=300,
+                    temperature=0.3,
+                    thinking_config=ThinkingConfig(thinking_budget=0),
+                ),
+            )
+            if not response.text:
+                return {"reply": "No tengo una respuesta clara para eso, ¿puedes reformular la pregunta?", "error": None}
+            return {"reply": response.text}
+        except Exception as e:
+            last_error = e
+            error_str = str(e)
+            is_retryable = "503" in error_str or "UNAVAILABLE" in error_str
+            if is_retryable and attempt < max_retries - 1:
+                time.sleep(1.5 * (attempt + 1))
+                continue
+            break
+
+    return {"reply": None, "error": str(last_error)}
 
 
 def _mock_yield(payload: SimulationRequest) -> float:
