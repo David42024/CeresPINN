@@ -194,6 +194,53 @@ def render_analysis_results(spec: Any) -> None:
             st.write(f"**Alpha:** {spec.statistical_tests.alpha}")
         st.caption("Selected based on problem type")
     
+    # Ficha 5: Climate-Adaptive Digital Twin Architecture & Protocols
+    is_cerespinn = any("cerespinn" in m.name for m in spec.models) or "maize" in spec.project_name.lower() or "cerespinn" in spec.project_name.lower()
+    if is_cerespinn:
+        with st.expander("🌾 Ficha 5: Digital Twin Architecture, Protocols & Scenarios", expanded=True):
+            st.markdown("#### 1. Ingesta de Datos Acoplada (Multi-Source)")
+            st.markdown("""
+            * **CHIRPS**: Precipitación diaria histórica a alta resolución espacial.
+            * **CHIRTS**: Temperatura máxima y mínima diaria histórica.
+            * **USDA NASS**: Rendimiento real observado a nivel de condado (*ground truth*, 1990–2020).
+            * **CMIP6 (NASA NEX-GDDP)**: Proyecciones climáticas de 5 GCMs con corrección estadística de sesgo (*bias-corrected*, downscaled a 0.25°).
+            * **SoilGrids 2.0**: Propiedades físico-químicas del suelo (contenido de arcilla, arena, carbono orgánico y capacidad de retención hídrica).
+            """)
+            
+            st.markdown("#### 2. Ecuaciones Físicas del PINN (Physics-Informed Neural Network)")
+            st.markdown("""
+            * **Acumulación de biomasa**: Modelo de eficiencia de uso de radiación (RUE) acoplado a la intercepción de luz.
+            * **Desarrollo fenológico**: Tiempo térmico medido en Grados Día de Crecimiento (GDD) entre siembra, floración (anthesis) y madurez fisiológica.
+            * **Balance hídrico y estrés**: Dinámica de evapotranspiración (ET) y cálculo de déficit hídrico edafoclimático.
+            * **Multi-Output**: Predice `yield` (bushels/acre), `flowering_date`, `maturity_date` y `accumulated_et`.
+            """)
+            
+            st.markdown("#### 3. Escenarios Climáticos SSP & Capa de Adaptación Prescriptiva")
+            st.markdown("""
+            * **Escenarios**: SSP1-2.6 (sostenibilidad), SSP2-4.5 (medio), SSP3-7.0 (alta rivalidad), SSP5-8.5 (altas emisiones) para horizontes **2030, 2050 y 2070**.
+            * **Intervenciones de adaptación**:
+              1. *Adelanto de siembra*: desplazar ventana de siembra 15 días hacia primavera temprana.
+              2. *Variedad adaptada*: transición a cultivares de ciclo más corto (ajuste de *maturity group*).
+              3. *Riego suplementario*: aplicación de 50 mm en el período crítico de floración/llenado de grano.
+            * **Optimización bayesiana**: Búsqueda global de la combinación óptima de manejo para mitigar $\ge 50\%$ de la pérdida proyectada de rendimiento.
+            """)
+            
+            st.markdown("#### 4. Protocolo Estadístico & Hipótesis")
+            st.markdown("""
+            * **Hipótesis $H_0$**: El twin climático no predice diferencias significativas de rendimiento entre SSP2-4.5 y SSP5-8.5 para 2050.
+            * **Hipótesis $H_1$**: El twin predice reducción del rendimiento en $\ge 15\%$ bajo SSP5-8.5 vs. baseline histórico, con identificación de ventanas óptimas de siembra que mitigan $\ge 50\%$ de la pérdida.
+            * **Validación Hindcast**: Test de Kolmogorov-Smirnov ($KS$) para validar distribución simulada (1990–2020) vs observada de USDA NASS.
+            * **Sensibilidad Global**: Método de Sobol para cuantificar varianza explicada por $T_{max}$, precipitación y distribución de lluvia.
+            * **Incertidumbre de Ensamble GCM**: Bootstrap no paramétrico con Intervalos de Confianza al $95\%$ y Rango Intercuartílico (IQR).
+            """)
+            
+            st.markdown("#### 5. Revistas Meta")
+            st.markdown("""
+            * **European Journal of Agronomy** (CiteScore ~8.0, afinidad: modelos de cultivo + clima).
+            * **Agricultural Systems** (CiteScore ~9.0, afinidad: sistemas agrícolas y adaptación climática).
+            * **Science of the Total Environment** (CiteScore ~12.5, afinidad: impacto ambiental y cambio climático).
+            """)
+    
     st.markdown("---")
     
     # Action buttons

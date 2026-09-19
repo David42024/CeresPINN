@@ -31,21 +31,30 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         feature_names: Optional[List[str]] = None,
         physics_weight: float = 0.1,
     ):
-        super().__init__(hyperparameters)
+        # Store parameters exactly as passed for sklearn compatibility
+        # Don't call super().__init__ to avoid parameter modification
+        self.hyperparameters = hyperparameters
         self.input_dim = input_dim
-        self.feature_names = feature_names or []
+        self.feature_names = feature_names
         self.physics_weight = physics_weight
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        
-        # PINN configuration
+        self._y_min = 0.0
+        self._y_span = 1.0
+        self.is_fitted = False
+
+        # PINN configuration (accepts catalog default keys hidden_dim/num_layers
+        # as aliases of hidden_units/hidden_layers)
+        hp = self.hyperparameters if self.hyperparameters is not None else {}
+        hidden_layers = hp.get("hidden_layers", hp.get("num_layers", 3))
+        hidden_units = hp.get("hidden_units", hp.get("hidden_dim", 64))
         self.pinn_config = PINNConfig(
-            hidden_layers=hyperparameters.get("hidden_layers", 3) if hyperparameters else 3,
-            hidden_units=hyperparameters.get("hidden_units", 64) if hyperparameters else 64,
-            activation=hyperparameters.get("activation", "tanh") if hyperparameters else "tanh",
-            dropout=hyperparameters.get("dropout", 0.0) if hyperparameters else 0.0,
+            hidden_layers=hidden_layers,
+            hidden_units=hidden_units,
+            activation=hp.get("activation", "tanh"),
+            dropout=hp.get("dropout", 0.0),
             loss_physics_weight=physics_weight,
-            feature_names=feature_names,
+            feature_names=self.feature_names if self.feature_names else [],
         )
     
     def _build_model(self, input_dim: int) -> None:
@@ -74,9 +83,24 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         """
         import torch.optim as optim
         from torch.utils.data import DataLoader, TensorDataset
-        
+
+        # Training schedule may come from ML Lab UI via hyperparameters
+        hp = self.hyperparameters or {}
+        epochs = int(hp.get("epochs", epochs))
+        batch_size = int(hp.get("batch_size", batch_size))
+        learning_rate = float(hp.get("learning_rate", learning_rate))
+
+        # Min-max target normalization (mirrors backend/train.py): keeps the
+        # MSE + physics loss on a stable scale; predict() denormalizes.
+        import numpy as np
+
+        y_arr = np.asarray(y, dtype=float)
+        self._y_min = float(y_arr.min())
+        self._y_span = float(y_arr.max() - y_arr.min()) or 1.0
+        y_n = (y_arr - self._y_min) / self._y_span
+
         X = self._to_tensor(X)
-        y = self._to_tensor(y)
+        y = self._to_tensor(y_n)
         
         if self.model is None:
             self._build_model(X.shape[1])
@@ -127,7 +151,7 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.model.eval()
         with torch.no_grad():
             yield_pred, _ = self.model(X)
-        return yield_pred.cpu().numpy()
+        return yield_pred.cpu().numpy() * self._y_span + self._y_min
     
     def predict_proba(self, X):
         """Predict class probabilities (not applicable for regression)."""
@@ -160,6 +184,48 @@ class CeresPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         if isinstance(data, np.ndarray):
             return torch.FloatTensor(data).to(self.device)
         return torch.FloatTensor(data).to(self.device)
+    
+    def get_params(self, deep=True):
+        """Get parameters for sklearn compatibility (required for cloning)."""
+        params = {
+            "hyperparameters": self.hyperparameters,
+            "input_dim": self.input_dim,
+            "feature_names": self.feature_names,
+            "physics_weight": self.physics_weight,
+        }
+        if deep:
+            # Return deep copies of mutable parameters
+            import copy
+            params = {k: copy.deepcopy(v) for k, v in params.items()}
+        return params
+    
+    def set_params(self, **params):
+        """Set parameters for sklearn compatibility (required for cloning)."""
+        for key, value in params.items():
+            if key == "hyperparameters":
+                self.hyperparameters = value
+                # Rebuild pinn_config if hyperparameters change
+                if self.hyperparameters is not None:
+                    hp = self.hyperparameters
+                    hidden_layers = hp.get("hidden_layers", hp.get("num_layers", 3))
+                    hidden_units = hp.get("hidden_units", hp.get("hidden_dim", 64))
+                    self.pinn_config = PINNConfig(
+                        hidden_layers=hidden_layers,
+                        hidden_units=hidden_units,
+                        activation=hp.get("activation", "tanh"),
+                        dropout=hp.get("dropout", 0.0),
+                        loss_physics_weight=self.physics_weight,
+                        feature_names=self.feature_names,
+                    )
+            elif key == "input_dim":
+                self.input_dim = value
+            elif key == "feature_names":
+                self.feature_names = value
+            elif key == "physics_weight":
+                self.physics_weight = value
+                if hasattr(self, "pinn_config"):
+                    self.pinn_config.loss_physics_weight = value
+        return self
 
 
 class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
@@ -184,6 +250,8 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.physics_weight = physics_weight
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._y_min = 0.0
+        self._y_span = 1.0
     
     def _build_model(self, input_dim: int) -> None:
         """Build the generic PINN model."""
@@ -212,9 +280,23 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         import torch.optim as optim
         from torch.utils.data import DataLoader, TensorDataset
         from models.pinn import generic_physics_loss
-        
+
+        # Training schedule may come from ML Lab UI via hyperparameters
+        hp = self.hyperparameters or {}
+        epochs = int(hp.get("epochs", epochs))
+        batch_size = int(hp.get("batch_size", batch_size))
+        learning_rate = float(hp.get("learning_rate", learning_rate))
+
+        # Min-max target normalization (mirrors backend/train.py)
+        import numpy as np
+
+        y_arr = np.asarray(y, dtype=float)
+        self._y_min = float(y_arr.min())
+        self._y_span = float(y_arr.max() - y_arr.min()) or 1.0
+        y_n = (y_arr - self._y_min) / self._y_span
+
         X = self._to_tensor(X)
-        y = self._to_tensor(y)
+        y = self._to_tensor(y_n)
         
         if self.model is None:
             self._build_model(X.shape[1])
@@ -264,7 +346,7 @@ class GenericPINNModel(BaseModel, BaseEstimator, RegressorMixin):
         self.model.eval()
         with torch.no_grad():
             output, _ = self.model(X)
-        return output.cpu().numpy()
+        return output.cpu().numpy() * self._y_span + self._y_min
     
     def predict_proba(self, X):
         """Predict class probabilities (not applicable for regression)."""

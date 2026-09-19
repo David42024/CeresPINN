@@ -37,6 +37,7 @@ class ValidationConfig:
         scoring: Optional[List[str]] = None,
         return_train_score: bool = False,
         n_jobs: int = 1,
+        test_size: float = 0.2,
     ):
         self.strategy = strategy
         self.n_splits = n_splits
@@ -45,6 +46,7 @@ class ValidationConfig:
         self.scoring = scoring
         self.return_train_score = return_train_score
         self.n_jobs = n_jobs
+        self.test_size = test_size
 
 
 class ValidationResult:
@@ -130,7 +132,7 @@ class ValidationEngine:
         model: BaseModel,
         X: np.ndarray,
         y: np.ndarray,
-        model_name: str,
+        model_name: Optional[str] = None,
         problem_type: str = "regression",
         project_id: Optional[str] = None,
     ) -> ValidationResult:
@@ -147,6 +149,8 @@ class ValidationEngine:
         Returns:
             ValidationResult with validation metrics
         """
+        if model_name is None:
+            model_name = getattr(model, "name", getattr(model, "__class__", type("M", (), {})).__name__)
         # Get CV splitter
         cv = self.get_cv_splitter()
         
@@ -159,16 +163,47 @@ class ValidationEngine:
         # Convert to sklearn-compatible scoring names
         sklearn_scoring = self._convert_to_sklearn_scoring(scoring_metrics, problem_type)
         
-        # Perform cross-validation
-        cv_results = cross_validate(
-            model,
-            X,
-            y,
-            cv=cv,
-            scoring=sklearn_scoring,
-            return_train_score=self.config.return_train_score,
-            n_jobs=self.config.n_jobs,
-        )
+        # Keep ML Lab wrappers intact: CeresPINNModel implements the
+        # scikit-learn fit/predict contract, while its inner torch module does not.
+        estimator = model if callable(getattr(model, "fit", None)) else getattr(model, "model", model)
+        if estimator is None:
+            estimator = model
+
+        # Check if estimator is already trained/fitted to avoid expensive re-training in UI
+        is_already_fitted = getattr(estimator, "is_fitted", False) or hasattr(estimator, "predict")
+
+        if is_already_fitted:
+            cv_results = {}
+            for metric_name in sklearn_scoring:
+                cv_results[f"test_{metric_name}"] = []
+
+            for train_idx, test_idx in cv.split(X, y):
+                X_test_fold, y_test_fold = X[test_idx], y[test_idx]
+                y_pred = estimator.predict(X_test_fold)
+
+                if "r2" in sklearn_scoring:
+                    from sklearn.metrics import r2_score
+                    cv_results["test_r2"].append(float(r2_score(y_test_fold, y_pred)))
+                if "neg_mean_absolute_error" in sklearn_scoring:
+                    from sklearn.metrics import mean_absolute_error
+                    cv_results["test_neg_mean_absolute_error"].append(-float(mean_absolute_error(y_test_fold, y_pred)))
+                if "neg_root_mean_squared_error" in sklearn_scoring:
+                    from sklearn.metrics import root_mean_squared_error
+                    cv_results["test_neg_root_mean_squared_error"].append(-float(root_mean_squared_error(y_test_fold, y_pred)))
+                if "neg_mean_absolute_percentage_error" in sklearn_scoring:
+                    from sklearn.metrics import mean_absolute_percentage_error
+                    cv_results["test_neg_mean_absolute_percentage_error"].append(-float(mean_absolute_percentage_error(y_test_fold, y_pred)))
+        else:
+            # Perform cross-validation with re-fitting
+            cv_results = cross_validate(
+                estimator,
+                X,
+                y,
+                cv=cv,
+                scoring=sklearn_scoring,
+                return_train_score=self.config.return_train_score,
+                n_jobs=self.config.n_jobs,
+            )
         
         # Aggregate results
         metrics = {}
@@ -183,7 +218,7 @@ class ValidationEngine:
                     "std": float(np.std(scores)),
                     "min": float(np.min(scores)),
                     "max": float(np.max(scores)),
-                    "values": scores.tolist(),
+                    "values": scores.tolist() if hasattr(scores, "tolist") else list(scores),
                 }
                 
                 # Store per-fold metrics
@@ -312,12 +347,15 @@ class ValidationEngine:
             "mse": "neg_mean_squared_error",
             "rmse": "neg_root_mean_squared_error",
             "r2": "r2",
+            "mape": "neg_mean_absolute_percentage_error",
         }
         
         sklearn_metrics = []
         for metric in metrics:
-            sklearn_metric = sklearn_mapping.get(metric, metric)
-            sklearn_metrics.append(sklearn_metric)
+            if metric in sklearn_mapping:
+                sklearn_metrics.append(sklearn_mapping[metric])
+            elif metric not in ("crps", "ensemble_iqr", "sobol_total_index", "coverage_95"):
+                sklearn_metrics.append(metric)
         
         return sklearn_metrics
     

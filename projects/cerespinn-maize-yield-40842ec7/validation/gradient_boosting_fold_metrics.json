@@ -1,0 +1,65 @@
+{
+  "data": [
+    {
+      "fold": 1,
+      "r2": 0.6766,
+      "neg_root_mean_squared_error": -17.6538,
+      "neg_mean_absolute_error": -13.3791,
+      "neg_mean_absolute_percentage_error": -0.0855,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 9.2
+    },
+    {
+      "fold": 2,
+      "r2": 0.6797,
+      "neg_root_mean_squared_error": -17.5939,
+      "neg_mean_absolute_error": -13.2597,
+      "neg_mean_absolute_percentage_error": -0.0849,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 10.4
+    },
+    {
+      "fold": 3,
+      "r2": 0.6732,
+      "neg_root_mean_squared_error": -17.7811,
+      "neg_mean_absolute_error": -13.3425,
+      "neg_mean_absolute_percentage_error": -0.0857,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 4.66
+    },
+    {
+      "fold": 4,
+      "r2": 0.6619,
+      "neg_root_mean_squared_error": -18.0905,
+      "neg_mean_absolute_error": -13.6224,
+      "neg_mean_absolute_percentage_error": -0.0882,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 5.94
+    },
+    {
+      "fold": 5,
+      "r2": 0.673,
+      "neg_root_mean_squared_error": -17.6418,
+      "neg_mean_absolute_error": -13.2855,
+      "neg_mean_absolute_percentage_error": -0.0845,
+      "n_train": 53184,
+      "n_samples": 13296,
+      "duration_sec": 5.62
+    }
+  ],
+  "metadata": {
+    "model_name": "gradient_boosting",
+    "display_name": "Gradient Boosting Regressor (Optimizado)",
+    "family": "Convencional (Ensamble Boosting)",
+    "strategy": "CrossValidation_5Fold",
+    "n_splits": 5,
+    "train_time_sec": 35.85,
+    "optimized": true,
+    "version": "2.0",
+    "trained_at": "2026-09-12T16:43:01"
+  }
+}

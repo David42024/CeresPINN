@@ -71,6 +71,74 @@ def _normalize_nass(df: pd.DataFrame) -> pd.DataFrame:
     return out.dropna(subset=["year", "yield_bu_acre"])
 
 
+# NEX-GDDP scenario ids (summary) -> SCENARIO_TEMPLATE keys (training rows).
+_NEX_SCENARIO_MAP = {
+    "SSP1-2.6": "ssp126",
+    "SSP2-4.5": "ssp245",
+    "SSP3-7.0": "ssp370",
+    "SSP5-8.5": "ssp585",
+}
+
+# Growing season (May-Sep) length used to scale daily precip flux to seasonal mm.
+_SEASON_DAYS = 153
+
+
+def _nex_year_lookup(nex_summary: pd.DataFrame | None) -> Dict[str, Any]:
+    """Index live NEX-GDDP regional means as {(scenario, year, variable): value}.
+
+    Units out of the extractor: pr = kg/m2/s flux, tasmax = Kelvin.
+    Returns the lookup plus the 1990-2014 historical tasmax baseline (degC)
+    used to express temp anomalies.
+    """
+    empty: Dict[str, Any] = {"tasmax_c": {}, "pr_flux": {}, "baseline_c": None}
+    if nex_summary is None or nex_summary.empty:
+        return empty
+    need = {"scenario", "variable", "year", "region_mean"}
+    if not need.issubset(set(nex_summary.columns)):
+        return empty
+    frame = nex_summary.copy()
+    frame["scenario"] = frame["scenario"].astype(str)
+    frame["variable"] = frame["variable"].astype(str)
+    frame["year"] = pd.to_numeric(frame["year"], errors="coerce").astype("Int64")
+
+    lookup = {"tasmax_c": {}, "pr_flux": {}, "baseline_c": None}
+    for _, row in frame.iterrows():
+        if pd.isna(row["year"]):
+            continue
+        key = (row["scenario"], int(row["year"]), row["variable"])
+        try:
+            val = float(row["region_mean"])
+        except (TypeError, ValueError):
+            continue
+        if row["variable"] == "tasmax":
+            lookup["tasmax_c"][key] = val - 273.15
+        elif row["variable"] == "pr":
+            lookup["pr_flux"][key] = val
+
+    hist = [v for (sc, _y, _v), v in lookup["tasmax_c"].items() if sc == "historical"]
+    if hist:
+        lookup["baseline_c"] = float(np.mean(hist))
+
+    # Years harvested sparsely (even historical years, 5-year SSP steps):
+    # linearly interpolate within each scenario so every training year has a
+    # real-based value instead of falling back to the flat template.
+    try:
+        full_years = list(range(1990, 2026))
+        for store in ("tasmax_c", "pr_flux"):
+            by_sc: Dict[str, Dict[int, float]] = {}
+            for (sc, y, _v), val in lookup[store].items():
+                by_sc.setdefault(sc, {})[y] = val
+            for sc, series in by_sc.items():
+                s = pd.Series(series).sort_index()
+                s = s.reindex(full_years).interpolate(method="linear", limit_direction="both")
+                for y in full_years:
+                    if (sc, y, "tasmax" if store == "tasmax_c" else "pr") not in lookup[store]:
+                        lookup[store][(sc, y, "tasmax" if store == "tasmax_c" else "pr")] = float(s.loc[y])
+    except Exception:
+        pass
+    return lookup
+
+
 def _blend_climate(
     years: np.ndarray,
     scenarios: np.ndarray,
@@ -83,6 +151,7 @@ def _blend_climate(
     breaks on missing projection data.
     """
     rows: list[Dict[str, Any]] = []
+    lookup = _nex_year_lookup(nex_summary)
     for year, scenario in zip(years, scenarios):
         feats = dict(SCENARIO_TEMPLATE.get(str(scenario), SCENARIO_TEMPLATE["SSP1-2.6"]))
         # Project forward anomalies with year (mild linear drift, mirrors the frontend).
@@ -90,17 +159,21 @@ def _blend_climate(
         feats["temp_anomaly_c"] = feats["temp_anomaly_c"] + years_from_base * 0.02
         feats["co2_ppm"] = feats["co2_ppm"] + years_from_base * 1.5
 
-        if nex_summary is not None and not nex_summary.empty:
-            mask = nex_summary["scenario"].astype(str).str.upper() == str(scenario).upper()
-            subset = nex_summary[mask]
-            if not subset.empty:
-                # Seasonal precip (mm) proxy: pr region_mean scaled to mm/season.
-                pr = subset.loc[subset["variable"] == "pr", "region_mean"].mean()
-                tasmax = subset.loc[subset["variable"] == "tasmax", "region_mean"].mean()
-                if pd.notna(pr):
-                    feats["seasonal_precip_mm"] = float(pr)
-                if pd.notna(tasmax):
-                    feats["temp_anomaly_c"] = float(tasmax) - 14.0  # ~mean temp reference
+        # Live NEX-GDDP override, per (scenario, year): historical experiment
+        # covers 1990-2014, SSP runs cover 2015+. Falls back to template when
+        # a given year/scenario was not harvested.
+        nex_sc = _NEX_SCENARIO_MAP.get(str(scenario), str(scenario).lower())
+        if int(year) < 2015:
+            nex_sc = "historical"
+        tas_c = lookup["tasmax_c"].get((nex_sc, int(year), "tasmax"))
+        if tas_c is not None:
+            if lookup["baseline_c"] is not None:
+                feats["temp_anomaly_c"] = float(tas_c - lookup["baseline_c"])
+            else:
+                feats["temp_anomaly_c"] = float(tas_c - 14.0)
+        pr_flux = lookup["pr_flux"].get((nex_sc, int(year), "pr"))
+        if pr_flux is not None and pr_flux >= 0:
+            feats["seasonal_precip_mm"] = float(pr_flux * 86400.0 * _SEASON_DAYS)
 
         # Secondary engineered features.
         feats["precip_anomaly_pct"] = feats.get("precip_anomaly_pct", 0.0)
