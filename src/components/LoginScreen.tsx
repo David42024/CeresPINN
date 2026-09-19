@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CloudRain, Droplets, Eye, EyeOff, Globe, Leaf, Loader2, LockKeyhole, Mail, Moon, Sprout, Sun, Thermometer } from 'lucide-react';
+import { Activity, CloudRain, Droplets, Eye, EyeOff, Globe, Leaf, Loader2, LockKeyhole, Mail, Moon, Sprout, Sun, Thermometer, TrendingUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { DEMO_USERS } from '../data/mockData';
 import { User } from '../types';
@@ -45,10 +45,21 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex selection:bg-emerald-500 selection:text-slate-950">
-      <section className="hidden md:flex md:w-[45%] min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-500 to-slate-900 text-white p-10 lg:p-14 flex-col justify-between">
+      <section
+        className="hidden md:flex md:w-[45%] min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-500 to-slate-900 text-white p-10 lg:p-14 flex-col justify-between"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px), linear-gradient(135deg, rgb(5 150 105), rgb(20 184 166), rgb(15 23 42))',
+          backgroundSize: '22px 22px, 100% 100%'
+        }}
+      >
         <div className="relative z-10">
-          <div className="w-20 h-20 rounded-[26px] bg-white/15 border border-white/25 backdrop-blur-sm flex items-center justify-center shadow-2xl">
-            <Sprout className="w-11 h-11 text-emerald-50" />
+          <div className="flex items-center justify-between gap-3">
+            <div className="w-20 h-20 rounded-[26px] bg-white/15 border border-white/25 backdrop-blur-sm flex items-center justify-center shadow-2xl">
+              <Sprout className="w-11 h-11 text-emerald-50" />
+            </div>
+            <span className="bg-emerald-500/10 text-emerald-100 border border-emerald-400/30 rounded-full px-3 py-1 text-xs font-mono whitespace-nowrap backdrop-blur-sm">
+              🌱 Simulación activa
+            </span>
           </div>
           <div className="mt-7 flex items-center gap-3">
             <h1 className="text-3xl font-black tracking-tight">CeresPINN</h1>
@@ -59,22 +70,65 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           <p className="mt-6 max-w-sm text-lg leading-8 text-emerald-50/90 font-medium">{t('login.tagline')}</p>
         </div>
 
-        <div className="relative z-10 grid grid-cols-2 gap-x-6 gap-y-7 max-w-md">
-          <div className="flex items-center gap-3">
-            <Sprout className="w-5 h-5 text-emerald-100" />
-            <span className="text-sm text-white/85">{t('login.feature1')}</span>
+        <div className="relative z-10 max-w-md space-y-6">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-7">
+            <div className="flex items-center gap-3">
+              <Sprout className="w-5 h-5 text-emerald-100" />
+              <span className="text-sm text-white/85">{t('login.feature1')}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Droplets className="w-5 h-5 text-cyan-100" />
+              <span className="text-sm text-white/85">{t('login.feature2')}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CloudRain className="w-5 h-5 text-sky-100" />
+              <span className="text-sm text-white/85">{t('login.feature3')}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Thermometer className="w-5 h-5 text-amber-100" />
+              <span className="text-sm text-white/85">{t('login.feature4')}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Droplets className="w-5 h-5 text-cyan-100" />
-            <span className="text-sm text-white/85">{t('login.feature2')}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <CloudRain className="w-5 h-5 text-sky-100" />
-            <span className="text-sm text-white/85">{t('login.feature3')}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Thermometer className="w-5 h-5 text-amber-100" />
-            <span className="text-sm text-white/85">{t('login.feature4')}</span>
+
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <div className="col-span-2 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rotate-[-2deg] hover:border-emerald-300/50 transition-all">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider text-emerald-100/70 font-semibold">Rendimiento proyectado</span>
+                  <div className="mt-1 text-2xl font-black font-mono">8,240 <span className="text-xs font-semibold text-white/65">kg/ha</span></div>
+                </div>
+                <div className="p-2 rounded-xl bg-emerald-400/15 border border-emerald-300/25 text-emerald-100">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between text-[11px] text-emerald-100/80">
+                <span>+12.8% vs. campaña anterior</span>
+                <span className="px-2 py-0.5 rounded-full border border-emerald-300/30 bg-emerald-300/10 font-mono">Óptimo</span>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rotate-[1deg] hover:border-teal-300/50 transition-all">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] uppercase tracking-wider text-white/65 font-semibold">Progreso del ciclo</span>
+                <span className="text-sm font-black font-mono text-emerald-100">68%</span>
+              </div>
+              <div className="mt-4 h-2 rounded-full bg-slate-950/40 overflow-hidden">
+                <div className="h-full w-[68%] rounded-full bg-gradient-to-r from-emerald-400 to-cyan-300 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
+              </div>
+              <div className="mt-2 text-[10px] text-white/60 font-mono">DAP 82 / 120</div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rotate-[-1deg] hover:border-amber-300/50 transition-all">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] uppercase tracking-wider text-white/65 font-semibold">CWSI</span>
+                <Activity className="w-4 h-4 text-amber-200" />
+              </div>
+              <div className="mt-2 flex items-baseline gap-2">
+                <span className="text-2xl font-black font-mono">0.24</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-400/15 text-emerald-100 border border-emerald-300/30 text-[10px] font-semibold">Confort</span>
+              </div>
+              <div className="mt-2 text-[10px] text-white/60">Estado hídrico estable</div>
+            </div>
           </div>
         </div>
       </section>
