@@ -230,8 +230,6 @@ export const App: React.FC = () => {
     setCurrentUser(null);
   };
 
-  const currentDayRecord = simulationResult.dailyRecords[currentDayIndex] || simulationResult.dailyRecords[0];
-
   if (!currentUser) {
     return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
   }
