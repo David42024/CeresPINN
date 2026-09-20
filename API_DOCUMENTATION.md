@@ -1,4 +1,24 @@
-# CeresPINN API Documentation
+# CeresPINN API Documentation & Project Status
+
+## Objetivo del Sistema
+CeresPINN (Physics-Informed Neural Network) es un **Gemelo Digital** diseñado para modelar la resiliencia climática del maíz (Zea mays L.) bajo los escenarios de cambio climático CMIP6 del IPCC (SSP1-2.6 a SSP5-8.5). 
+
+A diferencia de los modelos puramente empíricos de Machine Learning que pueden fallar al extrapolar condiciones climáticas extremas no vistas, **CeresPINN incorpora las leyes de la física**. Específicamente, integra la **Ecuación 1D de Richards** (flujo de agua en medios porosos insaturados) directamente en la función de pérdida (*loss function*) de la red neuronal. Esto asegura que el balance hídrico del suelo y las predicciones de estrés hídrico (CWSI) obedezcan a la conservación de masa, logrando predicciones científicamente robustas incluso para sequías extremas futuras.
+
+## Demostración en el Frontend
+El frontend de CeresPINN expone esta tecnología a través de una interfaz interactiva de toma de decisiones:
+1. **Gemelo 3D y Main Dashboard**: Visualización en tiempo real del ciclo fenológico del maíz, estrés hídrico diario y rendimiento proyectado bajo escenarios CMIP6. Las anomalías térmicas y de precipitación ajustan el forzamiento climático de forma local.
+2. **What-If Studio**: Herramienta comparativa que permite contrastar la línea base climática contra estrategias de adaptación (ej. riego deficitario o cambios de variedad de ciclo corto) simulando en paralelo con el motor PINN.
+3. **Panel de Adaptación**: Calcula automáticamente y recomienda estrategias (ej. adelanto de siembra) cuantificando la ganancia económica y resiliencia.
+4. **Vulnerability Map**: Ranquea campos geográficos por riesgo climático.
+5. **MLOps Dashboard**: Demuestra la superioridad técnica comparando el R² y RMSE de CeresPINN contra modelos estadísticos convencionales, validando la ventaja de la pérdida informada por la física.
+
+## 📌 Estado Actual de Implementación
+✅ **Funcional**: UI completa, backend API, PINN básico, validación estadística, pipelines CHIRPS/NEX-GDDP
+🔄 **En progreso**: PINN con ecuaciones PDE completas, integración validación→frontend
+❌ **Pendiente**: CHIRTS, SoilGrids, bias correction, mapas de vulnerabilidad, búsqueda bayesiana para optimización de adaptación
+
+---
 
 This document describes the REST API endpoints for the CeresPINN climate-adaptive maize digital twin backend.
 

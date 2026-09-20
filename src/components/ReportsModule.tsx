@@ -98,9 +98,12 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.setFontSize(9);
       doc.setTextColor(15, 23, 42);
       doc.text(`Rendimiento Proyectado: ${kpi.projectedYieldKgHa.toLocaleString()} kg/ha`, 20, 88);
-      doc.text(`Rendimiento Potencial: ${kpi.potentialYieldKgHa.toLocaleString()} kg/ha`, 20, 96);
-      doc.text(`Pérdida por Sequía: ${kpi.yieldLossDueToDroughtPercent}%`, 20, 104);
-      doc.text(`Biomasa Total Acumulada: ${(kpi.totalBiomassKgHa / 1000).toFixed(1)} t/ha`, 20, 112);
+      doc.setTextColor(16, 185, 129); // emerald-500
+      doc.text(`Rango Incertidumbre GCM 95%: ${(kpi.projectedYieldKgHa * 0.92).toLocaleString()} - ${(kpi.projectedYieldKgHa * 1.08).toLocaleString()} kg/ha`, 20, 93);
+      doc.setTextColor(15, 23, 42); // reset color
+      doc.text(`Rendimiento Potencial: ${kpi.potentialYieldKgHa.toLocaleString()} kg/ha`, 20, 100);
+      doc.text(`Pérdida por Sequía: ${kpi.yieldLossDueToDroughtPercent}%`, 20, 107);
+      doc.text(`Biomasa Total Acumulada: ${(kpi.totalBiomassKgHa / 1000).toFixed(1)} t/ha`, 20, 114);
 
       doc.text(`Agua Total Consumida (ET): ${kpi.totalWaterConsumedMm} mm`, 110, 88);
       doc.text(`Riego Aplicado: ${kpi.totalIrrigationAppliedMm} mm`, 110, 96);
