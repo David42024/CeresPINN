@@ -55,6 +55,7 @@ import { DataPipelinesView } from './components/DataPipelinesView';
 import { UserManagement } from './components/UserManagement';
 import { ValidationReport } from './components/ValidationReport';
 import { LoginScreen } from './components/LoginScreen';
+import { ChatbotWidget } from './components/ChatbotWidget';
 import { AdaptationPanel } from './components/AdaptationPanel';
 import { VulnerabilityMap } from './components/VulnerabilityMap';
 
@@ -831,6 +832,7 @@ export const App: React.FC = () => {
           <span className="font-mono text-[11px]">{t('app.footerSubtitle')}</span>
         </div>
       </footer>
+      <ChatbotWidget simulationResult={simulationResult} simulationConfig={simulationConfig} />
     </div>
   );
 };
