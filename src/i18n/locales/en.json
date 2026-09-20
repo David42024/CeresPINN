@@ -48,6 +48,24 @@
     "feature3": "Climate scenarios",
     "feature4": "Thermal stress"
   },
+  "adaptationPanel": {
+    "baseYield": "Base yield:",
+    "yield": "Yield",
+    "resilience": "Resilience",
+    "marginDelta": "Margin Δ",
+    "footerNote": "All metrics are calculated using the local PINN engine. Results reflect the active climate scenario ({{scenario}}) and the selected field ({{field}})."
+  },
+  "vulnerabilityMap": {
+    "activeScenario": "Active scenario:",
+    "fieldRegion": "Field / Region",
+    "yieldKgHa": "Yield (kg/ha)",
+    "droughtLoss": "Drought Loss",
+    "maxCwsi": "Max. CWSI",
+    "criticalDays": "Critical Days",
+    "resilience": "Resilience",
+    "riskLevel": "Risk Level",
+    "policyNote": "Recommendations are automatically generated from the resilience and yield loss indices calculated by CeresPINN under the active scenario."
+  },
   "chatbot": {
     "title": "CeresPINN Assistant",
     "subtitle": "Precision agriculture",

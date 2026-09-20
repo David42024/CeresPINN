@@ -1,4 +1,5 @@
 ﻿import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Lightbulb, TrendingUp, Droplets, Calendar, Sprout, ArrowRight,
   CheckCircle, ChevronDown, ChevronUp, Zap, ShieldCheck, DollarSign
@@ -30,6 +31,7 @@ const IMPACT_BADGE: Record<string, string> = {
 export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
   simulation, field, baseConfig, onApplyStrategy
 }) => {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | null>('early-planting');
   const [applying, setApplying] = useState<string | null>(null);
 
@@ -143,7 +145,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 dark:text-slate-400">Rendimiento base:</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">{t('adaptationPanel.baseYield')}</span>
           <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono font-bold text-sm text-slate-800 dark:text-slate-200">
             {baseYield.toLocaleString()} kg/ha
           </span>
@@ -208,17 +210,17 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
                   {/* KPI row */}
                   <div className="grid grid-cols-3 gap-2 text-xs">
                     <div className="p-2.5 rounded-lg bg-white/70 dark:bg-slate-900/60 text-center">
-                      <span className="text-slate-500 block text-[11px]">Rendimiento</span>
+                      <span className="text-slate-500 block text-[11px]">{t('adaptationPanel.yield')}</span>
                       <strong className="font-mono text-slate-900 dark:text-slate-100">{strategy.yield.toLocaleString()}</strong>
                       <span className="text-slate-500 text-[10px]"> kg/ha</span>
                     </div>
                     <div className="p-2.5 rounded-lg bg-white/70 dark:bg-slate-900/60 text-center">
-                      <span className="text-slate-500 block text-[11px]">Resiliencia</span>
+                      <span className="text-slate-500 block text-[11px]">{t('adaptationPanel.resilience')}</span>
                       <strong className="font-mono" style={{ color: RISK_COLOR(strategy.resilienceScore) }}>{strategy.resilienceScore}</strong>
                       <span className="text-slate-500 text-[10px]">/100</span>
                     </div>
                     <div className="p-2.5 rounded-lg bg-white/70 dark:bg-slate-900/60 text-center">
-                      <span className="text-slate-500 block text-[11px]">Margen Δ</span>
+                      <span className="text-slate-500 block text-[11px]">{t('adaptationPanel.marginDelta')}</span>
                       <strong className={`font-mono ${strategy.economicGain >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                         {strategy.economicGain >= 0 ? '+' : ''}${strategy.economicGain}
                       </strong>
@@ -247,7 +249,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
       {/* Footer note */}
       <div className="flex items-start gap-2 p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-xs text-slate-600 dark:text-slate-400">
         <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-        <span>Todas las métricas se calculan aplicando el motor PINN local. Los resultados reflejan el escenario climático activo (<strong className="text-slate-800 dark:text-slate-200">{simulation.config.scenario}</strong>) y el campo seleccionado (<strong className="text-slate-800 dark:text-slate-200">{simulation.fieldName}</strong>).</span>
+        <span>{t('adaptationPanel.footerNote', { scenario: simulation.config.scenario, field: simulation.fieldName })}</span>
       </div>
     </div>
   );

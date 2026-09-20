@@ -48,6 +48,24 @@
     "feature3": "Escenarios climáticos",
     "feature4": "Estrés térmico"
   },
+  "adaptationPanel": {
+    "baseYield": "Rendimiento base:",
+    "yield": "Rendimiento",
+    "resilience": "Resiliencia",
+    "marginDelta": "Margen Δ",
+    "footerNote": "Todas las métricas se calculan aplicando el motor PINN local. Los resultados reflejan el escenario climático activo ({{scenario}}) y el campo seleccionado ({{field}})."
+  },
+  "vulnerabilityMap": {
+    "activeScenario": "Escenario activo:",
+    "fieldRegion": "Campo / Región",
+    "yieldKgHa": "Rendimiento (kg/ha)",
+    "droughtLoss": "Pérdida Sequía",
+    "maxCwsi": "CWSI Máx.",
+    "criticalDays": "Días Críticos",
+    "resilience": "Resiliencia",
+    "riskLevel": "Nivel Riesgo",
+    "policyNote": "Las recomendaciones se generan automáticamente a partir de los índices de resiliencia y pérdida de rendimiento calculados por CeresPINN bajo el escenario activo."
+  },
   "chatbot": {
     "title": "Asistente CeresPINN",
     "subtitle": "Agricultura de precisión",
