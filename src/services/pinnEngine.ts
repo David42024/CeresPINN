@@ -479,6 +479,8 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
 
   return {
     id: `sim-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    inferenceMode: 'local-fallback',
+    modelName: 'Motor biofísico TypeScript local',
     config,
     fieldName: field.name,
     fieldLocation: `${field.locationName}, ${field.country}`,

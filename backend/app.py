@@ -5,7 +5,7 @@ import os
 import time
 from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -18,8 +18,19 @@ import backend.validation as validation
 load_dotenv()
 
 
+def _model_required() -> bool:
+    return os.getenv("CERESPINN_REQUIRE_MODEL", "0").strip().lower() in {"1", "true", "yes"}
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Production must never advertise or serve a surrogate as the trained PINN.
+    # Render sets CERESPINN_REQUIRE_MODEL=1, so a missing/incompatible checkpoint
+    # fails the deployment health check instead of silently degrading.
+    inv = inference_mod.get_inference()
+    if _model_required() and inv.load_model() is None:
+        raise RuntimeError(f"CeresPINN model is required but unavailable: {inv.error_message}")
+
     # Best-effort DB init + seed; never crashes when DB is unavailable.
     db.init_db()
     db.seed_if_empty()
@@ -28,10 +39,16 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="CeresPINN Backend", version="1.0.0", lifespan=lifespan)
 
+_frontend_origins = [
+    origin.strip()
+    for origin in os.getenv("FRONTEND_ORIGINS", "*").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=_frontend_origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -60,28 +77,39 @@ class ChatbotRequest(BaseModel):
 
 @app.get("/api/health")
 def health() -> Dict[str, Any]:
+    inv = inference_mod.get_inference()
+    model_ready = inv.load_model() is not None
     return {
-        "status": "ok",
+        "status": "ok" if model_ready or not _model_required() else "error",
         "service": "cerespinn-backend",
         "database": "postgresql+postgis",
-        "model": "pinn-maize-ensemble",
+        "model": "pinn-maize-ensemble" if model_ready else "unavailable",
+        "model_ready": model_ready,
+        "inference_mode": "pinn" if model_ready else "unavailable",
     }
 
 
 @app.get("/api/model/status")
 def model_status() -> Dict[str, Any]:
+    inv = inference_mod.get_inference()
+    model_ready = inv.load_model() is not None
+    meta = inv.metadata if model_ready else {}
+    test_metrics = meta.get("test_metrics", {})
+    mse = test_metrics.get("mse")
     return {
-        "model_name": "CeresPINN Digital Twin v2.0 (Optimizado)",
-        "status": "ready",
+        "model_name": meta.get("model", "CeresPINN Digital Twin"),
+        "status": "ready" if model_ready else "unavailable",
         "backend": "FastAPI",
         "framework": "PyTorch CeresPINN (Bio-physical Coupled)",
         "cmip6_source": "NASA NEX-GDDP (5 GCMs)",
-        "r2_score": 0.7842,
-        "rmse_bu_acre": 13.48,
-        "mae_bu_acre": 10.15,
-        "mape": "6.82%",
+        "r2_score": test_metrics.get("r2"),
+        "rmse_bu_acre": round(float(mse) ** 0.5, 4) if mse is not None else None,
+        "mae_bu_acre": test_metrics.get("mae"),
+        "data_source": meta.get("data_source"),
         "database": "PostgreSQL/PostGIS",
-        "inference_mode": "pinn",
+        "inference_mode": "pinn" if model_ready else "unavailable",
+        "checkpoint": inv.checkpoint.name,
+        "error": inv.error_message,
     }
 
 
@@ -156,6 +184,12 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
     payload_dict = payload.model_dump()
 
     response = inv.run_full_simulation(payload_dict)
+
+    if _model_required() and response.get("inference_mode") != "pinn":
+        raise HTTPException(
+            status_code=503,
+            detail=f"Trained CeresPINN inference unavailable: {inv.error_message or 'unknown error'}",
+        )
 
     # Best-effort persistence of the simulation result (never blocks/fails).
     if db.available():

@@ -1,5 +1,6 @@
 ﻿import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import {
   Lightbulb, TrendingUp, Droplets, Calendar, Sprout, ArrowRight,
   CheckCircle, ChevronDown, ChevronUp, Zap, ShieldCheck, DollarSign
@@ -9,7 +10,6 @@ import {
   CartesianGrid, Cell, LabelList
 } from 'recharts';
 import { SimulationResult, Field, SimulationConfig } from '../types';
-import { runPINNSimulation } from '../services/pinnEngine';
 import { simulateScenario } from '../services/api';
 
 interface AdaptationPanelProps {
@@ -34,13 +34,15 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | null>('early-planting');
   const [applying, setApplying] = useState<string | null>(null);
+  const [strategyResults, setStrategyResults] = useState<SimulationResult[] | null>(null);
+  const [strategyError, setStrategyError] = useState<string | null>(null);
 
   const baseYield = simulation.summaryKPIs.projectedYieldKgHa;
 
   // -----------------------------------------------------------------------
-  // Three adaptation strategies — computed from the PINN locally
+  // Three adaptation strategies — requested from the remote PINN.
   // -----------------------------------------------------------------------
-  const strategies = useMemo(() => {
+  const strategyConfigs = useMemo(() => {
     const earlyConfig: SimulationConfig = {
       ...baseConfig,
       plantingDate: (() => {
@@ -49,22 +51,36 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
         return d.toISOString().slice(0, 10);
       })(),
     };
-    const earlyResult  = runPINNSimulation(field, earlyConfig);
-    const earlyYield   = earlyResult.summaryKPIs.projectedYieldKgHa;
-
     const shortConfig: SimulationConfig = {
       ...baseConfig,
       maizeVariety: 'short_cycle',
     };
-    const shortResult  = runPINNSimulation(field, shortConfig);
-    const shortYield   = shortResult.summaryKPIs.projectedYieldKgHa;
-
     const irrigConfig: SimulationConfig = {
       ...baseConfig,
       irrigationStrategy: 'deficit_75',
     };
-    const irrigResult  = runPINNSimulation(field, irrigConfig);
-    const irrigYield   = irrigResult.summaryKPIs.projectedYieldKgHa;
+    return [earlyConfig, shortConfig, irrigConfig];
+  }, [baseConfig]);
+
+  useEffect(() => {
+    let active = true;
+    setStrategyResults(null);
+    setStrategyError(null);
+    Promise.all(strategyConfigs.map(config => simulateScenario(field, config)))
+      .then(results => { if (active) setStrategyResults(results); })
+      .catch(error => {
+        if (active) setStrategyError(error instanceof Error ? error.message : String(error));
+      });
+    return () => { active = false; };
+  }, [field, strategyConfigs]);
+
+  const strategies = useMemo(() => {
+    if (!strategyResults) return [];
+    const [earlyResult, shortResult, irrigResult] = strategyResults;
+    const [earlyConfig, shortConfig, irrigConfig] = strategyConfigs;
+    const earlyYield = earlyResult.summaryKPIs.projectedYieldKgHa;
+    const shortYield = shortResult.summaryKPIs.projectedYieldKgHa;
+    const irrigYield = irrigResult.summaryKPIs.projectedYieldKgHa;
 
     return [
       {
@@ -116,7 +132,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
         config: irrigConfig,
       },
     ];
-  }, [simulation, field, baseConfig]);
+  }, [simulation, strategyConfigs, strategyResults]);
 
   // Bar chart data for quick comparison
   const chartData = [
@@ -151,6 +167,13 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
           </span>
         </div>
       </div>
+
+      {!strategyResults && !strategyError && (
+        <div className="text-xs text-cyan-600 dark:text-cyan-300">Consultando estrategias en el PINN de Render…</div>
+      )}
+      {strategyError && (
+        <div className="text-xs text-rose-600 dark:text-rose-300">No se pudieron calcular estrategias con el PINN remoto: {strategyError}</div>
+      )}
 
       {/* Comparison Bar Chart */}
       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800">

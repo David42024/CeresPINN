@@ -64,6 +64,27 @@ def test_build_features_shape_and_normalization():
     assert abs(float(x[0, 2]) - (-0.02)) < 1e-6
 
 
+def test_build_features_keeps_constant_training_features_at_zero():
+    meta = {
+        "feature_names": TrainConfig().feature_names,
+        "normalization": {
+            "mean": [2020.0, 1.0, 0.0, 420.0, 0.2, 480.0, 20.0],
+            "std": [10.0, 1.0, 1.0, 20.0, 0.1, 1e-8, 1e-8],
+        },
+    }
+    x = PinnInference.build_features(
+        {
+            "scenario": "SSP5-8.5",
+            "target_year": 2070,
+            "precipitation_anomaly_percent": -30.0,
+        },
+        meta,
+    )
+    assert x is not None
+    assert float(x[0, 5]) == 0.0
+    assert float(x[0, 6]) == 0.0
+
+
 def test_predict_yield_returns_plausible_bu(trained_model_present):
     inv = PinnInference(
         checkpoint=MODELS / "cerespinn_pinn.pt",

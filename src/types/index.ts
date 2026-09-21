@@ -114,6 +114,8 @@ export interface DailySimulationRecord {
 
 export interface SimulationResult {
   id: string;
+  inferenceMode: 'pinn' | 'local-fallback' | 'pinn-calibrated-surrogate' | 'unavailable';
+  modelName?: string;
   config: SimulationConfig;
   fieldName: string;
   fieldLocation: string;

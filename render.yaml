@@ -5,8 +5,8 @@
 # run locally. Only this Python service is described here; the frontend lives on
 # Vercel.
 #
-# To enable the trained PINN later, add torch to backend/requirements.txt (or a
-# requirements-ml) and commit backend/models/cerespinn_pinn.pt, then redeploy.
+# The Docker build validates the committed checkpoint and fails if PyTorch cannot
+# load it. This prevents a successful deployment backed by a silent surrogate.
 
 services:
   - type: web
@@ -21,9 +21,13 @@ services:
         value: "1"
       - key: PORT
         sync: false
+      - key: CERESPINN_MODEL_DIR
+        value: /app/backend/models
+      - key: CERESPINN_REQUIRE_MODEL
+        value: "1"
+      # Set to the production Vercel origin. Multiple origins are comma-separated.
+      - key: FRONTEND_ORIGINS
+        sync: false
       # Set this in the Render dashboard to the Supabase connection string:
       - key: DATABASE_URL
         sync: false
-    # Uncomment when wiring the real PINN:
-    #   - key: CERESPINN_MODEL_DIR
-    #     value: backend/models

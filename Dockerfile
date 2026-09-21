@@ -20,8 +20,14 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY backend ./backend
 COPY backend/start.sh ./backend/start.sh
 
+# Validate the exact production checkpoint while building. A bad/missing model
+# must fail the deploy instead of activating the calibrated surrogate.
+RUN python -c "from backend.inference import get_inference; i=get_inference(); assert i.load_model() is not None, i.error_message"
+
 # Render injects PORT at runtime; this is just the default.
 ENV PORT=8000
+ENV CERESPINN_MODEL_DIR=/app/backend/models
+ENV CERESPINN_REQUIRE_MODEL=1
 
 EXPOSE 8000
 CMD ["bash", "backend/start.sh"]

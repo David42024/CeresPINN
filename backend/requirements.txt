@@ -1,3 +1,5 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 fastapi>=0.133
 uvicorn[standard]==0.30.6
 pydantic==2.9.2
@@ -11,3 +13,5 @@ netCDF4==1.7.2
 numpy==2.1.3
 pandas==2.2.3
 scipy==1.14.1
+# Required at runtime: /api/simulate loads backend/models/cerespinn_pinn.pt.
+torch==2.6.0+cpu

@@ -1,0 +1,56 @@
+{
+  "model": "CeresPINN-maize-v2.5",
+  "device": "cpu",
+  "input_dim": 7,
+  "feature_names": [
+    "year",
+    "temp_anomaly_c",
+    "precip_anomaly_pct",
+    "co2_ppm",
+    "heatwave_risk",
+    "seasonal_precip_mm",
+    "seasonal_cdd"
+  ],
+  "target_name": "yield_bu_acre",
+  "train_rows": 86,
+  "test_rows": 22,
+  "epochs": 60,
+  "best_test_mse": 0.011761,
+  "train_metrics": {
+    "mse": 9.1563,
+    "mae": 2.4705,
+    "r2": 0.805
+  },
+  "test_metrics": {
+    "mse": 12.9371,
+    "mae": 2.801,
+    "r2": 0.778
+  },
+  "data_source": "synthetic-fallback",
+  "normalization": {
+    "mean": [
+      2007.8023255813953,
+      1.7895348837209306,
+      -0.12511627906976738,
+      481.16279069767444,
+      0.4451162790697678,
+      480.0,
+      20.0
+    ],
+    "std": [
+      10.611336387099268,
+      0.7196622482445942,
+      0.08803731955979274,
+      29.996844985614963,
+      0.2525716401163753,
+      1e-08,
+      1e-08
+    ],
+    "y_min": 138.10920155058238,
+    "y_max": 166.36659041348187
+  },
+  "history": {
+    "train_loss": 0.028235764242708683,
+    "test_mse": 0.016202200204133987
+  }
+}

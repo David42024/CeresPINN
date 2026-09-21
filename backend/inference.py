@@ -12,6 +12,7 @@ Fallback contract (rigorous, never silent)
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -19,7 +20,9 @@ import numpy as np
 
 from .training.config import TrainConfig
 
-_MODEL_DIR = Path(__file__).resolve().parent / "models"
+_MODEL_DIR = Path(
+    os.getenv("CERESPINN_MODEL_DIR", str(Path(__file__).resolve().parent / "models"))
+).resolve()
 _CHECKPOINT = _MODEL_DIR / "cerespinn_pinn.pt"
 _METADATA = _MODEL_DIR / "cerespinn_metadata.json"
 
@@ -45,6 +48,13 @@ class PinnInference:
     @property
     def error_message(self) -> Optional[str]:
         return self._cached_error
+
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """Return model metadata after a successful load."""
+        if self._meta is None:
+            self.load_model()
+        return self._meta or {}
 
     def _load_torch(self):
         if self._torch is None:
@@ -91,7 +101,7 @@ class PinnInference:
         """Build the exact feature vector used at training time from a simulation payload."""
         try:
             mean = np.array(meta["normalization"]["mean"], dtype=float)
-            std = np.array(meta["normalization"]["std"], dtype=float) + 1e-8
+            std = np.array(meta["normalization"]["std"], dtype=float)
         except (KeyError, TypeError):
             return None
 
@@ -119,7 +129,13 @@ class PinnInference:
             x = np.array([features[name] for name in feature_names], dtype=float)
         except KeyError as exc:
             return None  # pragma: no cover
-        x_n = (x - mean) / std
+        # Features that were constant during training must stay at their training
+        # mean. Dividing a changed value by an epsilon-sized std would send an
+        # extreme out-of-distribution tensor into the network.
+        constant_features = std < 1e-6
+        x[constant_features] = mean[constant_features]
+        safe_std = np.where(constant_features, 1.0, std)
+        x_n = (x - mean) / safe_std
         return x_n.reshape(1, -1)
 
     # -- Predict -------------------------------------------------------------
@@ -446,6 +462,8 @@ class PinnInference:
 
         return {
             "id": f"sim-{payload.get('field_id', 'field-01')}-{payload.get('target_year', 2035)}",
+            "model_name": self.metadata.get("model", "CeresPINN") if inference_mode == "pinn" else "calibrated-surrogate",
+            "model_data_source": self.metadata.get("data_source") if inference_mode == "pinn" else None,
             "field_id": payload.get("field_id", "field-01"),
             "scenario": payload.get("scenario", "SSP3-7.0"),
             "target_year": payload.get("target_year", 2035),

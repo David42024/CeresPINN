@@ -57,6 +57,28 @@ npm run dev
 
 The frontend proxies `/api/*` to `http://localhost:8000`.
 
+## Production deployment (real PINN inference)
+
+The production path is intentionally strict: Render validates the committed
+`backend/models/cerespinn_pinn.pt` checkpoint during the Docker build and starts
+FastAPI with `CERESPINN_REQUIRE_MODEL=1`. A missing checkpoint, incompatible
+weights, or unavailable PyTorch fails the deployment instead of serving the
+calibrated surrogate.
+
+Required deployment settings:
+
+- **Render:** deploy using `render.yaml`; set `FRONTEND_ORIGINS` to the public
+  Vercel origin (for example `https://your-project.vercel.app`). Keep
+  `CERESPINN_REQUIRE_MODEL=1` and `CERESPINN_MODEL_DIR=/app/backend/models`.
+- **Vercel:** set `VITE_API_BASE_URL` to the public Render service URL, without a
+  trailing slash (for example `https://your-service.onrender.com`). Set it for
+  Production and Preview, then redeploy because Vite embeds it at build time.
+- Verify `GET /api/model/status` returns `status: "ready"` and
+  `inference_mode: "pinn"`. The frontend rejects any other mode in production.
+
+The active checkpoint and metadata are intentionally versioned. If the model is
+retrained, replace both files together so weights and normalization remain in sync.
+
 ## API endpoints
 
 - `GET /api/health`

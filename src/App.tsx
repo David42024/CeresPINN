@@ -83,7 +83,8 @@ export const App: React.FC = () => {
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(65); // Mid-season by default
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
   const [dbHealth, setDbHealth] = useState<any>(null);
-  const [modelOnline, setModelOnline] = useState<boolean>(true);
+  const [modelOnline, setModelOnline] = useState<boolean>(false);
+  const [modelName, setModelName] = useState<string>('CeresPINN');
   const [previousYield, setPreviousYield] = useState<number | null>(null);
 
   useEffect(() => {
@@ -116,7 +117,8 @@ export const App: React.FC = () => {
             setCurrentUser(usersRes.users[0]);
           }
           setDbHealth(healthRes.health);
-          setModelOnline(modelStatusRes.status === 'ready' || !modelStatusRes.fallback);
+          setModelOnline(modelStatusRes.status === 'ready' && modelStatusRes.inference_mode === 'pinn');
+          setModelName(modelStatusRes.model_name || 'CeresPINN');
           
           const initialField = (!fieldsRes.fallback && fieldsRes.fields.length > 0) 
             ? fieldsRes.fields[0] 
@@ -125,9 +127,11 @@ export const App: React.FC = () => {
             const liveSim = await simulateScenario(initialField, DEFAULT_SIMULATION_CONFIG);
             if (isMounted) {
               setSimulationResult(liveSim);
+              setModelOnline(liveSim.inferenceMode === 'pinn');
             }
           } catch (e) {
             console.warn('Initial live simulation failed, keeping local fallback', e);
+            setModelOnline(false);
           }
         }
       } catch (error) {
@@ -189,13 +193,13 @@ export const App: React.FC = () => {
     try {
       const res = await simulateScenario(selectedField, simulationConfig);
       setSimulationResult(res);
-      setModelOnline(true);
+      setModelOnline(res.inferenceMode === 'pinn');
       if (currentDayIndex >= res.dailyRecords.length) {
         setCurrentDayIndex(res.dailyRecords.length - 1);
       }
     } catch (error) {
       console.error('Simulation request failed', error);
-      setSimulationResult(runPINNSimulation(selectedField, simulationConfig));
+      setModelOnline(false);
     } finally {
       setIsSimulating(false);
     }
@@ -206,9 +210,10 @@ export const App: React.FC = () => {
     try {
       const res = await simulateScenario(field, simulationConfig);
       setSimulationResult(res);
+      setModelOnline(res.inferenceMode === 'pinn');
     } catch (error) {
       console.error('Simulation request failed for field switch', error);
-      setSimulationResult(runPINNSimulation(field, simulationConfig));
+      setModelOnline(false);
     }
   };
 
@@ -486,6 +491,17 @@ export const App: React.FC = () => {
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5" title={modelName}>
+              <Cpu className={`w-3.5 h-3.5 ${modelOnline ? 'text-emerald-500' : 'text-rose-500'}`} />
+              <span className="text-slate-600 dark:text-slate-400">ML:</span>
+              <span className={`px-2 py-1 rounded-lg font-mono text-[11px] border ${
+                modelOnline
+                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
+                  : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/40'
+              }`}>
+                {modelOnline ? 'PyTorch PINN' : 'No disponible'}
+              </span>
+            </div>
             {dbHealth && (
               <div className="flex items-center gap-1.5">
                 <Database className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
@@ -656,12 +672,15 @@ export const App: React.FC = () => {
               {/* Tarjeta de Resultados Rápidos con Comparación */}
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-emerald-500/20 flex flex-wrap items-center justify-between gap-4 text-xs">
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                  <div className={`w-3 h-3 rounded-full ${simulationResult.inferenceMode === 'pinn' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`}></div>
                   <div>
                     <span className="text-slate-500 dark:text-slate-400 block text-[11px]">Rendimiento CeresPINN Calculado (Clima {simulationResult.config.targetYear})</span>
                     <strong className="text-slate-900 dark:text-slate-100 font-mono text-base">
                       {simulationResult.summaryKPIs.projectedYieldKgHa.toLocaleString()} kg/ha
                     </strong>
+                    <span className={`ml-2 text-[10px] font-semibold ${simulationResult.inferenceMode === 'pinn' ? 'text-emerald-600' : 'text-amber-600'}`}>
+                      {simulationResult.inferenceMode === 'pinn' ? 'Inferencia PyTorch verificada' : 'Vista local; sin inferencia remota'}
+                    </span>
                   </div>
                   {previousYield !== null && previousYield !== simulationResult.summaryKPIs.projectedYieldKgHa && (
                     <span className={`px-2 py-1 rounded-lg font-mono text-xs font-bold flex items-center ${
@@ -737,8 +756,9 @@ export const App: React.FC = () => {
                   try {
                     const res = await simulateScenario(selectedField, merged);
                     setSimulationResult(res);
+                    setModelOnline(res.inferenceMode === 'pinn');
                   } catch {
-                    setSimulationResult(runPINNSimulation(selectedField, merged));
+                    setModelOnline(false);
                   }
                 })();
               }}
@@ -756,9 +776,10 @@ export const App: React.FC = () => {
               try {
                 const res = await simulateScenario(selectedField, newCfg);
                 setSimulationResult(res);
+                setModelOnline(res.inferenceMode === 'pinn');
               } catch (error) {
                 console.error('Config simulation failed', error);
-                setSimulationResult(runPINNSimulation(selectedField, newCfg));
+                setModelOnline(false);
               }
             }}
             onRunSimulation={executeSimulation}
@@ -771,6 +792,7 @@ export const App: React.FC = () => {
           <WhatIfStudio
             field={selectedField}
             baseConfig={simulationConfig}
+            initialSimulation={simulationResult}
           />
         )}
 

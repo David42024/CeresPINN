@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import { 
   GitCompare, 
   Sparkles, 
@@ -24,20 +25,20 @@ import {
   IrrigationStrategy, 
   MaizeVariety 
 } from '../types';
-import { runPINNSimulation } from '../services/pinnEngine';
 import { simulateScenario } from '../services/api';
 
 interface WhatIfStudioProps {
   field: Field;
   baseConfig: SimulationConfig;
+  initialSimulation: SimulationResult;
 }
 
-export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig }) => {
+export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, initialSimulation }) => {
   const { t } = useTranslation();
 
   // Scenario 1 (Baseline)
   const [configA, setConfigA] = useState<SimulationConfig>({ ...baseConfig });
-  const [resultA, setResultA] = useState<SimulationResult>(() => runPINNSimulation(field, baseConfig));
+  const [resultA, setResultA] = useState<SimulationResult>(initialSimulation);
 
   // Scenario 2 (Optimization 1 - Deficit or Date shift)
   const [configB, setConfigB] = useState<SimulationConfig>({
@@ -45,9 +46,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
     irrigationStrategy: 'deficit_50',
     maizeVariety: 'medium_cycle'
   });
-  const [resultB, setResultB] = useState<SimulationResult>(() => 
-    runPINNSimulation(field, { ...baseConfig, irrigationStrategy: 'deficit_50', maizeVariety: 'medium_cycle' })
-  );
+  const [resultB, setResultB] = useState<SimulationResult>(initialSimulation);
 
   // Scenario 3 (Optimization 2 - Sensor + Short cycle drought escape)
   const [configC, setConfigC] = useState<SimulationConfig>({
@@ -55,24 +54,24 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
     irrigationStrategy: 'smart_sensor',
     maizeVariety: 'short_cycle'
   });
-  const [resultC, setResultC] = useState<SimulationResult>(() => 
-    runPINNSimulation(field, { ...baseConfig, irrigationStrategy: 'smart_sensor', maizeVariety: 'short_cycle' })
-  );
+  const [resultC, setResultC] = useState<SimulationResult>(initialSimulation);
 
   // Comparison State
   const [isComparing, setIsComparing] = useState<boolean>(false);
   const [comparisonPending, setComparisonPending] = useState<boolean>(false);
   const [lastComparisonTime, setLastComparisonTime] = useState<string>('En tiempo real');
+  const [comparisonError, setComparisonError] = useState<string | null>(null);
 
   // Trigger PINN simulation for all 3 scenarios
   const handleRunComparison = async () => {
     setIsComparing(true);
+    setComparisonError(null);
     try {
-      // Simulate all 3 in parallel via backend API (or deterministic PINN engine fallback)
+      // Simulate all 3 in parallel through the backend PINN.
       const [resA, resB, resC] = await Promise.all([
-        simulateScenario(field, configA).catch(() => runPINNSimulation(field, configA)),
-        simulateScenario(field, configB).catch(() => runPINNSimulation(field, configB)),
-        simulateScenario(field, configC).catch(() => runPINNSimulation(field, configC)),
+        simulateScenario(field, configA),
+        simulateScenario(field, configB),
+        simulateScenario(field, configC),
       ]);
 
       // Satisfying PINN tensor calculation latency for perceived physics calculation
@@ -85,46 +84,35 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
       setLastComparisonTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     } catch (err) {
       console.error('Comparison calculation failed:', err);
+      setComparisonError(err instanceof Error ? err.message : String(err));
     } finally {
       setIsComparing(false);
     }
   };
+
+  useEffect(() => {
+    void handleRunComparison();
+    // Initial remote inference only; subsequent runs are user-triggered.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Local helper to update configs
   const handleUpdateConfigA = (updates: Partial<SimulationConfig>) => {
     const updated = { ...configA, ...updates };
     setConfigA(updated);
     setComparisonPending(true);
-    // Real-time optimistic preview
-    try {
-      setResultA(runPINNSimulation(field, updated));
-    } catch (e) {
-      console.error(e);
-    }
   };
 
   const handleUpdateConfigB = (updates: Partial<SimulationConfig>) => {
     const updated = { ...configB, ...updates };
     setConfigB(updated);
     setComparisonPending(true);
-    // Real-time optimistic preview
-    try {
-      setResultB(runPINNSimulation(field, updated));
-    } catch (e) {
-      console.error(e);
-    }
   };
 
   const handleUpdateConfigC = (updates: Partial<SimulationConfig>) => {
     const updated = { ...configC, ...updates };
     setConfigC(updated);
     setComparisonPending(true);
-    // Real-time optimistic preview
-    try {
-      setResultC(runPINNSimulation(field, updated));
-    } catch (e) {
-      console.error(e);
-    }
   };
 
   // Agronomic calculations for comparative analysis
@@ -245,6 +233,12 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig })
             <strong className="text-emerald-300 block font-semibold">Resolviendo Tensores de EDPs Acopladas PINN...</strong>
             <span className="text-[11px] text-slate-300">Integrando flujo de Richards en el suelo (0-100cm) + transpiración Penman-Monteith bajo forzamiento CMIP6 para los 3 escenarios.</span>
           </div>
+        </div>
+      )}
+
+      {comparisonError && (
+        <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs text-rose-600 dark:text-rose-300">
+          No se pudo ejecutar la comparación con el PINN remoto: {comparisonError}
         </div>
       )}
 

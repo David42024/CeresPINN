@@ -2,11 +2,45 @@ import type { DailySimulationRecord, Field, SimulationConfig, SimulationResult }
 import { runPINNSimulation } from './pinnEngine';
 import { DEFAULT_FIELDS, SOIL_PROFILES } from '../data/mockData';
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
+const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '').replace(/\/$/, '');
+const REQUIRE_REMOTE_PINN = import.meta.env.PROD || import.meta.env.VITE_REQUIRE_REMOTE_PINN === 'true';
 
-const safeNumber = (value: unknown, fallback: number) => {
+const assertProductionApiConfigured = () => {
+  if (REQUIRE_REMOTE_PINN && !API_BASE) {
+    throw new Error('VITE_API_BASE_URL is required in production and must point to the Render backend.');
+  }
+};
+
+const assertRemotePinnPayload = (payload: any) => {
+  if (!REQUIRE_REMOTE_PINN) return;
+  if (payload?.inference_mode !== 'pinn') {
+    throw new Error(`Render returned inference_mode=${payload?.inference_mode ?? 'missing'}; trained PINN required.`);
+  }
+  const requiredNumbers = [
+    'projected_yield_kg_ha',
+    'potential_yield_kg_ha',
+    'yield_loss_due_to_drought_percent',
+    'total_biomass_kg_ha',
+    'total_water_consumed_mm',
+    'water_productivity_kg_m3',
+    'total_precipitation_mm',
+    'total_irrigation_applied_mm',
+    'peak_water_stress_index',
+    'avg_water_stress_index',
+    'critical_drought_days_count',
+    'days_to_maturity',
+    'drought_resilience_score',
+    'economic_return_usd_ha',
+  ];
+  const missing = requiredNumbers.filter(key => !Number.isFinite(Number(payload?.[key])));
+  if (missing.length || !Array.isArray(payload?.daily_records) || payload.daily_records.length === 0) {
+    throw new Error(`Incomplete PINN response from Render. Invalid fields: ${missing.join(', ') || 'daily_records'}.`);
+  }
+};
+
+const safeNumber = (value: unknown, fallback: number | (() => number)) => {
   const number = Number(value);
-  return Number.isFinite(number) ? number : fallback;
+  return Number.isFinite(number) ? number : typeof fallback === 'function' ? fallback() : fallback;
 };
 
 const mapStage = (value: unknown): DailySimulationRecord['stage'] => {
@@ -38,28 +72,35 @@ const mapStageCode = (value: unknown): DailySimulationRecord['stageCode'] => {
 
 const mapBackendSimulation = (field: Field, config: SimulationConfig, response: any): SimulationResult => {
   const dailyRecords = Array.isArray(response?.daily_records) ? response.daily_records : [];
+  let fallback: SimulationResult | undefined;
+  const fallbackKpis = () => {
+    fallback ??= runPINNSimulation(field, config);
+    return fallback.summaryKPIs;
+  };
 
   return {
     id: response?.id ?? `sim-${Date.now()}`,
+    inferenceMode: response?.inference_mode ?? 'unavailable',
+    modelName: response?.model_name ?? 'CeresPINN',
     config,
     fieldName: field.name,
     fieldLocation: `${field.locationName}, ${field.country}`,
     createdAt: new Date().toISOString(),
     summaryKPIs: {
-      projectedYieldKgHa: safeNumber(response?.projected_yield_kg_ha, runPINNSimulation(field, config).summaryKPIs.projectedYieldKgHa),
-      potentialYieldKgHa: safeNumber(response?.potential_yield_kg_ha, runPINNSimulation(field, config).summaryKPIs.potentialYieldKgHa),
-      yieldLossDueToDroughtPercent: safeNumber(response?.yield_loss_due_to_drought_percent, runPINNSimulation(field, config).summaryKPIs.yieldLossDueToDroughtPercent),
-      totalBiomassKgHa: safeNumber(response?.total_biomass_kg_ha, runPINNSimulation(field, config).summaryKPIs.totalBiomassKgHa),
-      totalWaterConsumedMm: safeNumber(response?.total_water_consumed_mm, runPINNSimulation(field, config).summaryKPIs.totalWaterConsumedMm),
-      waterProductivityKgM3: safeNumber(response?.water_productivity_kg_m3, runPINNSimulation(field, config).summaryKPIs.waterProductivityKgM3),
-      totalPrecipitationMm: safeNumber(response?.total_precipitation_mm, runPINNSimulation(field, config).summaryKPIs.totalPrecipitationMm),
-      totalIrrigationAppliedMm: safeNumber(response?.total_irrigation_applied_mm, runPINNSimulation(field, config).summaryKPIs.totalIrrigationAppliedMm),
-      peakWaterStressIndex: safeNumber(response?.peak_water_stress_index, runPINNSimulation(field, config).summaryKPIs.peakWaterStressIndex),
-      avgWaterStressIndex: safeNumber(response?.avg_water_stress_index, runPINNSimulation(field, config).summaryKPIs.avgWaterStressIndex),
-      criticalDroughtDaysCount: safeNumber(response?.critical_drought_days_count, runPINNSimulation(field, config).summaryKPIs.criticalDroughtDaysCount),
-      daysToMaturity: safeNumber(response?.days_to_maturity, runPINNSimulation(field, config).summaryKPIs.daysToMaturity),
-      droughtResilienceScore: safeNumber(response?.drought_resilience_score, runPINNSimulation(field, config).summaryKPIs.droughtResilienceScore),
-      economicReturnUsdHa: safeNumber(response?.economic_return_usd_ha, runPINNSimulation(field, config).summaryKPIs.economicReturnUsdHa),
+      projectedYieldKgHa: safeNumber(response?.projected_yield_kg_ha, () => fallbackKpis().projectedYieldKgHa),
+      potentialYieldKgHa: safeNumber(response?.potential_yield_kg_ha, () => fallbackKpis().potentialYieldKgHa),
+      yieldLossDueToDroughtPercent: safeNumber(response?.yield_loss_due_to_drought_percent, () => fallbackKpis().yieldLossDueToDroughtPercent),
+      totalBiomassKgHa: safeNumber(response?.total_biomass_kg_ha, () => fallbackKpis().totalBiomassKgHa),
+      totalWaterConsumedMm: safeNumber(response?.total_water_consumed_mm, () => fallbackKpis().totalWaterConsumedMm),
+      waterProductivityKgM3: safeNumber(response?.water_productivity_kg_m3, () => fallbackKpis().waterProductivityKgM3),
+      totalPrecipitationMm: safeNumber(response?.total_precipitation_mm, () => fallbackKpis().totalPrecipitationMm),
+      totalIrrigationAppliedMm: safeNumber(response?.total_irrigation_applied_mm, () => fallbackKpis().totalIrrigationAppliedMm),
+      peakWaterStressIndex: safeNumber(response?.peak_water_stress_index, () => fallbackKpis().peakWaterStressIndex),
+      avgWaterStressIndex: safeNumber(response?.avg_water_stress_index, () => fallbackKpis().avgWaterStressIndex),
+      criticalDroughtDaysCount: safeNumber(response?.critical_drought_days_count, () => fallbackKpis().criticalDroughtDaysCount),
+      daysToMaturity: safeNumber(response?.days_to_maturity, () => fallbackKpis().daysToMaturity),
+      droughtResilienceScore: safeNumber(response?.drought_resilience_score, () => fallbackKpis().droughtResilienceScore),
+      economicReturnUsdHa: safeNumber(response?.economic_return_usd_ha, () => fallbackKpis().economicReturnUsdHa),
     },
     dailyRecords: dailyRecords.map((record: any, index: number) => ({
       day: safeNumber(record?.day, index + 1),
@@ -112,9 +153,8 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
 };
 
 export async function simulateScenario(field: Field, config: SimulationConfig): Promise<SimulationResult> {
-  const fallback = runPINNSimulation(field, config);
-
   try {
+    assertProductionApiConfigured();
     const response = await fetch(`${API_BASE}/api/simulate`, {
       method: 'POST',
       headers: {
@@ -140,15 +180,20 @@ export async function simulateScenario(field: Field, config: SimulationConfig): 
     }
 
     const payload = await response.json();
+    assertRemotePinnPayload(payload);
     return mapBackendSimulation(field, config, payload);
   } catch (error) {
+    if (REQUIRE_REMOTE_PINN) {
+      throw error;
+    }
     console.warn('FastAPI simulation backend unavailable; falling back to local PINN engine.', error);
-    return fallback;
+    return runPINNSimulation(field, config);
   }
 }
 
 export async function getModelStatus() {
   try {
+    assertProductionApiConfigured();
     const response = await fetch(`${API_BASE}/api/model/status`);
     if (!response.ok) {
       throw new Error(`Model status API returned ${response.status}`);
@@ -159,8 +204,11 @@ export async function getModelStatus() {
     console.warn('Model status endpoint unavailable.', error);
     return {
       model_name: 'CeresPINN-maize-v2.5',
-      status: 'local-fallback',
+      status: 'unavailable',
+      inference_mode: 'unavailable',
       backend: 'FastAPI-ready',
+      fallback: true,
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }

@@ -16,7 +16,7 @@ def test_simulate_returns_valid_contract(test_client, simulation_payload):
     assert resp.status_code == 200
     data = resp.json()
 
-    assert data["inference_mode"] in ("pinn", "mock", "mock-unavailable")
+    assert data["inference_mode"] in ("pinn", "pinn-calibrated-surrogate")
     assert isinstance(data["projected_yield_kg_ha"], (int, float))
     assert data["projected_yield_kg_ha"] > 0
     assert isinstance(data["daily_records"], list)
@@ -42,21 +42,18 @@ def test_simulate_uses_pinn_when_model_present(test_client, simulation_payload):
     assert resp.json()["inference_mode"] == "pinn"
 
 
-def test_simulate_fallback_without_model(test_client, simulation_payload, monkeypatch):
+def test_simulate_fallback_without_model(test_client, simulation_payload, monkeypatch, tmp_path):
     """Simulate absence of a trained model by monkeypatching the loader."""
     import backend.inference as inf_mod
 
-    class _NoModel:
-        available = False
-        error_message = "no model"
-
-        def predict_yield_bu_acre(self, payload):
-            return None
-
-    monkeypatch.setattr(inf_mod, "get_inference", lambda: _NoModel())
+    no_model = inf_mod.PinnInference(
+        checkpoint=tmp_path / "missing.pt",
+        metadata=tmp_path / "missing.json",
+    )
+    monkeypatch.setattr(inf_mod, "get_inference", lambda: no_model)
     resp = test_client.post("/api/simulate", json=simulation_payload)
     assert resp.status_code == 200
-    assert resp.json()["inference_mode"] == "mock"
+    assert resp.json()["inference_mode"] == "pinn-calibrated-surrogate"
 
 
 def test_simulate_rejects_bad_payload(test_client):
