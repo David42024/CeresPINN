@@ -232,6 +232,7 @@ export interface PipelineSyncResult {
 }
 
 const FALLBACK_TIMEOUT_MS = 4000;
+const DATABASE_HEALTH_TIMEOUT_MS = 60000;
 
 async function fetchWithTimeout(url: string, init: RequestInit, ms: number) {
   const controller = new AbortController();
@@ -580,7 +581,7 @@ export async function fetchDatabaseHealth() {
     const response = await fetchWithTimeout(
       `${API_BASE}/api/health/database`,
       { method: 'GET' },
-      FALLBACK_TIMEOUT_MS,
+      DATABASE_HEALTH_TIMEOUT_MS,
     );
     if (!response.ok) {
       throw new Error(`Database health API returned ${response.status}`);
