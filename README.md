@@ -69,7 +69,9 @@ Required deployment settings:
 
 - **Render:** deploy using `render.yaml`; set `FRONTEND_ORIGINS` to the public
   Vercel origin (for example `https://your-project.vercel.app`). Keep
-  `CERESPINN_REQUIRE_MODEL=1` and `CERESPINN_MODEL_DIR=/app/backend/models`.
+  `CERESPINN_REQUIRE_MODEL=1`, `CERESPINN_REQUIRE_DATABASE=1`, and
+  `CERESPINN_MODEL_DIR=/app/backend/models`. Set `DATABASE_URL` to a real
+  PostgreSQL connection string; production refuses the SQLite/mock fallback.
 - **Vercel:** set `VITE_API_BASE_URL` to the public Render service URL, without a
   trailing slash (for example `https://your-service.onrender.com`). Set it for
   Production and Preview, then redeploy because Vite embeds it at build time.

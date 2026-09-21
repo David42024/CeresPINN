@@ -593,9 +593,9 @@ export async function fetchDatabaseHealth() {
       fallback: true,
       health: {
         database: "postgres",
-        postgis: "available",
-        status: "mock-or-live",
-        note: "DATABASE_URL no configurada o BD inalcanzable: se usa el mock."
+        postgis: "unknown",
+        status: "unavailable",
+        error: error instanceof Error ? error.message : String(error),
       }
     };
   }

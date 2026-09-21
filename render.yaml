@@ -25,6 +25,8 @@ services:
         value: /app/backend/models
       - key: CERESPINN_REQUIRE_MODEL
         value: "1"
+      - key: CERESPINN_REQUIRE_DATABASE
+        value: "1"
       # Set to the production Vercel origin. Multiple origins are comma-separated.
       - key: FRONTEND_ORIGINS
         sync: false

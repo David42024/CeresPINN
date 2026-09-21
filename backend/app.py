@@ -22,6 +22,10 @@ def _model_required() -> bool:
     return os.getenv("CERESPINN_REQUIRE_MODEL", "0").strip().lower() in {"1", "true", "yes"}
 
 
+def _database_required() -> bool:
+    return os.getenv("CERESPINN_REQUIRE_DATABASE", "0").strip().lower() in {"1", "true", "yes"}
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Production must never advertise or serve a surrogate as the trained PINN.
@@ -31,9 +35,18 @@ async def lifespan(app: FastAPI):
     if _model_required() and inv.load_model() is None:
         raise RuntimeError(f"CeresPINN model is required but unavailable: {inv.error_message}")
 
+    if _database_required() and not db.external_database_configured():
+        raise RuntimeError("DATABASE_URL is required in production; SQLite fallback is disabled.")
+    if _database_required() and not db.available():
+        raise RuntimeError(f"Production database unavailable: {db.last_error()}")
+
     # Best-effort DB init + seed; never crashes when DB is unavailable.
     db.init_db()
     db.seed_if_empty()
+    if _database_required():
+        database_status = db.health()
+        if database_status.get("status") != "connected":
+            raise RuntimeError(f"Production database is not ready: {database_status}")
     yield
 
 
@@ -483,13 +496,5 @@ def validation_hindcast() -> Dict[str, Any]:
 
 @app.get("/api/health/database")
 def database_health() -> Dict[str, Any]:
-    """Return a live Postgres/PostGIS health report, or a mock-flag payload."""
-    d = db.health()
-    if d is not None:
-        return d
-    return {
-        "database": "postgres",
-        "postgis": "available",
-        "status": "mock-or-live",
-        "note": "DATABASE_URL no configurada o BD inalcanzable: se usa el mock.",
-    }
+    """Return the actual database state and diagnostic information."""
+    return db.health()

@@ -22,8 +22,10 @@ from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
-_DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
-if not _DATABASE_URL:
+_EXTERNAL_DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+_DATABASE_URL = _EXTERNAL_DATABASE_URL
+_USING_SQLITE_FALLBACK = not bool(_EXTERNAL_DATABASE_URL)
+if _USING_SQLITE_FALLBACK:
     _default_db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "data", "cerespinn.db"))
     os.makedirs(os.path.dirname(_default_db_path), exist_ok=True)
     _DATABASE_URL = f"sqlite:///{_default_db_path}"
@@ -35,11 +37,25 @@ class DatabaseUnavailable(Exception):
 
 _engine: Optional[Engine] = None
 _checked = False
+_last_error: Optional[str] = None
+
+
+def external_database_configured() -> bool:
+    """Whether DATABASE_URL was supplied instead of using local SQLite."""
+    return bool(_EXTERNAL_DATABASE_URL)
+
+
+def using_sqlite_fallback() -> bool:
+    return _USING_SQLITE_FALLBACK
+
+
+def last_error() -> Optional[str]:
+    return _last_error
 
 
 def get_engine() -> Optional[Engine]:
     """Return a lazy, cached SQLAlchemy engine, or None if DB not configured."""
-    global _engine, _checked
+    global _engine, _checked, _last_error
     if _checked:
         return _engine
     _checked = True
@@ -55,7 +71,8 @@ def get_engine() -> Optional[Engine]:
         # Force a round-trip so a misconfigured URL surfaces immediately.
         with _engine.connect():
             pass
-    except SQLAlchemyError:
+    except Exception as exc:  # noqa: BLE001 - exposed by the health endpoint
+        _last_error = f"{type(exc).__name__}: {exc}"
         _engine = None
     return _engine
 
@@ -892,10 +909,16 @@ def save_simulation(sim: Dict[str, Any]) -> None:
         pass
 
 
-def health() -> Optional[Dict[str, Any]]:
-    """Return a live health payload, or None when the DB is unavailable."""
+def health() -> Dict[str, Any]:
+    """Return the actual database state without disguising failures as mocks."""
     if not available():
-        return None
+        return {
+            "database": "postgres" if external_database_configured() else "sqlite",
+            "postgis": "unknown",
+            "status": "unavailable",
+            "configured": external_database_configured(),
+            "error": last_error() or "DATABASE_URL no configurada.",
+        }
     try:
         with _connect() as conn:
             engine = get_engine()
@@ -915,14 +938,26 @@ def health() -> Optional[Dict[str, Any]]:
                     "note": "Base de datos SQLite local conectada y poblada con esquemas y seeds."
                 }
             version = conn.execute(text("SELECT version()")).scalar()
+            # Querying the extension catalog does not fail when PostGIS is absent.
             postgis = conn.execute(
-                text("SELECT postgis_version()")
-            ).scalar()  # raises if PostGIS missing
+                text("SELECT extversion FROM pg_extension WHERE extname = 'postgis'")
+            ).scalar()
+            required_tables = {"fields", "users", "scenarios", "simulations"}
+            existing_tables = set(inspect(engine).get_table_names()) if engine else set()
+            missing_tables = sorted(required_tables - existing_tables)
             return {
                 "database": "postgres",
-                "postgis": postgis if isinstance(postgis, str) else "available",
-                "status": "connected",
+                "postgis": postgis if isinstance(postgis, str) else "not-enabled",
+                "status": "connected" if not missing_tables else "degraded",
                 "version": version[:60] if isinstance(version, str) else str(version),
+                "configured": True,
+                "missing_tables": missing_tables,
             }
-    except (SQLAlchemyError, DatabaseUnavailable, Exception):
-        return None
+    except Exception as exc:  # noqa: BLE001 - return the diagnostic, never a fake state
+        return {
+            "database": "postgres" if external_database_configured() else "sqlite",
+            "postgis": "unknown",
+            "status": "unavailable",
+            "configured": external_database_configured(),
+            "error": f"{type(exc).__name__}: {exc}",
+        }

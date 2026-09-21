@@ -503,13 +503,30 @@ export const App: React.FC = () => {
               </span>
             </div>
             {dbHealth && (
-              <div className="flex items-center gap-1.5">
-                <Database className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
+              <div
+                className="flex items-center gap-1.5"
+                title={dbHealth.error || dbHealth.note || dbHealth.version || ''}
+              >
+                <Database className={`w-3.5 h-3.5 ${
+                  dbHealth.status === 'connected' && dbHealth.database === 'postgres'
+                    ? 'text-emerald-500'
+                    : dbHealth.status === 'connected'
+                      ? 'text-amber-500'
+                      : 'text-rose-500'
+                }`} />
                 <span className="text-slate-600 dark:text-slate-400">{t('app.statusBarDb')}</span>
                 <span className={`px-2 py-1 rounded-lg font-mono text-[11px] ${
-                  dbHealth.status === 'healthy' || dbHealth.status === 'connected' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40'
+                  dbHealth.status === 'connected' && dbHealth.database === 'postgres'
+                    ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40'
+                    : dbHealth.status === 'connected'
+                      ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40'
+                      : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/40'
                 }`}>
-                  {dbHealth.status === 'healthy' || dbHealth.status === 'connected' ? t('app.statusBarOk') : t('app.statusBarMock')}
+                  {dbHealth.status === 'connected' && dbHealth.database === 'postgres'
+                    ? 'PostgreSQL'
+                    : dbHealth.status === 'connected'
+                      ? 'SQLite local'
+                      : 'Error BD'}
                 </span>
               </div>
             )}
