@@ -65,7 +65,7 @@
   },
   "data": {
     "path": "data/cerespinn_training_iowa.csv",
-    "sha256": "618e3e05d7edcad4a54701bf118891907ab1eeb2295691d028bc13e2255b5dbb"
+    "sha256": "f14535062e070a83372fc5c2a7ad8c393b0e472073aacc46d585f63aa24608f8"
   },
   "cerespinn_ensemble_metrics": {
     "rmse_bu_acre": 13.624735991528224,

@@ -1,17 +1,18 @@
 {
   "schema_version": 1,
   "description": "Immutable inputs for the CeresPINN Q1 reproducibility package",
+  "integrity_basis": "SHA-256 and byte counts after canonical CRLF-to-LF normalization for text files",
   "files": [
     {
       "path": "data/cerespinn_training_iowa.csv",
-      "sha256": "618e3e05d7edcad4a54701bf118891907ab1eeb2295691d028bc13e2255b5dbb",
-      "bytes": 5329366,
+      "sha256": "f14535062e070a83372fc5c2a7ad8c393b0e472073aacc46d585f63aa24608f8",
+      "bytes": 5262885,
       "data_rows": 66480
     },
     {
       "path": "data/cerespinn_training_preprocessed.csv",
-      "sha256": "4b122f6c7b21721c385708ff8596a901f91a898c2153a44cdd1913f323eedc6f",
-      "bytes": 8152580,
+      "sha256": "d107768e166c151cf906fe6a9596f8748d03ef66d80a6a65d61d68817875ab10",
+      "bytes": 8086099,
       "data_rows": 66480
     },
     {
@@ -21,8 +22,8 @@
     },
     {
       "path": "backend/models/cerespinn_metadata.json",
-      "sha256": "19f365fb854118fbed8e88b51701c096130ad4d58106a10954144225bf9f8cb6",
-      "bytes": 5176
+      "sha256": "b6b62a411a7c3ec79fa93dfdd0f8e498b1ec92345ba5cdd25c2c7394088c02c4",
+      "bytes": 4937
     }
   ],
   "generated_outputs": [

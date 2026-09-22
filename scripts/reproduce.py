@@ -13,11 +13,24 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "reproducibility" / "manifest.json"
 
 
+TEXT_SUFFIXES = {".csv", ".json", ".md", ".py", ".txt", ".yml", ".yaml"}
+
+
+def canonical_bytes(path: Path) -> bytes:
+    """Return platform-independent bytes for integrity checks.
+
+    Git may materialize text files with CRLF on Windows and LF on Linux. The
+    manifest hashes the canonical LF form so the same commit verifies on both.
+    """
+    content = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        content = content.replace(b"\r\n", b"\n")
+    return content
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
+    digest.update(canonical_bytes(path))
     return digest.hexdigest()
 
 
@@ -32,7 +45,7 @@ def verify_inputs() -> dict:
         path = ROOT / entry["path"]
         if not path.is_file():
             raise FileNotFoundError(f"Required reproducibility input is missing: {entry['path']}")
-        if path.stat().st_size != entry["bytes"]:
+        if len(canonical_bytes(path)) != entry["bytes"]:
             raise RuntimeError(f"Byte-size mismatch for {entry['path']}")
         actual_hash = sha256(path)
         if actual_hash != entry["sha256"]:
