@@ -186,6 +186,8 @@ def test_chatbot_status_never_exposes_key(test_client, monkeypatch):
 
 
 def test_render_vercel_origin_regex_is_project_scoped():
+    import backend.app as app_mod
+
     render_config = (Path(__file__).resolve().parents[2] / "render.yaml").read_text(encoding="utf-8")
     match = re.search(r"FRONTEND_ORIGIN_REGEX[\s\S]*?value: '([^']+)'", render_config)
     assert match is not None
@@ -196,6 +198,8 @@ def test_render_vercel_origin_regex_is_project_scoped():
         "https://ceres-pinn-qsuo9pjvz-daln486279513-gmailcoms-projects.vercel.app",
     )
     assert not re.fullmatch(pattern, "https://unrelated-project.vercel.app")
+    assert re.fullmatch(app_mod._frontend_origin_regex, "https://ceres-pinn.vercel.app")
+    assert not re.fullmatch(app_mod._frontend_origin_regex, "https://unrelated-project.vercel.app")
 
 
 # ---------------------------------------------------------------------------

@@ -67,7 +67,11 @@ _frontend_origins = [
     for origin in os.getenv("FRONTEND_ORIGINS", "*").split(",")
     if origin.strip()
 ]
-_frontend_origin_regex = os.getenv("FRONTEND_ORIGIN_REGEX", "").strip() or None
+_default_vercel_origin_regex = r"^https://ceres-pinn(?:-[a-z0-9-]+)?\.vercel\.app$"
+_frontend_origin_regex = (
+    os.getenv("FRONTEND_ORIGIN_REGEX", _default_vercel_origin_regex).strip()
+    or _default_vercel_origin_regex
+)
 
 app.add_middleware(
     CORSMiddleware,
