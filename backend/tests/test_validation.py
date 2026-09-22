@@ -38,10 +38,10 @@ def test_deterministic_yield_sane_range():
 # ---------------------------------------------------------------------------
 def test_hindcast_structure():
     r = v.hindcast()
-    assert r["n_years"] >= 20
+    assert r["n_years"] >= 5
     assert set(r["metrics"]) == {"rmse_kg_ha", "mae_kg_ha", "r2"}
     assert len(r["by_year"]) == r["n_years"]
-    assert r["reference_source"] in {"usda-nass", "synthetic-reference"}
+    assert r["reference_source"] in {"usda-nass+pinn-year-holdout", "usda-nass", "synthetic-reference"}
 
 
 # ---------------------------------------------------------------------------

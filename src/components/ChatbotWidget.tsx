@@ -2,8 +2,7 @@ import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { Bot, ChevronDown, Loader2, MessageCircle, Send, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { SimulationConfig, SimulationResult } from '../types';
-
-const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
+import { sendChatbotMessage, type ChatbotContext } from '../services/api';
 
 type ChatMessage = {
   id: number;
@@ -56,21 +55,25 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ simulationResult, 
     setIsSending(true);
 
     try {
-      const response = await fetch(`${API_BASE}/api/chatbot`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: trimmedMessage,
-          context: { simulationResult, simulationConfig }
-        })
-      });
-      const payload = await response.json();
-      if (!response.ok || !payload.reply) {
-        throw new Error(payload.error || `Chatbot API returned ${response.status}`);
-      }
+      const kpis = simulationResult?.summaryKPIs;
+      const context: ChatbotContext = {
+        fieldName: simulationResult?.fieldName,
+        fieldLocation: simulationResult?.fieldLocation,
+        scenario: simulationConfig?.scenario,
+        targetYear: simulationConfig?.targetYear,
+        inferenceMode: simulationResult?.inferenceMode,
+        modelName: simulationResult?.modelName,
+        modelDataSource: simulationResult?.modelDataSource,
+        projectedYieldKgHa: kpis?.projectedYieldKgHa,
+        yieldLossDueToDroughtPercent: kpis?.yieldLossDueToDroughtPercent,
+        totalWaterConsumedMm: kpis?.totalWaterConsumedMm,
+        peakWaterStressIndex: kpis?.peakWaterStressIndex,
+        droughtResilienceScore: kpis?.droughtResilienceScore,
+      };
+      const reply = await sendChatbotMessage(trimmedMessage, context);
       setMessages((current) => [
         ...current,
-        { id: Date.now() + 1, role: 'assistant', text: payload.reply }
+        { id: Date.now() + 1, role: 'assistant', text: reply }
       ]);
     } catch (error) {
       console.error('Chatbot request failed', error);

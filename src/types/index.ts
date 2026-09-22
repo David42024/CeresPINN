@@ -116,6 +116,8 @@ export interface SimulationResult {
   id: string;
   inferenceMode: 'pinn' | 'local-fallback' | 'pinn-calibrated-surrogate' | 'unavailable';
   modelName?: string;
+  modelDataSource?: string;
+  modelUsesRealData?: boolean;
   config: SimulationConfig;
   fieldName: string;
   fieldLocation: string;

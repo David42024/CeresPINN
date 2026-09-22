@@ -56,6 +56,12 @@ class PinnInference:
             self.load_model()
         return self._meta or {}
 
+    @property
+    def uses_real_data(self) -> bool:
+        """Whether the loaded checkpoint declares real observational/climate inputs."""
+        source = str(self.metadata.get("data_source", "")).strip().lower()
+        return source == "nass+nex-gddp"
+
     def _load_torch(self):
         if self._torch is None:
             try:
@@ -460,10 +466,15 @@ class PinnInference:
             f"Variedad recomendada: Híbrido largo resiliente (GDD {var_cfg['total_gdd']}) bajo escenario {payload.get('scenario', 'SSP3-7.0')}."
         ]
 
+        test_metrics = self.metadata.get("test_metrics", {}) if inference_mode == "pinn" else {}
+        test_mse = test_metrics.get("mse")
+        rmse_bu_acre = float(test_mse) ** 0.5 if test_mse is not None else None
+
         return {
             "id": f"sim-{payload.get('field_id', 'field-01')}-{payload.get('target_year', 2035)}",
             "model_name": self.metadata.get("model", "CeresPINN") if inference_mode == "pinn" else "calibrated-surrogate",
             "model_data_source": self.metadata.get("data_source") if inference_mode == "pinn" else None,
+            "model_uses_real_data": self.uses_real_data if inference_mode == "pinn" else False,
             "field_id": payload.get("field_id", "field-01"),
             "scenario": payload.get("scenario", "SSP3-7.0"),
             "target_year": payload.get("target_year", 2035),
@@ -489,9 +500,10 @@ class PinnInference:
                 "saturation": sat,
             },
             "pinn_validation_metrics": {
-                "r2_score": 0.7842,
-                "rmse_bu_acre": 13.48,
-                "mae_bu_acre": 10.15,
+                "r2_score": test_metrics.get("r2"),
+                "rmse_bu_acre": round(rmse_bu_acre, 4) if rmse_bu_acre is not None else None,
+                "rmse_kg_ha": round(rmse_bu_acre * 62.77, 1) if rmse_bu_acre is not None else None,
+                "mae_bu_acre": test_metrics.get("mae"),
                 "pde_residual_richards_loss": 0.0028,
                 "boundary_condition_loss": 0.0019,
                 "empirical_nass_loss": 0.0195,

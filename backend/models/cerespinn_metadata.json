@@ -12,45 +12,229 @@
     "seasonal_cdd"
   ],
   "target_name": "yield_bu_acre",
-  "train_rows": 86,
-  "test_rows": 22,
-  "epochs": 60,
-  "best_test_mse": 0.011761,
+  "train_rows": 84,
+  "test_rows": 24,
+  "epochs": 300,
+  "best_test_mse": 0.007284,
   "train_metrics": {
-    "mse": 9.1563,
-    "mae": 2.4705,
-    "r2": 0.805
+    "mse": 180.1821,
+    "mae": 9.395,
+    "r2": 0.8112
   },
   "test_metrics": {
-    "mse": 12.9371,
-    "mae": 2.801,
-    "r2": 0.778
+    "mse": 130.6244,
+    "mae": 9.8505,
+    "r2": 0.8225
   },
-  "data_source": "synthetic-fallback",
+  "data_source": "nass+nex-gddp",
+  "data_lineage": {
+    "yield_source": "USDA NASS QuickStats",
+    "climate_source": "NASA NEX-GDDP-CMIP6",
+    "nass_observations": 22160,
+    "nass_year_min": 1990,
+    "nass_year_max": 2025,
+    "nass_annual_aggregates": 36,
+    "nex_regional_rows": 98
+  },
+  "evaluation": {
+    "source": "nass+nex-gddp",
+    "split": {
+      "method": "grouped-random-year-holdout",
+      "train_years": [
+        1990,
+        1993,
+        1994,
+        1995,
+        1996,
+        1997,
+        1999,
+        2000,
+        2002,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2025
+      ],
+      "test_years": [
+        1991,
+        1992,
+        1998,
+        2001,
+        2003,
+        2004,
+        2011,
+        2024
+      ]
+    },
+    "samples": [
+      {
+        "year": 1991,
+        "observed_bu_acre": 118.0,
+        "predicted_bu_acre": 116.0415
+      },
+      {
+        "year": 1992,
+        "observed_bu_acre": 144.8,
+        "predicted_bu_acre": 128.773
+      },
+      {
+        "year": 1998,
+        "observed_bu_acre": 145.4,
+        "predicted_bu_acre": 144.6577
+      },
+      {
+        "year": 2001,
+        "observed_bu_acre": 143.3,
+        "predicted_bu_acre": 161.0948
+      },
+      {
+        "year": 2003,
+        "observed_bu_acre": 157.1,
+        "predicted_bu_acre": 165.7804
+      },
+      {
+        "year": 2004,
+        "observed_bu_acre": 181.4,
+        "predicted_bu_acre": 173.2556
+      },
+      {
+        "year": 2011,
+        "observed_bu_acre": 172.8,
+        "predicted_bu_acre": 181.2879
+      },
+      {
+        "year": 2024,
+        "observed_bu_acre": 212.65,
+        "predicted_bu_acre": 197.3762
+      },
+      {
+        "year": 1991,
+        "observed_bu_acre": 118.0,
+        "predicted_bu_acre": 119.333
+      },
+      {
+        "year": 1992,
+        "observed_bu_acre": 144.8,
+        "predicted_bu_acre": 128.8864
+      },
+      {
+        "year": 1998,
+        "observed_bu_acre": 145.4,
+        "predicted_bu_acre": 147.0471
+      },
+      {
+        "year": 2001,
+        "observed_bu_acre": 143.3,
+        "predicted_bu_acre": 162.9923
+      },
+      {
+        "year": 2003,
+        "observed_bu_acre": 157.1,
+        "predicted_bu_acre": 168.0656
+      },
+      {
+        "year": 2004,
+        "observed_bu_acre": 181.4,
+        "predicted_bu_acre": 174.4089
+      },
+      {
+        "year": 2011,
+        "observed_bu_acre": 172.8,
+        "predicted_bu_acre": 185.0667
+      },
+      {
+        "year": 2024,
+        "observed_bu_acre": 212.65,
+        "predicted_bu_acre": 200.5489
+      },
+      {
+        "year": 1991,
+        "observed_bu_acre": 118.0,
+        "predicted_bu_acre": 121.9363
+      },
+      {
+        "year": 1992,
+        "observed_bu_acre": 144.8,
+        "predicted_bu_acre": 131.2161
+      },
+      {
+        "year": 1998,
+        "observed_bu_acre": 145.4,
+        "predicted_bu_acre": 147.2943
+      },
+      {
+        "year": 2001,
+        "observed_bu_acre": 143.3,
+        "predicted_bu_acre": 162.7901
+      },
+      {
+        "year": 2003,
+        "observed_bu_acre": 157.1,
+        "predicted_bu_acre": 167.4842
+      },
+      {
+        "year": 2004,
+        "observed_bu_acre": 181.4,
+        "predicted_bu_acre": 175.5695
+      },
+      {
+        "year": 2011,
+        "observed_bu_acre": 172.8,
+        "predicted_bu_acre": 183.3368
+      },
+      {
+        "year": 2024,
+        "observed_bu_acre": 212.65,
+        "predicted_bu_acre": 199.9145
+      }
+    ]
+  },
+  "trained_at": "2026-09-21T23:15:58.137963+00:00",
+  "training_config": {
+    "loss_physics_weight": 0.5,
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "seed": 42
+  },
   "normalization": {
     "mean": [
-      2007.8023255813953,
-      1.7895348837209306,
-      -0.12511627906976738,
-      481.16279069767444,
-      0.4451162790697678,
-      480.0,
+      2008.7857142857142,
+      0.8557481166294651,
+      -0.12666666666666676,
+      481.6666666666667,
+      0.4500000000000003,
+      374.82179252058165,
       20.0
     ],
     "std": [
-      10.611336387099268,
-      0.7196622482445942,
-      0.08803731955979274,
-      29.996844985614963,
-      0.2525716401163753,
-      1e-08,
+      10.136064133631379,
+      2.0508371213083323,
+      0.089938260421547,
+      30.641293861417076,
+      0.258069768011279,
+      139.78422607761186,
       1e-08
     ],
-    "y_min": 138.10920155058238,
-    "y_max": 166.36659041348187
+    "y_min": 78.0,
+    "y_max": 210.10000001
   },
   "history": {
-    "train_loss": 0.028235764242708683,
-    "test_mse": 0.016202200204133987
+    "train_loss": 0.02320612221956253,
+    "test_mse": 0.007485461886972189
   }
 }

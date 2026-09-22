@@ -72,6 +72,13 @@ type ActiveTab =
   | 'validation'
   | 'vulnerability';
 
+type RuntimeModelStatus = {
+  r2Score?: number;
+  rmseKgHa?: number;
+  dataSource?: string;
+  realData: boolean;
+};
+
 export const App: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
@@ -85,6 +92,7 @@ export const App: React.FC = () => {
   const [dbHealth, setDbHealth] = useState<any>(null);
   const [modelOnline, setModelOnline] = useState<boolean>(false);
   const [modelName, setModelName] = useState<string>('CeresPINN');
+  const [runtimeModelStatus, setRuntimeModelStatus] = useState<RuntimeModelStatus>({ realData: false });
   const [previousYield, setPreviousYield] = useState<number | null>(null);
 
   useEffect(() => {
@@ -119,6 +127,12 @@ export const App: React.FC = () => {
           setDbHealth(healthRes.health);
           setModelOnline(modelStatusRes.status === 'ready' && modelStatusRes.inference_mode === 'pinn');
           setModelName(modelStatusRes.model_name || 'CeresPINN');
+          setRuntimeModelStatus({
+            r2Score: Number.isFinite(Number(modelStatusRes.r2_score)) ? Number(modelStatusRes.r2_score) : undefined,
+            rmseKgHa: Number.isFinite(Number(modelStatusRes.rmse_kg_ha)) ? Number(modelStatusRes.rmse_kg_ha) : undefined,
+            dataSource: modelStatusRes.data_source,
+            realData: modelStatusRes.real_data === true,
+          });
           
           const initialField = (!fieldsRes.fallback && fieldsRes.fields.length > 0) 
             ? fieldsRes.fields[0] 
@@ -265,7 +279,9 @@ export const App: React.FC = () => {
                   </span>
                   <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/30 ml-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    FastAPI Modelo Conectado (R² 0.7842)
+                    {modelOnline
+                      ? `FastAPI Modelo Conectado${runtimeModelStatus.r2Score !== undefined ? ` (R² ${runtimeModelStatus.r2Score.toFixed(4)})` : ''}`
+                      : 'FastAPI Modelo no disponible'}
                   </span>
                 </h1>
               </div>
@@ -491,7 +507,10 @@ export const App: React.FC = () => {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5" title={modelName}>
+            <div
+              className="flex items-center gap-1.5"
+              title={`${modelName}${runtimeModelStatus.dataSource ? ` · ${runtimeModelStatus.dataSource}` : ''}`}
+            >
               <Cpu className={`w-3.5 h-3.5 ${modelOnline ? 'text-emerald-500' : 'text-rose-500'}`} />
               <span className="text-slate-600 dark:text-slate-400">ML:</span>
               <span className={`px-2 py-1 rounded-lg font-mono text-[11px] border ${
@@ -499,7 +518,7 @@ export const App: React.FC = () => {
                   ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
                   : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/40'
               }`}>
-                {modelOnline ? 'PyTorch PINN' : 'No disponible'}
+                {modelOnline && runtimeModelStatus.realData ? 'PyTorch PINN · datos reales' : modelOnline ? 'PINN sin procedencia real' : 'No disponible'}
               </span>
             </div>
             {dbHealth && (
@@ -657,8 +676,9 @@ export const App: React.FC = () => {
                     className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-medium text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500"
                   >
                     <option value={2026}>📅 2026 (Presente)</option>
-                    <option value={2030}>📅 2030 (Corto Plazo)</option>
-                    <option value={2040}>📅 2040 (Medio Plazo)</option>
+                      <option value={2030}>📅 2030 (Corto Plazo)</option>
+                      <option value={2035}>📅 2035 (Medio Plazo)</option>
+                      <option value={2040}>📅 2040 (Medio Plazo)</option>
                     <option value={2050}>📅 2050 (Horizonte AR6)</option>
                     <option value={2070}>📅 2070 (Largo Plazo)</option>
                   </select>
@@ -698,6 +718,11 @@ export const App: React.FC = () => {
                     <span className={`ml-2 text-[10px] font-semibold ${simulationResult.inferenceMode === 'pinn' ? 'text-emerald-600' : 'text-amber-600'}`}>
                       {simulationResult.inferenceMode === 'pinn' ? 'Inferencia PyTorch verificada' : 'Vista local; sin inferencia remota'}
                     </span>
+                    {simulationResult.modelUsesRealData && (
+                      <span className="ml-2 text-[10px] font-semibold text-cyan-600 dark:text-cyan-400">
+                        USDA NASS + NASA NEX-GDDP
+                      </span>
+                    )}
                   </div>
                   {previousYield !== null && previousYield !== simulationResult.summaryKPIs.projectedYieldKgHa && (
                     <span className={`px-2 py-1 rounded-lg font-mono text-xs font-bold flex items-center ${

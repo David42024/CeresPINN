@@ -121,7 +121,8 @@ def load_observed_reference(
                 sub = sub[(sub["year"] >= HINDCAST_START) & (sub["year"] <= HINDCAST_END)]
                 obs = sub.groupby("year")["Value"].median().reindex(years).ffill().bfill()
                 if obs.notna().any():
-                    return years, obs.to_numpy(dtype=float) * 62.77 * 2.47105, "usda-nass"
+                    # Corn yield conversion: 1 bu/acre = 62.77 kg/ha.
+                    return years, obs.to_numpy(dtype=float) * 62.77, "usda-nass"
         except Exception:  # noqa: BLE001 - malformed reference must not break
             pass
 
@@ -136,28 +137,57 @@ def load_observed_reference(
 # ---------------------------------------------------------------------------
 # Hindcast + predictive metrics
 # ---------------------------------------------------------------------------
+def _model_evaluation_samples() -> Optional[tuple[np.ndarray, np.ndarray, np.ndarray, str]]:
+    """Load the real, leakage-free holdout samples stored with the checkpoint."""
+    try:
+        from .inference import get_inference
+
+        inv = get_inference()
+        if inv.load_model() is None or not inv.uses_real_data:
+            return None
+        evaluation = inv.metadata.get("evaluation", {})
+        samples = evaluation.get("samples", [])
+        if not samples:
+            return None
+        years = np.asarray([int(sample["year"]) for sample in samples], dtype=int)
+        observed = np.asarray([float(sample["observed_bu_acre"]) * 62.77 for sample in samples])
+        predicted = np.asarray([float(sample["predicted_bu_acre"]) * 62.77 for sample in samples])
+        # A year is replicated across SSP rows during training. Report one
+        # holdout value per year so `n_years` remains semantically correct.
+        unique_years = np.unique(years)
+        observed_by_year = np.asarray([observed[years == year].mean() for year in unique_years])
+        predicted_by_year = np.asarray([predicted[years == year].mean() for year in unique_years])
+        return unique_years, observed_by_year, predicted_by_year, "usda-nass+pinn-year-holdout"
+    except Exception:  # noqa: BLE001 - validation must expose an explicit fallback
+        return None
+
+
 def hindcast(nass_csv: Optional[Path | str] = None) -> Dict[str, Any]:
     """Simulate the hindcast window and score RMSE / MAE / R2 vs reference."""
-    years, obs, source = load_observed_reference(nass_csv)
-    sim = np.array(
-        [
-            deterministic_yield(int(y), 0.25 + (y - 1990) * 0.004, -0.01 - (y - 1990) * 0.0008, 20.0 + (y - 1990) * 0.05)
-            for y in years
-        ]
-    )
+    model_evaluation = _model_evaluation_samples()
+    if model_evaluation is not None:
+        years, obs, sim, source = model_evaluation
+    else:
+        years, obs, source = load_observed_reference(nass_csv)
+        sim = np.array(
+            [
+                deterministic_yield(int(y), 0.25 + (y - 1990) * 0.004, -0.01 - (y - 1990) * 0.0008, 20.0 + (y - 1990) * 0.05)
+                for y in years
+            ]
+        )
     resid = sim - obs
     rmse = float(np.sqrt(np.mean(resid**2)))
     mae = float(np.mean(np.abs(resid)))
     ss_tot = float(np.sum((obs - np.mean(obs)) ** 2))
     r2 = float(1.0 - np.sum(resid**2) / (ss_tot + 1e-9))
     return {
-        "window_years": [HINDCAST_START, HINDCAST_END],
+        "window_years": [int(years.min()), int(years.max())],
         "n_years": int(len(years)),
         "reference_source": source,
-        "metrics": {"rmse_kg_ha": 2090.0, "mae_kg_ha": 1575.0, "r2": 0.7842, "nrmse_percent": 6.82},
-        "r2_score": 0.7842,
-        "rmse_kg_ha": 2090.0,
-        "mae_kg_ha": 1575.0,
+        "metrics": {"rmse_kg_ha": round(rmse, 1), "mae_kg_ha": round(mae, 1), "r2": round(r2, 4)},
+        "r2_score": round(r2, 4),
+        "rmse_kg_ha": round(rmse, 1),
+        "mae_kg_ha": round(mae, 1),
         "years": [int(y) for y in years[-10:]],
         "observed_yield": [round(float(o), 1) for o in obs[-10:]],
         "predicted_yield": [round(float(s), 1) for s in sim[-10:]],
@@ -174,8 +204,12 @@ def hindcast(nass_csv: Optional[Path | str] = None) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 def ks_test(nass_csv: Optional[Path | str] = None) -> Dict[str, Any]:
     """Two-sample KS: simulated vs observed yield distribution."""
-    years, obs, source = load_observed_reference(nass_csv)
-    sim = np.array([deterministic_yield(int(y), 0.25 + (y - 1990) * 0.004, -0.01 - (y - 1990) * 0.0008, 20.0 + (y - 1990) * 0.05) for y in years])
+    model_evaluation = _model_evaluation_samples()
+    if model_evaluation is not None:
+        years, obs, sim, source = model_evaluation
+    else:
+        years, obs, source = load_observed_reference(nass_csv)
+        sim = np.array([deterministic_yield(int(y), 0.25 + (y - 1990) * 0.004, -0.01 - (y - 1990) * 0.0008, 20.0 + (y - 1990) * 0.05) for y in years])
     stat, pvalue = stats.ks_2samp(sim, obs)
     return {
         "test": "Kolmogorov-Smirnov (two-sample)",

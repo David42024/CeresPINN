@@ -27,15 +27,13 @@ import {
   Bar,
   Cell
 } from 'recharts';
-import { MODEL_REGISTRY_DATA } from '../data/mockData';
 import { ModelRegistryEntry } from '../types';
 import { fetchModelRegistry } from '../services/api';
 
 export const MLOpsDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const [models, setModels] = useState<ModelRegistryEntry[]>(MODEL_REGISTRY_DATA);
-  const [isRetraining, setIsRetraining] = useState<boolean>(false);
-  const [retrainEpoch, setRetrainEpoch] = useState<number>(0);
+  const [models, setModels] = useState<ModelRegistryEntry[]>([]);
+  const [registryError, setRegistryError] = useState<string | null>(null);
   const [lambdaPde, setLambdaPde] = useState<number>(0.45);
   const [learningRate, setLearningRate] = useState<number>(0.001);
   const [batchSize, setBatchSize] = useState<number>(64);
@@ -61,9 +59,15 @@ export const MLOpsDashboard: React.FC = () => {
             description: model.description
           }));
           setModels(transformedModels);
+          setRegistryError(null);
+        } else {
+          setModels([]);
+          setRegistryError('No se pudo verificar el registro de modelos del backend.');
         }
       } catch (error) {
-        console.warn('Failed to load model registry, using fallback', error);
+        console.warn('Failed to load model registry', error);
+        setModels([]);
+        setRegistryError('No se pudo verificar el registro de modelos del backend.');
       } finally {
         setLoadingModels(false);
       }
@@ -82,48 +86,7 @@ export const MLOpsDashboard: React.FC = () => {
     { epoch: 15000, totalLoss: 0.015, pdeLoss: 0.0024, dataLoss: 0.011, boundaryLoss: 0.0016 }
   ];
 
-  const handleRetrain = () => {
-    setIsRetraining(true);
-    setRetrainEpoch(0);
-
-    const interval = setInterval(() => {
-      setRetrainEpoch((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsRetraining(false);
-          // Add new model entry
-          const newModel: ModelRegistryEntry = {
-            version: `v2.5.${Math.floor(Math.random() * 10)}-PINN-Live`,
-            name: `PINN Ceres-Richards Fine-Tuned (${new Date().toLocaleDateString()})`,
-            architecture: 'Physics-Informed Deep ResNet + Automatic Differentiation',
-            trainedDate: new Date().toISOString().split('T')[0],
-            epochs: 20000,
-            richardsWeightLambda: lambdaPde,
-            testR2: 0.954,
-            testRmseKgHa: 340,
-            active: true,
-            status: 'production',
-            description: 'Modelo re-entrenado con pesos de conservación física actualizados.'
-          };
-
-          setModels(prevModels => [
-            newModel,
-            ...prevModels.map(m => ({ ...m, active: false, status: 'staging' as const }))
-          ]);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 250);
-  };
-
-  const handleSetActiveModel = (version: string) => {
-    setModels(prev => prev.map(m => ({
-      ...m,
-      active: m.version === version,
-      status: m.version === version ? 'production' : 'staging'
-    })));
-  };
+  const activeModel = models.find(model => model.active);
 
   return (
     <div id="mlops-pinn-dashboard" className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-5">
@@ -156,7 +119,9 @@ export const MLOpsDashboard: React.FC = () => {
               <TrendingDown className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               {t('mlOpsDashboard.lossChartTitle')}
             </h3>
-            <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400">R² = 0.942 | RMSE = 385 kg/ha</span>
+            <span className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400">
+              {activeModel ? `R² = ${activeModel.testR2.toFixed(4)} | RMSE = ${activeModel.testRmseKgHa.toLocaleString()} kg/ha` : 'Métricas no verificadas'}
+            </span>
           </div>
 
           <div className="h-[260px] w-full">
@@ -240,28 +205,13 @@ export const MLOpsDashboard: React.FC = () => {
           </div>
 
           <div>
-            {isRetraining && (
-              <div className="space-y-1.5 mb-3">
-                <div className="flex justify-between text-[11px] font-mono text-emerald-700 dark:text-emerald-400">
-                  <span>{t('mlOpsDashboard.optimizingTensors')}</span>
-                  <span>{retrainEpoch}%</span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-300"
-                    style={{ width: `${retrainEpoch}%` }}
-                  />
-                </div>
-              </div>
-            )}
-
             <button
-              onClick={handleRetrain}
-              disabled={isRetraining}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all disabled:opacity-50"
+              disabled
+              title="El entrenamiento se ejecuta fuera del navegador con el pipeline versionado y datos validados."
+              className="w-full py-2.5 rounded-xl bg-slate-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all opacity-70 cursor-not-allowed"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRetraining ? 'animate-spin' : ''}`} />
-              {isRetraining ? t('mlOpsDashboard.btnTrainingEpochs') : t('mlOpsDashboard.btnStartRetrain')}
+              <RefreshCw className="w-3.5 h-3.5" />
+              Reentrenamiento disponible solo en el pipeline seguro
             </button>
           </div>
         </div>
@@ -276,6 +226,10 @@ export const MLOpsDashboard: React.FC = () => {
         {loadingModels ? (
           <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-600 dark:text-slate-400">
             {t('mlOpsDashboard.loadingModels')}
+          </div>
+        ) : registryError ? (
+          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 text-center text-xs text-rose-700 dark:text-rose-300">
+            {registryError}
           </div>
         ) : (
           <div className="space-y-2">
@@ -317,14 +271,7 @@ export const MLOpsDashboard: React.FC = () => {
                     <span className="text-slate-700 dark:text-slate-300">{model.epochs.toLocaleString()}</span>
                   </div>
 
-                  {!model.active && (
-                    <button
-                      onClick={() => handleSetActiveModel(model.version)}
-                      className="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs transition-all"
-                    >
-                      {t('mlOpsDashboard.activateBtn')}
-                    </button>
-                  )}
+                  {!model.active && <span className="text-[10px] text-slate-500">Solo lectura</span>}
                 </div>
               </div>
             ))}
@@ -341,7 +288,10 @@ export const MLOpsDashboard: React.FC = () => {
 
         {/* Mini explanation */}
         <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-          <strong>Ventaja del PINN:</strong> La incorporación de la ecuación de Richards como loss de conservación física mejora el R² en <strong className="text-emerald-700 dark:text-emerald-400">+10.2 pp</strong> y reduce el RMSE en <strong className="text-emerald-700 dark:text-emerald-400">−660 kg/ha</strong> respecto al mejor modelo puramente estadístico. Datos calibrados en USDA NASS 2000-2025.
+          <strong>Modelo activo verificado:</strong>{' '}
+          {activeModel
+            ? `R² ${activeModel.testR2.toFixed(4)} y RMSE ${activeModel.testRmseKgHa.toLocaleString()} kg/ha, obtenidos de la metadata del checkpoint desplegado.`
+            : 'las métricas estarán disponibles cuando el backend confirme el checkpoint.'}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

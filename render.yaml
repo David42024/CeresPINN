@@ -25,11 +25,21 @@ services:
         value: /app/backend/models
       - key: CERESPINN_REQUIRE_MODEL
         value: "1"
+      - key: CERESPINN_REQUIRE_REAL_DATA
+        value: "1"
       - key: CERESPINN_REQUIRE_DATABASE
         value: "1"
-      # Set to the production Vercel origin. Multiple origins are comma-separated.
+      # Production alias verified from the latest successful Vercel deployment.
       - key: FRONTEND_ORIGINS
-        sync: false
+        value: https://ceres-pinn.vercel.app
+      # Covers stable and generated Preview URLs for the ceres-pinn Vercel project.
+      - key: FRONTEND_ORIGIN_REGEX
+        value: '^https://ceres-pinn(?:-[a-z0-9-]+)?\.vercel\.app$'
       # Set this in the Render dashboard to the Supabase connection string:
       - key: DATABASE_URL
         sync: false
+      # Backend-only secret used by /api/chatbot. Never put it in Vercel.
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-flash-latest

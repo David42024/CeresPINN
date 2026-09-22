@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:pinn-wiring": "tsx --test tests/pinn-wiring.test.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",

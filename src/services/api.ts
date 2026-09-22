@@ -4,6 +4,7 @@ import { DEFAULT_FIELDS, SOIL_PROFILES } from '../data/mockData';
 
 const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '').replace(/\/$/, '');
 const REQUIRE_REMOTE_PINN = import.meta.env.PROD || import.meta.env.VITE_REQUIRE_REMOTE_PINN === 'true';
+const CHATBOT_TIMEOUT_MS = 45000;
 
 const assertProductionApiConfigured = () => {
   if (REQUIRE_REMOTE_PINN && !API_BASE) {
@@ -11,10 +12,46 @@ const assertProductionApiConfigured = () => {
   }
 };
 
+export interface ChatbotContext {
+  fieldName?: string;
+  fieldLocation?: string;
+  scenario?: string;
+  targetYear?: number;
+  inferenceMode?: string;
+  modelName?: string;
+  modelDataSource?: string;
+  projectedYieldKgHa?: number;
+  yieldLossDueToDroughtPercent?: number;
+  totalWaterConsumedMm?: number;
+  peakWaterStressIndex?: number;
+  droughtResilienceScore?: number;
+}
+
+export async function sendChatbotMessage(message: string, context: ChatbotContext): Promise<string> {
+  assertProductionApiConfigured();
+  const response = await fetchWithTimeout(
+    `${API_BASE}/api/chatbot`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, context }),
+    },
+    CHATBOT_TIMEOUT_MS,
+  );
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || typeof payload?.reply !== 'string' || !payload.reply.trim()) {
+    throw new Error(payload?.detail ?? payload?.error ?? `Chatbot API returned ${response.status}`);
+  }
+  return payload.reply.trim();
+}
+
 const assertRemotePinnPayload = (payload: any) => {
   if (!REQUIRE_REMOTE_PINN) return;
   if (payload?.inference_mode !== 'pinn') {
     throw new Error(`Render returned inference_mode=${payload?.inference_mode ?? 'missing'}; trained PINN required.`);
+  }
+  if (payload?.model_uses_real_data !== true) {
+    throw new Error(`Render returned data_source=${payload?.model_data_source ?? 'missing'}; USDA NASS + NASA NEX-GDDP checkpoint required.`);
   }
   const requiredNumbers = [
     'projected_yield_kg_ha',
@@ -82,6 +119,8 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
     id: response?.id ?? `sim-${Date.now()}`,
     inferenceMode: response?.inference_mode ?? 'unavailable',
     modelName: response?.model_name ?? 'CeresPINN',
+    modelDataSource: response?.model_data_source,
+    modelUsesRealData: response?.model_uses_real_data === true,
     config,
     fieldName: field.name,
     fieldLocation: `${field.locationName}, ${field.country}`,

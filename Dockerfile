@@ -28,6 +28,7 @@ RUN python -c "from backend.inference import get_inference; i=get_inference(); a
 ENV PORT=8000
 ENV CERESPINN_MODEL_DIR=/app/backend/models
 ENV CERESPINN_REQUIRE_MODEL=1
+ENV CERESPINN_REQUIRE_REAL_DATA=1
 ENV CERESPINN_REQUIRE_DATABASE=1
 
 EXPOSE 8000

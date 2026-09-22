@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
 
 
 MODELS = Path(__file__).resolve().parent.parent / "models"
@@ -40,6 +41,44 @@ def test_simulate_uses_pinn_when_model_present(test_client, simulation_payload):
     resp = test_client.post("/api/simulate", json=simulation_payload)
     assert resp.status_code == 200
     assert resp.json()["inference_mode"] == "pinn"
+
+
+def test_simulate_endpoint_invokes_real_trained_checkpoint(test_client, simulation_payload, monkeypatch):
+    """Regression guard for every frontend run button: /api/simulate must execute the checkpoint."""
+    import backend.inference as inf_mod
+
+    inv = inf_mod.get_inference()
+    assert inv.load_model() is not None
+    assert inv.uses_real_data is True
+    original_predict = inv.predict_yield_bu_acre
+    calls = 0
+
+    def traced_predict(payload):
+        nonlocal calls
+        calls += 1
+        return original_predict(payload)
+
+    monkeypatch.setattr(inv, "predict_yield_bu_acre", traced_predict)
+    resp = test_client.post("/api/simulate", json=simulation_payload)
+    assert resp.status_code == 200
+    data = resp.json()
+    assert calls == 1
+    assert data["inference_mode"] == "pinn"
+    assert data["model_uses_real_data"] is True
+    assert data["model_data_source"] == "nass+nex-gddp"
+
+
+def test_model_status_matches_checkpoint_metadata(test_client):
+    import backend.inference as inf_mod
+
+    meta = inf_mod.get_inference().metadata
+    resp = test_client.get("/api/model/status")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["real_data"] is True
+    assert data["data_source"] == "nass+nex-gddp"
+    assert data["r2_score"] == meta["test_metrics"]["r2"]
+    assert data["epochs"] == meta["epochs"]
 
 
 def test_simulate_fallback_without_model(test_client, simulation_payload, monkeypatch, tmp_path):
@@ -90,6 +129,73 @@ def test_health(test_client):
     resp = test_client.get("/api/health")
     assert resp.status_code == 200
     assert resp.json()["status"] == "ok"
+
+
+# ---------------------------------------------------------------------------
+# /api/chatbot
+# ---------------------------------------------------------------------------
+def test_chatbot_requires_backend_key(test_client, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    resp = test_client.post("/api/chatbot", json={"message": "Hola"})
+    assert resp.status_code == 503
+    assert "configurado" in resp.json()["detail"]
+
+
+def test_chatbot_calls_gemini_with_compact_context(test_client, monkeypatch):
+    import backend.app as app_mod
+
+    captured = {}
+
+    def fake_generate(**kwargs):
+        captured.update(kwargs)
+        return "Respuesta de prueba"
+
+    monkeypatch.setenv("GEMINI_API_KEY", "test-only-secret")
+    monkeypatch.setenv("GEMINI_MODEL", "gemini-flash-latest")
+    monkeypatch.setattr(app_mod, "_generate_gemini_reply", fake_generate)
+    resp = test_client.post(
+        "/api/chatbot",
+        json={"message": "¿Cuál es el rendimiento?", "context": {"projectedYieldKgHa": 8778}},
+    )
+    assert resp.status_code == 200
+    assert resp.json()["reply"] == "Respuesta de prueba"
+    assert captured["api_key"] == "test-only-secret"
+    assert captured["model"] == "gemini-flash-latest"
+    assert '"projectedYieldKgHa": 8778' in captured["contents"]
+
+
+def test_chatbot_provider_failure_is_sanitized(test_client, monkeypatch):
+    import backend.app as app_mod
+
+    def fail_generate(**_kwargs):
+        raise RuntimeError("provider failed with do-not-leak-this")
+
+    monkeypatch.setenv("GEMINI_API_KEY", "do-not-leak-this")
+    monkeypatch.setattr(app_mod, "_generate_gemini_reply", fail_generate)
+    resp = test_client.post("/api/chatbot", json={"message": "Hola"})
+    assert resp.status_code == 502
+    assert "do-not-leak-this" not in resp.text
+
+
+def test_chatbot_status_never_exposes_key(test_client, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "top-secret")
+    resp = test_client.get("/api/chatbot/status")
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "ready"
+    assert "top-secret" not in resp.text
+
+
+def test_render_vercel_origin_regex_is_project_scoped():
+    render_config = (Path(__file__).resolve().parents[2] / "render.yaml").read_text(encoding="utf-8")
+    match = re.search(r"FRONTEND_ORIGIN_REGEX[\s\S]*?value: '([^']+)'", render_config)
+    assert match is not None
+    pattern = match.group(1).replace("\\\\", "\\")
+    assert re.fullmatch(pattern, "https://ceres-pinn.vercel.app")
+    assert re.fullmatch(
+        pattern,
+        "https://ceres-pinn-qsuo9pjvz-daln486279513-gmailcoms-projects.vercel.app",
+    )
+    assert not re.fullmatch(pattern, "https://unrelated-project.vercel.app")
 
 
 # ---------------------------------------------------------------------------

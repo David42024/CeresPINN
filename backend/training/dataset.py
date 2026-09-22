@@ -216,25 +216,47 @@ def build_dataset(
         .reset_index()
     )
 
+    nex_summary = artifacts.get("nex_summary")
+    info["data_lineage"] = {
+        "yield_source": "USDA NASS QuickStats",
+        "climate_source": "NASA NEX-GDDP-CMIP6",
+        "nass_observations": int(len(norm)),
+        "nass_year_min": int(norm["year"].min()),
+        "nass_year_max": int(norm["year"].max()),
+        "nass_annual_aggregates": int(len(annual)),
+        "nex_regional_rows": int(len(nex_summary)) if nex_summary is not None else 0,
+    }
+
     # Scenario expansion: every county-year row is replicated across the SSP scenarios
     # because a projected twin is scenario-conditional.
     scenarios = np.array([s for s in SCENARIO_TEMPLATE for _ in annual.index])
     years = np.tile(annual["year"].to_numpy(), len(SCENARIO_TEMPLATE))
     y = np.tile(annual["yield_bu_acre"].to_numpy(), len(SCENARIO_TEMPLATE))
 
-    climate = _blend_climate(years.astype(int), scenarios, artifacts.get("nex_summary"))
+    climate = _blend_climate(years.astype(int), scenarios, nex_summary)
     X = climate[train_config.feature_names].to_numpy(dtype=float)
 
-    # Train/test split (seeded, deterministic).
+    # Grouped holdout by complete year. Every SSP copy of a year stays in the
+    # same partition, preventing target leakage between train and test while
+    # keeping the observed yield range represented in both partitions.
+    unique_years = np.sort(np.unique(years.astype(int)))
+    year_split = max(1, min(len(unique_years) - 1, int(train_config.train_frac * len(unique_years))))
     rng = np.random.default_rng(train_config.seed)
-    idx = rng.permutation(len(X))
-    split = int(train_config.train_frac * len(X))
-    train_idx, test_idx = idx[:split], idx[split:]
+    shuffled_years = rng.permutation(unique_years)
+    train_years = np.sort(shuffled_years[:year_split])
+    test_years = np.sort(shuffled_years[year_split:])
+    train_idx = np.flatnonzero(np.isin(years.astype(int), train_years))
+    test_idx = np.flatnonzero(np.isin(years.astype(int), test_years))
 
     info["source"] = "nass+nex-gddp"
     info["n_rows"] = len(X)
     info["train_rows"] = len(train_idx)
     info["test_rows"] = len(test_idx)
+    info["split"] = {
+        "method": "grouped-random-year-holdout",
+        "train_years": [int(year) for year in train_years],
+        "test_years": [int(year) for year in test_years],
+    }
     return X[train_idx], y[train_idx], X[test_idx], y[test_idx], info
 
 

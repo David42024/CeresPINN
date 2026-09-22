@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
@@ -125,6 +126,21 @@ def train(
     )
     test_metrics = _compute_metrics(torch.tensor(yp_test_orig), torch.tensor(y_test))
 
+    # Persist the real holdout samples with the checkpoint metadata so deployed
+    # validation endpoints never need to invent a synthetic reference series.
+    evaluation_samples = [
+        {
+            "year": int(round(float(features[0]))),
+            "observed_bu_acre": round(float(observed), 4),
+            "predicted_bu_acre": round(float(predicted), 4),
+        }
+        for features, observed, predicted in zip(
+            X_test,
+            np.asarray(y_test).reshape(-1),
+            np.asarray(yp_test_orig).reshape(-1),
+        )
+    ]
+
     metadata = {
         "model": "CeresPINN-maize-v2.5",
         "device": device,
@@ -138,6 +154,19 @@ def train(
         "train_metrics": train_metrics,
         "test_metrics": test_metrics,
         "data_source": info.get("source"),
+        "data_lineage": info.get("data_lineage", {}),
+        "evaluation": {
+            "source": info.get("source"),
+            "split": info.get("split", {}),
+            "samples": evaluation_samples,
+        },
+        "trained_at": datetime.now(timezone.utc).isoformat(),
+        "training_config": {
+            "loss_physics_weight": train_config.loss_physics_weight,
+            "learning_rate": train_config.learning_rate,
+            "batch_size": train_config.batch_size,
+            "seed": train_config.seed,
+        },
         "normalization": {"mean": mean.tolist(), "std": std.tolist(), "y_min": y_min, "y_max": y_max},
         "history": {k: v[-1] for k, v in history.items()},
     }

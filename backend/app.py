@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+import json
 import os
 import time
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
 from .pipelines_api import router as pipelines_router
@@ -26,6 +27,10 @@ def _database_required() -> bool:
     return os.getenv("CERESPINN_REQUIRE_DATABASE", "0").strip().lower() in {"1", "true", "yes"}
 
 
+def _real_data_required() -> bool:
+    return os.getenv("CERESPINN_REQUIRE_REAL_DATA", "0").strip().lower() in {"1", "true", "yes"}
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Production must never advertise or serve a surrogate as the trained PINN.
@@ -34,6 +39,11 @@ async def lifespan(app: FastAPI):
     inv = inference_mod.get_inference()
     if _model_required() and inv.load_model() is None:
         raise RuntimeError(f"CeresPINN model is required but unavailable: {inv.error_message}")
+    if _real_data_required() and not inv.uses_real_data:
+        raise RuntimeError(
+            "Production requires a checkpoint trained with USDA NASS + NASA NEX-GDDP data; "
+            f"found data_source={inv.metadata.get('data_source', 'missing')}."
+        )
 
     if _database_required() and not db.external_database_configured():
         raise RuntimeError("DATABASE_URL is required in production; SQLite fallback is disabled.")
@@ -57,10 +67,12 @@ _frontend_origins = [
     for origin in os.getenv("FRONTEND_ORIGINS", "*").split(",")
     if origin.strip()
 ]
+_frontend_origin_regex = os.getenv("FRONTEND_ORIGIN_REGEX", "").strip() or None
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_frontend_origins,
+    allow_origin_regex=_frontend_origin_regex,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -84,8 +96,26 @@ class SimulationRequest(BaseModel):
 
 
 class ChatbotRequest(BaseModel):
-    message: str
+    message: str = Field(min_length=1, max_length=2000)
     context: Optional[dict] = None
+
+
+def _generate_gemini_reply(*, api_key: str, model: str, contents: str) -> Optional[str]:
+    """Call Gemini behind a small seam so the HTTP contract is testable offline."""
+    from google import genai
+    from google.genai.types import GenerateContentConfig, ThinkingConfig
+
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(
+        model=model,
+        contents=contents,
+        config=GenerateContentConfig(
+            max_output_tokens=300,
+            temperature=0.3,
+            thinking_config=ThinkingConfig(thinking_budget=0),
+        ),
+    )
+    return response.text
 
 
 @app.get("/api/health")
@@ -93,12 +123,14 @@ def health() -> Dict[str, Any]:
     inv = inference_mod.get_inference()
     model_ready = inv.load_model() is not None
     return {
-        "status": "ok" if model_ready or not _model_required() else "error",
+        "status": "ok" if (model_ready and (inv.uses_real_data or not _real_data_required())) or not _model_required() else "error",
         "service": "cerespinn-backend",
         "database": "postgresql+postgis",
         "model": "pinn-maize-ensemble" if model_ready else "unavailable",
         "model_ready": model_ready,
         "inference_mode": "pinn" if model_ready else "unavailable",
+        "data_source": inv.metadata.get("data_source") if model_ready else None,
+        "real_data": inv.uses_real_data if model_ready else False,
     }
 
 
@@ -117,8 +149,15 @@ def model_status() -> Dict[str, Any]:
         "cmip6_source": "NASA NEX-GDDP (5 GCMs)",
         "r2_score": test_metrics.get("r2"),
         "rmse_bu_acre": round(float(mse) ** 0.5, 4) if mse is not None else None,
+        "rmse_kg_ha": round((float(mse) ** 0.5) * 62.77, 1) if mse is not None else None,
         "mae_bu_acre": test_metrics.get("mae"),
         "data_source": meta.get("data_source"),
+        "data_lineage": meta.get("data_lineage", {}),
+        "real_data": inv.uses_real_data if model_ready else False,
+        "trained_at": meta.get("trained_at"),
+        "epochs": meta.get("epochs"),
+        "train_rows": meta.get("train_rows"),
+        "test_rows": meta.get("test_rows"),
         "database": "PostgreSQL/PostGIS",
         "inference_mode": "pinn" if model_ready else "unavailable",
         "checkpoint": inv.checkpoint.name,
@@ -203,6 +242,11 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
             status_code=503,
             detail=f"Trained CeresPINN inference unavailable: {inv.error_message or 'unknown error'}",
         )
+    if _real_data_required() and not response.get("model_uses_real_data"):
+        raise HTTPException(
+            status_code=503,
+            detail="The active PINN checkpoint was not trained with the required real datasets.",
+        )
 
     # Best-effort persistence of the simulation result (never blocks/fails).
     if db.available():
@@ -219,8 +263,14 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
 
 @app.post("/api/chatbot")
 def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
-    from google import genai
-    from google.genai.types import GenerateContentConfig, ThinkingConfig
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        raise HTTPException(
+            status_code=503,
+            detail="El asistente no está configurado en el backend.",
+        )
+
+    model = os.getenv("GEMINI_MODEL", "gemini-flash-latest").strip() or "gemini-flash-latest"
 
     system_prompt = (
         "Eres el asistente conversacional de CeresPINN, una plataforma de "
@@ -238,39 +288,48 @@ def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
         "matemáticas, notación LaTeX (nada de símbolos $ o \\frac), ni "
         "símbolos de markdown."
     )
+    # Keep requests bounded and deterministic. The frontend already sends a
+    # compact KPI summary, but this also protects direct API consumers.
+    context_json = json.dumps(payload.context or {}, ensure_ascii=False, default=str)
+    if len(context_json) > 12_000:
+        context_json = context_json[:12_000] + "…"
     contents = (
         f"{system_prompt}\n\n"
-        f"Contexto de la simulación actual: {payload.context}\n"
-        f"Pregunta del usuario: {payload.message}"
+        f"Contexto de la simulación actual: {context_json}\n"
+        f"Pregunta del usuario: {payload.message.strip()}"
     )
     max_retries = 3
-    last_error = None
 
     for attempt in range(max_retries):
         try:
-            client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-            response = client.models.generate_content(
-                model="gemini-flash-latest",
-                contents=contents,
-                config=GenerateContentConfig(
-                    max_output_tokens=300,
-                    temperature=0.3,
-                    thinking_config=ThinkingConfig(thinking_budget=0),
-                ),
-            )
-            if not response.text:
+            reply = _generate_gemini_reply(api_key=api_key, model=model, contents=contents)
+            if not reply:
                 return {"reply": "No tengo una respuesta clara para eso, ¿puedes reformular la pregunta?", "error": None}
-            return {"reply": response.text}
-        except Exception as e:
-            last_error = e
-            error_str = str(e)
-            is_retryable = "503" in error_str or "UNAVAILABLE" in error_str
+            return {"reply": reply, "error": None, "model": model}
+        except Exception as exc:
+            error_str = str(exc).upper()
+            is_retryable = any(code in error_str for code in ("429", "500", "503", "UNAVAILABLE", "RESOURCE_EXHAUSTED"))
             if is_retryable and attempt < max_retries - 1:
                 time.sleep(1.5 * (attempt + 1))
                 continue
             break
 
-    return {"reply": None, "error": str(last_error)}
+    # Do not leak provider diagnostics or credentials to the browser.
+    raise HTTPException(
+        status_code=502,
+        detail="Gemini no pudo generar una respuesta. Inténtalo nuevamente.",
+    )
+
+
+@app.get("/api/chatbot/status")
+def chatbot_status() -> Dict[str, Any]:
+    """Expose readiness without ever returning the Gemini credential."""
+    configured = bool(os.getenv("GEMINI_API_KEY", "").strip())
+    return {
+        "status": "ready" if configured else "unconfigured",
+        "configured": configured,
+        "model": os.getenv("GEMINI_MODEL", "gemini-flash-latest"),
+    }
 
 
 def _mock_yield(payload: SimulationRequest) -> float:
@@ -397,81 +456,31 @@ def list_soil_profiles() -> List[Dict[str, Any]]:
 @app.get("/api/model-registry")
 def list_model_registry() -> List[Dict[str, Any]]:
     """Model registry from Postgres, falling back to the trained benchmark set."""
-    rows = db.list_model_registry()
-    if rows is not None:
-        return rows
-    return [
-        {
-            "version": "v2.5.0-CeresPINN",
-            "name": "🌟 CeresPINN (Digital Twin PINN - Ganador)",
-            "architecture": "Physics-Informed Deep Neural Network + Monteith Bio-physical Prior + Automatic Differentiation PDE Loss",
-            "trainedDate": "2026-09-12",
-            "epochs": 15000,
-            "richardsWeightLambda": 0.085,
-            "testR2": 0.7842,
-            "testRmseKgHa": 2090,
-            "testRmseBuAcre": 13.48,
-            "active": True,
-            "status": "production",
-            "description": "Modelo insignia calibrado bajo protocolo Ficha 5 con acoplamiento biofísico de biomasa de Monteith, balance hídrico 1D de Richards y fenología GDD."
-        },
-        {
-            "version": "v2.3.0-GradientBoosting",
-            "name": "Gradient Boosting Regressor (Convencional #1)",
-            "architecture": "Gradient Boosted Decision Trees (100 estimators, max depth 5)",
-            "trainedDate": "2026-09-12",
-            "epochs": 100,
-            "richardsWeightLambda": 0.0,
-            "testR2": 0.6729,
-            "testRmseKgHa": 2750,
-            "testRmseBuAcre": 17.75,
-            "active": False,
-            "status": "staging",
-            "description": "Ensamble no lineal de árboles de decisión sobre variables bioclimáticas sin regularización física."
-        },
-        {
-            "version": "v2.2.0-RandomForest",
-            "name": "Random Forest Regressor (Convencional #2)",
-            "architecture": "Random Forest Ensemble (100 trees)",
-            "trainedDate": "2026-09-12",
-            "epochs": 100,
-            "richardsWeightLambda": 0.0,
-            "testR2": 0.6728,
-            "testRmseKgHa": 2753,
-            "testRmseBuAcre": 17.75,
-            "active": False,
-            "status": "staging",
-            "description": "Ensamble bagging estándar de la literatura agronómica."
-        },
-        {
-            "version": "v2.1.0-GenericPINN",
-            "name": "Generic PINN (Híbrido #2)",
-            "architecture": "Physics-Informed MLP (tanh activations + generic mass balance loss)",
-            "trainedDate": "2026-09-12",
-            "epochs": 10000,
-            "richardsWeightLambda": 0.03,
-            "testR2": 0.6214,
-            "testRmseKgHa": 2965,
-            "testRmseBuAcre": 19.12,
-            "active": False,
-            "status": "staging",
-            "description": "Red neuronal PINN estándar con penalización genérica de balance hídrico."
-        },
-        {
-            "version": "v1.8.2-RidgeRegression",
-            "name": "Ridge Regression (Convencional #3)",
-            "architecture": "Linear L2 Regularized Regression",
-            "trainedDate": "2026-09-12",
-            "epochs": 1,
-            "richardsWeightLambda": 0.0,
-            "testR2": 0.5144,
-            "testRmseKgHa": 3350,
-            "testRmseBuAcre": 21.63,
-            "active": False,
-            "status": "archived",
-            "description": "Línea base paramétrica lineal de referencia."
-        },
-    ]
+    inv = inference_mod.get_inference()
+    model_ready = inv.load_model() is not None
+    meta = inv.metadata if model_ready else {}
+    test_metrics = meta.get("test_metrics", {})
+    mse = test_metrics.get("mse")
+    current = {
+        "version": "v2.5.0-CeresPINN-RealData",
+        "name": "CeresPINN v2.5 (checkpoint desplegado)",
+        "architecture": "Physics-Informed Neural Network + balance hídrico y forzamiento CMIP6",
+        "trainedDate": str(meta.get("trained_at", ""))[:10] or None,
+        "epochs": meta.get("epochs", 0),
+        "richardsWeightLambda": meta.get("training_config", {}).get("loss_physics_weight", 0.0),
+        "testR2": test_metrics.get("r2", 0.0),
+        "testRmseKgHa": round((float(mse) ** 0.5) * 62.77, 1) if mse is not None else 0.0,
+        "active": model_ready,
+        "status": "production" if model_ready else "unavailable",
+        "description": (
+            "Checkpoint activo entrenado con USDA NASS QuickStats y NASA NEX-GDDP-CMIP6."
+            if inv.uses_real_data
+            else f"Checkpoint sin procedencia real verificada ({meta.get('data_source', 'sin metadata')})."
+        ),
+    }
+    rows = db.list_model_registry() or []
+    historical = [{**row, "active": False, "status": "archived"} for row in rows if row.get("version") != current["version"]]
+    return [current, *historical] if model_ready else historical
 
 
 @app.get("/api/users")

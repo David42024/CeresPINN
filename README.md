@@ -67,16 +67,21 @@ calibrated surrogate.
 
 Required deployment settings:
 
-- **Render:** deploy using `render.yaml`; set `FRONTEND_ORIGINS` to the public
-  Vercel origin (for example `https://your-project.vercel.app`). Keep
+- **Render:** deploy using `render.yaml`; `FRONTEND_ORIGINS` is set to the public
+  production alias `https://ceres-pinn.vercel.app`. Keep
   `CERESPINN_REQUIRE_MODEL=1`, `CERESPINN_REQUIRE_DATABASE=1`, and
-  `CERESPINN_MODEL_DIR=/app/backend/models`. Set `DATABASE_URL` to a real
-  PostgreSQL connection string; production refuses the SQLite/mock fallback.
+  `CERESPINN_REQUIRE_REAL_DATA=1`, and `CERESPINN_MODEL_DIR=/app/backend/models`.
+  Set `DATABASE_URL` to a real PostgreSQL connection string and
+  `GEMINI_API_KEY` as a secret; production refuses the SQLite/mock fallback.
+  `FRONTEND_ORIGIN_REGEX` is already scoped to the generated `ceres-pinn`
+  Vercel Preview URLs; add any custom domain explicitly to `FRONTEND_ORIGINS`.
 - **Vercel:** set `VITE_API_BASE_URL` to the public Render service URL, without a
   trailing slash (for example `https://your-service.onrender.com`). Set it for
   Production and Preview, then redeploy because Vite embeds it at build time.
 - Verify `GET /api/model/status` returns `status: "ready"` and
   `inference_mode: "pinn"`. The frontend rejects any other mode in production.
+- Verify `GET /api/chatbot/status` returns `status: "ready"`. The Gemini key is
+  backend-only: do not create `VITE_GEMINI_API_KEY` or commit it to `.env`.
 
 The active checkpoint and metadata are intentionally versioned. If the model is
 retrained, replace both files together so weights and normalization remain in sync.
@@ -88,6 +93,8 @@ retrained, replace both files together so weights and normalization remain in sy
 - `GET /api/fields`
 - `POST /api/simulate`
 - `GET /api/scenarios`
+- `POST /api/chatbot`
+- `GET /api/chatbot/status`
 - `GET /api/reports`
 
 ## Database note

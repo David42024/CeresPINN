@@ -30,6 +30,8 @@ def test_inference_available_when_model_exists(trained_model_present):
     # load_model must succeed and cache the model.
     assert inv.load_model() is not None
     assert inv.load_model() is inv._model
+    assert inv.uses_real_data is True
+    assert inv.metadata["data_source"] == "nass+nex-gddp"
 
 
 def test_inference_unavailable_without_model(tmp_path):
