@@ -148,16 +148,6 @@ export interface SimulationResult {
     saturation: number;
   };
   
-  pinnValidationMetrics: {
-    pdeResidualRichardsLoss: number;
-    boundaryConditionLoss: number;
-    empiricalNassLoss: number;
-    totalLoss: number;
-    inferenceTimeMs: number;
-    physicsConservationErrorPercent: number;
-    r2Score: number;
-  };
-  
   alerts: {
     id: string;
     level: 'info' | 'warning' | 'critical';
@@ -182,7 +172,7 @@ export interface ModelRegistryEntry {
   architecture: string;
   trainedDate: string;
   epochs: number;
-  richardsWeightLambda: number;
+  monotonicityWeight: number;
   testR2: number;
   testRmseKgHa: number;
   active: boolean;

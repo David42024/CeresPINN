@@ -177,15 +177,6 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
       wiltingPoint: field.soilProfile.wiltingPoint,
       saturation: field.soilProfile.saturation,
     },
-    pinnValidationMetrics: {
-      pdeResidualRichardsLoss: safeNumber(response?.pinn_validation_metrics?.pde_residual_richards_loss, 0.003),
-      boundaryConditionLoss: safeNumber(response?.pinn_validation_metrics?.boundary_condition_loss, 0.002),
-      empiricalNassLoss: safeNumber(response?.pinn_validation_metrics?.empirical_nass_loss, 0.021),
-      totalLoss: safeNumber(response?.pinn_validation_metrics?.total_loss, 0.028),
-      inferenceTimeMs: safeNumber(response?.pinn_validation_metrics?.inference_time_ms, 420),
-      physicsConservationErrorPercent: safeNumber(response?.pinn_validation_metrics?.physics_conservation_error_percent, 1.2),
-      r2Score: safeNumber(response?.pinn_validation_metrics?.r2_score, 0.91),
-    },
     alerts: Array.isArray(response?.alerts) ? response.alerts : [],
     agronomicRecommendations: Array.isArray(response?.agronomic_recommendations) ? response.agronomic_recommendations : [],
   };

@@ -1,0 +1,68 @@
+{
+  "determinism_same_seed_repeat": {
+    "seed": 42,
+    "max_abs_prediction_difference_bu_acre": 0.0,
+    "mean_abs_prediction_difference_bu_acre": 0.0,
+    "repeat_train_seconds": 17.33830000006128,
+    "torch_deterministic_algorithms_enabled": false
+  },
+  "co2_ablation_seed42": {
+    "features": [
+      "year",
+      "temp_anomaly_c",
+      "precip_anomaly_pct",
+      "heatwave_risk",
+      "seasonal_precip_mm",
+      "seasonal_cdd"
+    ],
+    "seed": 42,
+    "train_seconds": 17.3955223999219,
+    "rmse_bu_acre": 12.645022496334585,
+    "mae_bu_acre": 11.30836544036865,
+    "r2": 0.7827024964826969,
+    "rmse_kg_ha": 793.7280620949219,
+    "mae_kg_ha": 709.8260986919402
+  },
+  "structure": {
+    "total_parameters": 63042,
+    "trainable_parameters": 63042,
+    "physics_head_min_train": 0.5,
+    "physics_head_max_train": 0.5,
+    "effective_range_penalty_train": 0.0,
+    "physics_head_has_observed_target": false
+  },
+  "water_balance_from_rounded_output": {
+    "basis": "rounded API daily_records; not internal full-precision states",
+    "sum_residual_mm": -36.325999999999986,
+    "mean_abs_daily_residual_mm": 0.4604070796460158,
+    "max_abs_daily_residual_mm": 1.8099999999999827,
+    "n_days": 113
+  },
+  "sobol_method": {
+    "estimator": "Jansen first-order and total-order",
+    "sampler": "scipy.stats.qmc.Sobol(scramble=True)",
+    "scipy_version": "1.14.1",
+    "base_N": 32768,
+    "bounds": {
+      "temp_anomaly_c": [
+        2.2,
+        3.4
+      ],
+      "precip_anomaly_pct": [
+        -0.28,
+        -0.15
+      ],
+      "co2_ppm": [
+        500,
+        600
+      ]
+    },
+    "fixed": {
+      "year": 2050,
+      "heatwave_risk": 0.78,
+      "seasonal_cdd": 20.0,
+      "seasonal_precip_mm": "480*(1+precip_anomaly_pct)"
+    },
+    "seed": 42
+  }
+}

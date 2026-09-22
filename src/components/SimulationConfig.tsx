@@ -98,7 +98,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
             Configuración de Simulación & Forzamiento Biofísico PINN
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 max-w-2xl">
-            <strong>¿Para qué sirve?</strong> Permite parametrizar el forzamiento climático CMIP6, la fenología varietal, el balance hídrico 1D de Richards y el perfil edáfico de <strong className="text-slate-800 dark:text-slate-200">{field.name}</strong>.
+            <strong>¿Para qué sirve?</strong> Permite parametrizar el forzamiento climático, la fenología varietal y el balance hídrico demostrativo de tres capas para <strong className="text-slate-800 dark:text-slate-200">{field.name}</strong>.
           </p>
         </div>
 
@@ -568,7 +568,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs flex items-start gap-3">
             <Info className="w-4 h-4 text-cyan-600 dark:text-cyan-400 flex-shrink-0 mt-0.5" />
             <div className="text-slate-800 dark:text-slate-300">
-              El motor de Physics-Informed Neural Network (PINN) calcula el tensor de flujo 1D de Richards con K(h) según la curva de retención de Van Genuchten del suelo <strong>{field.soilProfile.label}</strong> (α = {field.soilProfile.alphaVanGenuchten}, n = {field.soilProfile.nVanGenuchten}).
+              El simulador actualiza tres depósitos de humedad con infiltración, extracción y drenaje limitado usando el perfil demostrativo <strong>{field.soilProfile.label}</strong>. Los parámetros α = {field.soilProfile.alphaVanGenuchten} y n = {field.soilProfile.nVanGenuchten} se muestran como metadata del perfil, pero no intervienen en un solucionador diferencial.
             </div>
           </div>
         </div>

@@ -1,0 +1,214 @@
+{
+  "provenance": {
+    "dataset": "data/cerespinn_training_iowa.csv",
+    "checkpoint": "backend/models/cerespinn_pinn.pt",
+    "metadata": "backend/models/cerespinn_metadata.json",
+    "split": {
+      "method": "grouped-random-year-holdout",
+      "train_years": [
+        1990,
+        1993,
+        1994,
+        1995,
+        1996,
+        1997,
+        1999,
+        2000,
+        2002,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2025
+      ],
+      "test_years": [
+        1991,
+        1992,
+        1998,
+        2001,
+        2003,
+        2004,
+        2011,
+        2024
+      ]
+    },
+    "seed": 42,
+    "generated_at_utc": "2026-09-22T23:15:03.297699+00:00"
+  },
+  "checkpoint_annual_metrics": {
+    "rmse_bu_acre": 11.345019076897634,
+    "mae_bu_acre": 9.625411033630368,
+    "r2": 0.8250854306330805,
+    "rmse_kg_ha": 712.1268474568645,
+    "mae_kg_ha": 604.1870505809782
+  },
+  "inferential_statistics": {
+    "n_independent_years": 8,
+    "mean_bias_bu_acre": 0.7419935226440337,
+    "mean_bias_kg_ha": 46.574933416366,
+    "paired_t_statistic": 0.173410241317004,
+    "paired_t_p_value_two_sided": 0.867236977776933,
+    "cohen_dz": 0.06130977878122457,
+    "ks_d": 0.25,
+    "ks_p_value": 0.98010878010878,
+    "bootstrap_95_ci": {
+      "rmse_kg_ha": [
+        465.92464897156634,
+        915.5348627188191
+      ],
+      "mae_kg_ha": [
+        343.7542861003872,
+        862.539138881683
+      ],
+      "r2": [
+        -0.10707715614252566,
+        0.9355296504321707
+      ]
+    }
+  },
+  "latency": {
+    "n_repetitions": 2000,
+    "batch_size": 1,
+    "median_ms": 0.3558,
+    "p95_ms": 0.9689749999999999,
+    "mean_ms": 0.46031425000000004,
+    "device": "CPU"
+  },
+  "training_benchmark": {
+    "elapsed_seconds": 8.310449399985373,
+    "epochs": 300,
+    "train_rows": 84,
+    "batch_size": 64,
+    "device": "CPU",
+    "torch_threads": 8,
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "unconstrained_mlp_train_seconds": 7.49126089992933,
+  "baseline_comparison": [
+    {
+      "model": "CeresPINN",
+      "n_independent_years": 8,
+      "rmse_bu_acre": 11.345019076897634,
+      "mae_bu_acre": 9.625411033630368,
+      "r2": 0.8250854306330805,
+      "rmse_kg_ha": 712.1268474568645,
+      "mae_kg_ha": 604.1870505809782
+    },
+    {
+      "model": "Linear regression",
+      "n_independent_years": 8,
+      "rmse_bu_acre": 10.230780769197365,
+      "mae_bu_acre": 8.877377849545486,
+      "r2": 0.8577562866970928,
+      "rmse_kg_ha": 642.1861088825186,
+      "mae_kg_ha": 557.2330076159701
+    },
+    {
+      "model": "Ridge (alpha=1)",
+      "n_independent_years": 8,
+      "rmse_bu_acre": 10.273277442107316,
+      "mae_bu_acre": 8.759471060646309,
+      "r2": 0.8565721269869803,
+      "rmse_kg_ha": 644.8536250410763,
+      "mae_kg_ha": 549.8319984767688
+    },
+    {
+      "model": "Random Forest",
+      "n_independent_years": 8,
+      "rmse_bu_acre": 19.2774306508746,
+      "mae_bu_acre": 14.182586494708847,
+      "r2": 0.4949739001645409,
+      "rmse_kg_ha": 1210.0443219553986,
+      "mae_kg_ha": 890.2409542728743
+    },
+    {
+      "model": "MLP (same architecture, no monotonicity regularization)",
+      "n_independent_years": 8,
+      "rmse_bu_acre": 18.81461583892139,
+      "mae_bu_acre": 15.60134468078613,
+      "r2": 0.518932259790325,
+      "rmse_kg_ha": 1180.9934362090958,
+      "mae_kg_ha": 979.2964056129455
+    }
+  ],
+  "robustness": [
+    {
+      "condition": "Gaussian noise (sigma=5% train SD)",
+      "feature": "all non-constant features",
+      "rmse_bu_acre": 11.48696493727304,
+      "rmse_change_pct": 0.5062675993854349,
+      "mean_abs_prediction_change_bu_acre": 0.9880593419075012,
+      "repetitions": 1000
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "year",
+      "rmse_bu_acre": 32.93944522837124,
+      "rmse_change_pct": 188.2067382268782,
+      "mean_abs_prediction_change_bu_acre": 25.86273193359375,
+      "repetitions": 1
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "temp_anomaly_c",
+      "rmse_bu_acre": 11.703106929935897,
+      "rmse_change_pct": 2.397422057735743,
+      "mean_abs_prediction_change_bu_acre": 1.614725112915039,
+      "repetitions": 1
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "precip_anomaly_pct",
+      "rmse_bu_acre": 11.48919923838163,
+      "rmse_change_pct": 0.525816824645875,
+      "mean_abs_prediction_change_bu_acre": 0.753376305103302,
+      "repetitions": 1
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "co2_ppm",
+      "rmse_bu_acre": 11.209187865361097,
+      "rmse_change_pct": -1.9241687147331654,
+      "mean_abs_prediction_change_bu_acre": 0.5849758982658386,
+      "repetitions": 1
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "heatwave_risk",
+      "rmse_bu_acre": 11.370342242061191,
+      "rmse_change_pct": -0.5141335141489289,
+      "mean_abs_prediction_change_bu_acre": 0.33503851294517517,
+      "repetitions": 1
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "seasonal_precip_mm",
+      "rmse_bu_acre": 10.875824499250584,
+      "rmse_change_pct": -4.840962477497889,
+      "mean_abs_prediction_change_bu_acre": 6.077724456787109,
+      "repetitions": 1
+    },
+    {
+      "condition": "single-feature mean imputation",
+      "feature": "seasonal_cdd",
+      "rmse_bu_acre": 11.429103091420817,
+      "rmse_change_pct": 0.0,
+      "mean_abs_prediction_change_bu_acre": 0.0,
+      "repetitions": 1
+    }
+  ]
+}

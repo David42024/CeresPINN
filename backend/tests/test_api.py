@@ -68,6 +68,21 @@ def test_simulate_endpoint_invokes_real_trained_checkpoint(test_client, simulati
     assert data["model_data_source"] == "nass+nex-gddp"
 
 
+def test_simulate_omits_legacy_equation_metrics(test_client, simulation_payload):
+    """The simulation contract must not expose fabricated scientific metrics."""
+    response = test_client.post("/api/simulate", json=simulation_payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert "pinn_validation_metrics" not in data
+    serialized = response.text.lower()
+    for forbidden in (
+        "pde_residual_richards_loss",
+        "boundary_condition_loss",
+        "physics_conservation_error_percent",
+    ):
+        assert forbidden not in serialized
+
+
 def test_model_status_matches_checkpoint_metadata(test_client):
     import backend.inference as inf_mod
 
@@ -79,6 +94,17 @@ def test_model_status_matches_checkpoint_metadata(test_client):
     assert data["data_source"] == "nass+nex-gddp"
     assert data["r2_score"] == meta["test_metrics"]["r2"]
     assert data["epochs"] == meta["epochs"]
+
+
+def test_model_registry_contains_only_deployed_checkpoint_metadata(test_client):
+    response = test_client.get("/api/model-registry")
+    assert response.status_code == 200
+    models = response.json()
+    assert len(models) == 1
+    assert models[0]["active"] is True
+    assert models[0]["epochs"] == 300
+    assert models[0]["monotonicityWeight"] == 0.5
+    assert "richardsWeightLambda" not in models[0]
 
 
 def test_simulate_fallback_without_model(test_client, simulation_payload, monkeypatch, tmp_path):

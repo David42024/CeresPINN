@@ -148,20 +148,6 @@ CREATE TABLE IF NOT EXISTS reports (
     payload     TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS model_registry (
-    version            TEXT PRIMARY KEY,
-    name               TEXT NOT NULL,
-    architecture       TEXT NOT NULL,
-    trained_date       TEXT NOT NULL,
-    epochs             INT NOT NULL,
-    richards_weight_lambda DOUBLE PRECISION NOT NULL,
-    test_r2            DOUBLE PRECISION NOT NULL,
-    test_rmse_kg_ha    DOUBLE PRECISION NOT NULL,
-    active             BOOLEAN NOT NULL DEFAULT FALSE,
-    status             TEXT NOT NULL,
-    description        TEXT NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS ingestion_pipelines (
     id                 TEXT PRIMARY KEY,
     name               TEXT NOT NULL,
@@ -383,7 +369,6 @@ def seed_if_empty() -> None:
             soil_count = conn.execute(text("SELECT count(*) FROM soil_profiles")).scalar() or 0
             scenarios_count = conn.execute(text("SELECT count(*) FROM scenarios")).scalar() or 0
             reports_count = conn.execute(text("SELECT count(*) FROM reports")).scalar() or 0
-            model_count = conn.execute(text("SELECT count(*) FROM model_registry")).scalar() or 0
             pipe_count = conn.execute(text("SELECT count(*) FROM ingestion_pipelines")).scalar() or 0
             users_count = conn.execute(text("SELECT count(*) FROM users")).scalar() or 0
 
@@ -439,19 +424,6 @@ def seed_if_empty() -> None:
                        VALUES (:id, :title, :generated_at, :summary, :payload)"""
                 )
                 conn.execute(INSERT, _REPORTS_SEED)
-
-            if model_count == 0:
-                INSERT = text(
-                    """INSERT INTO model_registry
-                       (version, name, architecture, trained_date, epochs,
-                        richards_weight_lambda, test_r2, test_rmse_kg_ha, active,
-                        status, description)
-                       VALUES (:version, :name, :architecture, :trained_date, :epochs,
-                               :richards_weight_lambda, :test_r2, :test_rmse_kg_ha,
-                               :active, :status, :description)"""
-                )
-                for m in _MODEL_REGISTRY_SEED:
-                    conn.execute(INSERT, m)
 
             if pipe_count == 0:
                 INSERT = text(
@@ -603,48 +575,6 @@ _REPORTS_SEED: Dict[str, Any] = {
     ),
 }
 
-_MODEL_REGISTRY_SEED: List[Dict[str, Any]] = [
-    {
-        "version": "v2.4.1-PINN-Ensemble",
-        "name": "PINN Ceres-Richards V2.4 (Active Production)",
-        "architecture": "Physics-Informed Deep ResNet + Automatic Differentiation PDE Loss",
-        "trained_date": "2026-08-15",
-        "epochs": 15000,
-        "richards_weight_lambda": 0.45,
-        "test_r2": 0.942,
-        "test_rmse_kg_ha": 385,
-        "active": True,
-        "status": "production",
-        "description": "Surrogate neural model enforcing 1D unsaturated Richards flow conservation & Priestley-Taylor ET constraints.",
-    },
-    {
-        "version": "v2.3.0-PINN-Richards",
-        "name": "PINN Richards Single-Soil V2.3",
-        "architecture": "Physics-Informed MLP (6 layers x 256 units, tanh activation)",
-        "trained_date": "2026-06-20",
-        "epochs": 12000,
-        "richards_weight_lambda": 0.35,
-        "test_r2": 0.918,
-        "test_rmse_kg_ha": 490,
-        "active": False,
-        "status": "staging",
-        "description": "Calibrated on USDA NASS 2000-2025 multi-state corn records.",
-    },
-    {
-        "version": "v1.8.2-Vanilla-LSTM",
-        "name": "Empirical Baseline (Non-Physics LSTM)",
-        "architecture": "Bidirectional LSTM + Dense Output",
-        "trained_date": "2026-02-10",
-        "epochs": 8000,
-        "richards_weight_lambda": 0.0,
-        "test_r2": 0.812,
-        "test_rmse_kg_ha": 890,
-        "active": False,
-        "status": "archived",
-        "description": "Baseline purely data-driven model without PDE physics regularization.",
-    },
-]
-
 _INGESTION_PIPELINES_SEED: List[Dict[str, Any]] = [
     {
         "id": "pipe-chirps",
@@ -782,26 +712,6 @@ def list_soil_profiles() -> Optional[List[Dict[str, Any]]]:
                 "saturatedConductivityKs": r["saturated_conductivity_ks"],
                 "alphaVanGenuchten": r["alpha_van_genuchten"],
                 "nVanGenuchten": r["n_van_genuchten"],
-            }
-            for r in rows
-        ]
-    except (SQLAlchemyError, DatabaseUnavailable):
-        return None
-
-
-def list_model_registry() -> Optional[List[Dict[str, Any]]]:
-    try:
-        with _connect() as conn:
-            rows = conn.execute(
-                text("SELECT * FROM model_registry ORDER BY trained_date DESC")
-            ).mappings().all()
-        return [
-            {
-                "version": r["version"], "name": r["name"], "architecture": r["architecture"],
-                "trainedDate": r["trained_date"], "epochs": r["epochs"],
-                "richardsWeightLambda": r["richards_weight_lambda"], "testR2": r["test_r2"],
-                "testRmseKgHa": r["test_rmse_kg_ha"], "active": bool(r["active"]),
-                "status": r["status"], "description": r["description"],
             }
             for r in rows
         ]

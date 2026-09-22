@@ -3,7 +3,7 @@
 Responsibilities:
   - assimilate the extracted public datasets (USDA NASS yields, CHIRPS + NASA
     NEX-GDDP climate) into a clean feature/target matrix,
-  - define the Physics-Informed Neural Network (PDE-consistent residual losses),
+  - define the yield MLP and its local monotonicity regularizer,
   - run the training loop and persist the learned weights.
 
 Public surface:

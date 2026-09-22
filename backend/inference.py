@@ -360,7 +360,8 @@ class PinnInference:
                     irrig_mm = round(min(35.0, max(15.0, deficit)), 1)
             total_irrig += irrig_mm
             
-            # 1D Richards Layer Dynamics
+            # Three-layer bucket water balance. This is a deterministic accounting
+            # model with capped drainage; it is not a numerical unsaturated-flow solver.
             net_infil = precip_mm + irrig_mm
             transp = min(etc * 0.75 * co2_transp_saving, (theta_top - wp * 0.5) * 300.0)
             transp = max(0.0, transp)
@@ -466,10 +467,6 @@ class PinnInference:
             f"Variedad recomendada: Híbrido largo resiliente (GDD {var_cfg['total_gdd']}) bajo escenario {payload.get('scenario', 'SSP3-7.0')}."
         ]
 
-        test_metrics = self.metadata.get("test_metrics", {}) if inference_mode == "pinn" else {}
-        test_mse = test_metrics.get("mse")
-        rmse_bu_acre = float(test_mse) ** 0.5 if test_mse is not None else None
-
         return {
             "id": f"sim-{payload.get('field_id', 'field-01')}-{payload.get('target_year', 2035)}",
             "model_name": self.metadata.get("model", "CeresPINN") if inference_mode == "pinn" else "calibrated-surrogate",
@@ -498,18 +495,6 @@ class PinnInference:
                 "fieldCapacity": fc,
                 "wiltingPoint": wp,
                 "saturation": sat,
-            },
-            "pinn_validation_metrics": {
-                "r2_score": test_metrics.get("r2"),
-                "rmse_bu_acre": round(rmse_bu_acre, 4) if rmse_bu_acre is not None else None,
-                "rmse_kg_ha": round(rmse_bu_acre * 62.77, 1) if rmse_bu_acre is not None else None,
-                "mae_bu_acre": test_metrics.get("mae"),
-                "pde_residual_richards_loss": 0.0028,
-                "boundary_condition_loss": 0.0019,
-                "empirical_nass_loss": 0.0195,
-                "total_loss": 0.0242,
-                "inference_time_ms": 38,
-                "physics_conservation_error_percent": 0.85,
             },
             "alerts": alerts,
             "agronomic_recommendations": recommendations,

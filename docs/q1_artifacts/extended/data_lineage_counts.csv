@@ -1,0 +1,6 @@
+stage,rows,independent_years,transformation
+USDA NASS county-year records,22160,36,numeric cleaning
+annual median targets,36,36,median yield by year
+year-scenario matrix,108,36,replicate each target across 3 SSP templates
+training partition,84,28,grouped random-year split
+test partition,24,8,grouped random-year split

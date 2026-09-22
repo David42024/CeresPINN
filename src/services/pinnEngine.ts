@@ -10,9 +10,11 @@ import {
 import i18next from '../i18n';
 
 /**
- * CeresPINN - Physics-Informed Neural Network Simulation Engine
- * Integrates Richards 1D Soil Water Flow Equation, Priestley-Taylor Evapotranspiration,
- * and CMIP6 climate anomaly downscaling for drought-resilient maize modeling.
+ * Local deterministic fallback for the CeresPINN user interface.
+ *
+ * It combines a three-layer bucket water balance, Priestley-Taylor
+ * evapotranspiration and parameterized CMIP6 anomalies. It does not load the
+ * trained checkpoint and is never accepted as production inference.
  */
 
 // Variety thermal constants (Growing Degree Days to maturity)
@@ -93,9 +95,11 @@ export function calculatePriestleyTaylorETo(
 }
 
 /**
- * Solves 1D Richards Soil Water Movement & Root Uptake using PINN discretizations
+ * Update the three soil-water buckets after infiltration and crop extraction.
+ * Drainage is capped by conductivity and relative saturation; this is an
+ * accounting approximation, not a partial-differential-equation solver.
  */
-function solveRichardsLayerDynamics(
+function updateLayerWaterBalance(
   soil: SoilProfile,
   thetaTop: number,
   thetaMid: number,
@@ -129,7 +133,7 @@ function solveRichardsLayerDynamics(
   const u2 = transpirationMm * r2Frac;
   const u3 = transpirationMm * r3Frac;
 
-  // Layer 1 Infiltration & Drainage (Richards downward flux)
+  // Layer 1 infiltration and capped downward drainage.
   let water1 = thetaTop * L1 + netInfiltrationMm - u1;
   let drainage1 = 0;
   if (water1 > fc * L1) {
@@ -336,8 +340,8 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
     const runoff = totalWaterInflow > 35 ? (totalWaterInflow - 35) * 0.25 : 0;
     const netInfiltration = totalWaterInflow - runoff;
 
-    // Solve Richards Soil Dynamics for this timestep
-    const soilState = solveRichardsLayerDynamics(
+    // Advance the transparent three-layer bucket balance for this timestep.
+    const soilState = updateLayerWaterBalance(
       soil,
       thetaTop,
       thetaMid,
@@ -506,15 +510,6 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
       fieldCapacity: fc,
       wiltingPoint: wp,
       saturation: sat
-    },
-    pinnValidationMetrics: {
-      pdeResidualRichardsLoss: 0.0024 + Math.random() * 0.0012,
-      boundaryConditionLoss: 0.0018 + Math.random() * 0.0009,
-      empiricalNassLoss: 0.0142 + Math.random() * 0.0035,
-      totalLoss: 0.0184 + Math.random() * 0.004,
-      inferenceTimeMs: Math.round(380 + Math.random() * 210),
-      physicsConservationErrorPercent: parseFloat((0.85 + Math.random() * 0.6).toFixed(2)),
-      r2Score: parseFloat((0.92 + Math.random() * 0.04).toFixed(3))
     },
     alerts,
     agronomicRecommendations: recommendations

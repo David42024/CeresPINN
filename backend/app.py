@@ -149,8 +149,8 @@ def model_status() -> Dict[str, Any]:
         "model_name": meta.get("model", "CeresPINN Digital Twin"),
         "status": "ready" if model_ready else "unavailable",
         "backend": "FastAPI",
-        "framework": "PyTorch CeresPINN (Bio-physical Coupled)",
-        "cmip6_source": "NASA NEX-GDDP (5 GCMs)",
+        "framework": "PyTorch MLP with monotonicity regularization",
+        "cmip6_source": "NASA NEX-GDDP-derived climate features",
         "r2_score": test_metrics.get("r2"),
         "rmse_bu_acre": round(float(mse) ** 0.5, 4) if mse is not None else None,
         "rmse_kg_ha": round((float(mse) ** 0.5) * 62.77, 1) if mse is not None else None,
@@ -468,10 +468,10 @@ def list_model_registry() -> List[Dict[str, Any]]:
     current = {
         "version": "v2.5.0-CeresPINN-RealData",
         "name": "CeresPINN v2.5 (checkpoint desplegado)",
-        "architecture": "Physics-Informed Neural Network + balance hídrico y forzamiento CMIP6",
+        "architecture": "MLP con regularización de monotonicidad y forzantes climáticos",
         "trainedDate": str(meta.get("trained_at", ""))[:10] or None,
         "epochs": meta.get("epochs", 0),
-        "richardsWeightLambda": meta.get("training_config", {}).get("loss_physics_weight", 0.0),
+        "monotonicityWeight": meta.get("training_config", {}).get("loss_physics_weight", 0.0),
         "testR2": test_metrics.get("r2", 0.0),
         "testRmseKgHa": round((float(mse) ** 0.5) * 62.77, 1) if mse is not None else 0.0,
         "active": model_ready,
@@ -482,9 +482,9 @@ def list_model_registry() -> List[Dict[str, Any]]:
             else f"Checkpoint sin procedencia real verificada ({meta.get('data_source', 'sin metadata')})."
         ),
     }
-    rows = db.list_model_registry() or []
-    historical = [{**row, "active": False, "status": "archived"} for row in rows if row.get("version") != current["version"]]
-    return [current, *historical] if model_ready else historical
+    # Only expose the deployed checkpoint. Historical registry rows were seeded
+    # demonstrations and are intentionally excluded from a scientific dashboard.
+    return [current] if model_ready else []
 
 
 @app.get("/api/users")

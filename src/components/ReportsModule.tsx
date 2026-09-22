@@ -68,7 +68,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(16, 185, 129); // emerald-500
-      doc.text('Modelado PINN Richards + Clima CMIP6 | Producción de Maíz Resiliente a Sequías', 14, 26);
+      doc.text('Checkpoint PyTorch + Escenario CMIP6 | Simulación exploratoria de maíz', 14, 26);
 
       // Metadata Box
       doc.setTextColor(51, 65, 85);
@@ -99,7 +99,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.setTextColor(15, 23, 42);
       doc.text(`Rendimiento Proyectado: ${kpi.projectedYieldKgHa.toLocaleString()} kg/ha`, 20, 88);
       doc.setTextColor(16, 185, 129); // emerald-500
-      doc.text(`Rango Incertidumbre GCM 95%: ${(kpi.projectedYieldKgHa * 0.92).toLocaleString()} - ${(kpi.projectedYieldKgHa * 1.08).toLocaleString()} kg/ha`, 20, 93);
+      doc.text(`Modelo: ${simulation.modelName} | Fuente: ${simulation.modelDataSource ?? 'sin metadata'}`, 20, 93);
       doc.setTextColor(15, 23, 42); // reset color
       doc.text(`Rendimiento Potencial: ${kpi.potentialYieldKgHa.toLocaleString()} kg/ha`, 20, 100);
       doc.text(`Pérdida por Sequía: ${kpi.yieldLossDueToDroughtPercent}%`, 20, 107);
@@ -228,7 +228,8 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         { 'Parámetro': 'Agua Total Consumida ET (mm)', 'Valor': kpi.totalWaterConsumedMm },
         { 'Parámetro': 'Productividad del Agua (kg/m³)', 'Valor': kpi.waterProductivityKgM3 },
         { 'Parámetro': 'Margen Económico Estimado ($/ha)', 'Valor': kpi.economicReturnUsdHa },
-        { 'Parámetro': 'PINN PDE Richards Loss', 'Valor': simulation.pinnValidationMetrics.pdeResidualRichardsLoss }
+        { 'Parámetro': 'Modelo desplegado', 'Valor': simulation.modelName },
+        { 'Parámetro': 'Fuente de entrenamiento', 'Valor': simulation.modelDataSource ?? 'sin metadata' }
       ];
       const kpiSheet = XLSX.utils.json_to_sheet(kpiRows);
       XLSX.utils.book_append_sheet(workbook, kpiSheet, 'Resumen_KPIs');

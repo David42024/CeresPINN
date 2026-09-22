@@ -22,7 +22,7 @@ test('scenario tools call the same backend PINN service', () => {
   for (const component of [
     'src/components/WhatIfStudio.tsx',
     'src/components/AdaptationPanel.tsx',
-    'src/components/VulnerabilityMap.tsx',
+    'src/components/FieldScenarioComparison.tsx',
   ]) {
     const contents = source(component);
     assert.match(contents, /import \{ simulateScenario \} from ['"]\.\.\/services\/api['"]/);
@@ -50,4 +50,30 @@ test('chatbot uses the shared backend client and never embeds a Gemini key in th
   assert.match(api, /`\$\{API_BASE\}\/api\/chatbot`/);
   assert.match(api, /CHATBOT_TIMEOUT_MS/);
   assert.doesNotMatch(widget + api, /VITE_GEMINI_API_KEY|GEMINI_API_KEY/);
+});
+
+test('production UI and API contract omit legacy equation metrics and synthetic MLOps curves', () => {
+  const files = [
+    'backend/inference.py',
+    'backend/app.py',
+    'src/services/api.ts',
+    'src/services/pinnEngine.ts',
+    'src/types/index.ts',
+    'src/components/MLOpsDashboard.tsx',
+    'src/components/ReportsModule.tsx',
+  ];
+  const contents = files.map(source).join('\n');
+
+  assert.doesNotMatch(contents, /pde_residual_richards_loss|boundary_condition_loss|physics_conservation_error_percent/i);
+  assert.doesNotMatch(contents, /pdeResidualRichardsLoss|boundaryConditionLoss|physicsConservationErrorPercent/);
+  assert.doesNotMatch(contents, /Richards|\bPDE\b|\bEDP\b/i);
+  assert.doesNotMatch(contents, /lossHistoryData|epoch:\s*1000|boundaryLoss|pdeLoss/);
+});
+
+test('field comparison is explicitly exploratory rather than spatial validation', () => {
+  const comparison = source('src/components/FieldScenarioComparison.tsx');
+
+  assert.match(comparison, /no constituye una evaluación espacial validada/);
+  assert.match(comparison, /Comparación Demostrativa de Campos/);
+  assert.doesNotMatch(comparison, /Mapa de Vulnerabilidad|Recomendaciones de Política/);
 });

@@ -1,0 +1,5 @@
+field_id,fc,wp,sat,ks_mm_day,origin
+field-bajio-02,0.38,0.22,0.52,35.0,hard-coded demonstration constant
+field-iowa-01,0.32,0.16,0.48,85.0,hard-coded demonstration constant
+field-pampas-03,0.28,0.13,0.46,120.0,hard-coded demonstration constant
+field-ebro-04,0.22,0.09,0.41,240.0,hard-coded demonstration constant

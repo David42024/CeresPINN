@@ -1,0 +1,9 @@
+condition,feature,rmse_bu_acre,rmse_change_pct,mean_abs_prediction_change_bu_acre,repetitions
+Gaussian noise (sigma=5% train SD),all non-constant features,11.48696493727304,0.5062675993854349,0.9880593419075012,1000
+single-feature mean imputation,year,32.93944522837124,188.2067382268782,25.86273193359375,1
+single-feature mean imputation,temp_anomaly_c,11.703106929935897,2.397422057735743,1.614725112915039,1
+single-feature mean imputation,precip_anomaly_pct,11.48919923838163,0.525816824645875,0.753376305103302,1
+single-feature mean imputation,co2_ppm,11.209187865361097,-1.9241687147331654,0.5849758982658386,1
+single-feature mean imputation,heatwave_risk,11.370342242061191,-0.5141335141489289,0.33503851294517517,1
+single-feature mean imputation,seasonal_precip_mm,10.875824499250584,-4.840962477497889,6.077724456787109,1
+single-feature mean imputation,seasonal_cdd,11.429103091420817,0.0,0.0,1
