@@ -101,6 +101,8 @@ provenance, limitations and checksums are documented in `data/README.md` and
 ```bash
 python -m pip install --requirement backend/requirements.txt pytest
 python -m pytest backend/tests -q -p no:cacheprovider
+python -m pip install --requirement requirements-streamlit.txt
+python -m pytest tests/test_streamlit_app.py -q -p no:cacheprovider
 npm ci
 npm run lint
 npm run test:pinn-wiring
