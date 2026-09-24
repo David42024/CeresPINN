@@ -217,6 +217,45 @@ def test_chatbot_provider_failure_is_sanitized(test_client, monkeypatch):
     assert "do-not-leak-this" not in resp.text
 
 
+def test_chatbot_langflow_requires_only_chatbot_flow(test_client, monkeypatch):
+    import backend.app as app_mod
+
+    captured = {}
+    monkeypatch.setenv("LANGFLOW_BASE_URL", "https://langflow.example.test")
+    monkeypatch.setenv("LANGFLOW_API_KEY", "test-langflow-key")
+    monkeypatch.setenv("LANGFLOW_CHATBOT_FLOW_ID", "chatbot-flow")
+
+    def fake_run(**kwargs):
+        captured.update(kwargs)
+        return "Respuesta visual"
+
+    monkeypatch.setattr(app_mod.langflow_client, "run_chatbot_flow", fake_run)
+    resp = test_client.post(
+        "/api/chatbot",
+        json={"message": "¿Cuál es el rendimiento?", "context": {"projectedYieldKgHa": 8778}},
+    )
+    assert resp.status_code == 200
+    assert resp.json()["reply"] == "Respuesta visual"
+    assert "8778" in captured["input_value"]
+    assert captured["config"].chatbot_flow_id == "chatbot-flow"
+
+
+def test_report_summary_does_not_depend_on_langflow(test_client, monkeypatch):
+    import backend.app as app_mod
+
+    monkeypatch.setenv("LANGFLOW_BASE_URL", "https://langflow.example.test")
+    monkeypatch.setenv("LANGFLOW_API_KEY", "test-langflow-key")
+    monkeypatch.setenv("LANGFLOW_CHATBOT_FLOW_ID", "chatbot-flow")
+    monkeypatch.setenv("OPENAI_API_KEY", "test-openai-key")
+    monkeypatch.setattr(app_mod, "_generate_llm_reply", lambda **_: "Resumen directo")
+    resp = test_client.post(
+        "/api/reports/ai-summary",
+        json={"scenario": "SSP2-4.5", "simulation_summary": {"yield": 8000}},
+    )
+    assert resp.status_code == 200
+    assert resp.json()["summary"] == "Resumen directo"
+
+
 def test_chatbot_status_never_exposes_key(test_client, monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "top-secret")
     monkeypatch.setenv("OPENAI_MODEL", "gpt-5-nano")
