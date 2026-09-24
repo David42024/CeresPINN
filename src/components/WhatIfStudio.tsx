@@ -231,7 +231,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
           </div>
           <div>
             <strong className="text-emerald-300 block font-semibold">Resolviendo Tensores de EDPs Acopladas PINN...</strong>
-            <span className="text-[11px] text-slate-300">Integrando flujo de Richards en el suelo (0-100cm) + transpiración Penman-Monteith bajo forzamiento CMIP6 para los 3 escenarios.</span>
+            <span className="text-[11px] text-slate-300">Comparando el balance hídrico demostrativo de 0-100 cm y la evapotranspiración parametrizada bajo tres escenarios climáticos.</span>
           </div>
         </div>
       )}

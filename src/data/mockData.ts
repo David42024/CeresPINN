@@ -1,4 +1,4 @@
-import { Field, IngestionPipeline, ModelRegistryEntry, SimulationConfig, SoilProfile, User } from '../types';
+import { Field, IngestionPipeline, SimulationConfig, SoilProfile, User } from '../types';
 
 export const SOIL_PROFILES: Record<string, SoilProfile> = {
   clay_loam: {
@@ -239,48 +239,6 @@ export const DEMO_USERS: User[] = [
       highContrast3D: false,
       emailAlerts: false
     }
-  }
-];
-
-export const MODEL_REGISTRY_DATA: ModelRegistryEntry[] = [
-  {
-    version: 'v2.4.1-PINN-Ensemble',
-    name: 'PINN Ceres-Richards V2.4 (Active Production)',
-    architecture: 'Physics-Informed Deep ResNet + Automatic Differentiation PDE Loss',
-    trainedDate: '2026-08-15',
-    epochs: 15000,
-    richardsWeightLambda: 0.45,
-    testR2: 0.942,
-    testRmseKgHa: 385,
-    active: true,
-    status: 'production',
-    description: 'Surrogate neural model enforcing 1D unsaturated Richards flow conservation & Priestley-Taylor ET constraints.'
-  },
-  {
-    version: 'v2.3.0-PINN-Richards',
-    name: 'PINN Richards Single-Soil V2.3',
-    architecture: 'Physics-Informed MLP (6 layers x 256 units, tanh activation)',
-    trainedDate: '2026-06-20',
-    epochs: 12000,
-    richardsWeightLambda: 0.35,
-    testR2: 0.918,
-    testRmseKgHa: 490,
-    active: false,
-    status: 'staging',
-    description: 'Calibrated on USDA NASS 2000-2025 multi-state corn records.'
-  },
-  {
-    version: 'v1.8.2-Vanilla-LSTM',
-    name: 'Empirical Baseline (Non-Physics LSTM)',
-    architecture: 'Bidirectional LSTM + Dense Output',
-    trainedDate: '2026-02-10',
-    epochs: 8000,
-    richardsWeightLambda: 0.0,
-    testR2: 0.812,
-    testRmseKgHa: 890,
-    active: false,
-    status: 'archived',
-    description: 'Baseline purely data-driven model without PDE physics regularization.'
   }
 ];
 

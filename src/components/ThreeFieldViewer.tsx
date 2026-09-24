@@ -22,7 +22,7 @@ interface ThreeFieldViewerProps {
   field?: any;
   simulation?: SimulationResult;
   currentDayIndex: number;
-  onChangeDayIndex: Dispatch<SetStateAction<number>> | ((dayIndex: number) => void);
+  onChangeDayIndex: Dispatch<SetStateAction<number>>;
 }
 
 type VisualLayerMode = 'soil_moisture' | 'biomass' | 'water_stress' | 'true_color';

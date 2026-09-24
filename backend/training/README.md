@@ -1,6 +1,6 @@
-# CeresPINN — Entrenamiento del modelo (PINN de maíz)
+# CeresPINN — Entrenamiento del modelo de rendimiento de maíz
 
-Este módulo (`backend/training/`) construye el PINN que aprende rendimiento de maíz
+Este módulo (`backend/training/`) construye la MLP que aprende rendimiento de maíz
 resiliente a sequía, condicionado a escenarios climáticos CMIP6 (SSP1-2.6, SSP3-7.0,
 SSP5-8.5), usando los datasets públicos extraídos por `backend/data/`.
 
@@ -10,7 +10,7 @@ SSP5-8.5), usando los datasets públicos extraídos por `backend/data/`.
 backend/training/
 ├── config.py     # Hiperparámetros + rutas (todo sobreescribible por env)
 ├── dataset.py    # Asimila NASS (yield) + CHIRPS/NEX-GDDP (clima) -> feature/target
-├── pinn.py       # CeresPINN (red 2 heads) + pérdida física (conservación de agua)
+├── pinn.py       # CeresPINN (red 2 heads) + regularización de monotonicidad
 ├── train.py      # Loop de entrenamiento + persistence (.pt + metadata.json)
 └── README.md
 ```
@@ -18,12 +18,14 @@ backend/training/
 - **Modelo** `CeresPINN`: MLP multicapa con dos salidas:
   - `yield_head` → rendimiento predicho (bu/acre)
   - `physics_head` → proxy de disponibilidad hídrica en [0,1] (via sigmoid)
-- **Pérdida física** (`physics_loss`): además del MSE de datos, penaliza
+- **Regularizador de monotonicidad** (`physics_loss`, nombre histórico): además del MSE de datos, penaliza
   - que el rendimiento aumente con la anomalía térmica (no físico),
   - que el rendimiento disminuya con más precipitación,
-  - disponibilidad hídrica fuera de [0,1].
-  → Incorpora el **Richards/agua-suelo** como prior de conservación simple; un bucle
-  completo de residuos PDE es una extensión directa de esta función.
+  - la salida auxiliar fuera de [0,1], aunque esta penalización es redundante porque la salida usa sigmoid.
+
+El regularizador actúa sobre derivadas locales de la salida de rendimiento respecto
+de entradas normalizadas. No implementa una ecuación gobernante ni demuestra
+conservación de agua. La cabeza auxiliar no dispone de un objetivo hídrico observado.
 
 ## Configuración del entorno
 

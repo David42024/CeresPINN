@@ -1,24 +1,21 @@
-"""Physics-Informed Neural Network for drought-resilient maize yield.
+"""Yield MLP with local agronomic monotonicity regularization.
 
 Architecture: a multi-layer perceptron with two heads
   - `yield_head` : predicted maize yield (bu/acre)            [supervised]
-  - `physics_head`: predicted "physics state" (water-stress proxy) [regularized]
+  - `physics_head`: bounded auxiliary output retained for checkpoint compatibility
 
-Physics-informed loss
-  A PINN enforces governing relations, not just data fit. This crop-twins domain is
-  governed by water availability. We encode two cheap, physically defensible priors:
+Regularization
+  The implementation encodes two local sign expectations and one range check:
 
-  1. Monotonicity prior (friction factor): a cell's yield must not *increase* with
-     its own water-stress anomaly (d y/d stress <= 0). Enforced as a soft penalty on
-     the Jacobian of the physics head w.r.t. the stress feature.
-     derivative  dyield/dprecip >= 0  (more water never hurts within reason).
+  1. Penalize positive d(yield)/d(temperature anomaly).
+  2. Penalize negative d(yield)/d(seasonal precipitation).
 
-  2. Conservation / feasibility prior: the physics head (a normalized 0..1 water
-     availability proxy) is driven through a sigmoid to live in [0,1]; the model is
-     penalized for predicting availability < 0 or > 1 (soft range penalty).
+  3. Check that the auxiliary sigmoid output remains in [0,1]. This term is
+     structurally zero because the sigmoid already guarantees the range.
 
-These are intentionally lightweight so the module runs on CPU; swapping in a full
-Richards residual loop is a drop-in extension of `physics_loss`.
+These terms are not a governing-equation residual and do not establish mass
+conservation. The legacy class/function names are retained to load the published
+checkpoint without changing its state-dict keys.
 """
 from __future__ import annotations
 

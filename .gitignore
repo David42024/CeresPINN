@@ -9,6 +9,7 @@ coverage/
 
 # Python
 __pycache__/
+.pytest_cache/
 *.py[cod]
 .venv*/
 .venv-mllab/
@@ -16,7 +17,16 @@ __pycache__/
 # Extracted scientific data (downloads are reproducible)
 backend/data/raw/
 backend/data/processed/
+backend/data/*.db
 data/
+
+# Reproducibility package: these processed, non-secret tables are the exact
+# inputs consumed by the published checkpoint and the Q1 audit scripts.
+!data/
+data/*
+!data/README.md
+!data/cerespinn_training_iowa.csv
+!data/cerespinn_training_preprocessed.csv
 
 # Keep arbitrary training artifacts out of Git, but ship the active production
 # checkpoint and its exact normalization metadata with the Render image.

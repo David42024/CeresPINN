@@ -57,7 +57,8 @@ import { ValidationReport } from './components/ValidationReport';
 import { LoginScreen } from './components/LoginScreen';
 import { ChatbotWidget } from './components/ChatbotWidget';
 import { AdaptationPanel } from './components/AdaptationPanel';
-import { VulnerabilityMap } from './components/VulnerabilityMap';
+import { FieldScenarioComparison } from './components/FieldScenarioComparison';
+import { ScientificScopeNotice } from './components/ScientificScopeNotice';
 
 type ActiveTab = 
   | 'twin3d' 
@@ -70,7 +71,7 @@ type ActiveTab =
   | 'pipelines' 
   | 'users'
   | 'validation'
-  | 'vulnerability';
+  | 'field-comparison';
 
 type RuntimeModelStatus = {
   r2Score?: number;
@@ -479,14 +480,14 @@ export const App: React.FC = () => {
           </button>
 
           <button
-            id="tab-btn-vulnerability"
-            onClick={() => setActiveTab('vulnerability')}
+            id="tab-btn-field-comparison"
+            onClick={() => setActiveTab('field-comparison')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'vulnerability' ? 'bg-slate-100 dark:bg-slate-800 text-rose-600 dark:text-rose-400 border-b-2 border-rose-500 dark:border-rose-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'field-comparison' ? 'bg-slate-100 dark:bg-slate-800 text-rose-600 dark:text-rose-400 border-b-2 border-rose-500 dark:border-rose-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
             <AlertTriangle className="w-3.5 h-3.5" />
-            Vulnerabilidad
+            Comparador de campos
           </button>
         </div>
       </header>
@@ -560,6 +561,8 @@ export const App: React.FC = () => {
           </div>
         </div>
 
+        <ScientificScopeNotice />
+
         {/* TAB 1: 3D Twin & Phenology */}
         {activeTab === 'twin3d' && (
           <div className="space-y-6">
@@ -574,7 +577,7 @@ export const App: React.FC = () => {
                     </h2>
                   </div>
                   <p className="text-xs text-slate-300 max-w-3xl">
-                    <strong>¿Para qué sirve?</strong> Visualiza la evolución del cultivo en 3D acoplada a la física de Richards (3 capas de suelo) y forzamiento climático CMIP6.
+                    <strong>¿Para qué sirve?</strong> Visualiza la evolución del cultivo con un balance hídrico demostrativo de tres capas y forzamiento climático parametrizado.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -880,9 +883,9 @@ export const App: React.FC = () => {
           <ValidationReport />
         )}
 
-        {/* TAB 11: Vulnerability Map */}
-        {activeTab === 'vulnerability' && (
-          <VulnerabilityMap
+        {/* TAB 11: exploratory field/scenario comparison */}
+        {activeTab === 'field-comparison' && (
+          <FieldScenarioComparison
             fields={fields}
             currentConfig={simulationConfig}
           />

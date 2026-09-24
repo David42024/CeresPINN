@@ -29,10 +29,19 @@
     "kpiLai": "Índice de Área Foliar (LAI)",
     "kpiSoilMoisture": "Humedad Suelo (0-30cm)",
     "kpiCwsi": "Índice de Estrés Hídrico (CWSI)",
-    "footerTitle": "CeresPINN: Physics-Informed Neural Network (Richards + Priestley-Taylor + CMIP6 Downscaling)",
+    "footerTitle": "CeresPINN: MLP regularizada por monotonicidad + balance hídrico demostrativo + CMIP6",
     "footerSubtitle": "Diseñado para Investigación Agronómica y Producción de Maíz Resiliente a Sequías",
     "langSelectorTitle": "Seleccionar idioma",
     "logout": "Cerrar sesión"
+  },
+  "scientificScope": {
+    "title": "Ética, equidad y alcance de decisión",
+    "badge": "Solo investigación exploratoria",
+    "summary": "CeresPINN no está calibrado a escala de condado y no identifica de forma validada territorios con mayor vulnerabilidad agrícola.",
+    "limitSpatial": "Las comparaciones entre campos no son mapas ni rankings de vulnerabilidad territorial.",
+    "limitSoil": "El perfil edáfico modifica el balance hídrico diario, pero no entra directamente en la red neuronal de rendimiento.",
+    "prohibited": "No usar para políticas públicas, asignación de agua, seguros, crédito, financiamiento o priorización territorial.",
+    "required": "Antes de esos usos se requieren datos espaciales reales, validación geográfica independiente, representatividad e incertidumbre explícita."
   },
   "login": {
     "title": "Inicia sesión para acceder a tu gemelo digital",
@@ -55,7 +64,7 @@
     "marginDelta": "Margen Δ",
     "footerNote": "Todas las métricas se calculan aplicando el motor PINN local. Los resultados reflejan el escenario climático activo ({{scenario}}) y el campo seleccionado ({{field}})."
   },
-  "vulnerabilityMap": {
+  "fieldComparison": {
     "activeScenario": "Escenario activo:",
     "fieldRegion": "Campo / Región",
     "yieldKgHa": "Rendimiento (kg/ha)",
@@ -63,8 +72,8 @@
     "maxCwsi": "CWSI Máx.",
     "criticalDays": "Días Críticos",
     "resilience": "Resiliencia",
-    "riskLevel": "Nivel Riesgo",
-    "policyNote": "Las recomendaciones se generan automáticamente a partir de los índices de resiliencia y pérdida de rendimiento calculados por CeresPINN bajo el escenario activo."
+    "indicatorBand": "Banda exploratoria",
+    "policyNote": "Vista exploratoria: las bandas se derivan de umbrales internos de CWSI y pérdida simulada. No representan un mapa validado ni recomendaciones para decisiones productivas."
   },
   "chatbot": {
     "title": "Asistente CeresPINN",
@@ -122,7 +131,7 @@
     "stageLabel": "Etapa:",
     "waterStressBadge": "Estrés Hídrico:",
     "layerMoistureBtn": "Humedad Suelo",
-    "layerMoistureTitle": "Humedad del Suelo (Richards PDE)",
+    "layerMoistureTitle": "Humedad del Suelo (balance de tres capas)",
     "layerBiomassBtn": "Biomasa",
     "layerBiomassTitle": "Biomasa y Altura de Dosel",
     "layerStressBtn": "Estrés CWSI",
@@ -151,8 +160,8 @@
   },
   "simulationConfig": {
     "title": "Configuración de Simulación & Forzamiento PINN",
-    "subtitle1": "Parámetros climáticos CMIP6, fenología varietal y balance hídrico Richards para",
-    "btnExecuteLoading": "Ejecutando PINN (Richards + ET)...",
+    "subtitle1": "Parámetros climáticos CMIP6, fenología varietal y balance hídrico por capas para",
+    "btnExecuteLoading": "Ejecutando checkpoint y simulación estacional...",
     "btnExecuteLabel": "Ejecutar Simulación Digital Twin",
     "tabClimate": "Escenarios Climáticos CMIP6",
     "tabCrop": "Variedad & Calendario",
@@ -214,7 +223,7 @@
     "drySoil": "Suelo Seco (10%)",
     "moderateMoisture": "Humedad Moderada (50%)",
     "fieldCap": "Capacidad de Campo (100%)",
-    "pinnEngineInfo1": "El motor de Physics-Informed Neural Network (PINN) calcula el tensor de flujo 1D de Richards con K(h) según la curva de retención de Van Genuchten del suelo",
+    "pinnEngineInfo1": "El simulador actualiza tres depósitos de humedad mediante infiltración, extracción y drenaje limitado por las propiedades demostrativas del suelo",
     "pinnEngineInfo2": "(α =",
     "pinnEngineInfo3": ", n =",
     "pinnEngineInfo4": ")."
@@ -300,7 +309,7 @@
     "btnSendEmail": "Enviar Reporte por Email",
     "btnEmailSent": "¡Reporte Enviado con Éxito!",
     "pdfHeader1": "CeresPINN - INFORME TÉCNICO DE GEMELO DIGITAL",
-    "pdfHeader2": "Modelado PINN Richards + Clima CMIP6 | Producción de Maíz Resiliente a Sequías",
+    "pdfHeader2": "Checkpoint PyTorch + Escenario CMIP6 | Simulación exploratoria de maíz",
     "pdfSec1": "1. INFORMACIÓN DE LA PARCELA Y ESCENARIO",
     "pdfField": "Campo / Parcela:",
     "pdfLocation": "Ubicación:",
@@ -370,36 +379,22 @@
     "xlsxKpiWater": "Agua Total Consumida ET (mm)",
     "xlsxKpiProd": "Productividad del Agua (kg/m³)",
     "xlsxKpiMargin": "Margen Económico Estimado ($/ha)",
-    "xlsxKpiPinn": "PINN PDE Richards Loss"
+    "xlsxModelSource": "Fuente del modelo"
   },
   "mlOpsDashboard": {
-    "title": "Administración del Modelo PINN & MLOps Registry",
-    "subtitle": "Supervisión de pérdidas PDE (Richards flow residual), re-entrenamiento continuo y versionado de pesos neuronales.",
-    "engineBadge": "Motor de Inferencia: PyTorch / LibTorch C++ JIT",
-    "lossChartTitle": "Descomposición de Funciones de Pérdida PINN (Training Convergence)",
-    "retrainTitle": "Re-entrenar Red Neuronal PINN",
-    "richardsWeight": "Peso Regularizador Richards (λ_PDE)",
-    "learningRate": "Tasa de Aprendizaje (Learning Rate η)",
-    "learningRateFast": "0.005 (Rápido)",
-    "learningRateStd": "0.001 (Estándar AdamW)",
-    "learningRateFine": "0.0001 (Fine-Tuning Fino)",
-    "batchSize": "Tamaño de Batch",
-    "batchSize64Opt": "64 (Óptimo GPU)",
-    "optimizingTensors": "Optimizando Tensores PyTorch...",
-    "btnStartRetrain": "Iniciar Re-entrenamiento PINN",
-    "btnTrainingEpochs": "Entrenando Épocas...",
-    "modelRegistry": "Registro de Versiones (Model Registry)",
-    "loadingModels": "Cargando registro de modelos del backend...",
+    "title": "Modelo desplegado y metadata MLOps",
+    "subtitle": "Métricas y configuración leídas exclusivamente del checkpoint activo.",
+    "verifiedOnly": "Solo datos verificados",
+    "loadingModels": "Cargando metadata del checkpoint...",
+    "unavailable": "El backend no confirmó un checkpoint activo.",
     "activeProd": "Activo en Producción",
     "r2Test": "R² Test",
     "rmse": "RMSE",
     "epochs": "Épocas",
-    "activateBtn": "Activar",
-    "epochsLabel": "Épocas",
-    "totalLoss": "Loss Total L_total",
-    "pdeLoss": "Residual PDE Richards (λ·L_pde)",
-    "dataLoss": "Datos Empíricos NASS (L_data)",
-    "bcLoss": "Cond. Contorno (L_bc)"
+    "monotonicityWeight": "Peso de monotonicidad",
+    "trainedAt": "Entrenado",
+    "architecture": "Arquitectura",
+    "noSyntheticCurves": "Las curvas sintéticas y los controles de reentrenamiento fueron retirados; este panel es de solo lectura."
   },
   "dataPipelinesView": {
     "title": "Pipelines de Ingesta y Calibración de Datos Públicos",
@@ -483,7 +478,7 @@
     "ensembleModels": "modelos"
   },
   "simConfig": {
-    "executeLoading": "Ejecutando PINN (Richards + ET)...",
+    "executeLoading": "Ejecutando checkpoint y simulación estacional...",
     "executeButton": "Ejecutar Simulación Digital Twin",
     "scenarioSustainable": "Desarrollo sostenible con reducción agresiva de emisiones.",
     "scenarioRivalry": "Rivalidad regional con políticas climáticas fragmentadas.",

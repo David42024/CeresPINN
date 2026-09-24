@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "description": "Immutable inputs for the CeresPINN Q1 reproducibility package",
+  "integrity_basis": "SHA-256 and byte counts after canonical CRLF-to-LF normalization for text files",
+  "files": [
+    {
+      "path": "data/cerespinn_training_iowa.csv",
+      "sha256": "f14535062e070a83372fc5c2a7ad8c393b0e472073aacc46d585f63aa24608f8",
+      "bytes": 5262885,
+      "data_rows": 66480
+    },
+    {
+      "path": "data/cerespinn_training_preprocessed.csv",
+      "sha256": "d107768e166c151cf906fe6a9596f8748d03ef66d80a6a65d61d68817875ab10",
+      "bytes": 8086099,
+      "data_rows": 66480
+    },
+    {
+      "path": "backend/models/cerespinn_pinn.pt",
+      "sha256": "600f4a2bfd8c8f3a4ce08e623cebed4087d64bae341ebd5fe71c32507abde7e4",
+      "bytes": 258098
+    },
+    {
+      "path": "backend/models/cerespinn_metadata.json",
+      "sha256": "b6b62a411a7c3ec79fa93dfdd0f8e498b1ec92345ba5cdd25c2c7394088c02c4",
+      "bytes": 4937
+    }
+  ],
+  "generated_outputs": [
+    "docs/q1_artifacts/q1_statistics.json",
+    "docs/q1_artifacts/hindcast_independent_years.csv",
+    "docs/q1_artifacts/same_split_baseline_comparison.csv",
+    "docs/q1_artifacts/robustness_results.csv",
+    "docs/q1_artifacts/extended/extended_audit.json",
+    "docs/q1_artifacts/temporal/temporal_validation_1990_2017_to_2018_2025.json",
+    "docs/q1_artifacts/temporal/temporal_predictions_2018_2025.csv",
+    "docs/q1_artifacts/temporal/temporal_seed_metrics.csv"
+  ]
+}

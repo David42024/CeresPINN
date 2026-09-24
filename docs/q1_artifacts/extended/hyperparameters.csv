@@ -1,0 +1,18 @@
+parameter,value
+input_features,7
+hidden_layers,4
+hidden_units_each,128
+hidden_activation,tanh
+dropout,0.05
+yield_head,128->64(ReLU)->1
+physics_head,128->32(ReLU)->1(Sigmoid)
+optimizer,Adam
+learning_rate,0.001
+adam_weight_decay,1e-05
+manual_l2_lambda,0.0001
+lambda_monotonicity,0.5
+batch_size,64
+epochs,300
+seed,42
+early_stopping,False
+normalization,"feature z-score and target min-max, train only"

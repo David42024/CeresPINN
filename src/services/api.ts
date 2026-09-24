@@ -53,6 +53,12 @@ const assertRemotePinnPayload = (payload: any) => {
   if (payload?.model_uses_real_data !== true) {
     throw new Error(`Render returned data_source=${payload?.model_data_source ?? 'missing'}; USDA NASS + NASA NEX-GDDP checkpoint required.`);
   }
+  if (
+    payload?.scientific_scope?.use_classification !== 'exploratory_research_only'
+    || payload?.scientific_scope?.territorial_prioritization_supported !== false
+  ) {
+    throw new Error('Render response is missing the required exploratory-use decision scope.');
+  }
   const requiredNumbers = [
     'projected_yield_kg_ha',
     'potential_yield_kg_ha',
@@ -121,6 +127,19 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
     modelName: response?.model_name ?? 'CeresPINN',
     modelDataSource: response?.model_data_source,
     modelUsesRealData: response?.model_uses_real_data === true,
+    scientificScope: response?.scientific_scope ? {
+      useClassification: 'exploratory_research_only',
+      spatialCalibration: response.scientific_scope.spatial_calibration === true,
+      countyLevelValidation: response.scientific_scope.county_level_validation === true,
+      soilAffectsYieldNetwork: response.scientific_scope.soil_affects_yield_network === true,
+      territorialPrioritizationSupported: response.scientific_scope.territorial_prioritization_supported === true,
+      prohibitedDecisionUses: Array.isArray(response.scientific_scope.prohibited_decision_uses)
+        ? response.scientific_scope.prohibited_decision_uses
+        : [],
+      requiredBeforeDecisionUse: Array.isArray(response.scientific_scope.required_before_decision_use)
+        ? response.scientific_scope.required_before_decision_use
+        : [],
+    } : undefined,
     config,
     fieldName: field.name,
     fieldLocation: `${field.locationName}, ${field.country}`,
@@ -176,15 +195,6 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
       fieldCapacity: field.soilProfile.fieldCapacity,
       wiltingPoint: field.soilProfile.wiltingPoint,
       saturation: field.soilProfile.saturation,
-    },
-    pinnValidationMetrics: {
-      pdeResidualRichardsLoss: safeNumber(response?.pinn_validation_metrics?.pde_residual_richards_loss, 0.003),
-      boundaryConditionLoss: safeNumber(response?.pinn_validation_metrics?.boundary_condition_loss, 0.002),
-      empiricalNassLoss: safeNumber(response?.pinn_validation_metrics?.empirical_nass_loss, 0.021),
-      totalLoss: safeNumber(response?.pinn_validation_metrics?.total_loss, 0.028),
-      inferenceTimeMs: safeNumber(response?.pinn_validation_metrics?.inference_time_ms, 420),
-      physicsConservationErrorPercent: safeNumber(response?.pinn_validation_metrics?.physics_conservation_error_percent, 1.2),
-      r2Score: safeNumber(response?.pinn_validation_metrics?.r2_score, 0.91),
     },
     alerts: Array.isArray(response?.alerts) ? response.alerts : [],
     agronomicRecommendations: Array.isArray(response?.agronomic_recommendations) ? response.agronomic_recommendations : [],

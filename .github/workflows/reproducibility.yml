@@ -1,0 +1,80 @@
+name: Reproducibility
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  scientific-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-repro.txt
+
+      - name: Install pinned scientific dependencies
+        run: python -m pip install --requirement requirements-repro.txt
+
+      - name: Reproduce Q1 evidence and prospective validation
+        run: python scripts/reproduce.py
+
+      - name: Upload regenerated evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cerespinn-q1-evidence
+          path: docs/q1_artifacts/
+          if-no-files-found: error
+
+  frontend-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run lint
+
+      - name: Validate model wiring
+        run: npm run test:pinn-wiring
+
+      - name: Build production frontend
+        run: npm run build
+
+  streamlit-behavior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-streamlit.txt
+
+      - name: Install Streamlit and test dependencies
+        run: python -m pip install --requirement requirements-streamlit.txt
+
+      - name: Validate Streamlit behavior
+        run: python -m pytest tests/test_streamlit_app.py -q -p no:cacheprovider

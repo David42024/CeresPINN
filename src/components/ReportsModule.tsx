@@ -68,7 +68,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(16, 185, 129); // emerald-500
-      doc.text('Modelado PINN Richards + Clima CMIP6 | Producción de Maíz Resiliente a Sequías', 14, 26);
+      doc.text('Checkpoint PyTorch + Escenario CMIP6 | Simulación exploratoria de maíz', 14, 26);
 
       // Metadata Box
       doc.setTextColor(51, 65, 85);
@@ -99,7 +99,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.setTextColor(15, 23, 42);
       doc.text(`Rendimiento Proyectado: ${kpi.projectedYieldKgHa.toLocaleString()} kg/ha`, 20, 88);
       doc.setTextColor(16, 185, 129); // emerald-500
-      doc.text(`Rango Incertidumbre GCM 95%: ${(kpi.projectedYieldKgHa * 0.92).toLocaleString()} - ${(kpi.projectedYieldKgHa * 1.08).toLocaleString()} kg/ha`, 20, 93);
+      doc.text(`Modelo: ${simulation.modelName} | Fuente: ${simulation.modelDataSource ?? 'sin metadata'}`, 20, 93);
       doc.setTextColor(15, 23, 42); // reset color
       doc.text(`Rendimiento Potencial: ${kpi.potentialYieldKgHa.toLocaleString()} kg/ha`, 20, 100);
       doc.text(`Pérdida por Sequía: ${kpi.yieldLossDueToDroughtPercent}%`, 20, 107);
@@ -160,6 +160,29 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         doc.text(String(d.cwsi), 145, yOffset + 4.5);
         doc.text(String(d.transpirationMm + d.evaporationMm), 175, yOffset + 4.5);
         yOffset += 6;
+      });
+
+      // Scientific scope is deliberately exported with every report so the
+      // simulation cannot be detached from its decision-use limitations.
+      doc.addPage();
+      doc.setTextColor(51, 65, 85);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text('5. ÉTICA, EQUIDAD Y ALCANCE DE DECISIÓN', 14, 22);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      const scopeParagraphs = [
+        'USO AUTORIZADO: investigación y exploración de escenarios.',
+        'CeresPINN no está calibrado a escala de condado y no identifica de forma validada territorios con mayor vulnerabilidad agrícola.',
+        'El perfil edáfico modifica la dinámica hídrica diaria, pero no es una entrada directa de la red neuronal que calcula el rendimiento.',
+        'No usar estas salidas para políticas públicas, asignación de agua, seguros, crédito, financiamiento ni priorización territorial.',
+        'Antes de cualquier uso decisional se requieren datos espaciales reales, validación geográfica independiente, análisis de representatividad y cuantificación transparente de incertidumbre.',
+      ];
+      let scopeY = 34;
+      scopeParagraphs.forEach(paragraph => {
+        const lines = doc.splitTextToSize(paragraph, 178);
+        doc.text(lines, 16, scopeY);
+        scopeY += lines.length * 6 + 5;
       });
 
       // Footer
@@ -228,10 +251,23 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         { 'Parámetro': 'Agua Total Consumida ET (mm)', 'Valor': kpi.totalWaterConsumedMm },
         { 'Parámetro': 'Productividad del Agua (kg/m³)', 'Valor': kpi.waterProductivityKgM3 },
         { 'Parámetro': 'Margen Económico Estimado ($/ha)', 'Valor': kpi.economicReturnUsdHa },
-        { 'Parámetro': 'PINN PDE Richards Loss', 'Valor': simulation.pinnValidationMetrics.pdeResidualRichardsLoss }
+        { 'Parámetro': 'Modelo desplegado', 'Valor': simulation.modelName },
+        { 'Parámetro': 'Fuente de entrenamiento', 'Valor': simulation.modelDataSource ?? 'sin metadata' }
       ];
       const kpiSheet = XLSX.utils.json_to_sheet(kpiRows);
       XLSX.utils.book_append_sheet(workbook, kpiSheet, 'Resumen_KPIs');
+
+      const scopeRows = [
+        { 'Aspecto': 'Clasificación de uso', 'Estado': 'Solo investigación exploratoria' },
+        { 'Aspecto': 'Calibración espacial a escala de condado', 'Estado': 'No realizada' },
+        { 'Aspecto': 'Validación independiente por territorio', 'Estado': 'No realizada' },
+        { 'Aspecto': 'Suelo como entrada directa de la red de rendimiento', 'Estado': 'No' },
+        { 'Aspecto': 'Priorización territorial', 'Estado': 'No soportada' },
+        { 'Aspecto': 'Usos excluidos', 'Estado': 'Política pública, agua, seguros, crédito y financiamiento' },
+        { 'Aspecto': 'Requisitos pendientes', 'Estado': 'Datos espaciales reales, validación geográfica, representatividad e incertidumbre' },
+      ];
+      const scopeSheet = XLSX.utils.json_to_sheet(scopeRows);
+      XLSX.utils.book_append_sheet(workbook, scopeSheet, 'Alcance_cientifico');
 
       XLSX.writeFile(workbook, `Simulacion_CeresPINN_${simulation.fieldName.replace(/\s+/g, '_')}.xlsx`);
     } catch (err) {

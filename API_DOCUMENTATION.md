@@ -1,22 +1,22 @@
 # CeresPINN API Documentation & Project Status
 
 ## Objetivo del Sistema
-CeresPINN (Physics-Informed Neural Network) es un **Gemelo Digital** diseñado para modelar la resiliencia climática del maíz (Zea mays L.) bajo los escenarios de cambio climático CMIP6 del IPCC (SSP1-2.6 a SSP5-8.5). 
+CeresPINN es un prototipo de **gemelo digital** para explorar respuestas del maíz (Zea mays L.) bajo escenarios climáticos CMIP6 (SSP1-2.6 a SSP5-8.5).
 
-A diferencia de los modelos puramente empíricos de Machine Learning que pueden fallar al extrapolar condiciones climáticas extremas no vistas, **CeresPINN incorpora las leyes de la física**. Específicamente, integra la **Ecuación 1D de Richards** (flujo de agua en medios porosos insaturados) directamente en la función de pérdida (*loss function*) de la red neuronal. Esto asegura que el balance hídrico del suelo y las predicciones de estrés hídrico (CWSI) obedezcan a la conservación de masa, logrando predicciones científicamente robustas incluso para sequías extremas futuras.
+El checkpoint es una MLP PyTorch regularizada por monotonicidad: penaliza respuestas locales del rendimiento con signo agronómicamente incoherente frente a anomalía térmica y precipitación estacional. La serie diaria de humedad usa un balance determinista de tres depósitos. Estas aproximaciones no garantizan conservación exacta, extrapolación fuera del dominio ni validación espacial.
 
 ## Demostración en el Frontend
 El frontend de CeresPINN expone esta tecnología a través de una interfaz interactiva de toma de decisiones:
 1. **Gemelo 3D y Main Dashboard**: Visualización en tiempo real del ciclo fenológico del maíz, estrés hídrico diario y rendimiento proyectado bajo escenarios CMIP6. Las anomalías térmicas y de precipitación ajustan el forzamiento climático de forma local.
 2. **What-If Studio**: Herramienta comparativa que permite contrastar la línea base climática contra estrategias de adaptación (ej. riego deficitario o cambios de variedad de ciclo corto) simulando en paralelo con el motor PINN.
-3. **Panel de Adaptación**: Calcula automáticamente y recomienda estrategias (ej. adelanto de siembra) cuantificando la ganancia económica y resiliencia.
-4. **Vulnerability Map**: Ranquea campos geográficos por riesgo climático.
-5. **MLOps Dashboard**: Demuestra la superioridad técnica comparando el R² y RMSE de CeresPINN contra modelos estadísticos convencionales, validando la ventaja de la pérdida informada por la física.
+3. **Panel de Adaptación**: Compara estrategias parametrizadas; sus salidas son exploratorias y no constituyen una optimización agronómica validada.
+4. **Comparador de campos**: Contrasta indicadores simulados entre los cuatro perfiles demostrativos; no es cartografía validada de riesgo regional.
+5. **MLOps Dashboard**: Muestra únicamente metadata y métricas del checkpoint desplegado, sin curvas sintéticas ni comparaciones no verificadas.
 
 ## 📌 Estado Actual de Implementación
-✅ **Funcional**: UI completa, backend API, PINN básico, validación estadística, pipelines CHIRPS/NEX-GDDP
-🔄 **En progreso**: PINN con ecuaciones PDE completas, integración validación→frontend
-❌ **Pendiente**: CHIRTS, SoilGrids, bias correction, mapas de vulnerabilidad, búsqueda bayesiana para optimización de adaptación
+✅ **Funcional**: UI, backend API, inferencia del checkpoint, comparadores de escenarios y pruebas de integración.
+🔄 **En progreso**: trazabilidad completa de datos, validación temporal y limpieza de supuestos demostrativos.
+❌ **Pendiente**: calibración espacial, validación externa, datos de suelo observados y optimización de manejo validada.
 
 ---
 
@@ -132,30 +132,22 @@ Retrieve available soil profile configurations.
 
 #### `GET /api/model-registry`
 
-Retrieve the registry of trained PINN models.
+Retrieve verified metadata for the checkpoint currently deployed by the backend.
 
 **Response:**
 ```json
-{
-  "models": [
-    {
-      "id": "pinn-v1",
-      "name": "PINN Richards v1.0",
-      "trained_on": "2024-01-15",
-      "rmse": 0.12,
-      "status": "production",
-      "training_epochs": 5000
-    },
-    {
-      "id": "pinn-v2",
-      "name": "PINN Richards v2.0",
-      "trained_on": "2024-06-20",
-      "rmse": 0.08,
-      "status": "production",
-      "training_epochs": 10000
-    }
-  ]
-}
+[
+  {
+    "version": "v2.5.0-CeresPINN-RealData",
+    "name": "CeresPINN v2.5 (checkpoint desplegado)",
+    "architecture": "MLP con regularización de monotonicidad y forzantes climáticos",
+    "epochs": 300,
+    "monotonicityWeight": 0.5,
+    "testR2": 0.8225,
+    "active": true,
+    "status": "production"
+  }
+]
 ```
 
 #### `GET /api/users`
@@ -193,49 +185,56 @@ Run a PINN simulation for a given field and configuration.
 **Request Body:**
 ```json
 {
-  "field": {
-    "id": "field-001",
-    "name": "Campo Bajío Norte",
-    "area_hectares": 50,
-    "location": {
-      "lat": 20.5,
-      "lon": -101.2,
-      "elevation_m": 1800
-    }
-  },
-  "config": {
-    "climate_scenario": "ssp2-4.5",
-    "soil_profile_id": "clay-loam",
-    "planting_date": 45,
-    "planting_density": 75000,
-    "irrigation_supplemental_mm": 50,
-    "variety": "drought_resistant"
-  }
+  "field_id": "field-iowa-01",
+  "scenario": "SSP3-7.0",
+  "target_year": 2035,
+  "planting_date": "2026-05-01",
+  "maize_variety": "medium_cycle",
+  "irrigation_strategy": "deficit_75",
+  "soil_moisture_initial_percent": 50,
+  "nitrogen_application_kg_ha": 180,
+  "carbon_dioxide_ppm": 540,
+  "temperature_anomaly_c": 1.8,
+  "precipitation_anomaly_percent": -12
 }
 ```
 
 **Response:**
 ```json
 {
-  "simulation_id": "sim-20240115-001",
-  "summary_kpis": {
-    "final_yield_kg_ha": 8200,
-    "lai_max": 4.2,
-    "cwsi_avg": 0.32,
-    "water_use_efficiency_kg_mm": 18.5
+  "id": "sim-field-iowa-01-2035",
+  "inference_mode": "pinn",
+  "model_uses_real_data": true,
+  "projected_yield_kg_ha": 8321,
+  "scientific_scope": {
+    "use_classification": "exploratory_research_only",
+    "spatial_calibration": false,
+    "county_level_validation": false,
+    "soil_affects_yield_network": false,
+    "territorial_prioritization_supported": false,
+    "prohibited_decision_uses": [
+      "public_policy",
+      "water_allocation",
+      "crop_insurance",
+      "credit_or_financing",
+      "county_vulnerability_ranking"
+    ]
   },
   "daily_records": [
     {
-      "day": 1,
+      "dap": 1,
       "lai": 0.1,
-      "soil_moisture_top": 0.35,
-      "cwsi": 0.0,
-      "stage": "Emergence",
-      "stage_code": "VE"
+      "soil_moisture_top": 0.28,
+      "cwsi": 0.1
     }
   ]
 }
 ```
+
+`scientific_scope` is normative. The current checkpoint is suitable only for
+exploratory research: it is not county-calibrated, does not use soil as a
+direct yield-network input, and must not be used to rank territorial
+vulnerability or allocate public resources.
 
 #### `GET /api/model/status`
 

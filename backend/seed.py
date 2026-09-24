@@ -18,7 +18,7 @@ if _root not in sys.path:
 from backend.db import (
     get_engine, init_db, available, _connect,
     _USERS_SEED, _FIELDS_SEED, _SCENARIOS_SEED, _REPORTS_SEED,
-    _MODEL_REGISTRY_SEED, _INGESTION_PIPELINES_SEED, _SOIL_PROFILES_SEED,
+    _INGESTION_PIPELINES_SEED, _SOIL_PROFILES_SEED,
 )
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
@@ -110,21 +110,6 @@ def run_seed():
             )
             conn.execute(stmt_r, _REPORTS_SEED)
             totals["reports"] = 1
-
-            # Model registry
-            totals["model_registry"] = _sqlite_or_pg(conn,
-                """INSERT OR REPLACE INTO model_registry
-                   (version,name,architecture,trained_date,epochs,richards_weight_lambda,
-                    test_r2,test_rmse_kg_ha,active,status,description)
-                   VALUES(:version,:name,:architecture,:trained_date,:epochs,:richards_weight_lambda,
-                    :test_r2,:test_rmse_kg_ha,:active,:status,:description)""",
-                """INSERT INTO model_registry
-                   (version,name,architecture,trained_date,epochs,richards_weight_lambda,
-                    test_r2,test_rmse_kg_ha,active,status,description)
-                   VALUES(:version,:name,:architecture,:trained_date,:epochs,:richards_weight_lambda,
-                    :test_r2,:test_rmse_kg_ha,:active,:status,:description)
-                   ON CONFLICT(version) DO UPDATE SET active=EXCLUDED.active,status=EXCLUDED.status""",
-                _MODEL_REGISTRY_SEED)
 
             # Pipelines
             totals["ingestion_pipelines"] = _sqlite_or_pg(conn,

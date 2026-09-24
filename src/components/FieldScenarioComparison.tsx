@@ -1,10 +1,7 @@
 ﻿import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
-import {
-  AlertTriangle, MapPin, TrendingDown, Droplets, Thermometer,
-  Globe, ShieldAlert, ArrowUpRight, Info
-} from 'lucide-react';
+import { AlertTriangle, MapPin, TrendingDown, Globe, Info } from 'lucide-react';
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip,
   CartesianGrid, Legend, Cell
@@ -13,19 +10,19 @@ import { Field, SimulationConfig } from '../types';
 import { INITIAL_FIELDS } from '../data/mockData';
 import { simulateScenario } from '../services/api';
 
-interface VulnerabilityMapProps {
+interface FieldScenarioComparisonProps {
   fields: Field[];
   currentConfig: SimulationConfig;
 }
 
-const RISK_LEVEL = (yieldLoss: number, cwsi: number) => {
-  if (yieldLoss > 22 || cwsi > 0.6) return { label: 'Crítico', color: '#ef4444', bg: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/40' };
-  if (yieldLoss > 14 || cwsi > 0.4) return { label: 'Alto', color: '#f97316', bg: 'bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/40' };
-  if (yieldLoss > 8 || cwsi > 0.25) return { label: 'Medio', color: '#f59e0b', bg: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40' };
-  return { label: 'Bajo', color: '#10b981', bg: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40' };
+const INDICATOR_BAND = (yieldLoss: number, cwsi: number) => {
+  if (yieldLoss > 22 || cwsi > 0.6) return { label: 'Estrés muy alto', color: '#ef4444', bg: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/40' };
+  if (yieldLoss > 14 || cwsi > 0.4) return { label: 'Estrés alto', color: '#f97316', bg: 'bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/40' };
+  if (yieldLoss > 8 || cwsi > 0.25) return { label: 'Estrés medio', color: '#f59e0b', bg: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40' };
+  return { label: 'Estrés bajo', color: '#10b981', bg: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40' };
 };
 
-type VulnerabilityDatum = {
+type FieldComparisonDatum = {
   field: Field;
   ssp1Yield: number;
   activeYield: number;
@@ -34,13 +31,13 @@ type VulnerabilityDatum = {
   cwsi: number;
   resilience: number;
   critDays: number;
-  risk: ReturnType<typeof RISK_LEVEL>;
+  band: ReturnType<typeof INDICATOR_BAND>;
 };
 
-export const VulnerabilityMap: React.FC<VulnerabilityMapProps> = ({ fields, currentConfig }) => {
+export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = ({ fields, currentConfig }) => {
   const { t } = useTranslation();
   const [activeScenario, setActiveScenario] = useState<'SSP1-2.6' | 'SSP3-7.0' | 'SSP5-8.5'>('SSP3-7.0');
-  const [fieldData, setFieldData] = useState<VulnerabilityDatum[]>([]);
+  const [fieldData, setFieldData] = useState<FieldComparisonDatum[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -71,7 +68,7 @@ export const VulnerabilityMap: React.FC<VulnerabilityMapProps> = ({ fields, curr
         cwsi,
         resilience: resActive.summaryKPIs.droughtResilienceScore,
         critDays: resActive.summaryKPIs.criticalDroughtDaysCount,
-        risk: RISK_LEVEL(yieldLoss, cwsi),
+        band: INDICATOR_BAND(yieldLoss, cwsi),
       };
     }))
       .then(data => { if (active) setFieldData(data.sort((a, b) => b.yieldLoss - a.yieldLoss)); })
@@ -98,29 +95,22 @@ export const VulnerabilityMap: React.FC<VulnerabilityMapProps> = ({ fields, curr
     'SSP5-8.5': '#ef4444',
   };
 
-  const policies = [
-    { region: 'México (El Bajío)',    rec: 'Adoptar variedades ciclo corto FAO 300-400 para escape de sequía terminal. Subsidio a sistemas de riego deficitario controlado.' },
-    { region: 'Iowa (EE.UU.)',        rec: 'Diversificar fechas de siembra. Monitoreo en tiempo real de CWSI con sensores infrarrojos. Bajo riesgo proyectado bajo SSP2-4.5.' },
-    { region: 'Buenos Aires (Pampas)',rec: 'Incorporar maíz tardío de siembra directa para aprovechar el perfil hídrico recargado del invierno. Riesgo moderado.' },
-    { region: 'Lleida (España)',      rec: 'Restricción de cupo hídrico requiere implementación urgente de riego por goteo sub-superficial y variedades tolerantes a estrés.' },
-  ];
-
   return (
-    <div id="vulnerability-map" className="space-y-5">
+    <div id="field-scenario-comparison" className="space-y-5">
       {/* Header */}
       <div className="p-5 rounded-2xl bg-gradient-to-r from-rose-950/30 via-slate-900 to-amber-950/20 border border-rose-500/30 shadow-xl space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-xl font-black text-slate-100 flex items-center gap-2">
               <AlertTriangle className="w-6 h-6 text-rose-400" />
-              Mapa de Vulnerabilidad Climática por Región (Zea mays L.)
+              Comparación Demostrativa de Campos (Zea mays L.)
             </h2>
             <p className="text-xs text-slate-300 max-w-3xl">
-              <strong>¿Para qué sirve?</strong> Ranquea los campos agrícolas registrados por nivel de riesgo climático proyectado, cuantificando pérdida de rendimiento potencial y estrés hídrico máximo bajo los escenarios CMIP6 seleccionados.
+              <strong>¿Para qué sirve?</strong> Compara las salidas del mismo escenario entre cuatro perfiles demostrativos. El checkpoint de rendimiento no usa coordenadas ni suelo como entradas, por lo que esta vista no constituye una evaluación espacial validada.
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400">{t('vulnerabilityMap.activeScenario')}</span>
+            <span className="text-xs text-slate-400">{t('fieldComparison.activeScenario')}</span>
             <select
               value={activeScenario}
               onChange={e => setActiveScenario(e.target.value as any)}
@@ -135,30 +125,30 @@ export const VulnerabilityMap: React.FC<VulnerabilityMapProps> = ({ fields, curr
       </div>
 
       {loading && (
-        <div className="text-xs text-cyan-600 dark:text-cyan-300">Calculando vulnerabilidad con el PINN remoto…</div>
+        <div className="text-xs text-cyan-600 dark:text-cyan-300">Calculando escenarios comparativos con el checkpoint remoto…</div>
       )}
       {loadError && (
-        <div className="text-xs text-rose-600 dark:text-rose-300">El PINN remoto no pudo calcular el mapa: {loadError}</div>
+        <div className="text-xs text-rose-600 dark:text-rose-300">El backend no pudo calcular la comparación: {loadError}</div>
       )}
 
       {/* Risk Table */}
       <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
           <Globe className="w-4 h-4 text-cyan-500" />
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Ranking de Vulnerabilidad — {activeScenario}</h3>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Orden exploratorio de indicadores — {activeScenario}</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-950/60 text-slate-500 dark:text-slate-400 uppercase text-[11px] tracking-wider">
                 <th className="px-4 py-3 text-left">#</th>
-                <th className="px-4 py-3 text-left">{t('vulnerabilityMap.fieldRegion')}</th>
-                <th className="px-4 py-3 text-right">{t('vulnerabilityMap.yieldKgHa')}</th>
-                <th className="px-4 py-3 text-right">{t('vulnerabilityMap.droughtLoss')}</th>
-                <th className="px-4 py-3 text-right">{t('vulnerabilityMap.maxCwsi')}</th>
-                <th className="px-4 py-3 text-right">{t('vulnerabilityMap.criticalDays')}</th>
-                <th className="px-4 py-3 text-right">{t('vulnerabilityMap.resilience')}</th>
-                <th className="px-4 py-3 text-center">{t('vulnerabilityMap.riskLevel')}</th>
+                <th className="px-4 py-3 text-left">{t('fieldComparison.fieldRegion')}</th>
+                <th className="px-4 py-3 text-right">{t('fieldComparison.yieldKgHa')}</th>
+                <th className="px-4 py-3 text-right">{t('fieldComparison.droughtLoss')}</th>
+                <th className="px-4 py-3 text-right">{t('fieldComparison.maxCwsi')}</th>
+                <th className="px-4 py-3 text-right">{t('fieldComparison.criticalDays')}</th>
+                <th className="px-4 py-3 text-right">{t('fieldComparison.resilience')}</th>
+                <th className="px-4 py-3 text-center">{t('fieldComparison.indicatorBand')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -187,13 +177,13 @@ export const VulnerabilityMap: React.FC<VulnerabilityMapProps> = ({ fields, curr
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       <div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${d.resilience}%`, backgroundColor: d.risk.color }} />
+                        <div className="h-full rounded-full" style={{ width: `${d.resilience}%`, backgroundColor: d.band.color }} />
                       </div>
                       <span className="font-mono text-[11px] text-slate-600 dark:text-slate-400">{d.resilience}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold ${d.risk.bg}`}>{d.risk.label}</span>
+                    <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold ${d.band.bg}`}>{d.band.label}</span>
                   </td>
                 </tr>
               ))}
@@ -222,27 +212,9 @@ export const VulnerabilityMap: React.FC<VulnerabilityMapProps> = ({ fields, curr
         </ResponsiveContainer>
       </div>
 
-      {/* Policy Recommendations */}
-      <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-3">
-        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-          <ShieldAlert className="w-4 h-4 text-amber-500" />
-          Recomendaciones de Política Adaptativa por Región
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {policies.map((p, i) => (
-            <div key={i} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <div className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-cyan-500" />
-                <span className="text-xs font-bold text-slate-900 dark:text-slate-100">{p.region}</span>
-              </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{p.rec}</p>
-            </div>
-          ))}
-        </div>
-        <div className="flex items-start gap-2 p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-800/30 text-xs text-slate-600 dark:text-slate-400">
-          <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
-          <span>{t('vulnerabilityMap.policyNote')}</span>
-        </div>
+      <div className="flex items-start gap-2 p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-800/30 text-xs text-slate-600 dark:text-slate-400">
+        <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+        <span>{t('fieldComparison.policyNote')}</span>
       </div>
     </div>
   );
