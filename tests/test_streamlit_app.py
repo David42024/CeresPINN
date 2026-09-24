@@ -156,6 +156,10 @@ def test_execute_button_posts_full_payload_and_displays_checkpoint_result(
             {
                 "inference_mode": "pinn",
                 "model_uses_real_data": True,
+                "scientific_scope": {
+                    "use_classification": "exploratory_research_only",
+                    "territorial_prioritization_supported": False,
+                },
                 "projected_yield_kg_ha": 8321,
                 "total_biomass_kg_ha": 11150,
                 "peak_water_stress_index": 0.42,
@@ -194,6 +198,21 @@ def test_execute_button_posts_full_payload_and_displays_checkpoint_result(
     assert values["Productividad del agua"] == "1.73 kg/m³"
     assert len(app.get("plotly_chart")) == 3
     assert any("checkpoint desplegado" in item.value for item in app.success)
+
+
+def test_decision_scope_notice_is_always_visible(
+    monkeypatch: pytest.MonkeyPatch,
+    api_payloads: dict[str, Any],
+) -> None:
+    install_get_mock(monkeypatch, api_payloads)
+    app = AppTest.from_file(APP_PATH, default_timeout=20).run()
+
+    assert not app.exception
+    assert any(
+        "No usar para política pública" in item.value
+        and "priorización territorial" in item.value
+        for item in app.warning
+    )
 
 
 @pytest.mark.parametrize(

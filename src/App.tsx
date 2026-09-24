@@ -58,6 +58,7 @@ import { LoginScreen } from './components/LoginScreen';
 import { ChatbotWidget } from './components/ChatbotWidget';
 import { AdaptationPanel } from './components/AdaptationPanel';
 import { FieldScenarioComparison } from './components/FieldScenarioComparison';
+import { ScientificScopeNotice } from './components/ScientificScopeNotice';
 
 type ActiveTab = 
   | 'twin3d' 
@@ -559,6 +560,8 @@ export const App: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <ScientificScopeNotice />
 
         {/* TAB 1: 3D Twin & Phenology */}
         {activeTab === 'twin3d' && (

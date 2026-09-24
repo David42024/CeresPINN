@@ -34,6 +34,15 @@
     "langSelectorTitle": "Select language",
     "logout": "Log out"
   },
+  "scientificScope": {
+    "title": "Ethics, equity, and decision scope",
+    "badge": "Exploratory research only",
+    "summary": "CeresPINN is not calibrated at county scale and does not validly identify territories with greater agricultural vulnerability.",
+    "limitSpatial": "Field comparisons are neither maps nor rankings of territorial vulnerability.",
+    "limitSoil": "The soil profile changes the daily water balance but is not a direct input to the yield neural network.",
+    "prohibited": "Do not use for public policy, water allocation, insurance, credit, financing, or territorial prioritization.",
+    "required": "Those uses require real spatial data, independent geographic validation, representativeness analysis, and explicit uncertainty."
+  },
   "login": {
     "title": "Sign in to access your digital twin",
     "emailLabel": "Email",
@@ -63,7 +72,7 @@
     "maxCwsi": "Max. CWSI",
     "criticalDays": "Critical Days",
     "resilience": "Resilience",
-    "riskLevel": "Indicative band",
+    "indicatorBand": "Exploratory band",
     "policyNote": "Exploratory view: bands come from internal CWSI and simulated-loss thresholds. They are not a validated map or production recommendation."
   },
   "chatbot": {

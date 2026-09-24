@@ -34,6 +34,15 @@
     "langSelectorTitle": "Seleccionar idioma",
     "logout": "Cerrar sesión"
   },
+  "scientificScope": {
+    "title": "Ética, equidad y alcance de decisión",
+    "badge": "Solo investigación exploratoria",
+    "summary": "CeresPINN no está calibrado a escala de condado y no identifica de forma validada territorios con mayor vulnerabilidad agrícola.",
+    "limitSpatial": "Las comparaciones entre campos no son mapas ni rankings de vulnerabilidad territorial.",
+    "limitSoil": "El perfil edáfico modifica el balance hídrico diario, pero no entra directamente en la red neuronal de rendimiento.",
+    "prohibited": "No usar para políticas públicas, asignación de agua, seguros, crédito, financiamiento o priorización territorial.",
+    "required": "Antes de esos usos se requieren datos espaciales reales, validación geográfica independiente, representatividad e incertidumbre explícita."
+  },
   "login": {
     "title": "Inicia sesión para acceder a tu gemelo digital",
     "emailLabel": "Correo electrónico",
@@ -63,7 +72,7 @@
     "maxCwsi": "CWSI Máx.",
     "criticalDays": "Días Críticos",
     "resilience": "Resiliencia",
-    "riskLevel": "Banda indicativa",
+    "indicatorBand": "Banda exploratoria",
     "policyNote": "Vista exploratoria: las bandas se derivan de umbrales internos de CWSI y pérdida simulada. No representan un mapa validado ni recomendaciones para decisiones productivas."
   },
   "chatbot": {

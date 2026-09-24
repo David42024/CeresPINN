@@ -83,6 +83,20 @@ def test_simulate_omits_legacy_equation_metrics(test_client, simulation_payload)
         assert forbidden not in serialized
 
 
+def test_simulation_declares_exploratory_decision_scope(test_client, simulation_payload):
+    response = test_client.post("/api/simulate", json=simulation_payload)
+    assert response.status_code == 200
+    scope = response.json()["scientific_scope"]
+    assert scope["use_classification"] == "exploratory_research_only"
+    assert scope["spatial_calibration"] is False
+    assert scope["county_level_validation"] is False
+    assert scope["soil_affects_yield_network"] is False
+    assert scope["territorial_prioritization_supported"] is False
+    assert "public_policy" in scope["prohibited_decision_uses"]
+    assert "water_allocation" in scope["prohibited_decision_uses"]
+    assert "transparent_uncertainty_quantification" in scope["required_before_decision_use"]
+
+
 def test_model_status_matches_checkpoint_metadata(test_client):
     import backend.inference as inf_mod
 

@@ -162,6 +162,29 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         yOffset += 6;
       });
 
+      // Scientific scope is deliberately exported with every report so the
+      // simulation cannot be detached from its decision-use limitations.
+      doc.addPage();
+      doc.setTextColor(51, 65, 85);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text('5. ÉTICA, EQUIDAD Y ALCANCE DE DECISIÓN', 14, 22);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      const scopeParagraphs = [
+        'USO AUTORIZADO: investigación y exploración de escenarios.',
+        'CeresPINN no está calibrado a escala de condado y no identifica de forma validada territorios con mayor vulnerabilidad agrícola.',
+        'El perfil edáfico modifica la dinámica hídrica diaria, pero no es una entrada directa de la red neuronal que calcula el rendimiento.',
+        'No usar estas salidas para políticas públicas, asignación de agua, seguros, crédito, financiamiento ni priorización territorial.',
+        'Antes de cualquier uso decisional se requieren datos espaciales reales, validación geográfica independiente, análisis de representatividad y cuantificación transparente de incertidumbre.',
+      ];
+      let scopeY = 34;
+      scopeParagraphs.forEach(paragraph => {
+        const lines = doc.splitTextToSize(paragraph, 178);
+        doc.text(lines, 16, scopeY);
+        scopeY += lines.length * 6 + 5;
+      });
+
       // Footer
       doc.setFontSize(7);
       doc.setTextColor(148, 163, 184);
@@ -233,6 +256,18 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       ];
       const kpiSheet = XLSX.utils.json_to_sheet(kpiRows);
       XLSX.utils.book_append_sheet(workbook, kpiSheet, 'Resumen_KPIs');
+
+      const scopeRows = [
+        { 'Aspecto': 'Clasificación de uso', 'Estado': 'Solo investigación exploratoria' },
+        { 'Aspecto': 'Calibración espacial a escala de condado', 'Estado': 'No realizada' },
+        { 'Aspecto': 'Validación independiente por territorio', 'Estado': 'No realizada' },
+        { 'Aspecto': 'Suelo como entrada directa de la red de rendimiento', 'Estado': 'No' },
+        { 'Aspecto': 'Priorización territorial', 'Estado': 'No soportada' },
+        { 'Aspecto': 'Usos excluidos', 'Estado': 'Política pública, agua, seguros, crédito y financiamiento' },
+        { 'Aspecto': 'Requisitos pendientes', 'Estado': 'Datos espaciales reales, validación geográfica, representatividad e incertidumbre' },
+      ];
+      const scopeSheet = XLSX.utils.json_to_sheet(scopeRows);
+      XLSX.utils.book_append_sheet(workbook, scopeSheet, 'Alcance_cientifico');
 
       XLSX.writeFile(workbook, `Simulacion_CeresPINN_${simulation.fieldName.replace(/\s+/g, '_')}.xlsx`);
     } catch (err) {

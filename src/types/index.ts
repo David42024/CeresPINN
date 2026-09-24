@@ -118,6 +118,15 @@ export interface SimulationResult {
   modelName?: string;
   modelDataSource?: string;
   modelUsesRealData?: boolean;
+  scientificScope?: {
+    useClassification: 'exploratory_research_only';
+    spatialCalibration: boolean;
+    countyLevelValidation: boolean;
+    soilAffectsYieldNetwork: boolean;
+    territorialPrioritizationSupported: boolean;
+    prohibitedDecisionUses: string[];
+    requiredBeforeDecisionUse: string[];
+  };
   config: SimulationConfig;
   fieldName: string;
   fieldLocation: string;

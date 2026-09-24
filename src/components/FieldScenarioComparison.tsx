@@ -15,7 +15,7 @@ interface FieldScenarioComparisonProps {
   currentConfig: SimulationConfig;
 }
 
-const RISK_LEVEL = (yieldLoss: number, cwsi: number) => {
+const INDICATOR_BAND = (yieldLoss: number, cwsi: number) => {
   if (yieldLoss > 22 || cwsi > 0.6) return { label: 'Estrés muy alto', color: '#ef4444', bg: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/40' };
   if (yieldLoss > 14 || cwsi > 0.4) return { label: 'Estrés alto', color: '#f97316', bg: 'bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/40' };
   if (yieldLoss > 8 || cwsi > 0.25) return { label: 'Estrés medio', color: '#f59e0b', bg: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40' };
@@ -31,7 +31,7 @@ type FieldComparisonDatum = {
   cwsi: number;
   resilience: number;
   critDays: number;
-  risk: ReturnType<typeof RISK_LEVEL>;
+  band: ReturnType<typeof INDICATOR_BAND>;
 };
 
 export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = ({ fields, currentConfig }) => {
@@ -68,7 +68,7 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
         cwsi,
         resilience: resActive.summaryKPIs.droughtResilienceScore,
         critDays: resActive.summaryKPIs.criticalDroughtDaysCount,
-        risk: RISK_LEVEL(yieldLoss, cwsi),
+        band: INDICATOR_BAND(yieldLoss, cwsi),
       };
     }))
       .then(data => { if (active) setFieldData(data.sort((a, b) => b.yieldLoss - a.yieldLoss)); })
@@ -148,7 +148,7 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
                 <th className="px-4 py-3 text-right">{t('fieldComparison.maxCwsi')}</th>
                 <th className="px-4 py-3 text-right">{t('fieldComparison.criticalDays')}</th>
                 <th className="px-4 py-3 text-right">{t('fieldComparison.resilience')}</th>
-                <th className="px-4 py-3 text-center">{t('fieldComparison.riskLevel')}</th>
+                <th className="px-4 py-3 text-center">{t('fieldComparison.indicatorBand')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -177,13 +177,13 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
                   <td className="px-4 py-3 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       <div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${d.resilience}%`, backgroundColor: d.risk.color }} />
+                        <div className="h-full rounded-full" style={{ width: `${d.resilience}%`, backgroundColor: d.band.color }} />
                       </div>
                       <span className="font-mono text-[11px] text-slate-600 dark:text-slate-400">{d.resilience}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold ${d.risk.bg}`}>{d.risk.label}</span>
+                    <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold ${d.band.bg}`}>{d.band.label}</span>
                   </td>
                 </tr>
               ))}

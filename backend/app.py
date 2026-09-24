@@ -411,6 +411,7 @@ def _build_simulation_response(
         "scenario": payload.scenario,
         "target_year": payload.target_year,
         "inference_mode": inference_mode,
+        "scientific_scope": inference_mod.SCIENTIFIC_SCOPE,
         "projected_yield_kg_ha": round(projected_yield),
         "potential_yield_kg_ha": 9200,
         "yield_loss_due_to_drought_percent": round(max(0, 100 - (projected_yield / 9200) * 100), 1),
@@ -460,13 +461,13 @@ def _build_simulation_response(
                 "title": "High drought stress risk",
                 "description": "The leading scenario suggests elevated water stress during tasseling.",
                 "timing": "VT-R1",
-                "recommended_action": "Apply strategic deficit irrigation or shift sowing date.",
+                "recommended_action": "Compare alternatives and validate them with local observations before acting.",
             }
         ],
         "agronomic_recommendations": [
-            "Delay sowing by 10-15 days to avoid peak drought stress.",
-            "Maintain at least 50% plant available water during VT-R1.",
-            "Evaluate a short-cycle genotype under SSP5-8.5.",
+            "Explore alternative sowing dates; no causal benefit is validated.",
+            "Compare water-management alternatives against local measurements.",
+            "Explore genotype-cycle sensitivity without treating it as a prescription.",
         ],
     }
 

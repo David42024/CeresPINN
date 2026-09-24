@@ -77,3 +77,21 @@ test('field comparison is explicitly exploratory rather than spatial validation'
   assert.match(comparison, /Comparación Demostrativa de Campos/);
   assert.doesNotMatch(comparison, /Mapa de Vulnerabilidad|Recomendaciones de Política/);
 });
+
+test('ethics and equity limitations are enforced in API, UI, and exports', () => {
+  const backend = source('backend/inference.py');
+  const api = source('src/services/api.ts');
+  const app = source('src/App.tsx');
+  const notice = source('src/components/ScientificScopeNotice.tsx');
+  const reports = source('src/components/ReportsModule.tsx');
+
+  assert.match(backend, /"use_classification": "exploratory_research_only"/);
+  assert.match(backend, /"soil_affects_yield_network": False/);
+  assert.match(backend, /"territorial_prioritization_supported": False/);
+  assert.match(api, /scientific_scope\?\.use_classification !== 'exploratory_research_only'/);
+  assert.match(app, /<ScientificScopeNotice \/>/);
+  assert.match(notice, /scientificScope\.prohibited/);
+  assert.match(reports, /ÉTICA, EQUIDAD Y ALCANCE DE DECISIÓN/);
+  assert.match(reports, /Alcance_cientifico/);
+  assert.doesNotMatch(backend, /mitigar hasta 45%|Variedad recomendada|Adelantar fecha de siembra 12 días/);
+});

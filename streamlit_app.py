@@ -188,6 +188,12 @@ def execute_simulation(payload: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("El backend no confirmó inferencia mediante el checkpoint.")
     if not result.get("model_uses_real_data"):
         raise RuntimeError("El backend no confirmó procedencia de datos reales.")
+    scope = result.get("scientific_scope", {})
+    if (
+        scope.get("use_classification") != "exploratory_research_only"
+        or scope.get("territorial_prioritization_supported") is not False
+    ):
+        raise RuntimeError("El backend no declaró el alcance exploratorio requerido.")
     if not isinstance(result.get("projected_yield_kg_ha"), (int, float)):
         raise RuntimeError("La respuesta del modelo no contiene rendimiento válido.")
     return result
@@ -423,6 +429,13 @@ def main() -> None:
     with col3:
         active_model = next((model for model in models if model.get("active")), None)
         st.metric("Checkpoint", "Disponible" if active_model else "No disponible")
+
+    st.warning(
+        "Ética y equidad — uso exclusivo para investigación exploratoria. "
+        "CeresPINN no está calibrado a escala de condado; el suelo no entra "
+        "directamente en la red de rendimiento. No usar para política pública, "
+        "asignación de agua, seguros, crédito, financiamiento ni priorización territorial."
+    )
 
     tab1, tab2, tab3, tab4 = st.tabs(
         ["📊 Dashboard", "⚙️ Configuración", "📈 Validación", "🧪 MLOps"]

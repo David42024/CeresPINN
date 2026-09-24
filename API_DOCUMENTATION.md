@@ -185,49 +185,56 @@ Run a PINN simulation for a given field and configuration.
 **Request Body:**
 ```json
 {
-  "field": {
-    "id": "field-001",
-    "name": "Campo Bajío Norte",
-    "area_hectares": 50,
-    "location": {
-      "lat": 20.5,
-      "lon": -101.2,
-      "elevation_m": 1800
-    }
-  },
-  "config": {
-    "climate_scenario": "ssp2-4.5",
-    "soil_profile_id": "clay-loam",
-    "planting_date": 45,
-    "planting_density": 75000,
-    "irrigation_supplemental_mm": 50,
-    "variety": "drought_resistant"
-  }
+  "field_id": "field-iowa-01",
+  "scenario": "SSP3-7.0",
+  "target_year": 2035,
+  "planting_date": "2026-05-01",
+  "maize_variety": "medium_cycle",
+  "irrigation_strategy": "deficit_75",
+  "soil_moisture_initial_percent": 50,
+  "nitrogen_application_kg_ha": 180,
+  "carbon_dioxide_ppm": 540,
+  "temperature_anomaly_c": 1.8,
+  "precipitation_anomaly_percent": -12
 }
 ```
 
 **Response:**
 ```json
 {
-  "simulation_id": "sim-20240115-001",
-  "summary_kpis": {
-    "final_yield_kg_ha": 8200,
-    "lai_max": 4.2,
-    "cwsi_avg": 0.32,
-    "water_use_efficiency_kg_mm": 18.5
+  "id": "sim-field-iowa-01-2035",
+  "inference_mode": "pinn",
+  "model_uses_real_data": true,
+  "projected_yield_kg_ha": 8321,
+  "scientific_scope": {
+    "use_classification": "exploratory_research_only",
+    "spatial_calibration": false,
+    "county_level_validation": false,
+    "soil_affects_yield_network": false,
+    "territorial_prioritization_supported": false,
+    "prohibited_decision_uses": [
+      "public_policy",
+      "water_allocation",
+      "crop_insurance",
+      "credit_or_financing",
+      "county_vulnerability_ranking"
+    ]
   },
   "daily_records": [
     {
-      "day": 1,
+      "dap": 1,
       "lai": 0.1,
-      "soil_moisture_top": 0.35,
-      "cwsi": 0.0,
-      "stage": "Emergence",
-      "stage_code": "VE"
+      "soil_moisture_top": 0.28,
+      "cwsi": 0.1
     }
   ]
 }
 ```
+
+`scientific_scope` is normative. The current checkpoint is suitable only for
+exploratory research: it is not county-calibrated, does not use soil as a
+direct yield-network input, and must not be used to rank territorial
+vulnerability or allocate public resources.
 
 #### `GET /api/model/status`
 

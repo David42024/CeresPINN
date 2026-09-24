@@ -26,6 +26,27 @@ _MODEL_DIR = Path(
 _CHECKPOINT = _MODEL_DIR / "cerespinn_pinn.pt"
 _METADATA = _MODEL_DIR / "cerespinn_metadata.json"
 
+SCIENTIFIC_SCOPE = {
+    "use_classification": "exploratory_research_only",
+    "spatial_calibration": False,
+    "county_level_validation": False,
+    "soil_affects_yield_network": False,
+    "territorial_prioritization_supported": False,
+    "prohibited_decision_uses": [
+        "public_policy",
+        "water_allocation",
+        "crop_insurance",
+        "credit_or_financing",
+        "county_vulnerability_ranking",
+    ],
+    "required_before_decision_use": [
+        "real_spatial_covariates",
+        "independent_geographic_validation",
+        "geographic_representativeness_analysis",
+        "transparent_uncertainty_quantification",
+    ],
+}
+
 
 class PinnInference:
     """Thin wrapper around the trained PINN with graceful degradation."""
@@ -449,7 +470,7 @@ class PinnInference:
                 "title": "Alto Riesgo de Estrés Hídrico en Floración",
                 "description": f"El índice de estrés hídrico alcanzó {max_stress:.2f} durante floración/espigazón (VT-R1).",
                 "timing": "VT-R1",
-                "recommended_action": "Aplicar riego de auxilio estratégico de 35-50 mm para proteger fecundación."
+                "recommended_action": "Explorar riego de auxilio y contrastarlo con mediciones locales antes de intervenir."
             })
         if temp_anom > 2.0:
             alerts.append({
@@ -458,13 +479,13 @@ class PinnInference:
                 "title": "Anomalía Térmica Extrema (>2.0°C)",
                 "description": "Las proyecciones CMIP6 indican pérdida de viabilidad polínica por temperaturas sobre 34°C.",
                 "timing": "R1 (Silking)",
-                "recommended_action": "Adelantar fecha de siembra 12 días para desfasar la floración de la canícula estival."
+                "recommended_action": "Comparar fechas de siembra alternativas; el modelo actual no valida causalmente su beneficio."
             })
             
         recommendations = [
-            f"Adelantar siembra al 5-10 de mayo para mitigar hasta 45% del estrés térmico proyectado.",
-            f"Estrategia hídrica evaluada: {irrigation_strat.upper()}. Mantener >50% de agua disponible en VT-R1.",
-            f"Variedad recomendada: Híbrido largo resiliente (GDD {var_cfg['total_gdd']}) bajo escenario {payload.get('scenario', 'SSP3-7.0')}."
+            "Comparar de forma exploratoria fechas de siembra alternativas; la versión actual no valida un beneficio causal del adelanto.",
+            f"Estrategia hídrica simulada: {irrigation_strat.upper()}. Contrastar cualquier cambio con mediciones locales antes de actuar.",
+            f"Explorar variedades con distinto ciclo térmico (referencia GDD {var_cfg['total_gdd']}) sin interpretar la salida como prescripción varietal."
         ]
 
         return {
@@ -472,6 +493,7 @@ class PinnInference:
             "model_name": self.metadata.get("model", "CeresPINN") if inference_mode == "pinn" else "calibrated-surrogate",
             "model_data_source": self.metadata.get("data_source") if inference_mode == "pinn" else None,
             "model_uses_real_data": self.uses_real_data if inference_mode == "pinn" else False,
+            "scientific_scope": SCIENTIFIC_SCOPE,
             "field_id": payload.get("field_id", "field-01"),
             "scenario": payload.get("scenario", "SSP3-7.0"),
             "target_year": payload.get("target_year", 2035),

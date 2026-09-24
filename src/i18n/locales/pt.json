@@ -34,6 +34,15 @@
     "langSelectorTitle": "Selecionar idioma",
     "logout": "Sair"
   },
+  "scientificScope": {
+    "title": "Ética, equidade e escopo de decisão",
+    "badge": "Somente pesquisa exploratória",
+    "summary": "O CeresPINN não está calibrado em escala de condado e não identifica de forma validada territórios com maior vulnerabilidade agrícola.",
+    "limitSpatial": "As comparações entre campos não são mapas nem rankings de vulnerabilidade territorial.",
+    "limitSoil": "O perfil do solo altera o balanço hídrico diário, mas não entra diretamente na rede neural de rendimento.",
+    "prohibited": "Não usar para políticas públicas, alocação de água, seguros, crédito, financiamento ou priorização territorial.",
+    "required": "Esses usos exigem dados espaciais reais, validação geográfica independente, representatividade e incerteza explícita."
+  },
   "login": {
     "title": "Entre para acessar seu gêmeo digital",
     "emailLabel": "E-mail",
@@ -63,7 +72,7 @@
     "maxCwsi": "CWSI Máx.",
     "criticalDays": "Dias Críticos",
     "resilience": "Resiliência",
-    "riskLevel": "Faixa indicativa",
+    "indicatorBand": "Faixa exploratória",
     "policyNote": "Vista exploratória: as faixas vêm de limiares internos de CWSI e perda simulada. Não representam um mapa validado nem recomendação produtiva."
   },
   "chatbot": {
