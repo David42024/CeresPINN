@@ -175,13 +175,13 @@ def test_health(test_client):
 # /api/chatbot
 # ---------------------------------------------------------------------------
 def test_chatbot_requires_backend_key(test_client, monkeypatch):
-    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     resp = test_client.post("/api/chatbot", json={"message": "Hola"})
     assert resp.status_code == 503
     assert "configurado" in resp.json()["detail"]
 
 
-def test_chatbot_calls_gemini_with_compact_context(test_client, monkeypatch):
+def test_chatbot_calls_openai_with_compact_context(test_client, monkeypatch):
     import backend.app as app_mod
 
     captured = {}
@@ -190,9 +190,9 @@ def test_chatbot_calls_gemini_with_compact_context(test_client, monkeypatch):
         captured.update(kwargs)
         return "Respuesta de prueba"
 
-    monkeypatch.setenv("GEMINI_API_KEY", "test-only-secret")
-    monkeypatch.setenv("GEMINI_MODEL", "gemini-flash-latest")
-    monkeypatch.setattr(app_mod, "_generate_gemini_reply", fake_generate)
+    monkeypatch.setenv("OPENAI_API_KEY", "test-only-secret")
+    monkeypatch.setenv("OPENAI_MODEL", "gpt-5-nano")
+    monkeypatch.setattr(app_mod, "_generate_llm_reply", fake_generate)
     resp = test_client.post(
         "/api/chatbot",
         json={"message": "¿Cuál es el rendimiento?", "context": {"projectedYieldKgHa": 8778}},
@@ -200,7 +200,7 @@ def test_chatbot_calls_gemini_with_compact_context(test_client, monkeypatch):
     assert resp.status_code == 200
     assert resp.json()["reply"] == "Respuesta de prueba"
     assert captured["api_key"] == "test-only-secret"
-    assert captured["model"] == "gemini-flash-latest"
+    assert captured["model"] == "gpt-5-nano"
     assert '"projectedYieldKgHa": 8778' in captured["contents"]
 
 
@@ -210,18 +210,20 @@ def test_chatbot_provider_failure_is_sanitized(test_client, monkeypatch):
     def fail_generate(**_kwargs):
         raise RuntimeError("provider failed with do-not-leak-this")
 
-    monkeypatch.setenv("GEMINI_API_KEY", "do-not-leak-this")
-    monkeypatch.setattr(app_mod, "_generate_gemini_reply", fail_generate)
+    monkeypatch.setenv("OPENAI_API_KEY", "do-not-leak-this")
+    monkeypatch.setattr(app_mod, "_generate_llm_reply", fail_generate)
     resp = test_client.post("/api/chatbot", json={"message": "Hola"})
     assert resp.status_code == 502
     assert "do-not-leak-this" not in resp.text
 
 
 def test_chatbot_status_never_exposes_key(test_client, monkeypatch):
-    monkeypatch.setenv("GEMINI_API_KEY", "top-secret")
+    monkeypatch.setenv("OPENAI_API_KEY", "top-secret")
+    monkeypatch.setenv("OPENAI_MODEL", "gpt-5-nano")
     resp = test_client.get("/api/chatbot/status")
     assert resp.status_code == 200
     assert resp.json()["status"] == "ready"
+    assert resp.json()["model"] == "gpt-5-nano"
     assert "top-secret" not in resp.text
 
 

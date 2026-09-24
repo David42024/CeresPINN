@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 import json
+import logging
 import os
 import time
 from typing import Any, Dict, List, Optional
@@ -18,6 +19,7 @@ import backend.db as db
 import backend.validation as validation
 
 load_dotenv()
+logger = logging.getLogger(__name__)
 
 
 def _model_required() -> bool:
@@ -26,6 +28,10 @@ def _model_required() -> bool:
 
 def _database_required() -> bool:
     return os.getenv("CERESPINN_REQUIRE_DATABASE", "0").strip().lower() in {"1", "true", "yes"}
+
+
+def _openai_model() -> str:
+    return os.getenv("OPENAI_MODEL", "gpt-5-nano").strip() or "gpt-5-nano"
 
 
 def _real_data_required() -> bool:
@@ -105,7 +111,7 @@ class ChatbotRequest(BaseModel):
     context: Optional[dict] = None
 
 
-def _generate_gemini_reply(*, api_key: str, model: str, contents: str) -> Optional[str]:
+def _generate_llm_reply(*, api_key: str, model: str, contents: str) -> Optional[str]:
     """Keep the existing test seam and HTTP behavior while executing real LCEL."""
     from .llm import generate_text
 
@@ -136,9 +142,25 @@ class ReportSummaryRequest(BaseModel):
 
 
 def _is_retryable_llm_error(exc: Exception) -> bool:
+    status = getattr(exc, "status_code", None)
+    if status in {408, 409, 429, 500, 502, 503, 504}:
+        return True
+    if type(exc).__name__ in {"APITimeoutError", "APIConnectionError", "RateLimitError", "InternalServerError"}:
+        return True
     return any(code in str(exc).upper() for code in (
-        "429", "500", "503", "UNAVAILABLE", "RESOURCE_EXHAUSTED",
+        "429", "500", "503", "UNAVAILABLE", "RESOURCE_EXHAUSTED", "TIMEOUT",
     ))
+
+
+def _log_llm_failure(exc: Exception, *, endpoint: str) -> None:
+    """Record diagnostics without logging a prompt, provider message, or key."""
+    logger.warning(
+        "LLM failure endpoint=%s type=%s status=%s request_id=%s",
+        endpoint,
+        type(exc).__name__,
+        getattr(exc, "status_code", None),
+        getattr(exc, "request_id", None),
+    )
 
 
 @app.get("/api/health")
@@ -286,14 +308,14 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
 
 @app.post("/api/chatbot")
 def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
-    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
     if not api_key:
         raise HTTPException(
             status_code=503,
             detail="El asistente no está configurado en el backend.",
         )
 
-    model = os.getenv("GEMINI_MODEL", "gemini-flash-latest").strip() or "gemini-flash-latest"
+    model = _openai_model()
 
     system_prompt = (
         "Eres el asistente conversacional de CeresPINN, una plataforma de "
@@ -325,7 +347,7 @@ def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
 
     for attempt in range(max_retries):
         try:
-            reply = _generate_gemini_reply(api_key=api_key, model=model, contents=contents)
+            reply = _generate_llm_reply(api_key=api_key, model=model, contents=contents)
             if not reply:
                 return {"reply": "No tengo una respuesta clara para eso, ¿puedes reformular la pregunta?", "error": None}
             return {"reply": reply, "error": None, "model": model}
@@ -333,23 +355,24 @@ def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
             if _is_retryable_llm_error(exc) and attempt < max_retries - 1:
                 time.sleep(1.5 * (attempt + 1))
                 continue
+            _log_llm_failure(exc, endpoint="chatbot")
             break
 
     # Do not leak provider diagnostics or credentials to the browser.
     raise HTTPException(
         status_code=502,
-        detail="Gemini no pudo generar una respuesta. Inténtalo nuevamente.",
+        detail="El asistente no pudo generar una respuesta. Inténtalo nuevamente.",
     )
 
 
 @app.post("/api/reports/ai-summary")
 def report_ai_summary(payload: ReportSummaryRequest):
-    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
     if not api_key:
         return JSONResponse(status_code=503, content={
             "summary": None, "error": "El asistente no está configurado en el backend.",
         })
-    model = os.getenv("GEMINI_MODEL", "gemini-flash-latest").strip() or "gemini-flash-latest"
+    model = _openai_model()
     contents = (
         "Redacta un resumen ejecutivo agrícola en español, con un máximo de "
         "4-5 oraciones cortas, en lenguaje claro y texto plano. Usa únicamente "
@@ -363,7 +386,7 @@ def report_ai_summary(payload: ReportSummaryRequest):
     )
     for attempt in range(3):
         try:
-            summary = _generate_gemini_reply(api_key=api_key, model=model, contents=contents)
+            summary = _generate_llm_reply(api_key=api_key, model=model, contents=contents)
             if summary and summary.strip():
                 return {"summary": summary.strip()}
             break
@@ -371,22 +394,23 @@ def report_ai_summary(payload: ReportSummaryRequest):
             if _is_retryable_llm_error(exc) and attempt < 2:
                 time.sleep(1.5 * (attempt + 1))
                 continue
+            _log_llm_failure(exc, endpoint="report_ai_summary")
             break
     # Provider exceptions may contain secrets: expose a stable public message.
     return JSONResponse(status_code=502, content={
         "summary": None,
-        "error": "Gemini no pudo generar el resumen. Inténtalo nuevamente.",
+        "error": "El asistente no pudo generar el resumen. Inténtalo nuevamente.",
     })
 
 
 @app.get("/api/chatbot/status")
 def chatbot_status() -> Dict[str, Any]:
-    """Expose readiness without ever returning the Gemini credential."""
-    configured = bool(os.getenv("GEMINI_API_KEY", "").strip())
+    """Expose readiness without ever returning the OpenAI credential."""
+    configured = bool(os.getenv("OPENAI_API_KEY", "").strip())
     return {
         "status": "ready" if configured else "unconfigured",
         "configured": configured,
-        "model": os.getenv("GEMINI_MODEL", "gemini-flash-latest"),
+        "model": _openai_model(),
     }
 
 

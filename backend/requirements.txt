@@ -7,9 +7,8 @@ requests==2.32.3
 psycopg2-binary==2.9.9
 sqlalchemy==2.0.35
 python-dotenv==1.0.1
-google-genai
 langchain-core
-langchain-google-genai
+langchain-openai
 xarray==2024.11.0
 netCDF4==1.7.2
 numpy==2.1.3
