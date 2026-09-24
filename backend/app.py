@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field, field_validator
 from dotenv import load_dotenv
 
 from .pipelines_api import router as pipelines_router
+from . import langflow_client
 import backend.inference as inference_mod
 import backend.db as db
 import backend.validation as validation
@@ -116,6 +117,20 @@ def _generate_llm_reply(*, api_key: str, model: str, contents: str) -> Optional[
     from .llm import generate_text
 
     return generate_text(api_key=api_key, model=model, contents=contents)
+
+
+def _chatbot_generation_config() -> tuple[str, Optional[langflow_client.LangflowConfig]]:
+    """Select the visual runtime for the chatbot only when explicitly configured."""
+    if langflow_client.langflow_requested():
+        try:
+            config = langflow_client.config_from_env()
+        except langflow_client.LangflowConfigurationError:
+            raise HTTPException(status_code=503, detail="El flujo de Langflow no está configurado.")
+        return "", config
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        raise HTTPException(status_code=503, detail="El asistente no está configurado en el backend.")
+    return api_key, None
 
 
 class ReportSummaryRequest(BaseModel):
@@ -308,13 +323,7 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
 
 @app.post("/api/chatbot")
 def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
-    if not api_key:
-        raise HTTPException(
-            status_code=503,
-            detail="El asistente no está configurado en el backend.",
-        )
-
+    api_key, langflow_config = _chatbot_generation_config()
     model = _openai_model()
 
     system_prompt = (
@@ -343,11 +352,18 @@ def chatbot(payload: ChatbotRequest) -> Dict[str, Any]:
         f"Contexto de la simulación actual: {context_json}\n"
         f"Pregunta del usuario: {payload.message.strip()}"
     )
+    langflow_input = (
+        f"Contexto de la simulación actual: {context_json}\n"
+        f"Pregunta del usuario: {payload.message.strip()}"
+    )
     max_retries = 3
 
     for attempt in range(max_retries):
         try:
-            reply = _generate_llm_reply(api_key=api_key, model=model, contents=contents)
+            reply = (
+                langflow_client.run_chatbot_flow(input_value=langflow_input, config=langflow_config)
+                if langflow_config else _generate_llm_reply(api_key=api_key, model=model, contents=contents)
+            )
             if not reply:
                 return {"reply": "No tengo una respuesta clara para eso, ¿puedes reformular la pregunta?", "error": None}
             return {"reply": reply, "error": None, "model": model}
@@ -406,11 +422,20 @@ def report_ai_summary(payload: ReportSummaryRequest):
 @app.get("/api/chatbot/status")
 def chatbot_status() -> Dict[str, Any]:
     """Expose readiness without ever returning the OpenAI credential."""
-    configured = bool(os.getenv("OPENAI_API_KEY", "").strip())
+    provider = "langflow" if langflow_client.langflow_requested() else "langchain"
+    if provider == "langflow":
+        try:
+            langflow_client.config_from_env()
+            configured = True
+        except langflow_client.LangflowConfigurationError:
+            configured = False
+    else:
+        configured = bool(os.getenv("OPENAI_API_KEY", "").strip())
     return {
         "status": "ready" if configured else "unconfigured",
         "configured": configured,
         "model": _openai_model(),
+        "provider": provider,
     }
 
 

@@ -36,6 +36,11 @@ opcional `OPENAI_MODEL` toma `gpt-5-nano` por defecto. `GEMINI_API_KEY` y
 y se dejó intacto por la restricción previa. La clave OpenAI nunca va en el
 frontend, GitHub, `render.yaml` ni en archivos compartidos.
 
+Langflow es opcional y se limita al chatbot. Se activa configurando
+`LANGFLOW_BASE_URL`, `LANGFLOW_API_KEY` y `LANGFLOW_CHATBOT_FLOW_ID`. No existe
+un flujo Langflow para reportes: el resumen ejecutivo continúa ejecutando la
+cadena LCEL de LangChain directamente con `OPENAI_API_KEY`.
+
 No se necesita una clave de LangChain o LangSmith y no se activan trazas.
 `ChatOpenAI` usa la API de Responses con razonamiento `minimal`, límite de
 512 tokens, timeout de 30 segundos, `store=False` y sin `temperature` (GPT-5
@@ -75,9 +80,10 @@ consistir únicamente en espacios.
 La redacción de 4-5 oraciones y la fidelidad científica son instrucciones al
 modelo, no garantías matemáticas. Los KPI proceden del solicitante: este
 endpoint no verifica su procedencia, no calcula predicciones ni sustituye la
-revisión del informe. No hay botón nuevo en el frontend ni integración con
-Langflow en este cambio. `GET /api/chatbot/status` solo comprueba que exista
-`OPENAI_API_KEY`; no prueba conectividad ni saldo de la cuenta.
+revisión del informe. No hay botón nuevo en el frontend. Cuando Langflow está
+configurado, `GET /api/chatbot/status` informa `provider: "langflow"`; de lo
+contrario informa `provider: "langchain"`. El estado valida configuración, no
+conectividad ni saldo de las cuentas.
 
 ## Verificación local realizada
 
