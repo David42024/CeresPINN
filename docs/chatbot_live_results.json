@@ -1,0 +1,176 @@
+{
+  "tested_at_utc": "2026-09-24T05:55:18.900186+00:00",
+  "base_url": "https://cerespinn-backend.onrender.com",
+  "context_is_synthetic": true,
+  "langchain_deployment_verified": false,
+  "results": [
+    {
+      "case": "saludo",
+      "input": {
+        "message": "Hola, ¿qué puedes ayudarme a entender en CeresPINN?",
+        "context": {}
+      },
+      "http_status": 200,
+      "output": {
+        "reply": "Hola, puedo ayudarte a ver cómo se mueven el agua y los nutrientes en el suelo de tu cultivo. Con esto puedes decidir mejor cuándo regar o fertilizar para cuidar tus plantas. Pregúntame lo que quieras sobre tu terreno o tus simulaciones.",
+        "error": null,
+        "model": "gemini-flash-latest"
+      },
+      "contract_ok": true,
+      "seconds": 27.66
+    },
+    {
+      "case": "lectura_kpi",
+      "input": {
+        "message": "Según estos datos ficticios de prueba, ¿cuál es el rendimiento proyectado y cuánta agua se consume?",
+        "context": {
+          "fieldName": "Parcela ficticia de prueba",
+          "scenario": "SSP2-4.5",
+          "targetYear": 2040,
+          "projectedYieldKgHa": 8000,
+          "yieldLossDueToDroughtPercent": 20,
+          "totalWaterConsumedMm": 420,
+          "peakWaterStressIndex": 0.8,
+          "droughtResilienceScore": 55
+        }
+      },
+      "http_status": 502,
+      "output": {
+        "detail": "Gemini no pudo generar una respuesta. Inténtalo nuevamente."
+      },
+      "contract_ok": false,
+      "seconds": 49.05
+    },
+    {
+      "case": "conversion",
+      "input": {
+        "message": "Convierte el rendimiento de esta simulación de prueba de kg/ha a toneladas por hectárea.",
+        "context": {
+          "fieldName": "Parcela ficticia de prueba",
+          "scenario": "SSP2-4.5",
+          "targetYear": 2040,
+          "projectedYieldKgHa": 8000,
+          "yieldLossDueToDroughtPercent": 20,
+          "totalWaterConsumedMm": 420,
+          "peakWaterStressIndex": 0.8,
+          "droughtResilienceScore": 55
+        }
+      },
+      "http_status": 502,
+      "output": {
+        "detail": "Gemini no pudo generar una respuesta. Inténtalo nuevamente."
+      },
+      "contract_ok": false,
+      "seconds": 29.06
+    },
+    {
+      "case": "estres",
+      "input": {
+        "message": "En estos datos de prueba, ¿qué significa un índice máximo de estrés hídrico de 0.8?",
+        "context": {
+          "fieldName": "Parcela ficticia de prueba",
+          "scenario": "SSP2-4.5",
+          "targetYear": 2040,
+          "projectedYieldKgHa": 8000,
+          "yieldLossDueToDroughtPercent": 20,
+          "totalWaterConsumedMm": 420,
+          "peakWaterStressIndex": 0.8,
+          "droughtResilienceScore": 55
+        }
+      },
+      "http_status": 502,
+      "output": {
+        "detail": "Gemini no pudo generar una respuesta. Inténtalo nuevamente."
+      },
+      "contract_ok": false,
+      "seconds": 24.3
+    },
+    {
+      "case": "sin_contexto",
+      "input": {
+        "message": "¿Cuál es el rendimiento exacto de mi parcela?",
+        "context": {}
+      },
+      "http_status": 502,
+      "output": {
+        "detail": "Gemini no pudo generar una respuesta. Inténtalo nuevamente."
+      },
+      "contract_ok": false,
+      "seconds": 8.61
+    },
+    {
+      "case": "comparacion_sin_datos",
+      "input": {
+        "message": "¿Cuánto aumentaría exactamente el rendimiento si cambio a riego completo?",
+        "context": {
+          "fieldName": "Parcela ficticia de prueba",
+          "scenario": "SSP2-4.5",
+          "targetYear": 2040,
+          "projectedYieldKgHa": 8000,
+          "yieldLossDueToDroughtPercent": 20,
+          "totalWaterConsumedMm": 420,
+          "peakWaterStressIndex": 0.8,
+          "droughtResilienceScore": 55
+        }
+      },
+      "http_status": 200,
+      "output": {
+        "reply": "No tengo datos de una simulación con riego completo para darte la cifra exacta. Sin embargo, como estás perdiendo un 20% por sequía sobre los 8000 kg actuales, podrías recuperar hasta unos 2000 kg por hectárea adicionales si eliminas todo el estrés hídrico.",
+        "error": null,
+        "model": "gemini-flash-latest"
+      },
+      "contract_ok": true,
+      "seconds": 9.42
+    },
+    {
+      "case": "alcance",
+      "input": {
+        "message": "¿Estos resultados bastan para asignar agua entre agricultores o decidir un crédito?",
+        "context": {
+          "fieldName": "Parcela ficticia de prueba",
+          "scenario": "SSP2-4.5",
+          "targetYear": 2040,
+          "projectedYieldKgHa": 8000,
+          "yieldLossDueToDroughtPercent": 20,
+          "totalWaterConsumedMm": 420,
+          "peakWaterStressIndex": 0.8,
+          "droughtResilienceScore": 55
+        }
+      },
+      "http_status": 200,
+      "output": {
+        "reply": "No, estos resultados son solo una simulación climática y no bastan por sí solos. Para repartir agua o dar créditos necesitas datos legales, financieros y mediciones reales en campo. Úsalos solo como una guía de apoyo para evaluar riesgos futuros.",
+        "error": null,
+        "model": "gemini-flash-latest"
+      },
+      "contract_ok": true,
+      "seconds": 16.19
+    },
+    {
+      "case": "entrada_vacia",
+      "input": {
+        "message": "",
+        "context": {}
+      },
+      "http_status": 422,
+      "output": {
+        "detail": [
+          {
+            "type": "string_too_short",
+            "loc": [
+              "body",
+              "message"
+            ],
+            "msg": "String should have at least 1 character",
+            "input": "",
+            "ctx": {
+              "min_length": 1
+            }
+          }
+        ]
+      },
+      "contract_ok": true,
+      "seconds": 0.22
+    }
+  ]
+}
