@@ -1,26 +1,26 @@
 # LangChain en el backend CeresPINN
 
 El chatbot y el resumen de reportes ejecutan la cadena LCEL
-`ChatPromptTemplate | ChatGoogleGenerativeAI | StrOutputParser` definida en
+`ChatPromptTemplate | ChatOpenAI | StrOutputParser` definida en
 `backend/llm.py`. El contenido se pasa como variable del prompt para conservar
 literalmente las llaves de JSON y del mensaje del usuario.
 
 ## Entorno comprobado
 
-Python 3.12.14; Pydantic 2.9.2; pydantic-core 2.23.4; FastAPI 0.141.1;
-Starlette 1.6.0; Torch 2.6.0+cpu; langchain-core 1.6.4;
-langchain-google-genai 4.3.7; google-genai 2.8.0.
+Python 3.12.14; Pydantic 2.9.2; FastAPI 0.141.1; Starlette 1.6.0;
+Torch 2.6.0+cpu; langchain-core 1.6.4; langchain-openai 1.6.6;
+openai 3.19.2.
 
-Las dos dependencias nuevas quedan sin fijar en `backend/requirements.txt`.
-Pip debe resolver **todo ese archivo junto**, respetando Pydantic 2.9.2.
-Instalar las integraciones por separado sin restricciones puede actualizar
-Pydantic. El entorno local `.venv-langchain` está separado de `.venv`.
+Las dependencias de LangChain quedan sin fijar agresivamente en
+`backend/requirements.txt`. El `pip --dry-run` con el archivo completo
+no pidió cambiar Pydantic, FastAPI, Starlette, Torch ni otro paquete ya
+instalado. Añadiría solo `langchain-openai 1.6.6`, `openai 3.19.2`,
+`tiktoken 0.14.0`, `jiter 0.17.0` y `regex 2026.9.10`.
 
 Para reproducir las versiones principales comprobadas:
 
 ```powershell
-python -m venv .venv-langchain
-.\.venv-langchain\Scripts\python.exe -m pip install -r backend/requirements-test.txt langchain-core==1.6.4 langchain-google-genai==4.3.7 google-genai==2.8.0 fastapi==0.141.1 starlette==1.6.0
+.\.venv-langchain\Scripts\python.exe -m pip install -r backend/requirements-test.txt
 .\.venv-langchain\Scripts\python.exe -m pip check
 .\.venv-langchain\Scripts\python.exe -c "from backend.app import app"
 .\.venv-langchain\Scripts\python.exe -m pytest backend/tests/test_api.py backend/tests/test_llm.py -q
@@ -29,21 +29,26 @@ python -m venv .venv-langchain
 
 ## Configuración
 
-Se reutiliza `GEMINI_API_KEY` del backend. `GEMINI_MODEL` conserva su valor
-predeterminado `gemini-flash-latest`. No se necesita cuenta ni clave de
-LangChain o LangSmith. No se activa el envío de trazas a LangSmith.
-La credencial de Render no se copia automáticamente al entorno local.
+En el backend de Render se debe configurar `OPENAI_API_KEY` con una clave
+**nueva**. La clave compartida en la conversación debe revocarse. La variable
+opcional `OPENAI_MODEL` toma `gpt-5-nano` por defecto. `GEMINI_API_KEY` y
+`GEMINI_MODEL` ya no se leen por el backend; `render.yaml` todavía las declara
+y se dejó intacto por la restricción previa. La clave OpenAI nunca va en el
+frontend, GitHub, `render.yaml` ni en archivos compartidos.
 
-La configuración del modelo conserva temperatura 0.3, 300 tokens de salida y
-presupuesto de razonamiento 0. Los reintentos están a cargo del endpoint:
-hasta tres intentos para 429, 500, 503, UNAVAILABLE o RESOURCE_EXHAUSTED, con
-esperas de 1.5 y 3 segundos. Se configura un timeout de 10 segundos por llamada.
+No se necesita una clave de LangChain o LangSmith y no se activan trazas.
+`ChatOpenAI` usa la API de Responses con razonamiento `minimal`, límite de
+512 tokens, timeout de 30 segundos, `store=False` y sin `temperature` (GPT-5
+nano no acepta el valor 0.3 anterior). Los reintentos están a cargo de los
+endpoints: hasta tres intentos para errores transitorios. Los logs registran
+solo tipo de error, código y request ID, nunca prompt ni credencial.
 
 ## Contratos
 
 `POST /api/chatbot` conserva `message` y `context`, su prompt original,
-el resultado `{reply, error: null, model}`, la respuesta alternativa cuando
-el modelo no produce texto, y los errores HTTP 503/502 con `detail` sanitizado.
+el resultado `{reply, error: null, model}` con `model: "gpt-5-nano"`, la
+respuesta alternativa cuando el modelo no produce texto, y los errores HTTP
+503/502 con `detail` sanitizado.
 
 `POST /api/reports/ai-summary` recibe:
 
@@ -71,24 +76,16 @@ La redacción de 4-5 oraciones y la fidelidad científica son instrucciones al
 modelo, no garantías matemáticas. Los KPI proceden del solicitante: este
 endpoint no verifica su procedencia, no calcula predicciones ni sustituye la
 revisión del informe. No hay botón nuevo en el frontend ni integración con
-Langflow en este cambio.
+Langflow en este cambio. `GET /api/chatbot/status` solo comprueba que exista
+`OPENAI_API_KEY`; no prueba conectividad ni saldo de la cuenta.
 
 ## Verificación local realizada
 
 - `pip check`: sin dependencias rotas.
 - Importación de `backend.app`: correcta.
-- Uvicorn con `--reload`, puerto 8017: arranque correcto.
 - 34 pruebas de `test_api.py` y `test_llm.py`: aprobadas. Se usó SQLite en
-  memoria para la suite. Hubo avisos de deprecación de AnyIO y de permisos de
-  la caché de pytest; no hubo fallos de pruebas.
-- POST reales por HTTP sin credencial: ambos endpoints devolvieron HTTP 503
-  con errores controlados.
-- POST reales por HTTP en un segundo proceso de prueba, puerto 8018:
-  ambos devolvieron HTTP 200 con el contrato esperado. Este proceso mantuvo
-  la cadena LCEL y `ChatGoogleGenerativeAI`, sustituyendo únicamente
-  `google.genai.models.Models.generate_content` por una respuesta determinística.
-  Esa sustitución fue temporal en memoria, no forma parte del backend.
-- Se detuvieron ambos servidores de prueba al terminar.
-
-No se validó una respuesta real de Google porque la sesión local no dispone
-de `GEMINI_API_KEY`. No se realizó despliegue ni se modificó producción.
+  memoria para la suite. Hubo un aviso de deprecación de AnyIO; no hubo
+  fallos de pruebas. Las respuestas del modelo en estas pruebas son simuladas.
+- Pendiente: configurar una clave OpenAI nueva en Render, desplegar y obtener
+  HTTP 200 reales en ambos endpoints. La clave compartida en la conversación
+  no se usó en pruebas locales ni se guardó en el repositorio.
