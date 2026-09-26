@@ -117,9 +117,7 @@ export const App: React.FC = () => {
             setFields(fieldsRes.fields);
             setSelectedField(fieldsRes.fields[0]);
           }
-          if (!usersRes.fallback && usersRes.users.length > 0) {
-            setCurrentUser(usersRes.users[0]);
-          }
+          // auto login removed
           setDbHealth(healthRes.health);
           const isModelReady = modelStatusRes.status === 'ready' || modelStatusRes.model_ready === true;
           setModelOnline(isModelReady);

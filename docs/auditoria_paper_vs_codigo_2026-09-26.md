@@ -1,5 +1,3 @@
-Mande a revisar mi paper y me dieron las observaciones con respecto a mi sistema, puedes indicarme si hay cosas que corregir en el sistema? O sería de corregir datos del informe con las nuevas actualizaciones implementadas? Si es que hay cosas que faltan añadir al sistema con funcionalidades fundamentales indicamelo:
-
 # Auditoría crítica del paper de CeresPINN frente al repositorio
 
 **Fecha de corte:** 2026-09-26  
@@ -96,3 +94,43 @@ Mande a revisar mi paper y me dieron las observaciones con respecto a mi sistema
 5. Centralizar forzantes climáticos y desactivar motores alternativos en modo científico.
 6. Separar predicción neuronal cruda, ajustes deterministas y simulación diaria en el contrato API.
 7. Añadir reproducción end-to-end del entrenamiento, hashes de outputs y generadores de figuras.
+8. Resolver Ksat, doble escala de precipitación, banda ±15 % y endpoint de estado.
+9. Alinear proveedor LLM, persistencia y metadata visible con el release real.
+
+### P2 — Fortalecimiento metodológico
+
+10. Validar estados biofísicos y cierre hídrico; calibrar manejo con datos experimentales.
+11. Publicar linaje NASS/NEX completo y distinguir claramente estudios v2.5 y v4.
+12. Normalizar terminología: “prototipo híbrido”, “MLP físicamente regularizado” y “brecha a potencial heurístico”.
+
+## 6. Verificaciones realizadas
+
+| Verificación | Resultado |
+|---|---|
+| Comparación del nuevo anexo con el anterior | Solo elimina un párrafo introductorio duplicado y corrige Chavoshi 2025→2024; las afirmaciones técnicas no cambian. |
+| Inspección del `HEAD` | `5df3da13c06a0382fad4038e5e6d22ea667b8978`; se inspeccionaron modelos, inferencia, validación, frontend, datos, scripts y CI. |
+| Consumo del checkpoint | Confirmado por lectura: `PinnAdapter` se selecciona si `cerespinn_pinn.pt` y metadato existen; ambos están presentes. |
+| Ejecución de pytest | No verificada en esta sesión: el `.venv` apunta a un Python inexistente y el runtime disponible no incluye pytest. Esto es además un problema de reproducibilidad local. |
+| Métricas Q1 | Verificadas contra CSV/JSON versionados, no regeneradas en esta sesión. |
+
+## 7. Preguntas para aclarar antes de la versión final
+
+1. ¿El artículo se publicará sobre el checkpoint PyTorch v2.5 o sobre el nuevo modelo espacial v4?
+2. ¿Por qué `/api/validation` usa v4 mientras `/api/simulate` prioriza v2.5?
+3. ¿Cuál es el R² verdadero del v4: 0.9462 o −0.0063 para `MLP_Small`?
+4. ¿Se retirarán v3/v4 del release del paper o se documentarán como experimentos separados?
+5. ¿Qué commit/tag completo reemplazará al hash `6c22e5…`?
+6. ¿Dónde se publicará el CSV exacto de 98 filas y su generador?
+7. ¿Aceptan incorporar en resumen y conclusiones el R² prospectivo −0.8318?
+8. ¿La salida oficial será el rendimiento crudo del checkpoint o el rendimiento posterior a multiplicadores?
+9. ¿CO₂ debe afectar dos veces el resultado —como feature de la red y como multiplicador posterior—?
+10. ¿React, Streamlit o FastAPI es la interfaz científica canónica?
+11. ¿Ksat debía intervenir realmente en drenaje/infiltración?
+12. ¿La banda ±15 % es solo heurística o existe una calibración de cobertura no versionada?
+13. ¿El asistente final usa Gemini u OpenAI?
+14. ¿PostgreSQL/PostGIS es una dependencia del experimento o solo una opción de despliegue?
+15. ¿Existen scripts originales para las figuras y el benchmark publicado?
+
+## 8. Dictamen
+
+El paper describe de forma razonablemente honesta el experimento **CeresPINN v2.5**, y sus métricas principales siguen presentes. El problema central ya no es solo editorial: el repositorio evolucionó hacia v3/v4 sin una frontera de release, y la aplicación mezcla inferencia v2.5 con validación v4. Por ello, el sistema actual no constituye una implementación única y coherente del manuscrito. La ruta de menor riesgo es congelar y corregir un release científico v2.5 para este paper, dejar v4 como línea futura separada y no presentar la aplicación pública como evidencia del artículo hasta unificar selección, validación y trazabilidad del modelo.

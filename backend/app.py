@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import time
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException
@@ -220,7 +221,7 @@ def model_status() -> Dict[str, Any]:
         "test_rows": meta.get("test_rows"),
         "database": "SQLite Local",
         "inference_mode": "trained_ml" if model_ready else "unavailable",
-        "checkpoint": inv.checkpoint.name,
+        "checkpoint": getattr(getattr(inv, 'adapter', None), 'checkpoint', Path('unknown')).name,
         "error": inv.error_message,
     }
 
@@ -463,7 +464,7 @@ def _build_simulation_response(
         "scientific_scope": inference_mod.SCIENTIFIC_SCOPE,
         "projected_yield_kg_ha": round(projected_yield),
         "potential_yield_kg_ha": 9200,
-        "yield_loss_due_to_drought_percent": round(max(0, 100 - (projected_yield / 9200) * 100), 1),
+        "gap_to_heuristic_potential_percent": round(max(0, 100 - (projected_yield / 9200) * 100), 1),
         "total_biomass_kg_ha": round(projected_yield * 1.34),
         "total_water_consumed_mm": 360,
         "water_productivity_kg_m3": 1.7,

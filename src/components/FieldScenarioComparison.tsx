@@ -57,7 +57,7 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
         simulateScenario(field, configActive),
         simulateScenario(field, configSsp5),
       ]);
-      const yieldLoss = resActive.summaryKPIs.yieldLossDueToDroughtPercent;
+      const yieldLoss = resActive.summaryKPIs.gapToHeuristicPotentialPercent;
       const cwsi = resActive.summaryKPIs.peakWaterStressIndex;
       return {
         field,
@@ -144,7 +144,7 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
                 <th className="px-4 py-3 text-left">#</th>
                 <th className="px-4 py-3 text-left">{t('fieldComparison.fieldRegion')}</th>
                 <th className="px-4 py-3 text-right">{t('fieldComparison.yieldKgHa')}</th>
-                <th className="px-4 py-3 text-right">{t('fieldComparison.droughtLoss')}</th>
+                <th className="px-4 py-3 text-right">{t('fieldComparison.yieldGap')}</th>
                 <th className="px-4 py-3 text-right">{t('fieldComparison.maxCwsi')}</th>
                 <th className="px-4 py-3 text-right">{t('fieldComparison.criticalDays')}</th>
                 <th className="px-4 py-3 text-right">{t('fieldComparison.resilience')}</th>

@@ -21,7 +21,7 @@ export interface ChatbotContext {
   modelName?: string;
   modelDataSource?: string;
   projectedYieldKgHa?: number;
-  yieldLossDueToDroughtPercent?: number;
+  gapToHeuristicPotentialPercent?: number;
   totalWaterConsumedMm?: number;
   peakWaterStressIndex?: number;
   droughtResilienceScore?: number;
@@ -53,8 +53,8 @@ const assertRemotePinnPayload = (payload: any) => {
   if (!payload?.model_version) {
     throw new Error('Render response is missing model_version.');
   }
-  if (!payload?.prediction_interval_90) {
-    throw new Error('Render response is missing prediction_interval_90.');
+  if (!payload?.heuristic_band_90) {
+    throw new Error('Render response is missing heuristic_band_90.');
   }
   if (!payload?.component_provenance) {
     throw new Error('Render response is missing component_provenance.');
@@ -71,7 +71,7 @@ const assertRemotePinnPayload = (payload: any) => {
   const requiredNumbers = [
     'projected_yield_kg_ha',
     'potential_yield_kg_ha',
-    'yield_loss_due_to_drought_percent',
+    'gap_to_heuristic_potential_percent',
     'total_biomass_kg_ha',
     'total_water_consumed_mm',
     'water_productivity_kg_m3',
@@ -138,9 +138,9 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
     modelVerified: response?.model_verified,
     predictionScope: response?.prediction_scope,
     datasetSha256: response?.dataset_sha256,
-    predictionInterval90: response?.prediction_interval_90 ? {
-      lowerKgHa: response.prediction_interval_90.lower_kg_ha,
-      upperKgHa: response.prediction_interval_90.upper_kg_ha,
+    heuristicBand90: response?.heuristic_band_90 ? {
+      lowerKgHa: response.heuristic_band_90.lower_kg_ha,
+      upperKgHa: response.heuristic_band_90.upper_kg_ha,
     } : undefined,
     isExtrapolation: response?.is_extrapolation,
     extrapolatedFeatures: response?.extrapolated_features,
@@ -170,9 +170,12 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
     fieldLocation: `${field.locationName}, ${field.country}`,
     createdAt: new Date().toISOString(),
     summaryKPIs: {
+      rawModelYieldKgHa: safeNumber(response?.raw_model_yield_kg_ha, () => undefined),
+      adjustedYieldKgHa: safeNumber(response?.adjusted_yield_kg_ha, () => fallbackKpis().projectedYieldKgHa),
+      yieldAdjustmentComponents: response?.yield_adjustment_components,
       projectedYieldKgHa: safeNumber(response?.projected_yield_kg_ha, () => fallbackKpis().projectedYieldKgHa),
       potentialYieldKgHa: safeNumber(response?.potential_yield_kg_ha, () => fallbackKpis().potentialYieldKgHa),
-      yieldLossDueToDroughtPercent: safeNumber(response?.yield_loss_due_to_drought_percent, () => fallbackKpis().yieldLossDueToDroughtPercent),
+      gapToHeuristicPotentialPercent: safeNumber(response?.gap_to_heuristic_potential_percent, () => fallbackKpis().gapToHeuristicPotentialPercent),
       totalBiomassKgHa: safeNumber(response?.total_biomass_kg_ha, () => fallbackKpis().totalBiomassKgHa),
       totalWaterConsumedMm: safeNumber(response?.total_water_consumed_mm, () => fallbackKpis().totalWaterConsumedMm),
       waterProductivityKgM3: safeNumber(response?.water_productivity_kg_m3, () => fallbackKpis().waterProductivityKgM3),
@@ -556,34 +559,33 @@ export async function fetchValidationReport() {
       fallback: true,
       report: {
         hindcast_metrics: {
-          rmse_kg_ha: 385,
-          mae_kg_ha: 298,
-          r2_score: 0.942,
-          nrmse_percent: 4.8
+          r2: null,
+          rmse: null,
+          mae: null,
+          bias: null
         },
-        ks_test: {
-          statistic: 0.087,
-          p_value: 0.234,
-          null_rejected: false
+        spatial_metrics: {
+          rmse_mean: null,
+          rmse_std: null
         },
-        paired_t_test: {
-          t_statistic: -1.45,
-          p_value: 0.147,
-          significant: false
+        t_test_results: {
+          status: "not_computed",
+          null_hypothesis: "The trained model maintains >15% yield loss under extreme climate.",
+          p_value: null,
+          t_statistic: null,
+          mean_difference_pct: null,
+          h1_supported: null
         },
-        sobol_sensitivity: {
-          first_order: { temperature: 0.42, precipitation: 0.31, co2: 0.18 },
-          total_order: { temperature: 0.58, precipitation: 0.45, co2: 0.25 }
-        },
-        bootstrap_ci: {
-          yield_95_ci_lower: 7650,
-          yield_95_ci_upper: 8350,
-          n_bootstrap: 1000
+        sobol_indices: {
+          status: "not_computed",
+          tmax: {"S1": null, "ST": null},
+          precip: {"S1": null, "ST": null},
+          cdd: {"S1": null, "ST": null}
         },
         ensemble_uncertainty: {
-          mean_yield: 8000,
-          std_yield: 175,
-          ensemble_size: 32
+          status: "not_computed",
+          method: "Real prediction intervals from Scikit-Learn (Not downscaled GCM spread)",
+          scenarios: {}
         }
       }
     };
