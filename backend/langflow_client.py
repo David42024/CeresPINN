@@ -69,5 +69,6 @@ def run_chatbot_flow(*, input_value: str, config: LangflowConfig | None = None) 
         # Generally, it looks like this for a Chat Output node:
         return result[0].outputs[0].results["message"].text
     except Exception as exc:
-        print(f"Error running local Langflow: {exc}")
-        raise LangflowExecutionError(500, str(exc)) from exc
+        error_msg = f"Error detallado de Langflow: {exc}"
+        print(error_msg)
+        return error_msg

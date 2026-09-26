@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+﻿import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as THREE from 'three';
 import { 
@@ -42,13 +42,13 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   const stagePills = useMemo(() => {
     if (!simulation?.dailyRecords) return [];
     const stagesWanted = [
-      { code: 'VE', label: '🌱 VE Siembra' },
-      { code: 'V3', label: '🌿 V3 Plántula' },
-      { code: 'V6', label: '🌿 V6 Vegetativo' },
-      { code: 'VT', label: '🌾 VT Espiga' },
-      { code: 'R1', label: '🌽 R1 Floración' },
-      { code: 'R3', label: '🌽 R3 Llenado' },
-      { code: 'R6', label: '🚜 R6 Cosecha' },
+      { code: 'VE', label: 'ðŸŒ± VE Siembra' },
+      { code: 'V3', label: 'ðŸŒ¿ V3 PlÃ¡ntula' },
+      { code: 'V6', label: 'ðŸŒ¿ V6 Vegetativo' },
+      { code: 'VT', label: 'ðŸŒ¾ VT Espiga' },
+      { code: 'R1', label: 'ðŸŒ½ R1 FloraciÃ³n' },
+      { code: 'R3', label: 'ðŸŒ½ R3 Llenado' },
+      { code: 'R6', label: 'ðŸšœ R6 Cosecha' },
     ];
     return stagesWanted.map((s) => {
       const idx = simulation.dailyRecords.findIndex((r) => r.stageCode === s.code);
@@ -62,6 +62,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
   // Controls state
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [layerMode, setLayerMode] = useState<VisualLayerMode>('soil_moisture');
   const [cameraMode, setCameraMode] = useState<CameraViewMode>('perspective');
   const [selectedDepth, setSelectedDepth] = useState<'top' | 'mid' | 'deep'>('top');
@@ -441,8 +442,22 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     updateCameraPosition();
   };
 
+  useEffect(() => {
+    const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.getElementById('three-field-viewer-card')?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
   return (
-    <div id="three-field-viewer-card" className="relative w-full h-[540px] bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col select-none">
+    <div id="three-field-viewer-card" className={elative w-full bg-white dark:bg-slate-900/90 shadow-2xl overflow-hidden flex flex-col select-none transition-all }>
       {/* 3D Canvas Viewport */}
       <div 
         ref={containerRef}
@@ -476,7 +491,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
           {dailyRecord && dailyRecord.stageCode === 'R6' ? (
             <div className="px-3 py-1.5 rounded-xl bg-amber-500/20 backdrop-blur-md border border-amber-400 dark:border-amber-500/60 text-amber-800 dark:text-amber-200 text-xs font-bold flex items-center gap-1.5 shadow-lg">
-              <span>🌽 Madurez Fisiológica R6 (Cultivo Maduro Listo para Cosecha)</span>
+              <span>ðŸŒ½ Madurez FisiolÃ³gica R6 (Cultivo Maduro Listo para Cosecha)</span>
             </div>
           ) : dailyRecord && dailyRecord.cwsi > 0.40 ? (
             <div className="px-3 py-1.5 rounded-xl bg-amber-50/80 dark:bg-amber-950/80 backdrop-blur-md border border-amber-300 dark:border-amber-600/60 text-amber-700 dark:text-amber-300 text-xs font-medium flex items-center gap-1.5 shadow-lg animate-pulse">
@@ -575,16 +590,23 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-slate-600 dark:text-slate-400 pt-0.5">
               <div>{t('threeFieldViewer.humedadTop')}: <span className="font-mono text-cyan-600 dark:text-cyan-300">{(dailyRecord.soilMoistureTop * 100).toFixed(1)}%</span></div>
               <div>{t('threeFieldViewer.biomasa')}: <span className="font-mono text-emerald-600 dark:text-emerald-300">{(dailyRecord.biomassKgHa / 1000).toFixed(1)} t/ha</span></div>
-              <div>{t('threeFieldViewer.laiArea')}: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.lai} m²/m²</span></div>
+              <div>{t('threeFieldViewer.laiArea')}: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.lai} mÂ²/mÂ²</span></div>
               <div>{t('threeFieldViewer.root')}: <span className="font-mono text-amber-600 dark:text-amber-300">{dailyRecord.rootDepthCm} cm</span></div>
               <div>{t('threeFieldViewer.transpiration')}: <span className="font-mono text-blue-600 dark:text-blue-300">{dailyRecord.transpirationMm} mm</span></div>
-              <div>{t('threeFieldViewer.gdd')}: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.gddAccumulated}°C·d</span></div>
+              <div>{t('threeFieldViewer.gdd')}: <span className="font-mono text-slate-800 dark:text-slate-200">{dailyRecord.gddAccumulated}Â°CÂ·d</span></div>
             </div>
           </div>
         )}
 
         {/* Camera Quick Controls */}
         <div className="absolute bottom-16 right-4 z-10 flex flex-col gap-1.5">
+          <button
+            onClick={toggleFullscreen}
+            className={p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all }
+            title="Pantalla Completa"
+          >
+            <Maximize2 className="w-4 h-4" />
+          </button>
           <button
             onClick={() => setCameraMode('perspective')}
             className={`p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all ${
@@ -605,7 +627,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
                 : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'
             }`}
             title={t('threeFieldViewer.camTopDownTitle')}
-            aria-label="Cambiar a vista aérea"
+            aria-label="Cambiar a vista aÃ©rea"
           >
             <Eye className="w-4 h-4" />
           </button>
@@ -636,7 +658,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               disabled={!simulation}
               className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white transition-all shadow-md shadow-emerald-600/25 flex items-center gap-2 text-xs font-semibold disabled:opacity-50 cursor-pointer"
               title={isPlaying ? t('threeFieldViewer.playPauseActive') : t('threeFieldViewer.playPause')}
-              aria-label={isPlaying ? 'Pausar simulación' : 'Reproducir ciclo fenológico'}
+              aria-label={isPlaying ? 'Pausar simulaciÃ³n' : 'Reproducir ciclo fenolÃ³gico'}
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white" />}
               <span>{isPlaying ? 'Pausar' : 'Reproducir'}</span>
@@ -650,7 +672,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
               disabled={!simulation}
               className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all disabled:opacity-50 cursor-pointer"
               title={t('threeFieldViewer.resetTitle')}
-              aria-label="Reiniciar simulación a la siembra"
+              aria-label="Reiniciar simulaciÃ³n a la siembra"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -661,11 +683,11 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             <span className="text-emerald-700 dark:text-emerald-400 font-bold whitespace-nowrap">
               {t('threeFieldViewer.sliderDayLabel')} {currentDayIndex + 1} de {simulation?.dailyRecords.length || 120}
             </span>
-            <span className="text-slate-400 dark:text-slate-600">•</span>
+            <span className="text-slate-400 dark:text-slate-600">â€¢</span>
             <span className="text-slate-600 dark:text-slate-300 whitespace-nowrap">
               {dailyRecord?.date || '--'}
             </span>
-            <span className="text-slate-400 dark:text-slate-600">•</span>
+            <span className="text-slate-400 dark:text-slate-600">â€¢</span>
             <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 font-semibold text-[11px] whitespace-nowrap">
               {dailyRecord?.stage || 'VE'} ({dailyRecord?.stageCode || 'VE'})
             </span>
@@ -694,13 +716,13 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           {/* Labels above slider */}
           <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 px-1">
             <span className="flex items-center gap-1 font-semibold text-slate-600 dark:text-slate-300">
-              🌱 {t('threeFieldViewer.sliderPlanting')} (DAP 1)
+              ðŸŒ± {t('threeFieldViewer.sliderPlanting')} (DAP 1)
             </span>
             <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
               Progreso del Ciclo: {Math.round(((currentDayIndex) / Math.max(1, (simulation?.dailyRecords.length || 1) - 1)) * 100)}%
             </span>
             <span className="flex items-center gap-1 font-semibold text-slate-600 dark:text-slate-300">
-              🚜 {t('threeFieldViewer.sliderHarvest')} (DAP {simulation?.dailyRecords.length || 120})
+              ðŸšœ {t('threeFieldViewer.sliderHarvest')} (DAP {simulation?.dailyRecords.length || 120})
             </span>
           </div>
 
@@ -785,3 +807,4 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     </div>
   );
 };
+
