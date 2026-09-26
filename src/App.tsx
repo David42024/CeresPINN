@@ -65,13 +65,8 @@ type ActiveTab =
   | 'dashboard' 
   | 'config' 
   | 'whatif' 
-  | 'map' 
   | 'reports' 
-  | 'mlops' 
-  | 'pipelines' 
-  | 'users'
-  | 'validation'
-  | 'field-comparison';
+  | 'about';
 
 type RuntimeModelStatus = {
   r2Score?: number;
@@ -369,6 +364,7 @@ export const App: React.FC = () => {
 
         {/* Navigation Tabs Bar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto py-1 border-t border-slate-100 dark:border-slate-900 text-xs">
+          {/* 1. Visualización 3D */}
           <button
             id="tab-btn-twin3d"
             onClick={() => setActiveTab('twin3d')}
@@ -380,6 +376,7 @@ export const App: React.FC = () => {
             {t('app.tabTwin3d')}
           </button>
 
+          {/* 2. Resultados / Dashboard KPI */}
           <button
             id="tab-btn-dashboard"
             onClick={() => setActiveTab('dashboard')}
@@ -391,6 +388,7 @@ export const App: React.FC = () => {
             {t('app.tabDashboard')}
           </button>
 
+          {/* 3. Simulación / Configuración */}
           <button
             id="tab-btn-config"
             onClick={() => setActiveTab('config')}
@@ -402,6 +400,7 @@ export const App: React.FC = () => {
             {t('app.tabConfig')}
           </button>
 
+          {/* 4. Comparar escenarios y adaptación */}
           <button
             id="tab-btn-whatif"
             onClick={() => setActiveTab('whatif')}
@@ -410,20 +409,10 @@ export const App: React.FC = () => {
             }`}
           >
             <GitCompare className="w-3.5 h-3.5" />
-            {t('app.tabWhatIf')}
+            Escenarios y Adaptación
           </button>
 
-          <button
-            id="tab-btn-map"
-            onClick={() => setActiveTab('map')}
-            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'map' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            <MapPin className="w-3.5 h-3.5" />
-            {t('app.tabMap')}
-          </button>
-
+          {/* 5. Exportar */}
           <button
             id="tab-btn-reports"
             onClick={() => setActiveTab('reports')}
@@ -432,62 +421,19 @@ export const App: React.FC = () => {
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
-            {t('app.tabReports')}
+            Exportar
           </button>
 
+          {/* 6. Acerca del modelo */}
           <button
-            id="tab-btn-mlops"
-            onClick={() => setActiveTab('mlops')}
+            id="tab-btn-about"
+            onClick={() => setActiveTab('about')}
             className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'mlops' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+              activeTab === 'about' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
-            <Cpu className="w-3.5 h-3.5" />
-            {t('app.tabMlOps')}
-          </button>
-
-          <button
-            id="tab-btn-pipelines"
-            onClick={() => setActiveTab('pipelines')}
-            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'pipelines' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            <Database className="w-3.5 h-3.5" />
-            {t('app.tabPipelines')}
-          </button>
-
-          <button
-            id="tab-btn-users"
-            onClick={() => setActiveTab('users')}
-            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'users' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            <Users className="w-3.5 h-3.5" />
-            {t('app.tabUsers')}
-          </button>
-
-          <button
-            id="tab-btn-validation"
-            onClick={() => setActiveTab('validation')}
-            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'validation' ? 'bg-slate-100 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-b-2 border-emerald-500 dark:border-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            {t('app.tabValidation')}
-          </button>
-
-          <button
-            id="tab-btn-field-comparison"
-            onClick={() => setActiveTab('field-comparison')}
-            className={`px-3 py-2 rounded-lg font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap ${
-              activeTab === 'field-comparison' ? 'bg-slate-100 dark:bg-slate-800 text-rose-600 dark:text-rose-400 border-b-2 border-rose-500 dark:border-rose-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-            }`}
-          >
-            <AlertTriangle className="w-3.5 h-3.5" />
-            Comparador de campos
+            <Info className="w-3.5 h-3.5" />
+            Acerca del Modelo
           </button>
         </div>
       </header>
@@ -782,13 +728,54 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: Dashboard & KPIs */}
+        {/* TAB 2: Dashboard & KPIs - Resultados */}
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
             <MainDashboard
               simulation={simulationResult}
               currentDayIndex={currentDayIndex}
               onSelectDayIndex={setCurrentDayIndex}
+            />
+          </div>
+        )}
+
+        {/* TAB 3: Simulación & Configuración */}
+        {activeTab === 'config' && (
+          <SimulationConfigPanel
+            field={selectedField}
+            config={simulationConfig}
+            onChangeConfig={async (newCfg) => {
+              setSimulationConfig(newCfg);
+              try {
+                const res = await simulateScenario(selectedField, newCfg);
+                setSimulationResult(res);
+                setModelOnline(['trained_ml', 'pinn', 'pinn-calibrated-surrogate'].includes(res.inferenceMode));
+              } catch (error) {
+                console.error('Config simulation failed', error);
+                setModelOnline(false);
+              }
+            }}
+            onRunSimulation={executeSimulation}
+            isLoading={isSimulating}
+          />
+        )}
+
+        {/* TAB 4: Escenarios & Adaptación (What-if + AdaptationPanel merged) */}
+        {activeTab === 'whatif' && (
+          <div className="space-y-6">
+            {/* Exploratory language notice */}
+            <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-700/50 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">
+              <ShieldAlert className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>
+                <strong>Uso exploratorio solamente.</strong> Las comparaciones de escenarios son orientativas.
+                Los "ahorros" y diferencias de rendimiento no deben interpretarse como prescripciones agronómicas ni como evidencia de causalidad.
+                Contrasta cualquier resultado con datos locales antes de tomar decisiones.
+              </span>
+            </div>
+            <WhatIfStudio
+              field={selectedField}
+              baseConfig={simulationConfig}
+              initialSimulation={simulationResult}
             />
             <AdaptationPanel
               simulation={simulationResult}
@@ -801,7 +788,7 @@ export const App: React.FC = () => {
                   try {
                     const res = await simulateScenario(selectedField, merged);
                     setSimulationResult(res);
-                    setModelOnline(res.inferenceMode === 'pinn');
+                    setModelOnline(['trained_ml', 'pinn', 'pinn-calibrated-surrogate'].includes(res.inferenceMode));
                   } catch {
                     setModelOnline(false);
                   }
@@ -811,48 +798,7 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 3: Simulation & Climate Config */}
-        {activeTab === 'config' && (
-          <SimulationConfigPanel
-            field={selectedField}
-            config={simulationConfig}
-            onChangeConfig={async (newCfg) => {
-              setSimulationConfig(newCfg);
-              try {
-                const res = await simulateScenario(selectedField, newCfg);
-                setSimulationResult(res);
-                setModelOnline(res.inferenceMode === 'pinn');
-              } catch (error) {
-                console.error('Config simulation failed', error);
-                setModelOnline(false);
-              }
-            }}
-            onRunSimulation={executeSimulation}
-            isLoading={isSimulating}
-          />
-        )}
-
-        {/* TAB 4: What-If Studio */}
-        {activeTab === 'whatif' && (
-          <WhatIfStudio
-            field={selectedField}
-            baseConfig={simulationConfig}
-            initialSimulation={simulationResult}
-          />
-        )}
-
-        {/* TAB 5: GIS Field Map Manager */}
-        {activeTab === 'map' && (
-          <FieldMapManager
-            fields={fields}
-            selectedField={selectedField}
-            onSelectField={handleSelectField}
-            onAddField={handleAddField}
-            onDeleteField={handleDeleteField}
-          />
-        )}
-
-        {/* TAB 6: Reports & Export */}
+        {/* TAB 5: Exportar PDF/XLSX */}
         {activeTab === 'reports' && (
           <ReportsModule
             simulation={simulationResult}
@@ -860,35 +806,18 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* TAB 7: MLOps & Model Registry */}
-        {activeTab === 'mlops' && (
-          <MLOpsDashboard />
-        )}
-
-        {/* TAB 8: Data Pipelines Ingestion */}
-        {activeTab === 'pipelines' && (
-          <DataPipelinesView />
-        )}
-
-        {/* TAB 9: User Management & RBAC */}
-        {activeTab === 'users' && (
-          <UserManagement
-            currentUser={currentUser}
-            onSwitchUser={setCurrentUser}
-          />
-        )}
-
-        {/* TAB 10: Statistical Validation */}
-        {activeTab === 'validation' && (
-          <ValidationReport />
-        )}
-
-        {/* TAB 11: exploratory field/scenario comparison */}
-        {activeTab === 'field-comparison' && (
-          <FieldScenarioComparison
-            fields={fields}
-            currentConfig={simulationConfig}
-          />
+        {/* TAB 6: Acerca del Modelo & Limitaciones (MLOps + Scientific scope) */}
+        {activeTab === 'about' && (
+          <div className="space-y-6">
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900/60 dark:via-slate-950 dark:to-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+              <div className="flex items-center gap-2 mb-3">
+                <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h2 className="text-base font-black text-slate-800 dark:text-slate-100">Transparencia del Modelo & Limitaciones Científicas</h2>
+              </div>
+              <ScientificScopeNotice />
+            </div>
+            <MLOpsDashboard />
+          </div>
         )}
       </main>
 
