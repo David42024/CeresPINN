@@ -78,7 +78,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
       ...config, 
       scenario,
       temperatureAnomalyC: newForcing.tempAnomalyC,
-      precipitationAnomalyPercent: newForcing.precipAnomalyPct,
+      precipitationAnomalyPercent: Math.round((newForcing.precipMultiplier - 1) * 100),
       carbonDioxidePpm: newForcing.co2Ppm
     });
   };
@@ -89,7 +89,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
       ...config, 
       targetYear,
       temperatureAnomalyC: newForcing.tempAnomalyC,
-      precipitationAnomalyPercent: newForcing.precipAnomalyPct,
+      precipitationAnomalyPercent: Math.round((newForcing.precipMultiplier - 1) * 100),
       carbonDioxidePpm: newForcing.co2Ppm
     });
   };
