@@ -17,3 +17,5 @@ scipy==1.14.1
 # Required at runtime: /api/simulate loads backend/models/cerespinn_pinn.pt.
 torch==2.6.0+cpu
 
+
+langflow>=1.0.0
