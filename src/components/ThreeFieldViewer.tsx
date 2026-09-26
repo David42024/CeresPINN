@@ -1,4 +1,4 @@
-﻿import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as THREE from 'three';
 import { 
@@ -457,7 +457,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   };
 
   return (
-    <div id="three-field-viewer-card" className={elative w-full bg-white dark:bg-slate-900/90 shadow-2xl overflow-hidden flex flex-col select-none transition-all }>
+    <div id="three-field-viewer-card" className={`relative w-full bg-white dark:bg-slate-900/90 shadow-2xl overflow-hidden flex flex-col select-none transition-all ${isFullscreen ? 'h-screen rounded-none border-none z-50' : 'h-[540px] rounded-2xl border border-slate-200 dark:border-slate-800'}`}>
       {/* 3D Canvas Viewport */}
       <div 
         ref={containerRef}
@@ -602,7 +602,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
         <div className="absolute bottom-16 right-4 z-10 flex flex-col gap-1.5">
           <button
             onClick={toggleFullscreen}
-            className={p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all }
+            className={`p-2 rounded-xl backdrop-blur-md border text-xs flex items-center justify-center transition-all ${isFullscreen ? 'bg-indigo-600 text-white border-indigo-500 shadow-lg' : 'bg-white/85 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-white'}`}
             title="Pantalla Completa"
           >
             <Maximize2 className="w-4 h-4" />
