@@ -120,7 +120,7 @@ export interface SimulationResult {
   modelVerified?: boolean;
   predictionScope?: string;
   datasetSha256?: string;
-  predictionInterval90?: { lowerKgHa: number; upperKgHa: number };
+  heuristicBand90?: { lowerKgHa: number; upperKgHa: number };
   isExtrapolation?: boolean;
   extrapolatedFeatures?: string[];
   componentProvenance?: {
@@ -146,9 +146,17 @@ export interface SimulationResult {
   createdAt: string;
   
   summaryKPIs: {
+    rawModelYieldKgHa?: number;
+    adjustedYieldKgHa?: number;
+    yieldAdjustmentComponents?: {
+      variety_mult: number;
+      irrigation_mult: number;
+      nitrogen_mult: number;
+      co2_mult: number;
+    };
     projectedYieldKgHa: number;
     potentialYieldKgHa: number;
-    yieldLossDueToDroughtPercent: number;
+    gapToHeuristicPotentialPercent: number;
     totalBiomassKgHa: number;
     totalWaterConsumedMm: number;
     waterProductivityKgM3: number; // kg grain per m³ water
@@ -208,7 +216,7 @@ export interface IngestionPipeline {
   source: string;
   frequency: string;
   lastSync: string;
-  status: 'healthy' | 'running' | 'warning' | 'error';
+  status: 'healthy' | 'running' | 'warning' | 'error' | 'demo';
   recordsProcessed: string;
   resolution: string;
   description: string;

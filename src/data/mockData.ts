@@ -249,9 +249,9 @@ export const INGESTION_PIPELINES: IngestionPipeline[] = [
     source: 'UCSB Climate Hazards Center (FTP/GeoTIFF 0.05°)',
     frequency: 'Diario (06:00 UTC)',
     lastSync: '2026-08-29 06:15:22 UTC',
-    status: 'healthy',
-    recordsProcessed: '14,892,100 grid points',
-    resolution: '0.05° (~5.3 km) downscaled to 100m',
+    status: 'demo',
+    recordsProcessed: '14,892,100 grid points (simulado)',
+    resolution: '0.05° (~5.3 km) downscaled to 100m (solo frontend)',
     description: 'Descarga satelital combinada con estaciones pluviométricas para monitoreo de precipitación en tiempo real.'
   },
   {
@@ -260,9 +260,9 @@ export const INGESTION_PIPELINES: IngestionPipeline[] = [
     source: 'NASA Earth Exchange (S3 Public Bucket / NetCDF4)',
     frequency: 'Semanal (Actualización de proyecciones)',
     lastSync: '2026-08-28 18:40:00 UTC',
-    status: 'healthy',
-    recordsProcessed: '32 Ensemble Models (SSP1-2.6, SSP3-7.0, SSP5-8.5)',
-    resolution: '0.25° con Quantile Delta Mapping',
+    status: 'demo',
+    recordsProcessed: '4 escenarios SSP (demostración – no ejecuta ensamble GCM real)',
+    resolution: '0.25° con Quantile Delta Mapping (conceptual)',
     description: 'Proyecciones climáticas globales con corrección de sesgo para temperatura extrema, radiación y VPD hasta 2050.'
   },
   {
@@ -272,8 +272,8 @@ export const INGESTION_PIPELINES: IngestionPipeline[] = [
     frequency: 'Mensual',
     lastSync: '2026-08-20 12:00:10 UTC',
     status: 'healthy',
-    recordsProcessed: '45,200 County-Year Yield Observations',
-    resolution: 'Nivel Condado / Parcela de calibración',
+    recordsProcessed: '22,160 registros NASS → 36 medianas anuales nacionales (experimento v2.5)',
+    resolution: 'Agregado nacional / No calibrado espacialmente',
     description: 'Datos históricos de rendimiento de maíz (1990-2025) utilizados como loss empírica de entrenamiento.'
   }
 ];

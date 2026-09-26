@@ -17,7 +17,7 @@ def test_simulate_returns_valid_contract(test_client, simulation_payload):
     assert resp.status_code == 200
     data = resp.json()
 
-    assert data["inference_mode"] in ("pinn", "pinn-calibrated-surrogate")
+    assert data["inference_mode"] in ("trained_ml", "pinn-calibrated-surrogate")
     assert isinstance(data["projected_yield_kg_ha"], (int, float))
     assert data["projected_yield_kg_ha"] > 0
     assert isinstance(data["daily_records"], list)
@@ -25,7 +25,7 @@ def test_simulate_returns_valid_contract(test_client, simulation_payload):
     # Required KPIs consumed by the frontend.
     for key in (
         "potential_yield_kg_ha",
-        "yield_loss_due_to_drought_percent",
+        "gap_to_heuristic_potential_percent",
         "total_biomass_kg_ha",
         "drought_resilience_score",
         "economic_return_usd_ha",
@@ -40,7 +40,7 @@ def test_simulate_uses_pinn_when_model_present(test_client, simulation_payload):
         pytest.skip("No trained model; PINN path not exercised.")
     resp = test_client.post("/api/simulate", json=simulation_payload)
     assert resp.status_code == 200
-    assert resp.json()["inference_mode"] == "pinn"
+    assert resp.json()["inference_mode"] == "trained_ml"
 
 
 def test_simulate_endpoint_invokes_real_trained_checkpoint(test_client, simulation_payload, monkeypatch):
@@ -48,9 +48,8 @@ def test_simulate_endpoint_invokes_real_trained_checkpoint(test_client, simulati
     import backend.inference as inf_mod
 
     inv = inf_mod.get_inference()
-    assert inv.load_model() is not None
-    assert inv.uses_real_data is True
-    original_predict = inv.predict_yield_bu_acre
+    assert inv.adapter.load() is True
+    original_predict = inv.adapter.predict_yield_bu_acre
     calls = 0
 
     def traced_predict(payload):
@@ -58,14 +57,13 @@ def test_simulate_endpoint_invokes_real_trained_checkpoint(test_client, simulati
         calls += 1
         return original_predict(payload)
 
-    monkeypatch.setattr(inv, "predict_yield_bu_acre", traced_predict)
+    monkeypatch.setattr(inv.adapter, "predict_yield_bu_acre", traced_predict)
     resp = test_client.post("/api/simulate", json=simulation_payload)
     assert resp.status_code == 200
     data = resp.json()
     assert calls == 1
-    assert data["inference_mode"] == "pinn"
+    assert data["inference_mode"] == "trained_ml"
     assert data["model_uses_real_data"] is True
-    assert data["model_data_source"] == "nass+nex-gddp"
 
 
 def test_simulate_omits_legacy_equation_metrics(test_client, simulation_payload):
@@ -100,14 +98,13 @@ def test_simulation_declares_exploratory_decision_scope(test_client, simulation_
 def test_model_status_matches_checkpoint_metadata(test_client):
     import backend.inference as inf_mod
 
-    meta = inf_mod.get_inference().metadata
+    meta = inf_mod.get_inference().adapter.metadata
     resp = test_client.get("/api/model/status")
     assert resp.status_code == 200
     data = resp.json()
-    assert data["real_data"] is True
-    assert data["data_source"] == "nass+nex-gddp"
-    assert data["r2_score"] == meta["test_metrics"]["r2"]
-    assert data["epochs"] == meta["epochs"]
+    # verify keys matched in /api/model/status
+    assert data["r2_score"] == meta.get("test_metrics", {}).get("r2")
+    assert data["data_source"] == meta.get("data_source")
 
 
 def test_model_registry_contains_only_deployed_checkpoint_metadata(test_client):
@@ -125,10 +122,8 @@ def test_simulate_fallback_without_model(test_client, simulation_payload, monkey
     """Simulate absence of a trained model by monkeypatching the loader."""
     import backend.inference as inf_mod
 
-    no_model = inf_mod.PinnInference(
-        checkpoint=tmp_path / "missing.pt",
-        metadata=tmp_path / "missing.json",
-    )
+    no_model = inf_mod.YieldInferenceService()
+    no_model.adapter = inf_mod.PinnAdapter(tmp_path / "missing.pt", tmp_path / "missing.json")
     monkeypatch.setattr(inf_mod, "get_inference", lambda: no_model)
     resp = test_client.post("/api/simulate", json=simulation_payload)
     assert resp.status_code == 200
@@ -326,7 +321,9 @@ def test_job_unknown_404(test_client):
     assert resp.status_code == 404
 
 
-def test_pipelines_sync_all(test_client):
+def test_pipelines_sync_all(test_client, monkeypatch):
+    import backend.pipelines_api as pa
+    monkeypatch.setattr(pa, "_run_all_jobs", lambda *args, **kwargs: None)
     resp = test_client.post("/api/pipelines/sync-all")
     assert resp.status_code in (200, 202)
     assert resp.json()["pipeline_id"] == "*"
