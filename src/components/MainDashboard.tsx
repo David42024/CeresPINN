@@ -58,11 +58,11 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
   return (
     <div id="main-dashboard-container" className="space-y-5">
       {/* Descriptive Module Header */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-emerald-950/40 border border-slate-200 dark:border-slate-800 shadow-xl space-y-3">
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/40 border border-slate-200 dark:border-slate-800 shadow-xl space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="space-y-1">
-            <h2 className="text-xl font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <BarChart3 className="w-6 h-6 text-emerald-500" />
+            <h2 className="text-xl font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
+              <BarChart3 className="w-6 h-6 text-emerald-600 dark:text-emerald-500" />
               Tablero Integral de Rendimiento & Dinámica Biofísica (CeresPINN)
             </h2>
             <p className="text-xs text-slate-600 dark:text-slate-300 max-w-3xl">
