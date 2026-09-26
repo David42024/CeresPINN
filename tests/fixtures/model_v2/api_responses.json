@@ -1,0 +1,430 @@
+{
+  "status": {
+    "model_name": "CeresPINN-maize-v2.5",
+    "status": "ready",
+    "backend": "FastAPI",
+    "framework": "PyTorch MLP with monotonicity regularization",
+    "cmip6_source": "NASA NEX-GDDP-derived climate features",
+    "r2_score": 0.8225,
+    "rmse_bu_acre": 11.4291,
+    "rmse_kg_ha": 717.4,
+    "mae_bu_acre": 9.8505,
+    "data_source": "nass+nex-gddp",
+    "data_lineage": {
+      "yield_source": "USDA NASS QuickStats",
+      "climate_source": "NASA NEX-GDDP-CMIP6",
+      "nass_observations": 22160,
+      "nass_year_min": 1990,
+      "nass_year_max": 2025,
+      "nass_annual_aggregates": 36,
+      "nex_regional_rows": 98
+    },
+    "real_data": true,
+    "trained_at": "2026-09-21T23:15:58.137963+00:00",
+    "epochs": 300,
+    "train_rows": 84,
+    "test_rows": 24,
+    "database": "PostgreSQL/PostGIS",
+    "inference_mode": "pinn",
+    "checkpoint": "cerespinn_pinn.pt",
+    "error": null
+  },
+  "simulate_cases": [
+    {
+      "case_index": 0,
+      "request": {
+        "year": 2024,
+        "state": "Iowa",
+        "county": "Story",
+        "scenario": "SSP2-4.5",
+        "irrigation": "rainfed",
+        "nitrogen_rate": 150,
+        "management_practice": "conventional",
+        "crop_variety": "default"
+      },
+      "response": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "field_id"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "target_year"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "planting_date"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "maize_variety"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "irrigation_strategy"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "soil_moisture_initial_percent"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "nitrogen_application_kg_ha"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "carbon_dioxide_ppm"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "temperature_anomaly_c"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "precipitation_anomaly_percent"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2024,
+              "state": "Iowa",
+              "county": "Story",
+              "scenario": "SSP2-4.5",
+              "irrigation": "rainfed",
+              "nitrogen_rate": 150,
+              "management_practice": "conventional",
+              "crop_variety": "default"
+            }
+          }
+        ]
+      },
+      "status_code": 422
+    },
+    {
+      "case_index": 1,
+      "request": {
+        "year": 2025,
+        "state": "Iowa",
+        "county": "Polk",
+        "scenario": "SSP5-8.5",
+        "irrigation": "full",
+        "nitrogen_rate": 200,
+        "management_practice": "conservation",
+        "crop_variety": "drought_tolerant"
+      },
+      "response": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "field_id"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "target_year"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "planting_date"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "maize_variety"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "irrigation_strategy"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "soil_moisture_initial_percent"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "nitrogen_application_kg_ha"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "carbon_dioxide_ppm"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "temperature_anomaly_c"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "precipitation_anomaly_percent"
+            ],
+            "msg": "Field required",
+            "input": {
+              "year": 2025,
+              "state": "Iowa",
+              "county": "Polk",
+              "scenario": "SSP5-8.5",
+              "irrigation": "full",
+              "nitrogen_rate": 200,
+              "management_practice": "conservation",
+              "crop_variety": "drought_tolerant"
+            }
+          }
+        ]
+      },
+      "status_code": 422
+    }
+  ]
+}

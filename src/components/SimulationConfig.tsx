@@ -73,11 +73,25 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
   const forcing = getCMIP6ClimateForcing(config.scenario, config.targetYear);
 
   const handleScenarioChange = (scenario: ClimateScenario) => {
-    onChangeConfig({ ...config, scenario });
+    const newForcing = getCMIP6ClimateForcing(scenario, config.targetYear);
+    onChangeConfig({ 
+      ...config, 
+      scenario,
+      temperatureAnomalyC: newForcing.tempAnomalyC,
+      precipitationAnomalyPercent: newForcing.precipAnomalyPct,
+      carbonDioxidePpm: newForcing.co2Ppm
+    });
   };
 
   const handleYearChange = (targetYear: number) => {
-    onChangeConfig({ ...config, targetYear });
+    const newForcing = getCMIP6ClimateForcing(config.scenario, targetYear);
+    onChangeConfig({ 
+      ...config, 
+      targetYear,
+      temperatureAnomalyC: newForcing.tempAnomalyC,
+      precipitationAnomalyPercent: newForcing.precipAnomalyPct,
+      carbonDioxidePpm: newForcing.co2Ppm
+    });
   };
 
   const handleVarietyChange = (maizeVariety: MaizeVariety) => {

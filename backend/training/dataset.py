@@ -209,12 +209,8 @@ def build_dataset(
         info["source"] = "synthetic-fallback-empty"
         return norm  # type: ignore[return-value]
 
-    # Deterministic county-aggregate: median yield per year (keeps frame small/loss calm).
-    annual = (
-        norm.groupby("year")["yield_bu_acre"]
-        .median()
-        .reset_index()
-    )
+    # Instead of median aggregate, we use the raw county observations for the panel.
+    annual = norm.copy()
 
     nex_summary = artifacts.get("nex_summary")
     info["data_lineage"] = {
@@ -227,13 +223,32 @@ def build_dataset(
         "nex_regional_rows": int(len(nex_summary)) if nex_summary is not None else 0,
     }
 
-    # Scenario expansion: every county-year row is replicated across the SSP scenarios
-    # because a projected twin is scenario-conditional.
-    scenarios = np.array([s for s in SCENARIO_TEMPLATE for _ in annual.index])
-    years = np.tile(annual["year"].to_numpy(), len(SCENARIO_TEMPLATE))
-    y = np.tile(annual["yield_bu_acre"].to_numpy(), len(SCENARIO_TEMPLATE))
+    # Stop expanding historical scenarios across SSPs!
+    # A historical observation belongs to the historical climate.
+    years = annual["year"].to_numpy(dtype=int)
+    scenarios = np.array(["historical"] * len(years))
+    y = annual["yield_bu_acre"].to_numpy()
 
-    climate = _blend_climate(years.astype(int), scenarios, nex_summary)
+    climate = _blend_climate(years, scenarios, nex_summary)
+    
+    # Map old features to new DataSchemaConfig features
+    if "season_precip_mm" not in climate.columns:
+        climate["season_precip_mm"] = 400.0 * (1 + climate.get("precip_anomaly_percent", 0.0) / 100.0)
+    if "season_temp_mean_c" not in climate.columns:
+        climate["season_temp_mean_c"] = 14.0 + climate.get("temp_anomaly_c", 0.0)
+    if "season_tmax_mean_c" not in climate.columns:
+        climate["season_tmax_mean_c"] = climate["season_temp_mean_c"] + 8.0
+    if "gdd" not in climate.columns:
+        climate["gdd"] = np.maximum(0, climate["season_temp_mean_c"] - 10) * 153
+    if "cdd" not in climate.columns:
+        climate["cdd"] = climate.get("seasonal_cdd", 20.0)
+    if "heat_days_30c" not in climate.columns:
+        climate["heat_days_30c"] = (climate.get("heatwave_risk", 0.0) * 30).astype(int)
+    if "heat_days_35c" not in climate.columns:
+        climate["heat_days_35c"] = (climate.get("heatwave_risk", 0.0) * 10).astype(int)
+    if "vpd_mean_kpa" not in climate.columns:
+        climate["vpd_mean_kpa"] = 1.2
+        
     X = climate[train_config.feature_names].to_numpy(dtype=float)
 
     # Grouped holdout by complete year. Every SSP copy of a year stays in the
@@ -268,6 +283,25 @@ def _synthetic_dataset(train_config: TrainConfig) -> Tuple[np.ndarray, np.ndarra
     scenarios = np.array([s for s in SCENARIO_TEMPLATE for _ in years])
     yy = np.tile(years, n_scenarios)
     climate = _blend_climate(yy.astype(int), scenarios, None)
+    
+    # Map old features to new DataSchemaConfig features for synthetic
+    if "season_precip_mm" not in climate.columns:
+        climate["season_precip_mm"] = 400.0 * (1 + climate.get("precip_anomaly_percent", 0.0) / 100.0)
+    if "season_temp_mean_c" not in climate.columns:
+        climate["season_temp_mean_c"] = 14.0 + climate.get("temp_anomaly_c", 0.0)
+    if "season_tmax_mean_c" not in climate.columns:
+        climate["season_tmax_mean_c"] = climate["season_temp_mean_c"] + 8.0
+    if "gdd" not in climate.columns:
+        climate["gdd"] = (climate["season_temp_mean_c"] - 10) * 153
+    if "cdd" not in climate.columns:
+        climate["cdd"] = climate.get("seasonal_cdd", 20.0)
+    if "heat_days_30c" not in climate.columns:
+        climate["heat_days_30c"] = (climate.get("heatwave_risk", 0.0) * 30).astype(int)
+    if "heat_days_35c" not in climate.columns:
+        climate["heat_days_35c"] = (climate.get("heatwave_risk", 0.0) * 10).astype(int)
+    if "vpd_mean_kpa" not in climate.columns:
+        climate["vpd_mean_kpa"] = 1.2
+        
     X = climate[train_config.feature_names].to_numpy(dtype=float)
 
     # Yield: base + temp penalty + noise (a learnable but simple target).
