@@ -75,6 +75,8 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const terrainMeshRef = useRef<THREE.Mesh | null>(null);
   const plantsGroupRef = useRef<THREE.Group | null>(null);
+  const rainSystemRef = useRef<THREE.Points | null>(null);
+  const rainVelocitiesRef = useRef<number[]>([]);
   const soilLayersGroupRef = useRef<THREE.Group | null>(null);
   const isDraggingRef = useRef<boolean>(false);
   const previousMousePositionRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -212,11 +214,45 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     scene.add(plantsGroup);
     plantsGroupRef.current = plantsGroup;
 
+    // Rain system
+    const rainCount = 1200;
+    const rainGeometry = new THREE.BufferGeometry();
+    const rainPositions = new Float32Array(rainCount * 3);
+    const rainVelocities = [];
+    for (let i = 0; i < rainCount; i++) {
+      rainPositions[i * 3] = (Math.random() - 0.5) * 40;
+      rainPositions[i * 3 + 1] = Math.random() * 20;
+      rainPositions[i * 3 + 2] = (Math.random() - 0.5) * 40;
+      rainVelocities.push(0.3 + Math.random() * 0.2);
+    }
+    rainGeometry.setAttribute('position', new THREE.BufferAttribute(rainPositions, 3));
+    const rainMaterial = new THREE.PointsMaterial({
+      color: 0x99ccff,
+      size: 0.1,
+      transparent: true,
+      opacity: 0.6
+    });
+    const rainSystem = new THREE.Points(rainGeometry, rainMaterial);
+    rainSystem.visible = false;
+    scene.add(rainSystem);
+    rainSystemRef.current = rainSystem;
+    rainVelocitiesRef.current = rainVelocities;
+
     // Render loop
     let animationFrameId: number;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       if (rendererRef.current && sceneRef.current && cameraRef.current) {
+        if (rainSystemRef.current && rainSystemRef.current.visible) {
+          const positions = rainSystemRef.current.geometry.attributes.position.array as Float32Array;
+          for (let i = 0; i < rainVelocitiesRef.current.length; i++) {
+            positions[i * 3 + 1] -= rainVelocitiesRef.current[i];
+            if (positions[i * 3 + 1] < 0) {
+              positions[i * 3 + 1] = 20;
+            }
+          }
+          rainSystemRef.current.geometry.attributes.position.needsUpdate = true;
+        }
         rendererRef.current.render(sceneRef.current, cameraRef.current);
       }
     };
@@ -231,11 +267,14 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       cameraRef.current.updateProjectionMatrix();
       rendererRef.current.setSize(newWidth, newHeight);
     };
+    const resizeObserver = new ResizeObserver(() => handleResize());
+    resizeObserver.observe(containerRef.current);
     window.addEventListener('resize', handleResize);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       renderer.dispose();
     };
   }, []);
