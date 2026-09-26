@@ -91,23 +91,29 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.text('2. INDICADORES CLAVE DE DESEMPEÑO (KPIs)', 14, 76);
 
       doc.setFillColor(241, 245, 249);
-      doc.rect(14, 80, 182, 38, 'F');
+      doc.rect(14, 80, 182, 43, 'F');
       doc.setDrawColor(203, 213, 225);
-      doc.rect(14, 80, 182, 38, 'S');
+      doc.rect(14, 80, 182, 43, 'S');
 
       doc.setFontSize(9);
       doc.setTextColor(15, 23, 42);
-      doc.text(`Rendimiento Proyectado: ${kpi.projectedYieldKgHa.toLocaleString()} kg/ha`, 20, 88);
+      if (kpi.rawModelYieldKgHa) {
+        doc.text(`Rendimiento Bruto (ML): ${kpi.rawModelYieldKgHa.toLocaleString()} kg/ha`, 20, 86);
+      }
+      doc.text(`Rendimiento Proyectado (Ajustado): ${kpi.projectedYieldKgHa.toLocaleString()} kg/ha`, 20, 92);
       doc.setTextColor(16, 185, 129); // emerald-500
-      doc.text(`Modelo: ${simulation.modelName} | Fuente: ${simulation.modelDataSource ?? 'sin metadata'}`, 20, 93);
+      doc.text(`Modelo: ${simulation.modelName} | Fuente: ${simulation.modelDataSource ?? 'sin metadata'}`, 20, 97);
       doc.setTextColor(15, 23, 42); // reset color
-      doc.text(`Rendimiento Potencial: ${kpi.potentialYieldKgHa.toLocaleString()} kg/ha`, 20, 100);
-      doc.text(`Pérdida por Sequía: ${kpi.yieldLossDueToDroughtPercent}%`, 20, 107);
-      doc.text(`Biomasa Total Acumulada: ${(kpi.totalBiomassKgHa / 1000).toFixed(1)} t/ha`, 20, 114);
+      doc.text(`Rendimiento Potencial: ${kpi.potentialYieldKgHa.toLocaleString()} kg/ha`, 20, 104);
+      doc.text(`Brecha de Rendimiento: ${kpi.gapToHeuristicPotentialPercent}%`, 20, 111);
+      doc.text(`Biomasa Total Acumulada: ${(kpi.totalBiomassKgHa / 1000).toFixed(1)} t/ha`, 20, 118);
 
       doc.text(`Agua Total Consumida (ET): ${kpi.totalWaterConsumedMm} mm`, 110, 88);
       doc.text(`Riego Aplicado: ${kpi.totalIrrigationAppliedMm} mm`, 110, 96);
       doc.text(`Productividad del Agua: ${kpi.waterProductivityKgM3} kg/m³`, 110, 104);
+      if (kpi.yieldAdjustmentComponents) {
+        doc.text(`Multiplicadores: V=${kpi.yieldAdjustmentComponents.variety_mult} R=${kpi.yieldAdjustmentComponents.irrigation_mult} N=${kpi.yieldAdjustmentComponents.nitrogen_mult} C=${kpi.yieldAdjustmentComponents.co2_mult}`, 110, 111);
+      }
       doc.text(`Score de Resiliencia Climática: ${kpi.droughtResilienceScore} / 100`, 110, 112);
 
       // Agronomic Recommendations
@@ -247,7 +253,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         { 'Parámetro': 'Estrategia Riego', 'Valor': simulation.config.irrigationStrategy },
         { 'Parámetro': 'Rendimiento Proyectado (kg/ha)', 'Valor': kpi.projectedYieldKgHa },
         { 'Parámetro': 'Rendimiento Potencial (kg/ha)', 'Valor': kpi.potentialYieldKgHa },
-        { 'Parámetro': 'Pérdida por Sequía (%)', 'Valor': kpi.yieldLossDueToDroughtPercent },
+        { 'Parámetro': 'Brecha de Rendimiento (%)', 'Valor': kpi.gapToHeuristicPotentialPercent },
         { 'Parámetro': 'Agua Total Consumida ET (mm)', 'Valor': kpi.totalWaterConsumedMm },
         { 'Parámetro': 'Productividad del Agua (kg/m³)', 'Valor': kpi.waterProductivityKgM3 },
         { 'Parámetro': 'Margen Económico Estimado ($/ha)', 'Valor': kpi.economicReturnUsdHa },

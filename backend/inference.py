@@ -574,7 +574,7 @@ class YieldInferenceService:
                 "vpd_kpa": round(vpd, 2),
             })
             
-        yield_loss_pct = round(max(0.0, 100.0 - (projected_yield / potential_yield) * 100.0), 1)
+        gap_to_heuristic_pct = round(max(0.0, 100.0 - (projected_yield / potential_yield) * 100.0), 1)
         avg_stress = round(stress_sum / float(total_sim_days), 2)
         drought_resilience = int(max(20, min(95, 100 - avg_stress * 80)))
         water_prod = round(projected_yield / max(1.0, total_et * 10.0), 2)
@@ -624,9 +624,18 @@ class YieldInferenceService:
             "field_id": payload.get("field_id", "field-01"),
             "scenario": payload.get("scenario", "SSP3-7.0"),
             "target_year": payload.get("target_year", 2035),
+            "raw_model_yield_kg_ha": round(bu_raw * 62.77) if bu_raw else None,
+            "adjusted_yield_kg_ha": round(projected_yield),
             "projected_yield_kg_ha": round(projected_yield),
             "potential_yield_kg_ha": round(potential_yield),
-            "prediction_interval_90": interval,
+            "yield_adjustment_components": {
+                "variety_mult": round(var_cfg["variety_mult"], 3),
+                "irrigation_mult": round(irrig_mult, 3),
+                "nitrogen_mult": round(n_mult, 3),
+                "co2_mult": round(co2_yield_mult, 3)
+            },
+            "heuristic_band_90": interval,
+            "heuristic_band_note": "Banda ±15 % heurística sin cobertura empírica calibrada.",
             "is_extrapolation": is_extrap,
             "extrapolated_features": extrap_feats,
             "component_provenance": {
@@ -635,7 +644,8 @@ class YieldInferenceService:
                 "economics": "derived_formula",
                 "management_effect": "not_learned"
             },
-            "yield_loss_due_to_drought_percent": yield_loss_pct,
+            "gap_to_heuristic_potential_percent": gap_to_heuristic_pct,
+            "gap_note": "Diferencia entre rendimiento simulado y techo heurístico; no atribuible causalmente a la sequía.",
 
             "total_biomass_kg_ha": round(total_biomass),
             "total_water_consumed_mm": round(total_et),
@@ -661,10 +671,10 @@ class YieldInferenceService:
 
 def _scenario_template(scenario: str) -> Dict[str, float]:
     return {
-        "SSP1-2.6": {"precip_anomaly_pct": -0.02, "temp_anomaly_c": 0.9, "co2_ppm": 445.0, "heatwave_risk": 0.15},
-        "SSP3-7.0": {"precip_anomaly_pct": -0.12, "temp_anomaly_c": 1.8, "co2_ppm": 480.0, "heatwave_risk": 0.42},
-        "SSP5-8.5": {"precip_anomaly_pct": -0.24, "temp_anomaly_c": 2.7, "co2_ppm": 520.0, "heatwave_risk": 0.78},
-    }.get(scenario, {"precip_anomaly_pct": -0.02, "temp_anomaly_c": 0.9, "co2_ppm": 445.0, "heatwave_risk": 0.15})
+        "SSP1-2.6": {"precip_anomaly_pct": -2.0, "temp_anomaly_c": 0.9, "co2_ppm": 445.0, "heatwave_risk": 0.15},
+        "SSP3-7.0": {"precip_anomaly_pct": -12.0, "temp_anomaly_c": 1.8, "co2_ppm": 480.0, "heatwave_risk": 0.42},
+        "SSP5-8.5": {"precip_anomaly_pct": -24.0, "temp_anomaly_c": 2.7, "co2_ppm": 520.0, "heatwave_risk": 0.78},
+    }.get(scenario, {"precip_anomaly_pct": -2.0, "temp_anomaly_c": 0.9, "co2_ppm": 445.0, "heatwave_risk": 0.15})
 
 
 # Module-level cached inference service.

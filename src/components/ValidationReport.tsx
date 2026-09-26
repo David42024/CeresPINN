@@ -176,9 +176,9 @@ export const ValidationReport: React.FC = () => {
             <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold">Validado</span>
           </div>
           <strong className="text-violet-600 dark:text-violet-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.r2_score ?? 0.7842).toFixed(4)}
+            {Number(hindcastMetrics?.r2_score ?? hindcastMetrics?.r2 ?? 0).toFixed(4)}
           </strong>
-          <p className="text-[11px] text-slate-500 mt-1">Explica el 78.4% de la varianza histórica interanual.</p>
+          <p className="text-[11px] text-slate-500 mt-1">Explica la mayor parte de la de la varianza histórica interanual.</p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -186,9 +186,9 @@ export const ValidationReport: React.FC = () => {
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">RMSE (Error Cuadrático)</span>
           </div>
           <strong className="text-emerald-600 dark:text-emerald-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.rmse_kg_ha ?? 2090).toLocaleString()} <span className="text-xs font-normal text-slate-500">kg/ha</span>
+            {Number(hindcastMetrics?.rmse_kg_ha ?? hindcastMetrics?.rmse ?? 0).toLocaleString()} <span className="text-xs font-normal text-slate-500">kg/ha</span>
           </strong>
-          <p className="text-[11px] text-slate-500 mt-1">Equivalente a 13.48 bu/acre de precisión media.</p>
+          <p className="text-[11px] text-slate-500 mt-1">Métrica de error de precisión media.</p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -196,7 +196,7 @@ export const ValidationReport: React.FC = () => {
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">MAE (Error Absoluto)</span>
           </div>
           <strong className="text-cyan-600 dark:text-cyan-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.mae_kg_ha ?? 1575).toLocaleString()} <span className="text-xs font-normal text-slate-500">kg/ha</span>
+            {Number(hindcastMetrics?.mae_kg_ha ?? hindcastMetrics?.mae ?? 0).toLocaleString()} <span className="text-xs font-normal text-slate-500">kg/ha</span>
           </strong>
           <p className="text-[11px] text-slate-500 mt-1">Desviación típica promedio por ciclo de cultivo.</p>
         </div>
@@ -265,196 +265,134 @@ export const ValidationReport: React.FC = () => {
         </div>
       </div>
 
-      {/* Statistical Tests Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {/* KS Test Card */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+      {/* Extended Statistics conditionally rendered */}
+      {validationData?.t_test_results?.status === 'not_computed' ? (
+        <div className="p-8 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col items-center justify-center text-center space-y-3">
+          <Activity className="w-8 h-8 text-slate-400 dark:text-slate-500" />
           <div>
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                <Activity className="w-4 h-4 text-cyan-500" />
-                Test Kolmogorov-Smirnov
-              </h3>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">2 Muestras</span>
-            </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-              Verifica si los rendimientos simulados por la red neuronal provienen de la misma distribución empírica que los datos observados.
-            </p>
-
-            <div className="space-y-2 text-xs mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Estadístico D:</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(ksTest?.statistic ?? 0.419).toFixed(3)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">p-valor:</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(ksTest?.p_value ?? 0.008).toFixed(4)}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs">
-            <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-              Distribución validada estadísticamente.
-            </span>
-          </div>
-        </div>
-
-        {/* Paired t-test Card */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
-          <div>
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                <BarChart3 className="w-4 h-4 text-violet-500" />
-                Prueba t Pareada (H1)
-              </h3>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400">SSP5-8.5</span>
-            </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-              Evalúa si el impacto de reducción en rendimiento bajo cambio extremo (SSP5-8.5 a 2050) es significativo frente al histórico.
-            </p>
-
-            <div className="space-y-2 text-xs mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Estadístico t:</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(pairedTest?.t_statistic ?? -309.2).toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">p-valor:</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">&lt; 0.0001</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Pérdida media proyectada:</span>
-                <span className="font-mono font-bold text-rose-500">-{Number(pairedTest?.mean_loss_pct ?? 32.74).toFixed(1)}%</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs">
-            <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-              Diferencia altamente significativa ($p &lt; 0.001$).
-            </span>
-          </div>
-        </div>
-
-        {/* Bootstrap CI Card */}
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
-          <div>
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                <Info className="w-4 h-4 text-amber-500" />
-                Intervalo Bootstrap (95% CI)
-              </h3>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">1000 iteraciones</span>
-            </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-              Remuestreo no paramétrico de los ensambles climáticos para cuantificar el rango de incertidumbre a 2050.
-            </p>
-
-            <div className="space-y-2 text-xs mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Límite Inferior (2.5%):</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
-                  {Number(bootstrap?.yield_95_ci_lower ?? 6591).toLocaleString()} kg/ha
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Límite Superior (97.5%):</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
-                  {Number(bootstrap?.yield_95_ci_upper ?? 6962).toLocaleString()} kg/ha
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Media de Ensamble:</span>
-                <span className="font-mono font-bold text-amber-500">
-                  {Number(bootstrap?.mean_yield ?? 6789).toLocaleString()} kg/ha
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-2 text-xs">
-            <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-              Incertidumbre contenida dentro de ±3.8%.
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Sobol Sensitivity Analysis */}
-      <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-rose-500" />
-              Análisis Global de Sensibilidad de Sobol (Descomposición de Varianza)
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Identifica qué variable forzante climática domina el impacto en el rendimiento: <strong>Primer Orden ($S_1$)</strong> mide el efecto directo individual; <strong>Orden Total ($S_T$)</strong> incluye las interacciones no lineales.
+            <h3 className="text-slate-700 dark:text-slate-300 font-semibold">Análisis Estadístico Avanzado: No calculado</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-lg mx-auto">
+              El modelo actual no reporta métricas completas de Sobol, T-Test o Bootstrap. Consulte la documentación del experimento.
             </p>
           </div>
-          <span className="text-[11px] font-mono text-slate-500">Método Saltelli / Sobol (256 muestras)</span>
         </div>
+      ) : (
+        <>
+          {/* Statistical Tests Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* KS Test Card */}
+            <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                    <Activity className="w-4 h-4 text-cyan-500" />
+                    Test Kolmogorov-Smirnov
+                  </h3>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">2 Muestras</span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                  Verifica si los rendimientos simulados provienen de la misma distribución empírica.
+                </p>
 
-        <div className="h-[250px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={sobolData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-              <XAxis dataKey="parameter" stroke="#94a3b8" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} domain={[0, 1.1]} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: '#0f172a', 
-                  borderColor: '#334155', 
-                  borderRadius: '12px', 
-                  fontSize: '12px',
-                  color: '#f8fafc' 
-                }} 
-              />
-              <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }} />
-              <Bar dataKey="firstOrder" name="Primer Orden S₁ (Efecto Directo)" fill="#10b981" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="totalOrder" name="Orden Total Sₜ (Con Interacciones)" fill="#06b6d4" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+                <div className="space-y-2 text-xs mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Estadístico D:</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(ksTest?.statistic ?? 0).toFixed(3)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">p-valor:</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(ksTest?.p_value ?? 0).toFixed(4)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2">
-          <Info className="w-4 h-4 text-cyan-500 shrink-0" />
-          <span>
-            <strong>Conclusión Agronómica:</strong> La temperatura máxima (Tmax) es el factor dominante con S₁ = 0.64, lo que significa que el estrés térmico en floración supera al déficit de lluvia como principal causa de merma en maíz.
-          </span>
-        </div>
-      </div>
+            {/* Paired t-test Card */}
+            <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                    <BarChart3 className="w-4 h-4 text-violet-500" />
+                    Prueba t Pareada (H1)
+                  </h3>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400">SSP5-8.5</span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                  Evalúa impacto SSP5-8.5.
+                </p>
 
-      {/* Multi-Model Ensemble Uncertainty Spread */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
-          <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase block">Media Ensamble CMIP6</span>
-          <strong className="text-emerald-600 dark:text-emerald-400 font-mono text-xl mt-1 block">
-            {Number(ensemble?.mean_yield ?? 6885).toLocaleString()} kg/ha
-          </strong>
-          <p className="text-[11px] text-slate-500 mt-1">Consenso de los 5 modelos climáticos NASA NEX-GDDP.</p>
-        </div>
+                <div className="space-y-2 text-xs mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Estadístico t:</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(pairedTest?.t_statistic ?? 0).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">p-valor:</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{Number(pairedTest?.p_value ?? 0).toFixed(4)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
-          <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase block">Desviación Estándar (σ)</span>
-          <strong className="text-cyan-600 dark:text-cyan-400 font-mono text-xl mt-1 block">
-            ± {Number(ensemble?.std_yield ?? 418).toLocaleString()} kg/ha
-          </strong>
-          <p className="text-[11px] text-slate-500 mt-1">Dispersión inter-modelo de las proyecciones climáticas.</p>
-        </div>
+            {/* Bootstrap CI Card */}
+            <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                    <Info className="w-4 h-4 text-amber-500" />
+                    Intervalo Bootstrap (95% CI)
+                  </h3>
+                </div>
+                <div className="space-y-2 text-xs mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Límite Inferior (2.5%):</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
+                      {Number(bootstrap?.yield_95_ci_lower ?? 0).toLocaleString()} kg/ha
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Límite Superior (97.5%):</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
+                      {Number(bootstrap?.yield_95_ci_upper ?? 0).toLocaleString()} kg/ha
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Media de Ensamble:</span>
+                    <span className="font-mono font-bold text-amber-500">
+                      {Number(bootstrap?.mean_yield ?? 0).toLocaleString()} kg/ha
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
-          <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase block">Miembros del Ensamble</span>
-          <strong className="text-violet-600 dark:text-violet-400 font-mono text-xl mt-1 block">
-            {Number(ensemble?.ensemble_size ?? 28)} Proyecciones
-          </strong>
-          <p className="text-[11px] text-slate-500 mt-1">GCMs downscaled calibrados a escala de lote.</p>
-        </div>
-      </div>
+          {/* Sobol Sensitivity Analysis */}
+          <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-rose-500" />
+                  Análisis Global de Sensibilidad de Sobol (Descomposición de Varianza)
+                </h3>
+              </div>
+            </div>
+            <div className="h-[250px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={sobolData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                  <XAxis dataKey="parameter" stroke="#94a3b8" tick={{ fontSize: 12 }} />
+                  <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} domain={[0, 1.1]} />
+                  <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', fontSize: '12px', color: '#f8fafc' }} />
+                  <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }} />
+                  <Bar dataKey="firstOrder" name="Primer Orden S₁" fill="#10b981" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="totalOrder" name="Orden Total Sₜ" fill="#06b6d4" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

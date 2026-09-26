@@ -492,7 +492,7 @@ export function runPINNSimulation(field: Field, config: SimulationConfig): Simul
     summaryKPIs: {
       projectedYieldKgHa: projectedYield,
       potentialYieldKgHa: potentialYield,
-      yieldLossDueToDroughtPercent: yieldLossPercent,
+      gapToHeuristicPotentialPercent: yieldLossPercent,
       totalBiomassKgHa: Math.round(totalBiomass),
       totalWaterConsumedMm: Math.round(totalEt),
       waterProductivityKgM3: waterProductivity,
