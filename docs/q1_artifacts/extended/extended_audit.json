@@ -3,7 +3,7 @@
     "seed": 42,
     "max_abs_prediction_difference_bu_acre": 0.0,
     "mean_abs_prediction_difference_bu_acre": 0.0,
-    "repeat_train_seconds": 17.33830000006128,
+    "repeat_train_seconds": 5.669969500042498,
     "torch_deterministic_algorithms_enabled": false
   },
   "co2_ablation_seed42": {
@@ -16,12 +16,12 @@
       "seasonal_cdd"
     ],
     "seed": 42,
-    "train_seconds": 17.3955223999219,
-    "rmse_bu_acre": 12.645022496334585,
-    "mae_bu_acre": 11.30836544036865,
-    "r2": 0.7827024964826969,
-    "rmse_kg_ha": 793.7280620949219,
-    "mae_kg_ha": 709.8260986919402
+    "train_seconds": 5.991269799997099,
+    "rmse_bu_acre": 13.684421218398679,
+    "mae_bu_acre": 12.029285049438474,
+    "r2": 0.7455113654363279,
+    "rmse_kg_ha": 858.9711198788851,
+    "mae_kg_ha": 755.0782225532531
   },
   "structure": {
     "total_parameters": 63042,
@@ -41,7 +41,7 @@
   "sobol_method": {
     "estimator": "Jansen first-order and total-order",
     "sampler": "scipy.stats.qmc.Sobol(scramble=True)",
-    "scipy_version": "1.14.1",
+    "scipy_version": "1.17.1",
     "base_N": 32768,
     "bounds": {
       "temp_anomaly_c": [

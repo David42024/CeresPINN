@@ -198,7 +198,7 @@ def health() -> Dict[str, Any]:
 def model_status() -> Dict[str, Any]:
     inv = inference_mod.get_inference()
     model_ready = inv.adapter.available
-    meta = inv.metadata if model_ready else {}
+    meta = inv.adapter.metadata if model_ready else {}
     test_metrics = meta.get("test_metrics", {})
     mse = test_metrics.get("mse")
     return {

@@ -142,7 +142,7 @@ export const App: React.FC = () => {
             const liveSim = await simulateScenario(initialField, DEFAULT_SIMULATION_CONFIG);
             if (isMounted) {
               setSimulationResult(liveSim);
-              setModelOnline(liveSim.inferenceMode === 'pinn');
+              setModelOnline(liveSim.inferenceMode === 'trained_ml' || liveSim.inferenceMode === 'pinn');
             }
           } catch (e) {
             console.warn('Initial live simulation failed, keeping local fallback', e);
@@ -567,21 +567,21 @@ export const App: React.FC = () => {
         {activeTab === 'twin3d' && (
           <div className="space-y-6">
             {/* Descriptive Module Header for Gemelo 3D */}
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-cyan-950/30 border border-emerald-500/30 shadow-xl space-y-2">
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-slate-50 to-cyan-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-cyan-950/30 border border-emerald-200 dark:border-emerald-500/30 shadow-xl space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <Sprout className="w-6 h-6 text-emerald-400" />
-                    <h2 className="text-xl font-black text-slate-100 tracking-tight">
+                    <Sprout className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                    <h2 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                       Gemelo Digital 3D & Dinámica Fenológica (Zea mays L.)
                     </h2>
                   </div>
-                  <p className="text-xs text-slate-300 max-w-3xl">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 max-w-3xl">
                     <strong>¿Para qué sirve?</strong> Visualiza la evolución del cultivo con un balance hídrico demostrativo de tres capas y forzamiento climático parametrizado.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold">
+                  <span className="px-3 py-1.5 rounded-xl bg-emerald-100 dark:bg-emerald-500/15 border border-emerald-300 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-bold">
                     Ciclo Simulado: {simulationResult.dailyRecords.length} días
                   </span>
                 </div>
