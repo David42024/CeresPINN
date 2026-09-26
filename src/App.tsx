@@ -142,7 +142,7 @@ export const App: React.FC = () => {
             const liveSim = await simulateScenario(initialField, DEFAULT_SIMULATION_CONFIG);
             if (isMounted) {
               setSimulationResult(liveSim);
-              setModelOnline(liveSim.inferenceMode === 'trained_ml' || liveSim.inferenceMode === 'pinn');
+              setModelOnline(['trained_ml', 'pinn', 'pinn-calibrated-surrogate'].includes(liveSim.inferenceMode));
             }
           } catch (e) {
             console.warn('Initial live simulation failed, keeping local fallback', e);
@@ -208,7 +208,7 @@ export const App: React.FC = () => {
     try {
       const res = await simulateScenario(selectedField, simulationConfig);
       setSimulationResult(res);
-      setModelOnline(res.inferenceMode === 'pinn');
+      setModelOnline(['trained_ml', 'pinn', 'pinn-calibrated-surrogate'].includes(res.inferenceMode));
       if (currentDayIndex >= res.dailyRecords.length) {
         setCurrentDayIndex(res.dailyRecords.length - 1);
       }
@@ -225,7 +225,7 @@ export const App: React.FC = () => {
     try {
       const res = await simulateScenario(field, simulationConfig);
       setSimulationResult(res);
-      setModelOnline(res.inferenceMode === 'pinn');
+      setModelOnline(['trained_ml', 'pinn', 'pinn-calibrated-surrogate'].includes(res.inferenceMode));
     } catch (error) {
       console.error('Simulation request failed for field switch', error);
       setModelOnline(false);
