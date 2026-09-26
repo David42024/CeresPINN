@@ -1,12 +1,12 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
 
 fastapi>=0.133
-uvicorn[standard]==0.30.6
+uvicorn[standard]>=0.30.6
 pydantic>=2.9.2
 requests>=2.32.3
 psycopg2-binary==2.9.9
 sqlalchemy>=2.0.35
-python-dotenv==1.0.1
+python-dotenv>=1.0.1
 langchain-core
 langchain-openai
 xarray==2024.11.0
