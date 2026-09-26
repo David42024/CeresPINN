@@ -566,7 +566,7 @@ def list_model_registry() -> List[Dict[str, Any]]:
     """Model registry from Postgres, falling back to the trained benchmark set."""
     inv = inference_mod.get_inference()
     model_ready = inv.adapter.available
-    meta = inv.metadata if model_ready else {}
+    meta = inv.adapter.metadata if model_ready else {}
     test_metrics = meta.get("test_metrics", {})
     mse = test_metrics.get("mse")
     current = {
