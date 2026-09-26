@@ -15,7 +15,7 @@ void i18n
       en: { translation: en },
       pt: { translation: pt }
     },
-    lng: storedLang ?? 'es',
+    lng: (storedLang && ['es', 'pt'].includes(storedLang)) ? storedLang : 'es',
     fallbackLng: 'es',
     supportedLngs: ['es', 'en', 'pt'],
     interpolation: {

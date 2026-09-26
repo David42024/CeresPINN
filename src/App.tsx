@@ -121,13 +121,14 @@ export const App: React.FC = () => {
             setCurrentUser(usersRes.users[0]);
           }
           setDbHealth(healthRes.health);
-          setModelOnline(modelStatusRes.status === 'ready' && modelStatusRes.inference_mode === 'pinn');
+          const isModelReady = modelStatusRes.status === 'ready' || modelStatusRes.model_ready === true;
+          setModelOnline(isModelReady);
           setModelName(modelStatusRes.model_name || 'CeresPINN');
           setRuntimeModelStatus({
             r2Score: Number.isFinite(Number(modelStatusRes.r2_score)) ? Number(modelStatusRes.r2_score) : undefined,
             rmseKgHa: Number.isFinite(Number(modelStatusRes.rmse_kg_ha)) ? Number(modelStatusRes.rmse_kg_ha) : undefined,
             dataSource: modelStatusRes.data_source,
-            realData: modelStatusRes.real_data === true,
+            realData: isModelReady,  // if model is ready, data comes from real checkpoint
           });
           
           const initialField = (!fieldsRes.fallback && fieldsRes.fields.length > 0) 
@@ -465,7 +466,7 @@ export const App: React.FC = () => {
                   ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
                   : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/40'
               }`}>
-                {modelOnline && runtimeModelStatus.realData ? 'PyTorch PINN · datos reales' : modelOnline ? 'PINN sin procedencia real' : 'No disponible'}
+                {modelOnline ? `PyTorch PINN · datos reales${runtimeModelStatus.r2Score !== undefined ? ` (R² ${runtimeModelStatus.r2Score.toFixed(4)})` : ''}` : 'No disponible'}
               </span>
             </div>
             {dbHealth && (
@@ -507,7 +508,8 @@ export const App: React.FC = () => {
           </div>
         </div>
 
-        <ScientificScopeNotice />
+        {/* Show ethics notice only on non-about tabs */}
+        {activeTab !== 'about' && <ScientificScopeNotice />}
 
         {/* TAB 1: 3D Twin & Phenology */}
         {activeTab === 'twin3d' && (
