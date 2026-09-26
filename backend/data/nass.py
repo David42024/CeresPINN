@@ -130,17 +130,18 @@ class NASSProvider(BaseProvider):
         return pd.DataFrame(
             columns=[
                 "year", "state_name", "state_alpha", "county_name",
-                "county_ansi", "Value", "unit_desc", "statisticcat_desc",
+                "state_fips", "county_fips", "Value", "unit_desc", "statisticcat_desc",
             ]
         )
 
     @staticmethod
     def _rows_to_frame(rows: List[Dict[str, Any]]) -> pd.DataFrame:
-        keep = [
+        keep_original = [
             "year",
             "state_name",
             "state_alpha",
             "county_name",
+            "state_ansi",
             "county_ansi",
             "Value",
             "unit_desc",
@@ -148,7 +149,10 @@ class NASSProvider(BaseProvider):
         ]
         df = pd.DataFrame(rows)
         if df.empty:
-            return pd.DataFrame(columns=keep)
+            return pd.DataFrame(columns=[
+                "year", "state_name", "state_alpha", "county_name",
+                "state_fips", "county_fips", "Value", "unit_desc", "statisticcat_desc"
+            ])
         # Normalize numeric value strings like "12,345" -> float
         if "Value" in df.columns:
             df["Value"] = (
@@ -159,16 +163,19 @@ class NASSProvider(BaseProvider):
                 .str.replace(")", "", regex=False)
                 .astype(float, errors="ignore")
             )
-        missing = [c for c in keep if c not in df.columns]
+        missing = [c for c in keep_original if c not in df.columns]
         for c in missing:
             df[c] = None
-        return df[keep]
+            
+        df = df[keep_original]
+        df = df.rename(columns={"state_ansi": "state_fips", "county_ansi": "county_fips"})
+        return df
 
     def _emit_empty_scenario(self, year_ge: int, year_le: int) -> None:
         empty = pd.DataFrame(
             columns=[
                 "year", "state_name", "state_alpha", "county_name",
-                "county_ansi", "Value", "unit_desc", "statisticcat_desc",
+                "state_fips", "county_fips", "Value", "unit_desc", "statisticcat_desc",
             ]
         )
         self.write_snapshot(self.out_dir / "maize_county_yield_usda.csv", empty)

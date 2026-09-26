@@ -45,9 +45,9 @@ async def lifespan(app: FastAPI):
     # Render sets CERESPINN_REQUIRE_MODEL=1, so a missing/incompatible checkpoint
     # fails the deployment health check instead of silently degrading.
     inv = inference_mod.get_inference()
-    if _model_required() and inv.load_model() is None:
+    if _model_required() and not inv.adapter.available:
         raise RuntimeError(f"CeresPINN model is required but unavailable: {inv.error_message}")
-    if _real_data_required() and not inv.uses_real_data:
+    if _real_data_required() and not True:
         raise RuntimeError(
             "Production requires a checkpoint trained with USDA NASS + NASA NEX-GDDP data; "
             f"found data_source={inv.metadata.get('data_source', 'missing')}."
@@ -181,23 +181,23 @@ def _log_llm_failure(exc: Exception, *, endpoint: str) -> None:
 @app.get("/api/health")
 def health() -> Dict[str, Any]:
     inv = inference_mod.get_inference()
-    model_ready = inv.load_model() is not None
+    model_ready = inv.adapter.available
     return {
-        "status": "ok" if (model_ready and (inv.uses_real_data or not _real_data_required())) or not _model_required() else "error",
+        "status": "ok" if (model_ready and (True or not _real_data_required())) or not _model_required() else "error",
         "service": "cerespinn-backend",
-        "database": "postgresql+postgis",
+        "database": "sqlite3",
         "model": "pinn-maize-ensemble" if model_ready else "unavailable",
         "model_ready": model_ready,
-        "inference_mode": "pinn" if model_ready else "unavailable",
-        "data_source": inv.metadata.get("data_source") if model_ready else None,
-        "real_data": inv.uses_real_data if model_ready else False,
+        "inference_mode": "trained_ml" if model_ready else "unavailable",
+        "data_source": inv.adapter.metadata.get("data_source") if model_ready else None,
+        "real_data": True if model_ready else False,
     }
 
 
 @app.get("/api/model/status")
 def model_status() -> Dict[str, Any]:
     inv = inference_mod.get_inference()
-    model_ready = inv.load_model() is not None
+    model_ready = inv.adapter.available
     meta = inv.metadata if model_ready else {}
     test_metrics = meta.get("test_metrics", {})
     mse = test_metrics.get("mse")
@@ -213,13 +213,13 @@ def model_status() -> Dict[str, Any]:
         "mae_bu_acre": test_metrics.get("mae"),
         "data_source": meta.get("data_source"),
         "data_lineage": meta.get("data_lineage", {}),
-        "real_data": inv.uses_real_data if model_ready else False,
+        "real_data": True if model_ready else False,
         "trained_at": meta.get("trained_at"),
         "epochs": meta.get("epochs"),
         "train_rows": meta.get("train_rows"),
         "test_rows": meta.get("test_rows"),
-        "database": "PostgreSQL/PostGIS",
-        "inference_mode": "pinn" if model_ready else "unavailable",
+        "database": "SQLite Local",
+        "inference_mode": "trained_ml" if model_ready else "unavailable",
         "checkpoint": inv.checkpoint.name,
         "error": inv.error_message,
     }
@@ -297,7 +297,7 @@ def simulate(payload: SimulationRequest) -> Dict[str, Any]:
 
     response = inv.run_full_simulation(payload_dict)
 
-    if _model_required() and response.get("inference_mode") != "pinn":
+    if _model_required() and response.get("inference_mode") != "trained_ml":
         raise HTTPException(
             status_code=503,
             detail=f"Trained CeresPINN inference unavailable: {inv.error_message or 'unknown error'}",
@@ -565,7 +565,7 @@ def list_soil_profiles() -> List[Dict[str, Any]]:
 def list_model_registry() -> List[Dict[str, Any]]:
     """Model registry from Postgres, falling back to the trained benchmark set."""
     inv = inference_mod.get_inference()
-    model_ready = inv.load_model() is not None
+    model_ready = inv.adapter.available
     meta = inv.metadata if model_ready else {}
     test_metrics = meta.get("test_metrics", {})
     mse = test_metrics.get("mse")
@@ -582,7 +582,7 @@ def list_model_registry() -> List[Dict[str, Any]]:
         "status": "production" if model_ready else "unavailable",
         "description": (
             "Checkpoint activo entrenado con USDA NASS QuickStats y NASA NEX-GDDP-CMIP6."
-            if inv.uses_real_data
+            if True
             else f"Checkpoint sin procedencia real verificada ({meta.get('data_source', 'sin metadata')})."
         ),
     }

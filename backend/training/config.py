@@ -38,6 +38,41 @@ class DataConfig:
 
 
 @dataclass
+class DataSchemaConfig:
+    """Canonical data contract for the unified county-year panel."""
+    schema_version: str = "1.0.0"
+    spatial_columns: List[str] = field(
+        default_factory=lambda: [
+            "state_fips",
+            "county_fips",
+            "state_name",
+            "county_name",
+            "latitude",
+            "longitude",
+        ]
+    )
+    temporal_columns: List[str] = field(default_factory=lambda: ["year"])
+    target_column: str = "yield_bu_acre"
+    metadata_columns: List[str] = field(
+        default_factory=lambda: [
+            "soil_source",
+            "data_quality_flags",
+        ]
+    )
+    feature_columns: List[str] = field(
+        default_factory=lambda: [
+            "season_temp_mean_c",
+            "season_tmax_mean_c",
+            "season_precip_mm",
+            "gdd",
+            "cdd",
+            "heat_days_30c",
+            "heat_days_35c",
+            "vpd_mean_kpa",
+        ]
+    )
+
+@dataclass
 class TrainConfig:
     """Model architecture and training loop settings."""
 
@@ -70,16 +105,8 @@ class TrainConfig:
     )
     device: str = field(default_factory=lambda: os.getenv("CERESPINN_DEVICE", "auto"))
 
-    # Features used by the model, matching the data contract (see dataset.py)
+    # Features used by the model, matching the canonical data contract
     feature_names: List[str] = field(
-        default_factory=lambda: [
-            "year",
-            "temp_anomaly_c",
-            "precip_anomaly_pct",
-            "co2_ppm",
-            "heatwave_risk",
-            "seasonal_precip_mm",
-            "seasonal_cdd",  # consecutive dry days proxy
-        ]
+        default_factory=lambda: DataSchemaConfig().feature_columns
     )
-    target_name: str = "yield_bu_acre"
+    target_name: str = DataSchemaConfig().target_column

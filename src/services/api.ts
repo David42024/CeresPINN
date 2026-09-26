@@ -47,8 +47,17 @@ export async function sendChatbotMessage(message: string, context: ChatbotContex
 
 const assertRemotePinnPayload = (payload: any) => {
   if (!REQUIRE_REMOTE_PINN) return;
-  if (payload?.inference_mode !== 'pinn') {
-    throw new Error(`Render returned inference_mode=${payload?.inference_mode ?? 'missing'}; trained PINN required.`);
+  if (payload?.model_verified !== true) {
+    throw new Error(`Render returned model_verified=${payload?.model_verified ?? 'missing'}; verified model required.`);
+  }
+  if (!payload?.model_version) {
+    throw new Error('Render response is missing model_version.');
+  }
+  if (!payload?.prediction_interval_90) {
+    throw new Error('Render response is missing prediction_interval_90.');
+  }
+  if (!payload?.component_provenance) {
+    throw new Error('Render response is missing component_provenance.');
   }
   if (payload?.model_uses_real_data !== true) {
     throw new Error(`Render returned data_source=${payload?.model_data_source ?? 'missing'}; USDA NASS + NASA NEX-GDDP checkpoint required.`);
@@ -77,7 +86,7 @@ const assertRemotePinnPayload = (payload: any) => {
   ];
   const missing = requiredNumbers.filter(key => !Number.isFinite(Number(payload?.[key])));
   if (missing.length || !Array.isArray(payload?.daily_records) || payload.daily_records.length === 0) {
-    throw new Error(`Incomplete PINN response from Render. Invalid fields: ${missing.join(', ') || 'daily_records'}.`);
+    throw new Error(`Incomplete response from Render. Invalid fields: ${missing.join(', ') || 'daily_records'}.`);
   }
 };
 
@@ -125,6 +134,22 @@ const mapBackendSimulation = (field: Field, config: SimulationConfig, response: 
     id: response?.id ?? `sim-${Date.now()}`,
     inferenceMode: response?.inference_mode ?? 'unavailable',
     modelName: response?.model_name ?? 'CeresPINN',
+    modelVersion: response?.model_version,
+    modelVerified: response?.model_verified,
+    predictionScope: response?.prediction_scope,
+    datasetSha256: response?.dataset_sha256,
+    predictionInterval90: response?.prediction_interval_90 ? {
+      lowerKgHa: response.prediction_interval_90.lower_kg_ha,
+      upperKgHa: response.prediction_interval_90.upper_kg_ha,
+    } : undefined,
+    isExtrapolation: response?.is_extrapolation,
+    extrapolatedFeatures: response?.extrapolated_features,
+    componentProvenance: response?.component_provenance ? {
+      yield: response.component_provenance.yield,
+      dailyRecords: response.component_provenance.daily_records,
+      economics: response.component_provenance.economics,
+      managementEffect: response.component_provenance.management_effect,
+    } : undefined,
     modelDataSource: response?.model_data_source,
     modelUsesRealData: response?.model_uses_real_data === true,
     scientificScope: response?.scientific_scope ? {

@@ -36,7 +36,7 @@ test('production simulation posts to FastAPI and rejects synthetic checkpoints',
 
   assert.match(api, /fetch\(`\$\{API_BASE\}\/api\/simulate`/);
   assert.match(api, /method: 'POST'/);
-  assert.match(api, /payload\?\.inference_mode !== 'pinn'/);
+  assert.match(api, /payload\?\.model_verified !== true/);
   assert.match(api, /payload\?\.model_uses_real_data !== true/);
   assert.match(api, /if \(REQUIRE_REMOTE_PINN\) \{\s*throw error;/);
 });

@@ -577,38 +577,27 @@ _REPORTS_SEED: Dict[str, Any] = {
 
 _INGESTION_PIPELINES_SEED: List[Dict[str, Any]] = [
     {
-        "id": "pipe-chirps",
-        "name": "CHIRPS Daily Precipitation Pipeline",
-        "source": "UCSB Climate Hazards Center (FTP/GeoTIFF 0.05°)",
-        "frequency": "Diario (06:00 UTC)",
-        "last_sync": "2026-08-29 06:15:22 UTC",
+        "id": "pipe-noaa-cag",
+        "name": "NOAA NCEI Climate at a Glance",
+        "source": "NOAA (API Observacional Real)",
+        "frequency": "Mensual",
+        "last_sync": "2026-09-25",
         "status": "healthy",
-        "records_processed": "14,892,100 grid points",
-        "resolution": "0.05° (~5.3 km) downscaled to 100m",
-        "description": "Descarga satelital combinada con estaciones pluviométricas para monitoreo de precipitación en tiempo real.",
-    },
-    {
-        "id": "pipe-nasa-nex",
-        "name": "NASA NEX-GDDP CMIP6 Climate Scenarios",
-        "source": "NASA Earth Exchange (S3 Public Bucket / NetCDF4)",
-        "frequency": "Semanal (Actualización de proyecciones)",
-        "last_sync": "2026-08-28 18:40:00 UTC",
-        "status": "healthy",
-        "records_processed": "32 Ensemble Models (SSP1-2.6, SSP3-7.0, SSP5-8.5)",
-        "resolution": "0.25° con Quantile Delta Mapping",
-        "description": "Proyecciones climáticas globales con corrección de sesgo para temperatura extrema, radiación y VPD hasta 2050.",
+        "records_processed": "3,564 registros (Iowa)",
+        "resolution": "Nivel Condado",
+        "description": "Temperatura máxima, media, precipitaciones estacionales y CDD por condado para Iowa (1990-2025).",
     },
     {
         "id": "pipe-usda-nass",
-        "name": "USDA NASS QuickStats Crop Harvest Yields",
-        "source": "USDA National Agricultural Statistics Service API",
+        "name": "USDA NASS QuickStats",
+        "source": "USDA NASS API (Real)",
         "frequency": "Mensual",
-        "last_sync": "2026-08-20 12:00:10 UTC",
+        "last_sync": "2026-09-25",
         "status": "healthy",
-        "records_processed": "45,200 County-Year Yield Observations",
-        "resolution": "Nivel Condado / Parcela de calibración",
-        "description": "Datos históricos de rendimiento de maíz (1990-2025) utilizados como loss empírica de entrenamiento.",
-    },
+        "records_processed": "3,476 observaciones de rendimiento",
+        "resolution": "Nivel Condado",
+        "description": "Datos históricos de rendimiento de maíz observados en Iowa.",
+    }
 ]
 
 _USERS_SEED: List[Dict[str, Any]] = [

@@ -114,8 +114,21 @@ export interface DailySimulationRecord {
 
 export interface SimulationResult {
   id: string;
-  inferenceMode: 'pinn' | 'local-fallback' | 'pinn-calibrated-surrogate' | 'unavailable';
+  inferenceMode: 'trained_ml' | 'pinn' | 'local-fallback' | 'pinn-calibrated-surrogate' | 'unavailable';
   modelName?: string;
+  modelVersion?: string;
+  modelVerified?: boolean;
+  predictionScope?: string;
+  datasetSha256?: string;
+  predictionInterval90?: { lowerKgHa: number; upperKgHa: number };
+  isExtrapolation?: boolean;
+  extrapolatedFeatures?: string[];
+  componentProvenance?: {
+    yield: string;
+    dailyRecords: string;
+    economics: string;
+    managementEffect: string;
+  };
   modelDataSource?: string;
   modelUsesRealData?: boolean;
   scientificScope?: {
