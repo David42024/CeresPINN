@@ -199,7 +199,79 @@ class PinnAdapter(YieldModelAdapter):
         return self.available
         
     def predict_yield_bu_acre(self, payload: Dict[str, Any]) -> Optional[float]:
-        return None
+        """Run actual forward pass through the saved PyTorch PINN checkpoint."""
+        try:
+            import torch
+            meta = self.metadata
+            feature_names = meta.get("feature_names", [])
+            norm = meta.get("normalization", {})
+            mean = norm.get("mean", [])
+            std  = norm.get("std",  [])
+            y_min = float(norm.get("y_min", 78.0))
+            y_max = float(norm.get("y_max", 210.1))
+
+            # Build scenario features matching training order
+            year = float(payload.get("target_year", 2035))
+            temp_anom = float(payload.get("temperature_anomaly_c", 1.8))
+            precip_anom_pct = float(payload.get("precipitation_anomaly_percent", -12.0)) / 100.0
+            co2 = float(payload.get("carbon_dioxide_ppm", 540.0))
+            seasonal_precip = 480.0 * (1.0 + precip_anom_pct)
+            scenario_str = str(payload.get("scenario", "SSP3-7.0"))
+            scenario_map = {
+                "SSP1-2.6": 0.15, "SSP2-4.5": 0.35,
+                "SSP3-7.0": 0.60, "SSP5-8.5": 0.85,
+            }
+            heatwave_risk = scenario_map.get(scenario_str, 0.45)
+            seasonal_cdd = 20.0  # constant in training data
+
+            feat_map = {
+                "year": year,
+                "temp_anomaly_c": temp_anom,
+                "precip_anomaly_pct": precip_anom_pct,
+                "co2_ppm": co2,
+                "heatwave_risk": heatwave_risk,
+                "seasonal_precip_mm": seasonal_precip,
+                "seasonal_cdd": seasonal_cdd,
+            }
+            raw = np.array([feat_map.get(f, 0.0) for f in feature_names], dtype=np.float32)
+
+            # Normalize using training stats
+            mu  = np.array(mean, dtype=np.float32)
+            sig = np.array(std,  dtype=np.float32)
+            sig = np.where(sig < 1e-9, 1.0, sig)  # guard zero-std features
+            x_norm = (raw - mu) / sig
+
+            # Load model and run forward pass
+            state = torch.load(str(self.checkpoint), map_location="cpu", weights_only=False)
+            # state may be a dict of weights or a full model object
+            if isinstance(state, torch.nn.Module):
+                model = state.eval()
+                with torch.no_grad():
+                    x_t = torch.tensor(x_norm, dtype=torch.float32).unsqueeze(0)
+                    y_norm = model(x_t).item()
+            elif isinstance(state, dict) and all(isinstance(v, torch.Tensor) for v in state.values()):
+                # Raw state_dict — reconstruct the CeresPINN architecture from TrainConfig
+                from .training.config import TrainConfig
+                from .training.pinn import CeresPINN
+                cfg = TrainConfig()
+                model = CeresPINN(train_config=cfg, input_dim=len(feature_names))
+                model.load_state_dict(state)
+                model.eval()
+                with torch.no_grad():
+                    x_t = torch.tensor(x_norm, dtype=torch.float32).unsqueeze(0)
+                    out = model(x_t)
+                    # CeresPINN returns (yield_pred, physics); take first element
+                    y_norm = out[0].item() if isinstance(out, tuple) else out.item()
+            else:
+                return None
+
+            # Denormalize: model output is in [0,1] min-max scaled to [y_min, y_max]
+            y_pred = y_norm * (y_max - y_min) + y_min
+            return float(y_pred)
+        except Exception as exc:
+            import logging
+            logging.getLogger(__name__).warning("PinnAdapter.predict_yield_bu_acre failed: %s", exc)
+            return None
         
     def get_prediction_interval(self, payload: Dict[str, Any], point_bu: float) -> Dict[str, float]:
         kg_ha = point_bu * 62.77
