@@ -22,7 +22,7 @@ COPY backend/start.sh ./backend/start.sh
 
 # Validate the exact production checkpoint while building. A bad/missing model
 # must fail the deploy instead of activating the calibrated surrogate.
-RUN python -c "from backend.inference import get_inference; i=get_inference(); assert i.load_model() is not None, i.error_message"
+RUN python -c "from backend.inference import get_inference; i=get_inference(); assert i.adapter.load() is True, i.error_message"
 
 # Render injects PORT at runtime; this is just the default.
 ENV PORT=8000

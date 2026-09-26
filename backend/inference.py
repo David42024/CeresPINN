@@ -50,7 +50,6 @@ SCIENTIFIC_SCOPE = {
 
 from abc import ABC, abstractmethod
 import json
-import joblib
 
 class YieldModelAdapter(ABC):
     @abstractmethod
@@ -104,6 +103,7 @@ class SklearnAdapter(YieldModelAdapter):
             self._cached_error = "Model not found."
             return False
         try:
+            import joblib
             self._model = joblib.load(self.model_path)
             self._meta = json.loads(self.meta_path.read_text(encoding="utf-8"))
             return True
@@ -217,10 +217,10 @@ class YieldInferenceService:
         self.sklearn_adapter = SklearnAdapter(ridge_path, ridge_meta)
         self.pinn_adapter = PinnAdapter(_CHECKPOINT, _METADATA)
         
-        if self.sklearn_adapter.available:
-            self.adapter = self.sklearn_adapter
-        else:
+        if self.pinn_adapter.available:
             self.adapter = self.pinn_adapter
+        else:
+            self.adapter = self.sklearn_adapter
             
     @property
     def error_message(self):
