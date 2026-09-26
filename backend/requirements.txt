@@ -2,18 +2,18 @@
 
 fastapi>=0.133
 uvicorn[standard]==0.30.6
-pydantic==2.9.2
-requests==2.32.3
+pydantic>=2.9.2
+requests>=2.32.3
 psycopg2-binary==2.9.9
-sqlalchemy==2.0.35
+sqlalchemy>=2.0.35
 python-dotenv==1.0.1
 langchain-core
 langchain-openai
 xarray==2024.11.0
 netCDF4==1.7.2
-numpy==2.1.3
-pandas==2.2.3
-scipy==1.14.1
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.14.0
 # Required at runtime: /api/simulate loads backend/models/cerespinn_pinn.pt.
 torch==2.6.0+cpu
 
