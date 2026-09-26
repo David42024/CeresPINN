@@ -291,7 +291,7 @@ def management_artifacts() -> tuple[pd.DataFrame, dict]:
             "irrigation_strategy": "deficit_75",
         },
     }
-    raw_bu = inference.predict_yield_bu_acre(common)
+    raw_bu = inference.adapter.predict_yield_bu_acre(common)
     results = {}
     rows = []
     baseline_yield = None
