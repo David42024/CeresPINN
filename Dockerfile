@@ -13,8 +13,8 @@ WORKDIR /app
 
 # Copy only the requirements first to leverage Docker layer caching
 COPY backend/requirements.txt ./backend/requirements.txt
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r backend/requirements.txt
+RUN pip install --no-cache-dir uv && \
+    uv pip install --system --no-cache-dir -r backend/requirements.txt
 
 # Copy the rest of the backend and the start script
 COPY backend ./backend

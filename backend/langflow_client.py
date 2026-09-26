@@ -1,16 +1,20 @@
 """Server-side execution of the visual CeresPINN flows in Langflow.
 
-Only the backend talks to Langflow. Browser clients never receive its API key.
+This module now uses `langflow.load` to execute a local .json flow directly
+in memory instead of making REST requests to an external Langflow server.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import os
-from urllib.parse import quote, urlsplit
-from uuid import uuid4
+from pathlib import Path
+from dataclasses import dataclass
 
-import requests
+try:
+    from langflow.load import run_flow_from_json
+    LANGFLOW_AVAILABLE = True
+except ImportError:
+    LANGFLOW_AVAILABLE = False
 
 
 class LangflowConfigurationError(RuntimeError):
@@ -18,86 +22,52 @@ class LangflowConfigurationError(RuntimeError):
 
 
 class LangflowExecutionError(RuntimeError):
-    def __init__(self, status_code: int | None = None):
-        super().__init__("Langflow execution failed")
+    def __init__(self, status_code: int | None = None, message: str = "Langflow execution failed"):
+        super().__init__(message)
         self.status_code = status_code
 
 
 @dataclass(frozen=True)
 class LangflowConfig:
-    base_url: str
-    api_key: str
-    chatbot_flow_id: str
+    pass
 
 
 def langflow_requested() -> bool:
-    """A URL explicitly opts into Langflow; partial settings never silently fall back."""
-    return bool(os.getenv("LANGFLOW_BASE_URL", "").strip())
+    """A URL explicitly opts into Langflow; or if the local JSON exists."""
+    # Consider requested if the user placed the JSON file in backend/
+    json_path = Path(__file__).parent / "chatbot_flow.json"
+    return json_path.exists()
 
 
 def config_from_env() -> LangflowConfig:
-    base_url = os.getenv("LANGFLOW_BASE_URL", "").strip().rstrip("/")
-    api_key = os.getenv("LANGFLOW_API_KEY", "").strip()
-    chatbot_flow_id = os.getenv("LANGFLOW_CHATBOT_FLOW_ID", "").strip()
-    parsed = urlsplit(base_url)
-    if (
-        parsed.scheme not in {"http", "https"}
-        or not parsed.hostname
-        or parsed.username
-        or parsed.password
-        or parsed.path
-        or parsed.query
-        or parsed.fragment
-    ):
-        raise LangflowConfigurationError("LANGFLOW_BASE_URL must be a bare HTTP(S) origin")
-    if parsed.scheme == "http" and parsed.hostname not in {"localhost", "127.0.0.1", "::1"}:
-        raise LangflowConfigurationError("Remote Langflow must use HTTPS")
-    if not api_key or not chatbot_flow_id:
-        raise LangflowConfigurationError("Langflow URL, API key and chatbot flow ID are required")
-    return LangflowConfig(base_url, api_key, chatbot_flow_id)
-
-
-def _response_text(body: object) -> str:
-    if not isinstance(body, dict):
-        raise LangflowExecutionError(502)
-    outputs = body.get("outputs")
-    if not isinstance(outputs, list):
-        raise LangflowExecutionError(502)
-    for item in outputs:
-        for output in item.get("outputs", []) if isinstance(item, dict) else []:
-            if not isinstance(output, dict):
-                continue
-            results = output.get("results")
-            if not isinstance(results, dict):
-                continue
-            message = results.get("message")
-            if isinstance(message, dict) and isinstance(message.get("text"), str):
-                result = message["text"].strip()
-                if result:
-                    return result
-    raise LangflowExecutionError(502)
+    """Returns an empty config since we run locally from JSON now."""
+    json_path = Path(__file__).parent / "chatbot_flow.json"
+    if not json_path.exists():
+        raise LangflowConfigurationError("No se encontró el archivo chatbot_flow.json en backend/")
+    return LangflowConfig()
 
 
 def run_chatbot_flow(*, input_value: str, config: LangflowConfig | None = None) -> str:
-    config = config or config_from_env()
-    url = f"{config.base_url}/api/v1/run/{quote(config.chatbot_flow_id, safe='')}"
+    """Run the chatbot flow headless in the same process."""
+    if not LANGFLOW_AVAILABLE:
+        raise LangflowExecutionError(503, "Langflow module is not installed. Add it to requirements.txt.")
+        
+    json_path = Path(__file__).parent / "chatbot_flow.json"
+    if not json_path.exists():
+        raise LangflowExecutionError(500, "Flow JSON not found.")
+        
     try:
-        response = requests.post(
-            url,
-            headers={"Content-Type": "application/json", "x-api-key": config.api_key},
-            json={
-                "input_value": input_value,
-                "input_type": "chat",
-                "output_type": "chat",
-                "session_id": f"cerespinn-{uuid4().hex}",
-            },
-            timeout=60,
+        # Run local langflow file
+        result = run_flow_from_json(
+            flow=str(json_path),
+            input_value=input_value,
+            fallback_to_env_vars=True,
+            tweaks={}
         )
-    except requests.RequestException as exc:
-        raise LangflowExecutionError(503) from exc
-    if not response.ok:
-        raise LangflowExecutionError(response.status_code)
-    try:
-        return _response_text(response.json())
-    except ValueError as exc:
-        raise LangflowExecutionError(502) from exc
+        
+        # Depending on your specific flow, the output structure might change.
+        # Generally, it looks like this for a Chat Output node:
+        return result[0].outputs[0].results["message"].text
+    except Exception as exc:
+        print(f"Error running local Langflow: {exc}")
+        raise LangflowExecutionError(500, str(exc)) from exc
