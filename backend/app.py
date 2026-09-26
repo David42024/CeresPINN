@@ -189,7 +189,7 @@ def health() -> Dict[str, Any]:
         "model": "pinn-maize-ensemble" if model_ready else "unavailable",
         "model_ready": model_ready,
         "inference_mode": "trained_ml" if model_ready else "unavailable",
-        "data_source": inv.metadata.get("data_source") if model_ready else None,
+        "data_source": inv.adapter.metadata.get("data_source") if model_ready else None,
         "real_data": True if model_ready else False,
     }
 
