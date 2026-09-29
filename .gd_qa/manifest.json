@@ -1,0 +1,252 @@
+[
+  {
+    "ruta": "backend/app.py",
+    "sha256": "4972c4e530ab3b9bc0253882c19db523f84d665c0039fea6082a67d48186140b",
+    "lineas": 619
+  },
+  {
+    "ruta": "backend/chatbot_flow.json",
+    "sha256": "7bc180c7160f7d06b563adff7c5ebbd91fe90dcb8c9262dcfeae0f85e2aa53fc",
+    "lineas": 1472
+  },
+  {
+    "ruta": "backend/data/.env.example",
+    "sha256": "144e50239411a07c22fe0db88d8781d02df3bf4396156fc1ea57be3159a505fe",
+    "lineas": 12
+  },
+  {
+    "ruta": "backend/data/__init__.py",
+    "sha256": "9109ddaa2b6fca404753214c09ff37e22b228cc2d372e4df10929862a448dc0c",
+    "lineas": 23
+  },
+  {
+    "ruta": "backend/data/build_panel.py",
+    "sha256": "575c79066c962df3e54c78d6fd9b0bf50328d137041752085c4368e3cc6bfe65",
+    "lineas": 55
+  },
+  {
+    "ruta": "backend/data/chirps.py",
+    "sha256": "a63b3a845088a9f0dbf1173fb0da89c2d5d822402db4ab5202adfa20827772de",
+    "lineas": 116
+  },
+  {
+    "ruta": "backend/data/clean_nass.py",
+    "sha256": "32ce69f399004fff6610c65d967d08138454bdc02fc6875e3629fc213a83b107",
+    "lineas": 80
+  },
+  {
+    "ruta": "backend/data/config.py",
+    "sha256": "6136cfd378d328cec83f092c495d464dbcccbbbf7f9a19977bf667646b06c7e6",
+    "lineas": 163
+  },
+  {
+    "ruta": "backend/data/extractors.py",
+    "sha256": "13a44092312e42081fa5322b47d9b7433241bbfa726c52263b547ad891f4f678",
+    "lineas": 81
+  },
+  {
+    "ruta": "backend/data/nass.py",
+    "sha256": "845b90a3600623ba1fee2684edf3aec7d00ab718889fcaeaadc60a2d9fd19d75",
+    "lineas": 191
+  },
+  {
+    "ruta": "backend/data/nex_gddp.py",
+    "sha256": "6969c5064c80965b5aa0268ac6d951e8d4e3627e4c73422b7395349608fef7c9",
+    "lineas": 214
+  },
+  {
+    "ruta": "backend/data/noaa_cag.py",
+    "sha256": "dad9505d6bb7354ebb09a9f96a836b78d936b9b660902eb59e761b204cb184eb",
+    "lineas": 86
+  },
+  {
+    "ruta": "backend/data/processed/canonical_panel_manifest.json",
+    "sha256": "01465906e4ab4ef6730bda25f66e84e7d8ecf12d56c35957fc98a645fc759295",
+    "lineas": 50
+  },
+  {
+    "ruta": "backend/data/processed/nass_clean_manifest.json",
+    "sha256": "4fe62083c98565bf958d1c98a21bb922ebb9755d4b454157d585e796a9be9af2",
+    "lineas": 45
+  },
+  {
+    "ruta": "backend/data/provider_base.py",
+    "sha256": "5100514f8e77d3de10dd5b1d330281f0f64a63b5c233d3a7f9a8d2fa670e7bf1",
+    "lineas": 90
+  },
+  {
+    "ruta": "backend/data/raw/chirps/chirps_manifest.json",
+    "sha256": "0188d76da1c12a813caac96dab2c36c363ef20a13a82342ee529988a7fa53729",
+    "lineas": 33
+  },
+  {
+    "ruta": "backend/data/raw/nass/usda-nass_manifest.json",
+    "sha256": "5173f2094193ea02033d508558b62461e4ed91659b57081a28495b823807f0ca",
+    "lineas": 8
+  },
+  {
+    "ruta": "backend/data/raw/nex-gddp/nex-gddp_manifest.json",
+    "sha256": "66df6a8c0876ae3b1d39212edecd108cec00efc626725740e2133e4c7e7c8026",
+    "lineas": 56
+  },
+  {
+    "ruta": "backend/db.py",
+    "sha256": "6dedc651010b49967e3e4a1bdd22f4218ac38e69b52bd7537f6e67a857846d10",
+    "lineas": 863
+  },
+  {
+    "ruta": "backend/inference.py",
+    "sha256": "45d5af52e0f5dbcdb85c4a41b8a839ef7f63dcf532f3a78238bf1c6ddf51b2ae",
+    "lineas": 687
+  },
+  {
+    "ruta": "backend/langflow_client.py",
+    "sha256": "d8e86be3e16064834e688952bea624a499d00b4b6094de99f9fffb4e21460194",
+    "lineas": 75
+  },
+  {
+    "ruta": "backend/llm.py",
+    "sha256": "e3459ceb5b8d7a8e5ea4d81827850e7d9d21811f09049aff19cbd8df98384e8c",
+    "lineas": 27
+  },
+  {
+    "ruta": "backend/main.py",
+    "sha256": "ef55a4b8ac784b7dfe44c03bd33bbc8f4e48b132d4880a68e9ccf3e8cdef704b",
+    "lineas": 7
+  },
+  {
+    "ruta": "backend/models/cerespinn_metadata.json",
+    "sha256": "19f365fb854118fbed8e88b51701c096130ad4d58106a10954144225bf9f8cb6",
+    "lineas": 240
+  },
+  {
+    "ruta": "backend/models/cerespinn_ridge_v3_metadata.json",
+    "sha256": "2af03a5707f6ae72099818000a9e2b11143a7ac3459be29b216f907f4f44bab7",
+    "lineas": 84
+  },
+  {
+    "ruta": "backend/models/experimental/cerespinn_spatial_v4_metadata.json",
+    "sha256": "271b7489a5d43ee0d5f0267098bd62fe8a7a33559449646f20b2b03ea89da21e",
+    "lineas": 129
+  },
+  {
+    "ruta": "backend/models/ruta_a_model_comparison.json",
+    "sha256": "622c88f5b1bc6c8d180adaeb64d31837754149fb59b742c8ab8cbe73d79daa00",
+    "lineas": 37
+  },
+  {
+    "ruta": "backend/pipelines_api.py",
+    "sha256": "34159c67efff979941513c8cc95a43df680a2e11cc41b765b1d74926cee8f9ce",
+    "lineas": 357
+  },
+  {
+    "ruta": "backend/requirements-ml.txt",
+    "sha256": "d714e29c29671bfcc3e5445ebb7b92366d2ca119f4d788b9be5c8b1c72333a54",
+    "lineas": 27
+  },
+  {
+    "ruta": "backend/requirements-test.txt",
+    "sha256": "ff2c36b0f8ca4a37c9d9a01a882c65feaa0cb01ed680a1bad523bbff8cea0de5",
+    "lineas": 7
+  },
+  {
+    "ruta": "backend/requirements.txt",
+    "sha256": "3bf0a42dad40deac4380d96b7f2fbd3c3e756057baeef1fb1df91d0b37da593c",
+    "lineas": 22
+  },
+  {
+    "ruta": "backend/seed.py",
+    "sha256": "8da7bd16cdcecf044f8c651b14ac181d63f3fabf5a28f4cbbb88d5053865402c",
+    "lineas": 169
+  },
+  {
+    "ruta": "backend/start.sh",
+    "sha256": "f5df2806058641ac9235d6615f38887c1b58ae95c1e719055001ece90644b778",
+    "lineas": 8
+  },
+  {
+    "ruta": "backend/tests/conftest.py",
+    "sha256": "d568a68c8fa8565225bec070c8d59b01776ea144595885327fb1469855852f20",
+    "lineas": 51
+  },
+  {
+    "ruta": "backend/tests/test_api.py",
+    "sha256": "26d0daa5dd22216fe88b8c82591d6c9ff2f5c4c35d6204885ea02cdf1637cf42",
+    "lineas": 331
+  },
+  {
+    "ruta": "backend/tests/test_digital_twin_api.py",
+    "sha256": "0235e7df29568e1ab36a006e684ae44c2b5af9d070a3866fe76a951aa6972806",
+    "lineas": 51
+  },
+  {
+    "ruta": "backend/tests/test_inference.py",
+    "sha256": "cb4ffef4ee809e15290afbfc104d93bc3a30453785882ae1e605fe8f8aad4875",
+    "lineas": 69
+  },
+  {
+    "ruta": "backend/tests/test_llm.py",
+    "sha256": "b414ff1d303c234ba86d843b1108d8e0172b86095dbc1f6eb85faf50e02de7c0",
+    "lineas": 144
+  },
+  {
+    "ruta": "backend/tests/test_training.py",
+    "sha256": "512fbdc7b994dbaad9238a501edb2a2d33d9e71784d8b01ffa1d9bed2691fcd1",
+    "lineas": 65
+  },
+  {
+    "ruta": "backend/tests/test_validation.py",
+    "sha256": "6cd98d85594031264a894da9cef856657835576129e59371c2ed97854cff9562",
+    "lineas": 25
+  },
+  {
+    "ruta": "backend/training/README.md",
+    "sha256": "57021563fee614b9fab0f547ddad66898ab965bc8d40422231591bf13e5dc7d6",
+    "lineas": 88
+  },
+  {
+    "ruta": "backend/training/__init__.py",
+    "sha256": "f62a7287c2f1c7d2a5b89122b2104072a2e3e08602ae9644b9756caa95e781c6",
+    "lineas": 30
+  },
+  {
+    "ruta": "backend/training/config.py",
+    "sha256": "95d7e687735ad7d9cb44e004748f3f9c3ac7f34ce76b48419567833489582071",
+    "lineas": 113
+  },
+  {
+    "ruta": "backend/training/dataset.py",
+    "sha256": "593a86cee9d0e10c268588b3a1190b7f721b321804a28c60d9832de4a7d9a176",
+    "lineas": 316
+  },
+  {
+    "ruta": "backend/training/package_model.py",
+    "sha256": "9746af994070ea78166a20bc4e09a4a3e1c537956debb617cfcb2540c225fa3a",
+    "lineas": 112
+  },
+  {
+    "ruta": "backend/training/pinn.py",
+    "sha256": "f9a92742170d68e4b16f1cd976591dcd83335ca98692527ef7b4b1f5d046242c",
+    "lineas": 118
+  },
+  {
+    "ruta": "backend/training/train.py",
+    "sha256": "cd3a718c0b2706ee4544dbf26273f95512c42ffa2d3e4f4d05af8220869cd53f",
+    "lineas": 186
+  },
+  {
+    "ruta": "backend/training/train_v3.py",
+    "sha256": "623ab868ff7b3bac7a632435ffe8b8542829cb4f6b1121d3db0abe10900d1165",
+    "lineas": 86
+  },
+  {
+    "ruta": "backend/training/train_v4_spatial.py",
+    "sha256": "bd4f049b707400df5f3747db778425a4189f3377c60c41bd4d191899c98d01bd",
+    "lineas": 173
+  },
+  {
+    "ruta": "backend/validation.py",
+    "sha256": "8d1d1669e416d89df8a1e3ce3e12f310dca3c13d64a49238065f40153ee433de",
+    "lineas": 54
+  }
+]

@@ -1,0 +1,50 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 1 /Kids [5 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 1210 >>
+stream
+BT /F2 20 Tf 1 0 0 1 40.00 802.00 Tm (Informe de CeresPINN) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 768.00 Tm (Autor:) Tj ET
+BT /F1 9 Tf 1 0 0 1 40.00 748.00 Tm (2026-09-29T13:34:16.032842+00:00) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 729.40 Tm (Alcance) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 705.20 Tm (Resultados de ejecuciones guardadas de CeresPINN. Cada protocolo conserva sus propias) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 691.20 Tm (particiones y fecha de ejecución. Las asociaciones observacionales no demuestran causalidad) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 677.20 Tm (ni superioridad universal.) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 657.20 Tm (Comparación de modelos) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 633.00 Tm (No hay un benchmark común guardado.) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 613.00 Tm (Disponibilidad y límites) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 588.80 Tm (No se combinan métricas de protocolos diferentes para declarar un ganador. Los resultados no) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 574.80 Tm (sustituyen validación operativa independiente. Archivos no disponibles:) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 560.80 Tm (common_benchmark.json, cerespinn_spatial_v4_metadata.json) Tj ET
+BT /F1 8 Tf 1 0 0 1 555.00 22.00 Tm (1) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000218 00000 n 
+0000000320 00000 n 
+0000000456 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+1718
+%%EOF

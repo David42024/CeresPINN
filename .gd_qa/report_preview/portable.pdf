@@ -1,0 +1,98 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 1 /Kids [5 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 4162 >>
+stream
+BT /F2 20 Tf 1 0 0 1 40.00 802.00 Tm (Informe de prueba) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 768.00 Tm (Autor: Equipo) Tj ET
+BT /F1 9 Tf 1 0 0 1 40.00 748.00 Tm (2026-09-29T13:31:44.032707+00:00) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 729.40 Tm (Alcance) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 705.20 Tm (Resultados de ejecuciones guardadas de CeresPINN. Cada protocolo conserva sus propias) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 691.20 Tm (particiones y fecha de ejecución. Las asociaciones observacionales no demuestran causalidad) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 677.20 Tm (ni superioridad universal.) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 657.20 Tm (Comparación de modelos) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 633.00 Tm (Ejecución: 2026-09-29. Ganador seleccionado por validación: Ridge. Protocolo:) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 619.00 Tm (chronological_train_validation_test. Particiones: {"train": {"years": [2000, 2001]}, "test":) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 605.00 Tm ({"years": [2002]}}.) Tj ET
+.93 .93 .93 rg 40 563.00 515 22 re f 0 0 0 rg
+.7 .7 .7 RG .4 w 40.00 563.00 103.00 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 45.00 573.00 Tm (Modelo) Tj ET
+.7 .7 .7 RG .4 w 143.00 563.00 103.00 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 148.00 573.00 Tm (R² validación) Tj ET
+.7 .7 .7 RG .4 w 246.00 563.00 103.00 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 251.00 573.00 Tm (R² prueba) Tj ET
+.7 .7 .7 RG .4 w 349.00 563.00 103.00 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 354.00 573.00 Tm (RMSE prueba kg/ha) Tj ET
+.7 .7 .7 RG .4 w 452.00 563.00 103.00 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 457.00 573.00 Tm (MAE prueba kg/ha) Tj ET
+.7 .7 .7 RG .4 w 40.00 541.00 103.00 22 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 45.00 551.00 Tm (Ridge) Tj ET
+.7 .7 .7 RG .4 w 143.00 541.00 103.00 22 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 148.00 551.00 Tm (0.12) Tj ET
+.7 .7 .7 RG .4 w 246.00 541.00 103.00 22 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 251.00 551.00 Tm (-0.27) Tj ET
+.7 .7 .7 RG .4 w 349.00 541.00 103.00 22 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 354.00 551.00 Tm (432.1) Tj ET
+.7 .7 .7 RG .4 w 452.00 541.00 103.00 22 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 457.00 551.00 Tm (300.2) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 521.00 Tm (Disponibilidad y límites) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 496.80 Tm (No se combinan métricas de protocolos diferentes para declarar un ganador. Los resultados no) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 482.80 Tm (sustituyen validación operativa independiente. Archivos no disponibles:) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 468.80 Tm (statistical_analysis.json, cerespinn_spatial_v4_metadata.json) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 448.80 Tm (Trazabilidad de fuentes) Tj ET
+BT /F1 10 Tf 1 0 0 1 40.00 424.60 Tm (Las huellas SHA256 identifican los archivos utilizados al generar el informe.) Tj ET
+.93 .93 .93 rg 40 382.60 515 22 re f 0 0 0 rg
+.7 .7 .7 RG .4 w 40.00 382.60 257.50 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 45.00 392.60 Tm (Archivo) Tj ET
+.7 .7 .7 RG .4 w 297.50 382.60 257.50 22 re S 0 0 0 RG
+BT /F2 7.5 Tf 1 0 0 1 302.50 392.60 Tm (SHA256) Tj ET
+.7 .7 .7 RG .4 w 40.00 350.60 257.50 32 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 45.00 370.60 Tm (ml_lab\\artifacts\\common_benchmark.json) Tj ET
+.7 .7 .7 RG .4 w 297.50 350.60 257.50 32 re S 0 0 0 RG
+BT /F1 7.5 Tf 1 0 0 1 302.50 370.60 Tm (e0fad4eedebcfed4f3bee46f783630457f2dc9b346a19d436ff20c7d2) Tj ET
+BT /F1 7.5 Tf 1 0 0 1 302.50 360.60 Tm (147ff44) Tj ET
+BT /F2 13 Tf 1 0 0 1 40.00 330.60 Tm (R² en prueba independiente) Tj ET
+.85 .85 .85 RG 201.57 286.20 m 201.57 154.93 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 191.57 134.73 Tm (-0.292) Tj ET
+.85 .85 .85 RG 281.09 286.20 m 281.09 154.93 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 271.09 134.73 Tm (-0.213) Tj ET
+.85 .85 .85 RG 360.61 286.20 m 360.61 154.93 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 350.61 134.73 Tm (-0.135) Tj ET
+.85 .85 .85 RG 440.13 286.20 m 440.13 154.93 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 430.13 134.73 Tm (-0.0567) Tj ET
+.85 .85 .85 RG 519.66 286.20 m 519.66 154.93 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 509.66 134.73 Tm (0.0216) Tj ET
+BT /F1 8 Tf 1 0 0 1 40.00 257.96 Tm (Ridge) Tj ET
+.137 .42 .557 rg 223.51 252.88 274.21 16.16 re f 0 0 0 rg
+BT /F1 8 Tf 1 0 0 1 555.00 22.00 Tm (1) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000218 00000 n 
+0000000320 00000 n 
+0000000456 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+4670
+%%EOF

@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "title": "Informe de CeresPINN",
+    "author": "",
+    "generated_at": "2026-09-29T13:42:28.123228+00:00",
+    "template": "executive"
+  },
+  "options": {
+    "include_charts": true,
+    "include_tables": true
+  },
+  "sections": [
+    {
+      "title": "Resumen de la evaluación",
+      "text": "Este informe reúne los datos y resultados disponibles. La selección del mejor modelo aún está pendiente de ejecutar la comparación común de candidatos."
+    },
+    {
+      "title": "Datos activos",
+      "text": "3448 observaciones y 14 variables. 0 duplicados exactos adicionales. Cobertura: 1990–2025. 99 condados representados.",
+      "columns": [
+        "Variable",
+        "Valores faltantes"
+      ],
+      "rows": []
+    },
+    {
+      "title": "Evaluaciones complementarias",
+      "text": "Validación temporal: 3 folds externos, con parámetros fijos. Suite estadística: 10 contrastes; 0 rechazos de H0 con corrección Holm y alfa 0.05. Los resultados por modelo y los intervalos completos se incluyen en la plantilla técnica."
+    },
+    {
+      "title": "Resultados del checkpoint disponible",
+      "text": "Modelo: CeresPINN-maize-v2.5. Partición registrada: reserva aleatoria de años. Entrenamiento: 84 observaciones; prueba: 24. Son métricas históricas registradas, no recalculadas en este informe ni equivalentes al nuevo benchmark común.",
+      "columns": [
+        "Conjunto",
+        "R²",
+        "MAE (bu/acre)",
+        "MSE (bu/acre)²"
+      ],
+      "rows": [
+        [
+          "Entrenamiento",
+          0.8112,
+          9.395,
+          180.1821
+        ],
+        [
+          "Prueba registrada",
+          0.8225,
+          9.8505,
+          130.6244
+        ]
+      ]
+    },
+    {
+      "title": "Próximos pasos",
+      "text": "Ejecutar la comparación común para seleccionar el mejor modelo."
+    },
+    {
+      "title": "Interpretación y límites",
+      "text": "Cada resultado debe interpretarse dentro de su protocolo y sus unidades. Las asociaciones observacionales no demuestran causalidad. La evaluación exploratoria no sustituye validación para uso operativo."
+    }
+  ],
+  "charts": [
+    {
+      "title": "R² registrado del checkpoint",
+      "kind": "bar",
+      "labels": [
+        "Entrenamiento",
+        "Prueba registrada"
+      ],
+      "values": [
+        0.8112,
+        0.8225
+      ],
+      "ylabel": "R²"
+    }
+  ],
+  "sources": [
+    {
+      "file": "ml_lab\\artifacts\\statistical_analysis.json",
+      "sha256": "903471bd698cd8c0fd3aef142da585e38c9b42cce735793e6cf10bf2ca3e783a"
+    },
+    {
+      "file": "ml_lab\\artifacts\\cv_temporal_fixed.json",
+      "sha256": "95fa3f528bd9f9e9f78c0e20eab3f9207a8ba0d3d7ac43ba588d230176a3a17e"
+    },
+    {
+      "file": "backend\\models\\cerespinn_metadata.json",
+      "sha256": "19f365fb854118fbed8e88b51701c096130ad4d58106a10954144225bf9f8cb6"
+    }
+  ],
+  "unavailable": [
+    "common_benchmark.json",
+    "cerespinn_spatial_v4_metadata.json"
+  ]
+}

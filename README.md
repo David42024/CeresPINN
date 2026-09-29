@@ -7,10 +7,9 @@
 
 CeresPINN is designed to address critical gaps identified in recent agro-climatic literature:
 
-1. **Monotonicity-informed yield model:** The trained PyTorch MLP penalizes yield responses with the wrong local sign: yield should not increase with thermal anomaly or decrease with additional seasonal precipitation inside the training domain. This is a soft regularizer, not a governing-equation solver or a guarantee outside the observed data range.
-2. **Beyond Static Yield Predictions:** While traditional models focus solely on crop yield, CeresPINN incorporates climate stressors to evaluate risks to the **Harvestable Fraction (HF)**, preventing the systematic underestimation of food security risks under CMIP6 extreme heat and drought scenarios (Xiao et al., 2025).
-3. **Interactive scenario exploration:** The checkpoint and deterministic seasonal simulator support fast comparisons through `/api/simulate`. No direct speed comparison with process-based crop models is claimed.
-4. **Georeferenced records:** PostgreSQL/PostGIS stores field geometry and metadata. The current yield checkpoint does not use coordinates or soil parameters as neural-network inputs, so field comparisons are exploratory rather than validated spatial predictions.
+1. **Monotonicity-informed yield model:** The trained PyTorch MLP applies differentiable monotonicity constraints on temperature and precipitation inside the training domain. It does not solve the Richards PDE, and the constraints do not guarantee behavior outside the observed data range.
+2. **Interactive scenario exploration:** The checkpoint and deterministic seasonal simulator support fast comparisons through `/api/simulate`. No direct speed comparison with process-based crop models is claimed.
+3. **Georeferenced records:** PostgreSQL/PostGIS stores field geometry and metadata. The current yield checkpoint does not use coordinates or soil parameters as neural-network inputs, so field comparisons are exploratory rather than validated spatial predictions.
 
 - **Data:**
   - **Climate features:** Regional summaries derived from NASA NEX-GDDP-CMIP6.

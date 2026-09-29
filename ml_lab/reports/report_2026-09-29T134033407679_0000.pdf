@@ -1,0 +1,123 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 2 /Kids [5 0 R 7 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 3973 >>
+stream
+.18 .42 .35 rg
+BT /F2 9 Tf 1 0 0 1 48.00 794.00 Tm (CERESPINN  /  RESUMEN EJECUTIVO) Tj ET
+0 0 0 rg
+BT /F2 25 Tf 1 0 0 1 48.00 756.00 Tm (Informe de CeresPINN) Tj ET
+.4 .4 .4 rg
+BT /F1 9 Tf 1 0 0 1 48.00 710.00 Tm (29 de septiembre de 2026 · 08:40 \(UTC-5\)) Tj ET
+0 0 0 rg
+BT /F2 13 Tf 1 0 0 1 48.00 660.68 Tm (01  Resumen de la evaluación) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 632.44 Tm (Este informe reúne los datos y resultados disponibles. La selección del mejor modelo) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 616.90 Tm (aún está pendiente de ejecutar la comparación común de candidatos.) Tj ET
+BT /F2 13 Tf 1 0 0 1 48.00 583.36 Tm (02  Datos activos) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 555.12 Tm (3448 observaciones y 14 variables. 0 duplicados exactos adicionales. Cobertura:) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 539.58 Tm (1990–2025. 99 condados representados.) Tj ET
+BT /F2 13 Tf 1 0 0 1 48.00 506.04 Tm (03  Evaluaciones complementarias) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 477.80 Tm (Validación temporal: 3 folds externos, con parámetros fijos. Suite estadística: 10) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 462.26 Tm (contrastes; 0 rechazos de H0 con corrección Holm y alfa 0.05. Los resultados por) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 446.72 Tm (modelo y los intervalos completos se incluyen en la plantilla técnica.) Tj ET
+BT /F2 13 Tf 1 0 0 1 48.00 413.18 Tm (04  Resultados del checkpoint disponible) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 384.94 Tm (Modelo: CeresPINN-maize-v2.5. Partición registrada: reserva aleatoria de años.) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 369.40 Tm (Entrenamiento: 84 observaciones; prueba: 24. Son métricas históricas registradas, no) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 353.86 Tm (recalculadas en este informe ni equivalentes al nuevo benchmark común.) Tj ET
+.91 .94 .93 rg 48 302.32 499 27 re f 0 0 0 rg
+.82 .84 .84 RG .35 w 48.00 302.32 154.69 27 re S 0 0 0 RG
+BT /F2 8 Tf 1 0 0 1 55.00 315.32 Tm (Conjunto) Tj ET
+.82 .84 .84 RG .35 w 202.69 302.32 114.77 27 re S 0 0 0 RG
+BT /F2 8 Tf 1 0 0 1 209.69 315.32 Tm (R²) Tj ET
+.82 .84 .84 RG .35 w 317.46 302.32 114.77 27 re S 0 0 0 RG
+BT /F2 8 Tf 1 0 0 1 324.46 315.32 Tm (MAE \(bu/acre\)) Tj ET
+.82 .84 .84 RG .35 w 432.23 302.32 114.77 27 re S 0 0 0 RG
+BT /F2 8 Tf 1 0 0 1 439.23 315.32 Tm (MSE \(bu/acre\)²) Tj ET
+.82 .84 .84 RG .35 w 48.00 275.32 154.69 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 55.00 288.32 Tm (Entrenamiento) Tj ET
+.82 .84 .84 RG .35 w 202.69 275.32 114.77 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 209.69 288.32 Tm (0.8112) Tj ET
+.82 .84 .84 RG .35 w 317.46 275.32 114.77 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 324.46 288.32 Tm (9.395) Tj ET
+.82 .84 .84 RG .35 w 432.23 275.32 114.77 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 439.23 288.32 Tm (180.182) Tj ET
+.97 .98 .98 rg 48 248.32 499 27 re f 0 0 0 rg
+.82 .84 .84 RG .35 w 48.00 248.32 154.69 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 55.00 261.32 Tm (Prueba registrada) Tj ET
+.82 .84 .84 RG .35 w 202.69 248.32 114.77 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 209.69 261.32 Tm (0.8225) Tj ET
+.82 .84 .84 RG .35 w 317.46 248.32 114.77 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 324.46 261.32 Tm (9.8505) Tj ET
+.82 .84 .84 RG .35 w 432.23 248.32 114.77 27 re S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 439.23 261.32 Tm (130.624) Tj ET
+BT /F2 13 Tf 1 0 0 1 48.00 219.32 Tm (05  Próximos pasos) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 191.08 Tm (Ejecutar la comparación común para seleccionar el mejor modelo.) Tj ET
+BT /F2 13 Tf 1 0 0 1 48.00 157.54 Tm (06  Interpretación y límites) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 129.30 Tm (Cada resultado debe interpretarse dentro de su protocolo y sus unidades. Las) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 113.76 Tm (asociaciones observacionales no demuestran causalidad. La evaluación exploratoria no) Tj ET
+BT /F1 10.5 Tf 1 0 0 1 48.00 98.22 Tm (sustituye validación para uso operativo.) Tj ET
+.45 .45 .45 rg
+BT /F1 8 Tf 1 0 0 1 48.00 25.00 Tm (CeresPINN · Resumen ejecutivo) Tj ET
+BT /F1 8 Tf 1 0 0 1 547.00 25.00 Tm (1) Tj ET
+0 0 0 rg
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 1082 >>
+stream
+BT /F2 8 Tf 1 0 0 1 48.00 794.00 Tm (CERESPINN / RESULTADOS DE INVESTIGACIÓN) Tj ET
+BT /F2 13 Tf 1 0 0 1 48.00 769.00 Tm (R² registrado del checkpoint) Tj ET
+.85 .85 .85 RG 204.55 721.19 m 204.55 594.00 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 194.55 574.43 Tm (-0.0658) Tj ET
+.85 .85 .85 RG 281.60 721.19 m 281.60 594.00 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 271.60 574.43 Tm (0.173) Tj ET
+.85 .85 .85 RG 358.65 721.19 m 358.65 594.00 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 348.65 574.43 Tm (0.411) Tj ET
+.85 .85 .85 RG 435.70 721.19 m 435.70 594.00 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 425.70 574.43 Tm (0.65) Tj ET
+.85 .85 .85 RG 512.75 721.19 m 512.75 594.00 l S 0 0 0 RG
+BT /F1 8 Tf 1 0 0 1 502.75 574.43 Tm (0.888) Tj ET
+BT /F1 8 Tf 1 0 0 1 48.00 693.73 Tm (Entrenamiento) Tj ET
+.137 .42 .557 rg 225.80 688.90 262.04 15.65 re f 0 0 0 rg
+BT /F1 8 Tf 1 0 0 1 48.00 656.55 Tm (Prueba registrada) Tj ET
+.137 .42 .557 rg 225.80 651.72 265.69 15.65 re f 0 0 0 rg
+.45 .45 .45 rg
+BT /F1 8 Tf 1 0 0 1 48.00 25.00 Tm (CeresPINN · Resumen ejecutivo) Tj ET
+BT /F1 8 Tf 1 0 0 1 547.00 25.00 Tm (2) Tj ET
+0 0 0 rg
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000127 00000 n 
+0000000224 00000 n 
+0000000326 00000 n 
+0000000462 00000 n 
+0000004487 00000 n 
+0000004623 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+5757
+%%EOF

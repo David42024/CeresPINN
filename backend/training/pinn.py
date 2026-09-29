@@ -86,8 +86,13 @@ def physics_loss(
     term_3 : range feasibility of the water-availability proxy.
     """
     names = getattr(train_config, "feature_names", [])
-    hot_idx = names.index("temp_anomaly_c") if "temp_anomaly_c" in names else None
-    cold_idx = names.index("seasonal_precip_mm") if "seasonal_precip_mm" in names else None
+    # Support both the checkpoint schema and the county-year panel schema.
+    hot_name = next((name for name in ('temp_anomaly_c', 'season_tmax_mean_c', 'season_temp_mean_c')
+                     if name in names), None)
+    precip_name = next((name for name in ('seasonal_precip_mm', 'season_precip_mm')
+                        if name in names), None)
+    hot_idx = names.index(hot_name) if hot_name else None
+    cold_idx = names.index(precip_name) if precip_name else None
 
     # Re-run a forward on a copy of the batch that is explicitly part of the graph,
     # so autograd can differentiate yield w.r.t. the inputs.
@@ -98,18 +103,18 @@ def physics_loss(
     loss = torch.zeros((), device=xg.device)
 
     if hot_idx is not None:
-        dy_dtemp = torch.autograd.grad(
+        gradient = torch.autograd.grad(
             yield_pred.sum(), xg, create_graph=True, retain_graph=True, allow_unused=True
-        )[0][:, hot_idx]
-        if dy_dtemp is not None:
-            loss = loss + lam * torch.relu(dy_dtemp).mean()
+        )[0]
+        if gradient is not None:
+            loss = loss + lam * torch.relu(gradient[:, hot_idx]).mean()
 
     if cold_idx is not None:
-        dy_dprecip = torch.autograd.grad(
+        gradient = torch.autograd.grad(
             yield_pred.sum(), xg, create_graph=True, retain_graph=True, allow_unused=True
-        )[0][:, cold_idx]
-        if dy_dprecip is not None:
-            loss = loss + lam * torch.relu(-dy_dprecip).mean()
+        )[0]
+        if gradient is not None:
+            loss = loss + lam * torch.relu(-gradient[:, cold_idx]).mean()
 
     # Range feasibility: availability must stay within [0,1] (already sigmoid, soft).
     loss = loss + lam * (torch.relu(physics - 1.0).mean() + torch.relu(-physics).mean())
