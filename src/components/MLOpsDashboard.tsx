@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Activity, CalendarDays, Cpu, Database, Layers, ShieldCheck } from 'lucide-react';
 import { ModelRegistryEntry } from '../types';
 import { fetchModelRegistry } from '../services/api';
+import { TableExportButton } from './TableExportButton';
+import { ExportRow } from '../utils/figureExport';
 
 /**
  * Read-only view of the checkpoint metadata returned by FastAPI.
@@ -48,6 +50,17 @@ export const MLOpsDashboard: React.FC = () => {
   }, [t]);
 
   const activeModel = models.find(model => model.active) ?? models[0];
+  const modelRows: ExportRow[] = activeModel ? [{
+    Modelo: activeModel.name,
+    Versión: activeModel.version,
+    Arquitectura: activeModel.architecture,
+    'R² de prueba': activeModel.testR2,
+    'RMSE de prueba (kg/ha)': activeModel.testRmseKgHa,
+    Épocas: activeModel.epochs,
+    'Peso de monotonicidad': activeModel.monotonicityWeight,
+    'Fecha de entrenamiento': activeModel.trainedDate ?? '',
+    Activo: activeModel.active,
+  }] : [];
 
   return (
     <div id="mlops-pinn-dashboard" className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xl space-y-5">
@@ -99,6 +112,11 @@ export const MLOpsDashboard: React.FC = () => {
             <MetricCard icon={<Layers className="w-4 h-4" />} label={t('mlOpsDashboard.epochs')} value={activeModel.epochs.toLocaleString()} />
             <MetricCard icon={<ShieldCheck className="w-4 h-4" />} label={t('mlOpsDashboard.monotonicityWeight')} value={activeModel.monotonicityWeight.toString()} />
             <MetricCard icon={<CalendarDays className="w-4 h-4" />} label={t('mlOpsDashboard.trainedAt')} value={activeModel.trainedDate || '—'} />
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-xs text-slate-600 dark:text-slate-400">La tabla exportada contiene únicamente metadatos verificados del checkpoint desplegado.</p>
+            <TableExportButton rows={modelRows} fileName="cerespinn_metadatos_modelo" />
           </div>
 
           <div className="flex items-start gap-2 p-3 rounded-xl bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/50 text-xs text-slate-700 dark:text-slate-300">

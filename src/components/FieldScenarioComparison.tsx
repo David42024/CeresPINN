@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { AlertTriangle, MapPin, TrendingDown, Globe, Info } from 'lucide-react';
@@ -9,6 +9,9 @@ import {
 import { Field, SimulationConfig } from '../types';
 import { INITIAL_FIELDS } from '../data/mockData';
 import { simulateScenario } from '../services/api';
+import { FigureExportToolbar } from './FigureExportToolbar';
+import { TableExportButton } from './TableExportButton';
+import { ExportRow } from '../utils/figureExport';
 
 interface FieldScenarioComparisonProps {
   fields: Field[];
@@ -40,6 +43,7 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
   const [fieldData, setFieldData] = useState<FieldComparisonDatum[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const allFields = fields.length > 0 ? fields : INITIAL_FIELDS;
 
@@ -86,6 +90,17 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
     'SSP1-2.6':      d.ssp1Yield,
     [activeScenario]: d.activeYield,
     'SSP5-8.5':      d.ssp5Yield,
+  }));
+  const comparisonRows: ExportRow[] = fieldData.map(d => ({
+    Campo: d.field.name,
+    Ubicación: `${d.field.locationName}, ${d.field.country}`,
+    Escenario: activeScenario,
+    'Rendimiento proyectado (kg/ha)': d.activeYield,
+    'Brecha heurística de rendimiento (%)': d.yieldLoss,
+    'CWSI máximo (0–1)': d.cwsi,
+    'Días críticos': d.critDays,
+    'Puntuación de resiliencia': d.resilience,
+    'Banda indicativa': d.band.label,
   }));
 
   const scenarioColors: Record<string, string> = {
@@ -136,6 +151,9 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
           <Globe className="w-4 h-4 text-cyan-500" />
           <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Orden exploratorio de indicadores — {activeScenario}</h3>
+          <div className="ml-auto">
+            <TableExportButton rows={comparisonRows} fileName="cerespinn_comparacion_indicadores" />
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
@@ -198,11 +216,25 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
           <TrendingDown className="w-4 h-4 text-rose-500" />
           Comparativa Rendimiento: SSP1-2.6 vs {activeScenario} vs SSP5-8.5 por Campo
         </h3>
+        <p className="text-xs text-slate-600 dark:text-slate-400">La figura compara rendimientos proyectados entre escenarios para perfiles demostrativos. No representa una evaluación espacial validada ni sustenta decisiones territoriales.</p>
+        <FigureExportToolbar targetRef={chartRef} options={{
+          title: `Comparación de rendimiento por escenario y campo (${activeScenario})`,
+          interpretation: 'Compara las salidas de rendimiento de tres escenarios climáticos para cada perfil demostrativo; los campos no son observaciones geográficas validadas.',
+          xAxisLabel: 'Perfil de campo demostrativo',
+          yAxisLabel: 'Rendimiento proyectado (kg/ha)',
+          fileName: 'cerespinn_comparacion_escenarios',
+        }} dataRows={chartData.map(row => ({
+          Campo: row.name,
+          'Rendimiento SSP1-2.6 (kg/ha)': row['SSP1-2.6'],
+          [`Rendimiento ${activeScenario} (kg/ha)`]: row[activeScenario],
+          'Rendimiento SSP5-8.5 (kg/ha)': row['SSP5-8.5'],
+        }))} />
+        <div ref={chartRef}>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 60 }}>
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
-            <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-25} textAnchor="end" />
-            <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(1)}t`} />
+            <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-25} textAnchor="end" label={{ value: 'Perfil de campo demostrativo', position: 'insideBottom', offset: -48, fill: '#64748b', fontSize: 10 }} />
+            <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(1)}t`} label={{ value: 'Rendimiento (kg/ha)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
             <Tooltip formatter={(v: number) => [`${v.toLocaleString()} kg/ha`]} contentStyle={{ fontSize: 11 }} />
             <Legend wrapperStyle={{ fontSize: 11, paddingTop: 16 }} />
             <Bar dataKey="SSP1-2.6" fill="#10b981" radius={[3,3,0,0]} />
@@ -210,6 +242,7 @@ export const FieldScenarioComparison: React.FC<FieldScenarioComparisonProps> = (
             <Bar dataKey="SSP5-8.5" fill="#ef4444" radius={[3,3,0,0]} />
           </BarChart>
         </ResponsiveContainer>
+        </div>
       </div>
 
       <div className="flex items-start gap-2 p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-800/30 text-xs text-slate-600 dark:text-slate-400">

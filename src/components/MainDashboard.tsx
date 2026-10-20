@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   TrendingUp, 
@@ -34,6 +34,8 @@ import {
   ReferenceLine 
 } from 'recharts';
 import { SimulationResult } from '../types';
+import { FigureExportToolbar } from './FigureExportToolbar';
+import { ExportRow } from '../utils/figureExport';
 
 interface MainDashboardProps {
   simulation: SimulationResult;
@@ -54,6 +56,64 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
   const currentDay = simulation.dailyRecords[currentDayIndex] || simulation.dailyRecords[0];
 
   const [showGuide, setShowGuide] = useState<boolean>(true);
+  const yieldGapPercent = kpi.gapToHeuristicPotentialPercent;
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartExportConfig = {
+    soil_layers: {
+      title: 'Evolución de la humedad del suelo por profundidad',
+      interpretation: 'La serie compara la humedad volumétrica de tres capas durante el ciclo y la referencia de capacidad de campo y punto de marchitez.',
+      xAxisLabel: 'Días después de la siembra (DAP)',
+      yAxisLabel: 'Humedad volumétrica (%)',
+      fileName: 'cerespinn_humedad_suelo',
+    },
+    biomass_lai: {
+      title: 'Acumulación de biomasa e índice de área foliar',
+      interpretation: 'La figura muestra la acumulación de biomasa seca y el desarrollo del área foliar durante el ciclo de cultivo.',
+      xAxisLabel: 'Días después de la siembra (DAP)',
+      yAxisLabel: 'Biomasa (t/ha) y LAI (m²/m²)',
+      fileName: 'cerespinn_biomasa_lai',
+    },
+    water_fluxes: {
+      title: 'Flujos diarios del balance hídrico',
+      interpretation: 'La comparación de precipitación, riego y demandas evaporativas describe las entradas y salidas diarias de agua del sistema.',
+      xAxisLabel: 'Días después de la siembra (DAP)',
+      yAxisLabel: 'Lámina de agua (mm/día)',
+      fileName: 'cerespinn_balance_hidrico',
+    },
+    stress_cwsi: {
+      title: 'Evolución del estrés hídrico y térmico',
+      interpretation: 'Los índices de estrés se expresan entre cero y uno; valores mayores indican mayor estrés del cultivo.',
+      xAxisLabel: 'Días después de la siembra (DAP)',
+      yAxisLabel: 'Índice de estrés (0–1)',
+      fileName: 'cerespinn_estres',
+    },
+  }[activeChartView];
+  const chartExportRows: ExportRow[] = simulation.dailyRecords.map(day => {
+    const common = { DAP: day.dap, Fecha: day.date };
+    if (activeChartView === 'soil_layers') return {
+      ...common,
+      'Humedad superficial (m³/m³)': day.soilMoistureTop,
+      'Humedad media (m³/m³)': day.soilMoistureMid,
+      'Humedad profunda (m³/m³)': day.soilMoistureDeep,
+    };
+    if (activeChartView === 'biomass_lai') return {
+      ...common,
+      'Biomasa (kg/ha)': day.biomassKgHa,
+      'Índice de área foliar (m²/m²)': day.lai,
+    };
+    if (activeChartView === 'water_fluxes') return {
+      ...common,
+      'Precipitación (mm/día)': day.precipitationMm,
+      'Riego (mm/día)': day.irrigationMm,
+      'Transpiración (mm/día)': day.transpirationMm,
+      'ETo (mm/día)': day.etoMm,
+    };
+    return {
+      ...common,
+      'CWSI (0–1)': day.cwsi,
+      'Estrés térmico (0–1)': day.thermalStressFactor,
+    };
+  });
 
   return (
     <div id="main-dashboard-container" className="space-y-5">
@@ -131,7 +191,9 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
           
           <div className="mt-1 flex items-center gap-1.5 text-[10px]">
             <span className="text-slate-500 dark:text-slate-400">
-              IC 90%: {Math.round(simulation.predictionInterval90?.lowerKgHa || kpi.projectedYieldKgHa * 0.9).toLocaleString()} - {Math.round(simulation.predictionInterval90?.upperKgHa || kpi.projectedYieldKgHa * 1.1).toLocaleString()}
+              Banda heurística 90%: {simulation.heuristicBand90
+                ? `${Math.round(simulation.heuristicBand90.lowerKgHa).toLocaleString()}–${Math.round(simulation.heuristicBand90.upperKgHa).toLocaleString()} kg/ha`
+                : 'No disponible'}
             </span>
             {simulation.isExtrapolation && (
               <span className="text-rose-500 font-semibold px-1 py-0.5 bg-rose-50 dark:bg-rose-950/50 rounded flex items-center" title={`Fuera de dominio: ${simulation.extrapolatedFeatures?.join(', ')}`}>
@@ -143,10 +205,10 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
           <div className="mt-2 flex items-center justify-between text-xs pt-2 border-t border-slate-200/80 dark:border-slate-800/80">
             <span className="text-slate-500 dark:text-slate-500">{t('mainDashboard.kpiPotential')} {(kpi.potentialYieldKgHa / 1000).toFixed(1)} t/ha</span>
             <span className={`font-semibold flex items-center ${
-              kpi.yieldLossDueToDroughtPercent > 20 ? 'text-rose-500 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
+              yieldGapPercent > 20 ? 'text-rose-500 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
             }`}>
-              {kpi.yieldLossDueToDroughtPercent > 20 ? <ArrowDownRight className="w-3.5 h-3.5 mr-0.5" /> : <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" />}
-              {kpi.yieldLossDueToDroughtPercent > 0 ? `-${kpi.yieldLossDueToDroughtPercent}%` : t('mainDashboard.kpiOptimal')}
+              {yieldGapPercent > 20 ? <ArrowDownRight className="w-3.5 h-3.5 mr-0.5" /> : <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" />}
+              {yieldGapPercent > 0 ? `Brecha: ${yieldGapPercent.toFixed(1)}%` : t('mainDashboard.kpiOptimal')}
             </span>
           </div>
         </div>
@@ -301,14 +363,20 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
           </div>
         </div>
 
+        <div className="space-y-2">
+          <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{chartExportConfig.title}</h4>
+          <p className="text-xs text-slate-600 dark:text-slate-400">{chartExportConfig.interpretation}</p>
+          <FigureExportToolbar targetRef={chartRef} options={chartExportConfig} dataRows={chartExportRows} />
+        </div>
+
         {/* Chart 1: Soil Moisture 3 Depths */}
         {activeChartView === 'soil_layers' && (
-          <div className="h-[320px] w-full pt-2">
+          <div ref={chartRef} className="h-[320px] w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={simulation.dailyRecords} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="dap" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: t('mainDashboard.chartDapLabel'), position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 11 }} />
-                <YAxis stroke="#64748b" tick={{ fontSize: 11 }} domain={[0.05, 0.45]} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} />
+                <YAxis stroke="#64748b" tick={{ fontSize: 11 }} domain={[0.05, 0.45]} tickFormatter={(v) => `${(v * 100).toFixed(0)}%`} label={{ value: 'Humedad volumétrica (%)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#090d16', borderColor: '#334155', borderRadius: '12px', fontSize: '12px' }} 
                   formatter={(val: any) => [`${(Number(val) * 100).toFixed(1)}% vol`, '']}
@@ -327,13 +395,13 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
 
         {/* Chart 2: Biomass & LAI */}
         {activeChartView === 'biomass_lai' && (
-          <div className="h-[320px] w-full pt-2">
+          <div ref={chartRef} className="h-[320px] w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={simulation.dailyRecords} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="dap" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: t('mainDashboard.chartDapLabel'), position: 'insideBottom', fill: '#64748b', fontSize: 11 }} />
-                <YAxis yAxisId="left" stroke="#10b981" tick={{ fontSize: 11 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}t`} />
-                <YAxis yAxisId="right" orientation="right" stroke="#06b6d4" tick={{ fontSize: 11 }} domain={[0, 6]} />
+                <YAxis yAxisId="left" stroke="#10b981" tick={{ fontSize: 11 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}t`} label={{ value: 'Biomasa (t/ha)', angle: -90, position: 'insideLeft', fill: '#10b981', fontSize: 10 }} />
+                <YAxis yAxisId="right" orientation="right" stroke="#06b6d4" tick={{ fontSize: 11 }} domain={[0, 6]} label={{ value: 'LAI (m²/m²)', angle: 90, position: 'insideRight', fill: '#06b6d4', fontSize: 10 }} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#090d16', borderColor: '#334155', borderRadius: '12px', fontSize: '12px' }}
                   labelFormatter={(dap) => `DAP ${dap}`}
@@ -348,11 +416,11 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
 
         {/* Chart 3: Water Balance */}
         {activeChartView === 'water_fluxes' && (
-          <div className="h-[320px] w-full pt-2">
+          <div ref={chartRef} className="h-[320px] w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={simulation.dailyRecords} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="dap" stroke="#64748b" tick={{ fontSize: 11 }} />
+                <XAxis dataKey="dap" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: t('mainDashboard.chartDapLabel'), position: 'insideBottom', fill: '#64748b', fontSize: 11 }} />
                 <YAxis stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: t('mainDashboard.chartWaterPerDay'), angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
                 <Tooltip contentStyle={{ backgroundColor: '#090d16', borderColor: '#334155', borderRadius: '12px', fontSize: '12px' }} />
                 <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
@@ -367,12 +435,12 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
 
         {/* Chart 4: Stress CWSI */}
         {activeChartView === 'stress_cwsi' && (
-          <div className="h-[320px] w-full pt-2">
+          <div ref={chartRef} className="h-[320px] w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={simulation.dailyRecords} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="dap" stroke="#64748b" tick={{ fontSize: 11 }} />
-                <YAxis stroke="#64748b" tick={{ fontSize: 11 }} domain={[0, 1]} />
+                <XAxis dataKey="dap" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: t('mainDashboard.chartDapLabel'), position: 'insideBottom', fill: '#64748b', fontSize: 11 }} />
+                <YAxis stroke="#64748b" tick={{ fontSize: 11 }} domain={[0, 1]} label={{ value: 'Índice de estrés (0–1)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }} />
                 <Tooltip contentStyle={{ backgroundColor: '#090d16', borderColor: '#334155', borderRadius: '12px', fontSize: '12px' }} />
                 <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
                 <ReferenceLine y={0.45} stroke="#ef4444" strokeDasharray="4 4" label={{ value: t('mainDashboard.chartSevereDroughtThreshold'), fill: '#ef4444', fontSize: 10 }} />

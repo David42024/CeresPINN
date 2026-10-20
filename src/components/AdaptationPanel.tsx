@@ -35,6 +35,9 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | null>('early-planting');
   const [applying, setApplying] = useState<string | null>(null);
+  const [strategyResults, setStrategyResults] = useState<SimulationResult[] | null>(null);
+  const [strategyError, setStrategyError] = useState<string | null>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const baseYield = simulation.summaryKPIs.projectedYieldKgHa;
 

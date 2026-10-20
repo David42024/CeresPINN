@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   ShieldCheck, 
@@ -26,6 +26,8 @@ import {
   Bar
 } from 'recharts';
 import { fetchValidationReport, fetchHindcastData } from '../services/api';
+import { FigureExportToolbar } from './FigureExportToolbar';
+import { ExportRow } from '../utils/figureExport';
 
 export const ValidationReport: React.FC = () => {
   const { t } = useTranslation();
@@ -33,6 +35,8 @@ export const ValidationReport: React.FC = () => {
   const [hindcastData, setHindcastData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isFallback, setIsFallback] = useState(false);
+  const hindcastChartRef = useRef<HTMLDivElement>(null);
+  const sobolChartRef = useRef<HTMLDivElement>(null);
 
   const loadData = async () => {
     try {
@@ -97,6 +101,18 @@ export const ValidationReport: React.FC = () => {
 
     return [];
   }, [validationData]);
+
+  const hindcastExportRows: ExportRow[] = hindcastChartData.map(row => ({
+    Año: row.year,
+    'Rendimiento observado (kg/ha)': row.observed,
+    'Rendimiento predicho (kg/ha)': row.predicted,
+    'Residuo (kg/ha)': row.residual,
+  }));
+  const sobolExportRows: ExportRow[] = sobolData.map(row => ({
+    Parámetro: row.parameter,
+    'Índice de primer orden S1': row.firstOrder,
+    'Índice de orden total ST': row.totalOrder,
+  }));
 
   // Extract statistical fields supporting both alias conventions
   const ksTest = validationData?.ks_test || {};
@@ -227,12 +243,20 @@ export const ValidationReport: React.FC = () => {
           <span className="text-[11px] text-slate-500 font-mono">Ventana analizada: 10 campañas agrícolas</span>
         </div>
 
-        <div className="h-[300px] w-full">
+        <p className="text-xs text-slate-600 dark:text-slate-400">La comparación muestra la correspondencia entre observaciones históricas y predicciones del modelo; su relevancia depende de la representatividad de las campañas evaluadas.</p>
+        <FigureExportToolbar targetRef={hindcastChartRef} options={{
+          title: 'Validación temporal retrospectiva (hindcast 2011–2020)',
+          interpretation: 'Compara los rendimientos observados y predichos por año; las diferencias representan errores del modelo en la ventana histórica.',
+          xAxisLabel: 'Año de cosecha',
+          yAxisLabel: 'Rendimiento (kg/ha)',
+          fileName: 'cerespinn_hindcast',
+        }} dataRows={hindcastExportRows} />
+        <div ref={hindcastChartRef} className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={hindcastChartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-              <XAxis dataKey="year" stroke="#94a3b8" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} domain={['dataMin - 500', 'dataMax + 500']} />
+              <XAxis dataKey="year" stroke="#94a3b8" tick={{ fontSize: 12 }} label={{ value: 'Año de cosecha', position: 'insideBottom', offset: -3, fill: '#64748b', fontSize: 11 }} />
+              <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} domain={['dataMin - 500', 'dataMax + 500']} label={{ value: 'Rendimiento (kg/ha)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: '#0f172a', 
@@ -377,12 +401,20 @@ export const ValidationReport: React.FC = () => {
                 </h3>
               </div>
             </div>
-            <div className="h-[250px] w-full">
+            <p className="text-xs text-slate-600 dark:text-slate-400">Los índices estiman la contribución de cada variable a la varianza de salida dentro del análisis reportado; no implican causalidad.</p>
+            <FigureExportToolbar targetRef={sobolChartRef} options={{
+              title: 'Análisis global de sensibilidad de Sobol',
+              interpretation: 'Los índices de primer orden y de orden total describen las contribuciones estimadas de los parámetros a la varianza de salida.',
+              xAxisLabel: 'Parámetro de entrada',
+              yAxisLabel: 'Índice de sensibilidad (adimensional)',
+              fileName: 'cerespinn_sobol',
+            }} dataRows={sobolExportRows} />
+            <div ref={sobolChartRef} className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={sobolData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                  <XAxis dataKey="parameter" stroke="#94a3b8" tick={{ fontSize: 12 }} />
-                  <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} domain={[0, 1.1]} />
+                  <XAxis dataKey="parameter" stroke="#94a3b8" tick={{ fontSize: 12 }} label={{ value: 'Parámetro de entrada', position: 'insideBottom', offset: -2, fill: '#64748b', fontSize: 11 }} />
+                  <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} domain={[0, 1.1]} label={{ value: 'Índice de sensibilidad', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
                   <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', fontSize: '12px', color: '#f8fafc' }} />
                   <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }} />
                   <Bar dataKey="firstOrder" name="Primer Orden S₁" fill="#10b981" radius={[6, 6, 0, 0]} />

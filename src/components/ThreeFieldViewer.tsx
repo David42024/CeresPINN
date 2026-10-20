@@ -14,9 +14,11 @@ import {
   Thermometer, 
   Info,
   Calendar,
-  Activity
+  Activity,
+  Download
 } from 'lucide-react';
 import { DailySimulationRecord, SimulationResult } from '../types';
+import { downloadPngDataUrl600 } from '../utils/figureExport';
 
 interface ThreeFieldViewerProps {
   field?: any;
@@ -68,6 +70,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   const [selectedDepth, setSelectedDepth] = useState<'top' | 'mid' | 'deep'>('top');
   const [showWireframe, setShowWireframe] = useState<boolean>(false);
   const [speedMultiplier, setSpeedMultiplier] = useState<number>(1);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   // Three.js instances ref
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -495,6 +498,97 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     }
   };
 
+  const exportHighResolutionFigure = async () => {
+    const scene = sceneRef.current;
+    const camera = cameraRef.current;
+    if (!scene || !camera) {
+      setExportError('La escena 3D todavía no está disponible para exportar.');
+      return;
+    }
+    let exportRenderer: THREE.WebGLRenderer | null = null;
+
+    try {
+      setExportError(null);
+      const width = 3600;
+      const renderHeight = Math.round(width * 0.58);
+      const headerHeight = 340;
+      const outputCanvas = document.createElement('canvas');
+      outputCanvas.width = width;
+      outputCanvas.height = renderHeight + headerHeight;
+
+      const renderCanvas = document.createElement('canvas');
+      exportRenderer = new THREE.WebGLRenderer({
+        canvas: renderCanvas,
+        antialias: true,
+        preserveDrawingBuffer: true,
+        powerPreference: 'high-performance',
+      });
+      exportRenderer.setPixelRatio(1);
+      exportRenderer.setSize(width, renderHeight);
+      exportRenderer.shadowMap.enabled = true;
+      exportRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const exportCamera = camera.clone();
+      exportCamera.aspect = width / renderHeight;
+      exportCamera.updateProjectionMatrix();
+      scene.updateMatrixWorld(true);
+      exportRenderer.render(scene, exportCamera);
+
+      const context = outputCanvas.getContext('2d');
+      if (!context) throw new Error('No se pudo preparar la figura 3D de alta resolución.');
+      context.fillStyle = '#ffffff';
+      context.fillRect(0, 0, width, outputCanvas.height);
+      context.fillStyle = '#111827';
+      context.font = 'bold 58px Arial';
+      const modeTitle = {
+        soil_moisture: 'Humedad del suelo',
+        biomass: 'Biomasa del cultivo',
+        water_stress: 'Estrés hídrico del cultivo',
+        true_color: 'Vista 3D del cultivo',
+      }[layerMode];
+      context.fillText(`${modeTitle} — DAP ${dailyRecord?.dap ?? '—'}`, 90, 95);
+      context.font = '34px Arial';
+      const unitLabel = layerMode === 'soil_moisture'
+        ? 'Humedad volumétrica (%)'
+        : layerMode === 'biomass' ? 'Biomasa (kg/ha)' : layerMode === 'water_stress' ? 'Índice CWSI (0–1)' : 'Representación visual 3D';
+      context.fillText(`${unitLabel} | ${dailyRecord?.date ?? ''} | ${dailyRecord?.stage ?? ''}`, 90, 155);
+      const selectedSoilMoisture = selectedDepth === 'top'
+        ? dailyRecord?.soilMoistureTop
+        : selectedDepth === 'mid' ? dailyRecord?.soilMoistureMid : dailyRecord?.soilMoistureDeep;
+      const scalarValue = layerMode === 'soil_moisture'
+        ? `${((selectedSoilMoisture ?? 0) * 100).toFixed(1)}%`
+        : layerMode === 'biomass' ? `${dailyRecord?.biomassKgHa.toLocaleString() ?? '—'} kg/ha`
+          : layerMode === 'water_stress' ? `${dailyRecord?.cwsi.toFixed(2) ?? '—'}`
+            : 'Sin variable escalar';
+      const legend = {
+        soil_moisture: 'Leyenda del terreno: marrón seco → verde húmedo (≈10–35% vol.)',
+        biomass: 'Leyenda del terreno: oscuro → verde, 0–22 000 kg/ha',
+        water_stress: 'Leyenda del terreno: verde sin estrés → rojo estrés alto (CWSI 0–1)',
+        true_color: 'Leyenda: coloración visual del cultivo, sin escala cuantitativa',
+      }[layerMode];
+      context.font = '28px Arial';
+      context.fillText(
+        `Valor mostrado: ${scalarValue} | ${legend}`,
+        90,
+        210,
+      );
+      context.fillText(
+        'La escena representa el estado simulado del cultivo para el día seleccionado; no es una observación de campo.',
+        90,
+        285,
+      );
+      context.drawImage(renderCanvas, 0, headerHeight, width, renderHeight);
+
+      const fileName = `cerespinn_vista_3d_${layerMode}_dap_${dailyRecord?.dap ?? 'sin_dato'}.png`;
+      await downloadPngDataUrl600(outputCanvas.toDataURL('image/png'), fileName);
+    } catch (error) {
+      console.error('No se pudo exportar la vista 3D:', error);
+      setExportError(error instanceof Error ? error.message : 'Error inesperado al exportar la vista 3D.');
+    } finally {
+      exportRenderer?.dispose();
+    }
+  };
+
   return (
     <div id="three-field-viewer-card" className={`relative w-full bg-white dark:bg-slate-900/90 shadow-2xl overflow-hidden flex flex-col select-none transition-all ${isFullscreen ? 'h-screen rounded-none border-none z-50' : 'h-[680px] rounded-2xl border border-slate-200 dark:border-slate-800'}`}>
       {/* 3D Canvas Viewport */}
@@ -542,6 +636,15 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
 
         {/* Top Right: Layer Mode Selectors */}
         <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
+          <button
+            type="button"
+            onClick={() => void exportHighResolutionFigure()}
+            className="px-3 py-1.5 rounded-xl bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1.5 shadow-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+            aria-label="Exportar figura 3D como PNG a 600 DPI"
+          >
+            <Download className="w-3.5 h-3.5" /> PNG 600 DPI
+          </button>
+          {exportError && <span role="alert" className="max-w-xs rounded bg-white/95 px-2 py-1 text-[10px] text-rose-700 shadow">{exportError}</span>}
           <div className="p-1 rounded-xl bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border border-slate-200 dark:border-slate-800 flex items-center gap-1 shadow-xl">
             <button
               id="btn-layer-moisture"

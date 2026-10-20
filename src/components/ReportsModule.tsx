@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   FileText, 
@@ -14,8 +14,11 @@ import {
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { SimulationResult, User } from '../types';
 import { fetchReports } from '../services/api';
+import { FigureExportToolbar } from './FigureExportToolbar';
+import { createFigurePng, ExportRow, FigureExportOptions } from '../utils/figureExport';
 
 interface ReportsModuleProps {
   simulation: SimulationResult;
@@ -27,9 +30,12 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
   const [emailTo, setEmailTo] = useState<string>(currentUser.email || '');
   const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState<boolean>(false);
+  const [pdfExportError, setPdfExportError] = useState<string | null>(null);
   const [isGeneratingExcel, setIsGeneratingExcel] = useState<boolean>(false);
   const [reportsData, setReportsData] = useState<any>(null);
   const [loadingReports, setLoadingReports] = useState<boolean>(true);
+  const biomassChartRef = useRef<HTMLDivElement>(null);
+  const waterChartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadReports = async () => {
@@ -49,11 +55,44 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
   }, []);
 
   const kpi = simulation.summaryKPIs;
+  const biomassFigure: FigureExportOptions = {
+    title: 'Desarrollo de biomasa e índice de área foliar',
+    interpretation: 'La figura muestra la evolución simulada de biomasa y área foliar; describe el desarrollo del cultivo bajo el escenario seleccionado.',
+    xAxisLabel: 'Días después de la siembra (DAP)',
+    yAxisLabel: 'Biomasa (kg/ha) y LAI (m²/m²)',
+    fileName: 'cerespinn_reporte_biomasa_lai',
+  };
+  const waterFigure: FigureExportOptions = {
+    title: 'Balance hídrico diario del cultivo',
+    interpretation: 'La precipitación y el riego representan entradas de agua, mientras la evapotranspiración de referencia sirve como indicador de demanda atmosférica.',
+    xAxisLabel: 'Días después de la siembra (DAP)',
+    yAxisLabel: 'Lámina de agua (mm/día)',
+    fileName: 'cerespinn_reporte_balance_hidrico',
+  };
+  const biomassRows: ExportRow[] = simulation.dailyRecords.map(day => ({
+    DAP: day.dap,
+    'Biomasa (kg/ha)': day.biomassKgHa,
+    'Índice de área foliar (m²/m²)': day.lai,
+  }));
+  const waterRows: ExportRow[] = simulation.dailyRecords.map(day => ({
+    DAP: day.dap,
+    'Precipitación (mm/día)': day.precipitationMm,
+    'Riego (mm/día)': day.irrigationMm,
+    'ETo (mm/día)': day.etoMm,
+  }));
 
   // Generate and download executive PDF report
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
     setIsGeneratingPdf(true);
+    setPdfExportError(null);
     try {
+      if (!biomassChartRef.current || !waterChartRef.current) {
+        throw new Error('No se encontraron las figuras del reporte para exportarlas.');
+      }
+      const [biomassImage, waterImage] = await Promise.all([
+        createFigurePng(biomassChartRef.current, biomassFigure),
+        createFigurePng(waterChartRef.current, waterFigure),
+      ]);
       const doc = new jsPDF();
 
       // Header Branding
@@ -168,13 +207,29 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
         yOffset += 6;
       });
 
+      doc.addPage();
+      doc.setTextColor(51, 65, 85);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text('5. FIGURAS DEL ESCENARIO SIMULADO', 14, 20);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text('Figura 1: Desarrollo de biomasa e índice de área foliar.', 14, 30);
+      doc.addImage(biomassImage.dataUrl, 'PNG', 10, 34, 190, 190 * biomassImage.height / biomassImage.width);
+      doc.addPage();
+      doc.setTextColor(51, 65, 85);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text('Figura 2: Balance hídrico diario del cultivo.', 14, 20);
+      doc.addImage(waterImage.dataUrl, 'PNG', 10, 24, 190, 190 * waterImage.height / waterImage.width);
+
       // Scientific scope is deliberately exported with every report so the
       // simulation cannot be detached from its decision-use limitations.
       doc.addPage();
       doc.setTextColor(51, 65, 85);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(13);
-      doc.text('5. ÉTICA, EQUIDAD Y ALCANCE DE DECISIÓN', 14, 22);
+      doc.text('6. ÉTICA, EQUIDAD Y ALCANCE DE DECISIÓN', 14, 22);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(10);
       const scopeParagraphs = [
@@ -199,6 +254,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       doc.save(`Reporte_CeresPINN_${simulation.fieldName.replace(/\s+/g, '_')}_${simulation.config.scenario}.pdf`);
     } catch (err) {
       console.error('Error generating PDF:', err);
+      setPdfExportError(err instanceof Error ? err.message : 'Error inesperado al generar el PDF.');
     } finally {
       setIsGeneratingPdf(false);
     }
@@ -303,6 +359,49 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
           </p>
         </div>
       </div>
+
+      <section className="space-y-4" aria-label="Figuras del reporte">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Figuras del escenario actual</h3>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+            <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{biomassFigure.title}</h4>
+            <p className="text-xs text-slate-600 dark:text-slate-400">{biomassFigure.interpretation}</p>
+            <FigureExportToolbar targetRef={biomassChartRef} options={biomassFigure} dataRows={biomassRows} />
+            <div ref={biomassChartRef} className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={simulation.dailyRecords} margin={{ top: 8, right: 18, left: 8, bottom: 12 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="dap" label={{ value: biomassFigure.xAxisLabel, position: 'insideBottom', offset: -6, fontSize: 10 }} />
+                  <YAxis yAxisId="biomass" label={{ value: 'Biomasa (kg/ha)', angle: -90, position: 'insideLeft', fontSize: 10 }} />
+                  <YAxis yAxisId="lai" orientation="right" label={{ value: 'LAI (m²/m²)', angle: 90, position: 'insideRight', fontSize: 10 }} />
+                  <Tooltip />
+                  <Line yAxisId="biomass" type="monotone" dataKey="biomassKgHa" name="Biomasa (kg/ha)" stroke="#059669" dot={false} />
+                  <Line yAxisId="lai" type="monotone" dataKey="lai" name="LAI (m²/m²)" stroke="#0891b2" dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+            <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{waterFigure.title}</h4>
+            <p className="text-xs text-slate-600 dark:text-slate-400">{waterFigure.interpretation}</p>
+            <FigureExportToolbar targetRef={waterChartRef} options={waterFigure} dataRows={waterRows} />
+            <div ref={waterChartRef} className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={simulation.dailyRecords} margin={{ top: 8, right: 18, left: 8, bottom: 12 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="dap" label={{ value: waterFigure.xAxisLabel, position: 'insideBottom', offset: -6, fontSize: 10 }} />
+                  <YAxis label={{ value: waterFigure.yAxisLabel, angle: -90, position: 'insideLeft', fontSize: 10 }} />
+                  <Tooltip />
+                  <Bar dataKey="precipitationMm" name="Precipitación (mm/día)" fill="#0284c7" />
+                  <Bar dataKey="irrigationMm" name="Riego (mm/día)" fill="#7c3aed" />
+                  <Line dataKey="etoMm" name="ETo (mm/día)" stroke="#d97706" dot={false} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+        {pdfExportError && <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">{pdfExportError}</p>}
+      </section>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* PDF Export Card */}
