@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+﻿import React, { useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import {
@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { SimulationResult, Field, SimulationConfig } from '../types';
 import { simulateScenario } from '../services/api';
+import { FigureExportToolbar } from './FigureExportToolbar';
 
 interface AdaptationPanelProps {
   simulation: SimulationResult;
@@ -34,8 +35,6 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | null>('early-planting');
   const [applying, setApplying] = useState<string | null>(null);
-  const [strategyResults, setStrategyResults] = useState<SimulationResult[] | null>(null);
-  const [strategyError, setStrategyError] = useState<string | null>(null);
 
   const baseYield = simulation.summaryKPIs.projectedYieldKgHa;
 
@@ -181,11 +180,27 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
           <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
           Comparativa de Rendimiento: Base vs. Estrategias de Adaptación
         </p>
-        <ResponsiveContainer width="100%" height={120}>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Compara el rendimiento proyectado del escenario base con tres estrategias; las diferencias reflejan la respuesta simulada del PINN bajo la configuración activa.</p>
+        <FigureExportToolbar
+          targetRef={chartRef}
+          options={{
+            title: 'Rendimiento proyectado: escenario base y estrategias de adaptación',
+            interpretation: 'Las barras comparan el rendimiento proyectado por el motor PINN para el escenario base y las tres estrategias agronómicas.',
+            xAxisLabel: 'Rendimiento proyectado (t/ha)',
+            yAxisLabel: 'Estrategia de manejo',
+            fileName: 'cerespinn_estrategias_adaptacion',
+          }}
+          dataRows={chartData.map(({ name, yield: projectedYield }) => ({
+            Estrategia: name,
+            'Rendimiento proyectado (kg/ha)': projectedYield,
+          }))}
+        />
+        <div ref={chartRef}>
+        <ResponsiveContainer width="100%" height={160}>
           <BarChart data={chartData} layout="vertical" margin={{ left: 8, right: 40, top: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} horizontal={false} />
-            <XAxis type="number" domain={[Math.min(...chartData.map(d => d.yield)) * 0.92, Math.max(...chartData.map(d => d.yield)) * 1.02]} tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(1)}t`} />
-            <YAxis type="category" dataKey="name" tick={{ fontSize: 10 }} width={80} />
+            <XAxis type="number" domain={[Math.min(...chartData.map(d => d.yield)) * 0.92, Math.max(...chartData.map(d => d.yield)) * 1.02]} tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(1)} t/ha`} label={{ value: 'Rendimiento proyectado (t/ha)', position: 'insideBottom', offset: -2, fontSize: 10 }} />
+            <YAxis type="category" dataKey="name" tick={{ fontSize: 10 }} width={80} label={{ value: 'Estrategia', angle: -90, position: 'insideLeft', fontSize: 10 }} />
             <Tooltip formatter={(v: number) => [`${v.toLocaleString()} kg/ha`, 'Rendimiento']} contentStyle={{ fontSize: 11 }} />
             <Bar dataKey="yield" radius={[0,4,4,0]}>
               {chartData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
@@ -193,6 +208,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        </div>
       </div>
 
       {/* Strategy Cards */}
