@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-20T15:53:49.913Z",
+  "url": "http://cerespinn.local",
+  "transport": "Actual dist build served from disk through Playwright routing; application data is not injected.",
+  "dataSource": "Built-in local simulation; backend not running. Backend inference is outside this validation.",
+  "figures": [
+    {
+      "title": "Desarrollo de biomasa e índice de área foliar",
+      "fileName": "cerespinn_reporte_biomasa_lai_600dpi.png",
+      "width": 3406,
+      "height": 2438,
+      "dpiX": 599.9988,
+      "dpiY": 599.9988,
+      "zoomIn": true,
+      "zoomOut": true,
+      "pan": true,
+      "reset": true,
+      "originalTicks": [
+        "2",
+        "9",
+        "18",
+        "27",
+        "36",
+        "45",
+        "54",
+        "63",
+        "72",
+        "81",
+        "90",
+        "100",
+        "110"
+      ],
+      "zoomedTicks": [
+        "33",
+        "38",
+        "43",
+        "48",
+        "53",
+        "58",
+        "63",
+        "68",
+        "73",
+        "78",
+        "83"
+      ]
+    },
+    {
+      "title": "Balance hídrico diario del cultivo",
+      "fileName": "cerespinn_reporte_balance_hidrico_600dpi.png",
+      "width": 3406,
+      "height": 2438,
+      "dpiX": 599.9988,
+      "dpiY": 599.9988,
+      "zoomIn": true,
+      "zoomOut": true,
+      "pan": true,
+      "reset": true,
+      "originalTicks": [
+        "1",
+        "7",
+        "14",
+        "21",
+        "29",
+        "37",
+        "45",
+        "53",
+        "61",
+        "69",
+        "77",
+        "85",
+        "93",
+        "101",
+        "110"
+      ],
+      "zoomedTicks": [
+        "31",
+        "35",
+        "39",
+        "43",
+        "47",
+        "51",
+        "55",
+        "59",
+        "63",
+        "67",
+        "71",
+        "75",
+        "79",
+        "83"
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "fileName": "cerespinn_reporte_biomasa_lai.xlsx",
+      "sheet": "Datos",
+      "rows": 110,
+      "columns": [
+        "DAP",
+        "Biomasa (kg/ha)",
+        "Índice de área foliar (m²/m²)"
+      ],
+      "numericValuesMatchUi": true
+    },
+    {
+      "fileName": "cerespinn_reporte_balance_hidrico.xlsx",
+      "sheet": "Datos",
+      "rows": 110,
+      "columns": [
+        "DAP",
+        "Precipitación (mm/día)",
+        "Riego (mm/día)",
+        "ETo (mm/día)"
+      ],
+      "numericValuesMatchUi": true
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "apiResponses": [
+    {
+      "url": "http://cerespinn.local/api/fields",
+      "status": 404
+    },
+    {
+      "url": "http://cerespinn.local/api/users",
+      "status": 404
+    },
+    {
+      "url": "http://cerespinn.local/api/health/database",
+      "status": 404
+    },
+    {
+      "url": "http://cerespinn.local/api/reports",
+      "status": 404
+    }
+  ],
+  "scenario": "CeresPINN\nv2.5\nFastAPI Modelo no disponible\n\nGemelo Digital Adaptativo al Clima | Maíz Resiliente a Sequías\n\n📍 Parcela Experimental Ames Norte (64.5 ha)\n📍 Rancho Santa Elena - Módulo 4 (48 ha)\n📍 Estancia La Vanguardia - Lote 12 (120 ha)\n📍 Finca Riego Canal d’Urgell (35.2 ha)\nES\nEN\nPT\nEjecutar PINN\nGemelo 3D & Fenología\nDashboard & KPIs\nConfiguración & Clima\nEscenarios y Adaptación\nExportar\nAcerca del Modelo\nCampo: Parcela Experimental Ames Norte (Story County, Iowa)\nUsuario: Dra. Elena Vasconcelos (admin)\nEscenario: SSP3-7.0\nML:\nNo disponible\nBD:\nError BD\nEstado:\nListo\nÉtica, equidad y alcance de decisión\nSOLO INVESTIGACIÓN EXPLORATORIA\n\nCeresPINN no está calibrado a escala de condado y no identifica de forma validada territorios con mayor vulnerabilidad agrícola.\n\nLas comparaciones entre campos no son mapas ni rankings de vulnerabilidad territorial.\n\nEl perfil edáfico modifica el balance hídrico diario, pero no entra directamente en la red neuronal de rendimiento.\n\nNo usar para políticas públicas, asignación de agua, seguros, crédito, financiamiento o priorización territorial.\n\nAntes de esos usos se requieren datos espaciales reales, validación geográfica independiente, representatividad e incertidumbre explícita.\n\nCentro de Reportes, Informes y Exportación de Datos\n\nGeneración de informes ejecutivos en PDF, dataset completo en Excel (.xlsx) y comunicación a productores.\n\nFiguras del escenario actual\nDesarrollo de biomasa e índice de área foliar\n\nLa figura muestra la evolución simulada de biomasa y área foliar; describe el desarrollo del cultivo bajo el escenario seleccionado.\n\nSVG\nPNG 600 DPI\nPDF\nCSV\nZoom +\nZoom −\nRestablecer\n1×\nBiomasa (kg/ha)LAI (m²/m²)\n2\n9\n18\n27\n36\n45\n54\n63\n72\n81\n90\n100\n110\nDías después de la siembra (DAP)\n0\n6500\n13000\n19500\n26000\nBiomasa (kg/ha)\n0\n2\n4\n6\n8\nLAI (m²/m²)\nBalance hídrico diario del cultivo\n\nLa precipitación y el riego representan entradas de agua, mientras la evapotranspiración de referencia sirve como indicador de demanda atmosférica.\n\nSVG\nPNG 600 DPI\nPDF\nCSV\nZoom +\nZoom −\nRestablecer\n1×\nETo (mm/día)Precipitación (mm/día)Riego (mm/día)\n1\n7\n14\n21\n29\n37\n45\n53\n61\n69\n77\n85\n93\n101\n110\nDías después de la siembra (DAP)\n0\n6\n12\n18\n24\nLámina de agua (mm/día)\nTablas del escenario actual\nTabla 1. Biomasa e índice de área foliar\nDescargar Excel (.xlsx)\n\n110 registros. Excel incluye todos los días del escenario.\n\nTabla 1. Biomasa e índice de área foliar\nDAP\tBiomasa (kg/ha)\tÍndice de área foliar (m²/m²)\n1\t86\t0.16\n2\t130\t0.18\n3\t191\t0",
+  "mobileOverflow": false,
+  "status": "PASS"
+}

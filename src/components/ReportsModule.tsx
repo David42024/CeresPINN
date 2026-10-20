@@ -13,11 +13,12 @@ import {
   BookOpen
 } from 'lucide-react';
 import jsPDF from 'jspdf';
-import * as XLSX from 'xlsx';
-import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, CartesianGrid, ComposedChart, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { SimulationResult, User } from '../types';
 import { fetchReports } from '../services/api';
 import { FigureExportToolbar } from './FigureExportToolbar';
+import { FigureZoomControls, useFigureZoom } from './FigureZoomControls';
+import { ExportDataTable } from './ExportDataTable';
 import { createFigurePng, ExportRow, FigureExportOptions } from '../utils/figureExport';
 
 interface ReportsModuleProps {
@@ -36,6 +37,8 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
   const [loadingReports, setLoadingReports] = useState<boolean>(true);
   const biomassChartRef = useRef<HTMLDivElement>(null);
   const waterChartRef = useRef<HTMLDivElement>(null);
+  const biomassZoom = useFigureZoom(simulation.dailyRecords);
+  const waterZoom = useFigureZoom(simulation.dailyRecords);
 
   useEffect(() => {
     const loadReports = async () => {
@@ -261,9 +264,10 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
   };
 
   // Export full raw daily records to Excel (.xlsx)
-  const handleExportExcel = () => {
+  const handleExportExcel = async () => {
     setIsGeneratingExcel(true);
     try {
+      const XLSX = await import('xlsx');
       const dataRows = simulation.dailyRecords.map(d => ({
         'DAP (Días Tras Siembra)': d.dap,
         'Día del Año': d.day,
@@ -367,16 +371,18 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{biomassFigure.title}</h4>
             <p className="text-xs text-slate-600 dark:text-slate-400">{biomassFigure.interpretation}</p>
             <FigureExportToolbar targetRef={biomassChartRef} options={biomassFigure} dataRows={biomassRows} />
+            <FigureZoomControls {...biomassZoom} title={biomassFigure.title} />
             <div ref={biomassChartRef} className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={simulation.dailyRecords} margin={{ top: 8, right: 18, left: 8, bottom: 12 }}>
+                <LineChart data={biomassZoom.records} margin={{ top: 8, right: 18, left: 8, bottom: 12 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="dap" label={{ value: biomassFigure.xAxisLabel, position: 'insideBottom', offset: -6, fontSize: 10 }} />
-                  <YAxis yAxisId="biomass" label={{ value: 'Biomasa (kg/ha)', angle: -90, position: 'insideLeft', fontSize: 10 }} />
-                  <YAxis yAxisId="lai" orientation="right" label={{ value: 'LAI (m²/m²)', angle: 90, position: 'insideRight', fontSize: 10 }} />
+                  <XAxis dataKey="dap" tick={{ fontSize: 11 }} minTickGap={18} label={{ value: biomassFigure.xAxisLabel, position: 'insideBottom', offset: -6, fontSize: 10 }} />
+                  <YAxis yAxisId="biomass" tick={{ fontSize: 11 }} label={{ value: 'Biomasa (kg/ha)', angle: -90, position: 'insideLeft', fontSize: 10 }} />
+                  <YAxis yAxisId="lai" tick={{ fontSize: 11 }} orientation="right" label={{ value: 'LAI (m²/m²)', angle: 90, position: 'insideRight', fontSize: 10 }} />
                   <Tooltip />
-                  <Line yAxisId="biomass" type="monotone" dataKey="biomassKgHa" name="Biomasa (kg/ha)" stroke="#059669" dot={false} />
-                  <Line yAxisId="lai" type="monotone" dataKey="lai" name="LAI (m²/m²)" stroke="#0891b2" dot={false} />
+                  <Legend verticalAlign="top" wrapperStyle={{ fontSize: 11 }} />
+                  <Line yAxisId="biomass" type="monotone" dataKey="biomassKgHa" name="Biomasa (kg/ha)" stroke="#059669" dot={false} isAnimationActive={false} />
+                  <Line yAxisId="lai" type="monotone" dataKey="lai" name="LAI (m²/m²)" stroke="#0891b2" dot={false} isAnimationActive={false} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -385,22 +391,32 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
             <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{waterFigure.title}</h4>
             <p className="text-xs text-slate-600 dark:text-slate-400">{waterFigure.interpretation}</p>
             <FigureExportToolbar targetRef={waterChartRef} options={waterFigure} dataRows={waterRows} />
+            <FigureZoomControls {...waterZoom} title={waterFigure.title} />
             <div ref={waterChartRef} className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={simulation.dailyRecords} margin={{ top: 8, right: 18, left: 8, bottom: 12 }}>
+                <ComposedChart data={waterZoom.records} margin={{ top: 8, right: 18, left: 8, bottom: 12 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="dap" label={{ value: waterFigure.xAxisLabel, position: 'insideBottom', offset: -6, fontSize: 10 }} />
-                  <YAxis label={{ value: waterFigure.yAxisLabel, angle: -90, position: 'insideLeft', fontSize: 10 }} />
+                  <XAxis dataKey="dap" tick={{ fontSize: 11 }} minTickGap={18} label={{ value: waterFigure.xAxisLabel, position: 'insideBottom', offset: -6, fontSize: 10 }} />
+                  <YAxis tick={{ fontSize: 11 }} label={{ value: waterFigure.yAxisLabel, angle: -90, position: 'insideLeft', fontSize: 10 }} />
                   <Tooltip />
-                  <Bar dataKey="precipitationMm" name="Precipitación (mm/día)" fill="#0284c7" />
-                  <Bar dataKey="irrigationMm" name="Riego (mm/día)" fill="#7c3aed" />
-                  <Line dataKey="etoMm" name="ETo (mm/día)" stroke="#d97706" dot={false} />
-                </BarChart>
+                  <Legend verticalAlign="top" wrapperStyle={{ fontSize: 11 }} />
+                  <Bar dataKey="precipitationMm" name="Precipitación (mm/día)" fill="#0284c7" isAnimationActive={false} />
+                  <Bar dataKey="irrigationMm" name="Riego (mm/día)" fill="#7c3aed" isAnimationActive={false} />
+                  <Line dataKey="etoMm" name="ETo (mm/día)" stroke="#d97706" dot={false} isAnimationActive={false} />
+                </ComposedChart>
               </ResponsiveContainer>
             </div>
           </div>
         </div>
         {pdfExportError && <p role="alert" className="text-xs text-rose-600 dark:text-rose-400">{pdfExportError}</p>}
+      </section>
+
+      <section aria-label="Tablas del escenario actual" className="space-y-3">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Tablas del escenario actual</h3>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          <ExportDataTable title="Tabla 1. Biomasa e índice de área foliar" rows={biomassRows} fileName={biomassFigure.fileName} />
+          <ExportDataTable title="Tabla 2. Balance hídrico diario" rows={waterRows} fileName={waterFigure.fileName} />
+        </div>
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

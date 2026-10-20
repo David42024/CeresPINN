@@ -12,7 +12,7 @@ export interface FigureExportOptions {
 
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 const DPI_SCALE = 600 / 96;
-const PIXELS_PER_METER = Math.ceil(600 / 0.0254);
+const PIXELS_PER_METER = Math.round(600 / 0.0254);
 
 const addPngDpiMetadata = (dataUrl: string) => {
   const base64 = dataUrl.split(',')[1];
@@ -75,7 +75,7 @@ const addPngDpiMetadata = (dataUrl: string) => {
 };
 
 const getChartSvg = (container: HTMLElement): SVGSVGElement => {
-  const svg = container.querySelector<SVGSVGElement>('svg.recharts-surface');
+  const svg = container.querySelector<SVGSVGElement>('.recharts-wrapper > svg.recharts-surface');
   if (!svg) {
     throw new Error('No se encontró una gráfica SVG para exportar.');
   }
@@ -87,7 +87,8 @@ const createExportSvg = (source: SVGSVGElement, options: FigureExportOptions): S
   const width = Math.max(1, Math.round(bounds.width));
   const height = Math.max(1, Math.round(bounds.height));
   const clone = source.cloneNode(true) as SVGSVGElement;
-  const topPadding = 54;
+  const legend = Array.from(source.parentElement?.querySelectorAll<HTMLElement>('.recharts-legend-item-text') ?? []);
+  const topPadding = legend.length ? 78 : 54;
   const bottomPadding = 56;
   const totalHeight = height + topPadding + bottomPadding;
 
@@ -95,6 +96,7 @@ const createExportSvg = (source: SVGSVGElement, options: FigureExportOptions): S
   clone.setAttribute('width', String(width));
   clone.setAttribute('height', String(totalHeight));
   clone.setAttribute('viewBox', `0 0 ${width} ${totalHeight}`);
+  clone.setAttribute('font-family', 'Arial, sans-serif');
 
   const definitions = Array.from(clone.children).filter(child => child.tagName.toLowerCase() === 'defs');
   const graphContent = Array.from(clone.children).filter(child => child.tagName.toLowerCase() !== 'defs');
@@ -121,6 +123,23 @@ const createExportSvg = (source: SVGSVGElement, options: FigureExportOptions): S
   addText(options.title, 18, 25, 16, 'bold');
   const axisDescription = [options.xAxisLabel, options.yAxisLabel].filter(Boolean).join(' | ');
   if (axisDescription) addText(axisDescription, 18, 44, 11);
+
+  // Recharts renders legends in HTML, outside the chart SVG. Recreate their
+  // labels and colors so downloaded figures identify every plotted series.
+  let legendX = 18;
+  legend.forEach(item => {
+    const swatch = document.createElementNS(SVG_NAMESPACE, 'line');
+    swatch.setAttribute('x1', String(legendX));
+    swatch.setAttribute('x2', String(legendX + 18));
+    swatch.setAttribute('y1', '63');
+    swatch.setAttribute('y2', '63');
+    swatch.setAttribute('stroke', getComputedStyle(item).color);
+    swatch.setAttribute('stroke-width', '3');
+    clone.appendChild(swatch);
+    const label = item.textContent ?? '';
+    addText(label, legendX + 24, 67, 10);
+    legendX += label.length * 6 + 42;
+  });
 
   const graph = document.createElementNS(SVG_NAMESPACE, 'g');
   graph.setAttribute('transform', `translate(0 ${topPadding})`);
@@ -216,6 +235,17 @@ export const downloadFigurePdf = async (container: HTMLElement, options: FigureE
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [pageWidth, pageHeight] });
   doc.addImage(dataUrl, 'PNG', margin, margin, imageWidth, imageHeight, undefined, 'FAST');
   doc.save(`${options.fileName}.pdf`);
+};
+
+export const downloadExcel = async (rows: ExportRow[], fileName: string) => {
+  if (rows.length === 0) throw new Error('No hay datos disponibles para exportar.');
+  const XLSX = await import('xlsx');
+  const sheet = XLSX.utils.json_to_sheet(rows);
+  sheet['!cols'] = Object.keys(rows[0]).map(header => ({ wch: Math.max(12, Math.min(48, header.length + 2)) }));
+  sheet['!autofilter'] = { ref: sheet['!ref']! };
+  const book = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(book, sheet, 'Datos');
+  XLSX.writeFile(book, `${fileName}.xlsx`);
 };
 
 export const downloadCsv = (rows: ExportRow[], fileName: string) => {
