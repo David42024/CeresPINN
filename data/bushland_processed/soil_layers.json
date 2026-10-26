@@ -1,0 +1,26 @@
+[
+  {
+    "thickness_mm": 300,
+    "field_capacity": 0.3433333333333334,
+    "wilting_point": 0.18,
+    "saturation": 0.5093333333333334,
+    "residual": 0.02333333333333333,
+    "ksat_mm_day": 1719.2
+  },
+  {
+    "thickness_mm": 300,
+    "field_capacity": 0.3333333333333333,
+    "wilting_point": 0.18,
+    "saturation": 0.45,
+    "residual": 0.05,
+    "ksat_mm_day": 275.99999999999994
+  },
+  {
+    "thickness_mm": 900,
+    "field_capacity": 0.34,
+    "wilting_point": 0.1911111111111111,
+    "saturation": 0.43666666666666665,
+    "residual": 0.11666666666666667,
+    "ksat_mm_day": 211.4133333333333
+  }
+]

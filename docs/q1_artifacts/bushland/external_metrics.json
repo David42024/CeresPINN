@@ -1,0 +1,171 @@
+{
+  "design": "Retrospective external-source evaluation of separate coupled process extension",
+  "calibration_years": [
+    1989,
+    1990,
+    1994,
+    2013
+  ],
+  "evaluation_years": [
+    2016,
+    2018
+  ],
+  "evaluation_field_seasons": 8,
+  "independent_evaluation_years": 2,
+  "models": {
+    "training_mean_yield": {
+      "calibration": {
+        "n": 11,
+        "rmse": 2466.114851625885,
+        "mae": 1575.0415811927776,
+        "bias": 9.094947017729282e-13,
+        "r2": 0.0
+      },
+      "evaluation": {
+        "n": 8,
+        "rmse": 2500.9767755480243,
+        "mae": 2325.9973249212026,
+        "bias": -2325.9973249212026,
+        "r2": -6.405549691223927
+      }
+    },
+    "weather_irrigation_ridge": {
+      "calibration": {
+        "n": 11,
+        "rmse": 1510.2818228715403,
+        "mae": 1128.689272455739,
+        "bias": 1.0335167065601458e-12,
+        "r2": 0.624949806741518
+      },
+      "evaluation": {
+        "n": 8,
+        "rmse": 1604.1898284345891,
+        "mae": 1342.2388416025503,
+        "bias": -1342.2388416025503,
+        "r2": -2.046838953615707
+      }
+    },
+    "uncalibrated_process": {
+      "calibration": {
+        "n": 11,
+        "rmse": 4488.905702533598,
+        "mae": 4104.3330120243445,
+        "bias": 4104.3330120243445,
+        "r2": -2.3132512267861296
+      },
+      "evaluation": {
+        "n": 8,
+        "rmse": 1084.080285870825,
+        "mae": 949.22125860039,
+        "bias": 274.0795312564635,
+        "r2": -0.39142844160398704
+      }
+    },
+    "calibrated_coupled_process": {
+      "calibration": {
+        "n": 11,
+        "rmse": 1573.9721700057253,
+        "mae": 1265.488914535679,
+        "bias": 67.21818484935561,
+        "r2": 0.5926502059782806
+      },
+      "evaluation": {
+        "n": 8,
+        "rmse": 3248.074803069792,
+        "mae": 3080.2143165979187,
+        "bias": -3080.2143165979187,
+        "r2": -11.490793474535318
+      }
+    }
+  },
+  "daily_states": {
+    "LAI": {
+      "calibration": {
+        "n": 113,
+        "rmse": 1.2165279288999244,
+        "mae": 0.9410497151227011,
+        "bias": 0.01881778275388655,
+        "r2": 0.5959352633954269
+      },
+      "evaluation": {
+        "n": 49,
+        "rmse": 1.8643206738653602,
+        "mae": 1.5932260777784186,
+        "bias": -1.5324523051295138,
+        "r2": -0.29308821989230305
+      }
+    },
+    "biomass_kg_ha": {
+      "calibration": {
+        "n": 119,
+        "rmse": 1991.4071232179526,
+        "mae": 1719.3579271492933,
+        "bias": 710.1446350918424,
+        "r2": 0.9430095410773804
+      },
+      "evaluation": {
+        "n": 49,
+        "rmse": 4095.5181842343545,
+        "mae": 3116.67386825913,
+        "bias": -2808.7713571177555,
+        "r2": 0.7487602599481118
+      }
+    },
+    "ET_mm": {
+      "calibration": {
+        "n": 2045,
+        "rmse": 1.6076759035811161,
+        "mae": 1.2482784422590043,
+        "bias": 0.10834520402570513,
+        "r2": 0.7172258095573549
+      },
+      "evaluation": {
+        "n": 1455,
+        "rmse": 1.5695277195882855,
+        "mae": 1.1228413615051893,
+        "bias": -0.3022625288692763,
+        "r2": 0.7590861862611921
+      }
+    },
+    "theta_m3_m3": {
+      "calibration": {
+        "n": 405,
+        "rmse": 0.06350056232703788,
+        "mae": 0.04791242206110836,
+        "bias": 0.02061746967564434,
+        "r2": -1.0764839575740428
+      },
+      "evaluation": {
+        "n": 333,
+        "rmse": 0.05081881002331289,
+        "mae": 0.03642004304494689,
+        "bias": 0.013483487795937851,
+        "r2": -0.19093205328714036
+      }
+    }
+  },
+  "limitations": [
+    "One station; fields and spans are not independent regions",
+    "Source endpoints were previewed during extraction; no preregistration claim",
+    "No evaluation-score-driven model selection",
+    "No external evaluation of the archived national neural checkpoint",
+    "Irrigation treatment is confounded with field",
+    "Stale preplant profiles used as planting-day approximation with age reported; no subsequent assimilation"
+  ],
+  "maximum_absolute_water_residual_mm": 1.5631940186722204e-13,
+  "forcing_source_counts": {
+    "rain_source": {
+      "lysimeter": 3232,
+      "station_gauge": 627
+    },
+    "irrigation_source": {
+      "daily_record": 3184,
+      "no_event_assumed_zero": 648,
+      "event_log": 27
+    },
+    "dew_source": {
+      "daily_record": 3208,
+      "missing_assumed_zero": 651
+    }
+  }
+}

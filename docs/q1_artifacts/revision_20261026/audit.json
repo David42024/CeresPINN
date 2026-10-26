@@ -1,0 +1,302 @@
+{
+  "national": {
+    "design": "five expanding-window four-year test blocks 2006-2025; no future training",
+    "n_unique_test_years": 20,
+    "initial_train_years": [
+      1990,
+      1991,
+      1992,
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005
+    ],
+    "seeds": [
+      0,
+      1,
+      42
+    ],
+    "epochs": 300,
+    "hyperparameters": "fixed before new evaluation; no test tuning",
+    "climate_only_features": [
+      "temp_anomaly_c",
+      "seasonal_precip_mm"
+    ],
+    "trend": "OLS on training years only; residual network has no year input",
+    "uncertainty": "circular moving-block bootstrap, block length 3 years, 20000 draws; descriptive intervals",
+    "caveat": "retrospective additional internal audit; earlier manuscript results already known; not a pristine external holdout",
+    "scores": [
+      {
+        "model": "year_trend",
+        "rmse_kg_ha": 1133.7804558390758,
+        "mae_kg_ha": 750.469780509455,
+        "r2": 0.1635539045201757,
+        "bias_kg_ha": 403.0726855811234,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            530.2338016203911,
+            1722.7839769608777
+          ],
+          "mae_kg_ha": [
+            388.6679578553259,
+            1243.9200544313198
+          ]
+        }
+      },
+      {
+        "model": "linear_all",
+        "rmse_kg_ha": 1012.2926373661617,
+        "mae_kg_ha": 742.8169638944885,
+        "r2": 0.33320523452659323,
+        "bias_kg_ha": 217.45676046710423,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            581.8291669886379,
+            1426.5304196746754
+          ],
+          "mae_kg_ha": [
+            440.31087713678704,
+            1117.250247089778
+          ]
+        }
+      },
+      {
+        "model": "ridge_all",
+        "rmse_kg_ha": 999.0422149812268,
+        "mae_kg_ha": 732.1897755637074,
+        "r2": 0.3505470326872221,
+        "bias_kg_ha": 180.00151391610453,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            580.8123106078984,
+            1399.6009768673334
+          ],
+          "mae_kg_ha": [
+            435.86996798072556,
+            1096.1542454007008
+          ]
+        }
+      },
+      {
+        "model": "ridge_climate_only",
+        "rmse_kg_ha": 2258.4250790665146,
+        "mae_kg_ha": 2080.8210385009775,
+        "r2": -2.318878863490398,
+        "bias_kg_ha": -2080.8210385009775,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            1834.2618609982596,
+            2611.86555041061
+          ],
+          "mae_kg_ha": [
+            1653.274578445964,
+            2488.5146054976344
+          ]
+        }
+      },
+      {
+        "model": "mlp_all",
+        "rmse_kg_ha": 1325.6634752059376,
+        "mae_kg_ha": 1035.6054140624997,
+        "r2": -0.14352748383930747,
+        "bias_kg_ha": 309.8378898437495,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            886.123479343488,
+            1720.8610300331513
+          ],
+          "mae_kg_ha": [
+            672.7818637207034,
+            1396.2826088964837
+          ]
+        }
+      },
+      {
+        "model": "monotonic_all",
+        "rmse_kg_ha": 1085.0386416868691,
+        "mae_kg_ha": 897.3121480468744,
+        "r2": 0.23392650668498027,
+        "bias_kg_ha": 224.0212394531245,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            795.4926738529408,
+            1343.7621208532955
+          ],
+          "mae_kg_ha": [
+            666.4455780566396,
+            1126.8776817578123
+          ]
+        }
+      },
+      {
+        "model": "monotonic_climate_only",
+        "rmse_kg_ha": 2735.047763295546,
+        "mae_kg_ha": 2576.009156054688,
+        "r2": -3.8675436589133962,
+        "bias_kg_ha": -2576.009156054688,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            2420.4839257159156,
+            3004.303471704151
+          ],
+          "mae_kg_ha": [
+            2237.9084389892587,
+            2889.2122929003904
+          ]
+        }
+      },
+      {
+        "model": "detrended_monotonic_climate",
+        "rmse_kg_ha": 1097.8699855543764,
+        "mae_kg_ha": 778.0806357195288,
+        "r2": 0.21570065941447658,
+        "bias_kg_ha": 252.9815910217714,
+        "block_bootstrap_95_ci": {
+          "rmse_kg_ha": [
+            602.9466655993903,
+            1543.0891674871928
+          ],
+          "mae_kg_ha": [
+            436.78852010770987,
+            1186.5885376986614
+          ]
+        }
+      }
+    ],
+    "paired_comparisons": [
+      {
+        "comparison": "monotonic_all minus year_trend",
+        "mean_absolute_error_difference_kg_ha": 146.8423675374197,
+        "fold_sign_randomization_p": 0.5625,
+        "independent_blocks": 5,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "comparison": "monotonic_all minus linear_all",
+        "mean_absolute_error_difference_kg_ha": 154.4951841523861,
+        "fold_sign_randomization_p": 0.3125,
+        "independent_blocks": 5,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "comparison": "monotonic_all minus ridge_all",
+        "mean_absolute_error_difference_kg_ha": 165.12237248316723,
+        "fold_sign_randomization_p": 0.3125,
+        "independent_blocks": 5,
+        "holm_adjusted_p": 1.0
+      },
+      {
+        "comparison": "monotonic_all minus mlp_all",
+        "mean_absolute_error_difference_kg_ha": -138.29326601562516,
+        "fold_sign_randomization_p": 0.4375,
+        "independent_blocks": 5,
+        "holm_adjusted_p": 1.0
+      }
+    ]
+  },
+  "county": {
+    "design": "five disjoint county groups; train other counties <=2017, test held counties 2018-2025",
+    "input_rows": 3460,
+    "counties": 99,
+    "test_county_years": 696,
+    "independent_test_years": 8,
+    "spatial_scope": "internal Iowa county transfer; not independent field validation",
+    "features_removed": {
+      "cdd": "NOAA cooling degree days; NOT consecutive dry days",
+      "gdd": "seasonal mean approximation, not daily accumulated GDD",
+      "heat_days_30c/35c": "heuristic from seasonal mean maxima, not observed daily counts",
+      "vpd_mean_kpa": "heuristic temperature formula, not measured vapor pressure deficit"
+    },
+    "season": "April-September, six months ending September; historical column names retained",
+    "provenance": "Frozen processed panel retained; current NASS values match all targets, NOAA climate matches through 2024 with disclosed 2025 differences; complete newly acquired raw sources and robustness results in reacquired_20261026",
+    "scores": [
+      {
+        "model": "climate_only",
+        "rmse_kg_ha": 2991.533389912708,
+        "mae_kg_ha": 2737.8227183955496,
+        "r2": -4.751757236711794,
+        "bias_kg_ha": -2705.0708376133784,
+        "county_rmse_median_kg_ha": 3006.705933255978,
+        "annual_cluster_bootstrap_ci": {
+          "rmse_kg_ha": [
+            2499.9021628233663,
+            3451.2206457094394
+          ],
+          "mae_kg_ha": [
+            2200.240807109108,
+            3285.829130535978
+          ]
+        }
+      },
+      {
+        "model": "trend_and_climate",
+        "rmse_kg_ha": 1268.6162811071783,
+        "mae_kg_ha": 986.6294796943563,
+        "r2": -0.03436400699509634,
+        "bias_kg_ha": 311.110853153502,
+        "county_rmse_median_kg_ha": 1188.576982270103,
+        "annual_cluster_bootstrap_ci": {
+          "rmse_kg_ha": [
+            1024.7963896985777,
+            1492.1432856560352
+          ],
+          "mae_kg_ha": [
+            806.9354603474987,
+            1192.9527307376432
+          ]
+        }
+      },
+      {
+        "model": "trend_only",
+        "rmse_kg_ha": 1173.5900999404423,
+        "mae_kg_ha": 921.5145212679248,
+        "r2": 0.11479121974276962,
+        "bias_kg_ha": 99.86063491676396,
+        "county_rmse_median_kg_ha": 1081.4339252687264,
+        "annual_cluster_bootstrap_ci": {
+          "rmse_kg_ha": [
+            972.8711177009712,
+            1345.153664496243
+          ],
+          "mae_kg_ha": [
+            771.4310415282988,
+            1065.6880637496297
+          ]
+        }
+      }
+    ],
+    "source_fidelity_artifact": "docs/q1_artifacts/reacquired_20261026/source_fidelity.json"
+  },
+  "environment": {
+    "python": "3.11.0",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.16.3",
+    "sklearn": "1.9.0",
+    "torch": "2.14.0+cpu"
+  },
+  "base_commit": "23cc51ef788239269301790da11e36aa17314e7d",
+  "inputs": [
+    {
+      "path": "data/cerespinn_training_iowa.csv",
+      "sha256": "f14535062e070a83372fc5c2a7ad8c393b0e472073aacc46d585f63aa24608f8"
+    },
+    {
+      "path": "data/cerespinn_county_audit.csv",
+      "sha256": "d21f34f8c88536cbcef699afbac9d85430116d1be828dba8c75b762ea47d7dd4"
+    },
+    {
+      "path": "scripts/revision_scientific_audit.py",
+      "sha256": "da2f9fd14a867b4fc5a77381364e3f769863dd0792667b34376bc99eebbf0e7f"
+    }
+  ]
+}

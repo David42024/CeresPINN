@@ -1,0 +1,8 @@
+feature,vif,status
+year,1.6709056410638365,finite
+temp_anomaly_c,1.0535619857485627,finite
+precip_anomaly_pct,,rank deficient infinite VIF
+co2_ppm,,rank deficient infinite VIF
+heatwave_risk,,rank deficient infinite VIF
+seasonal_precip_mm,1.6079191535224298,finite
+seasonal_cdd,,constant excluded

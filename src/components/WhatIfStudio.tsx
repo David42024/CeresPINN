@@ -74,7 +74,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
         simulateScenario(field, configC),
       ]);
 
-      // Satisfying PINN tensor calculation latency for perceived physics calculation
+      // Keep the loading indicator visible briefly during the comparison.
       await new Promise((r) => setTimeout(r, 600));
 
       setResultA(resA);
@@ -140,36 +140,25 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
 
   // Identify Best Scenario
   let winner = 'C';
-  let winnerTitle = 'Escenario C (Sensor + Resiliencia)';
+  let winnerTitle = 'Escenario C';
   let winnerYield = yieldC;
   let winnerWater = waterC;
-  let winnerMargin = marginC;
-  let winnerCwsi = cwsiC;
-  let winnerWue = wueC;
 
   if (yieldB > yieldC && yieldB > yieldA) {
     winner = 'B';
-    winnerTitle = 'Escenario B (Optimización 1)';
+    winnerTitle = 'Escenario B';
     winnerYield = yieldB;
     winnerWater = waterB;
-    winnerMargin = marginB;
-    winnerCwsi = cwsiB;
-    winnerWue = wueB;
   } else if (yieldA >= yieldB && yieldA >= yieldC) {
     winner = 'A';
     winnerTitle = 'Escenario A (Línea Base)';
     winnerYield = yieldA;
     winnerWater = waterA;
-    winnerMargin = marginA;
-    winnerCwsi = cwsiA;
-    winnerWue = wueA;
   }
 
   const deltaYieldVsBase = winnerYield - yieldA;
   const deltaYieldPct = yieldA > 0 ? ((deltaYieldVsBase / yieldA) * 100).toFixed(1) : '0.0';
   const deltaWaterVsBase = winnerWater - waterA;
-  const deltaMarginVsBase = winnerMargin - marginA;
-  const cwsiReductionPct = cwsiA > 0 ? (((cwsiA - winnerCwsi) / cwsiA) * 100).toFixed(0) : '0';
 
   // Max for visual progress bars
   const maxYield = Math.max(yieldA, yieldB, yieldC, 1);
@@ -186,7 +175,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
             {t('whatIfStudio.title', 'Módulo de Análisis Comparativo "¿Qué pasa si?" (What-If Studio)')}
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-            <strong>¿Para qué sirve?</strong> Evalúa y contrasta 3 estrategias agronómicas simultáneas bajo forzamiento climático PINN. Permite comparar la Línea Base con dos alternativas de adaptación observando la brecha de rendimiento (Δ kg/ha), el ahorro de agua y el margen económico en tiempo real.
+            {t('scientificScope.scenarioExplanation')}
           </p>
         </div>
 
@@ -201,17 +190,17 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
                 ? 'bg-slate-700 cursor-not-allowed opacity-80'
                 : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 shadow-emerald-500/25 hover:shadow-emerald-500/40 ring-2 ring-emerald-400/30'
             }`}
-            title="Lanzar simulación comparativa de los 3 escenarios mediante tensores PINN"
+            title={t('scientificScope.compareScenarios')}
           >
             {isComparing ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Simulando Redes PINN...</span>
+                <span>{t('scientificScope.computingScenarios')}</span>
               </>
             ) : (
               <>
                 <Zap className="w-4 h-4 text-amber-300 fill-amber-300 animate-pulse" />
-                <span>⚡ Comparar 3 Escenarios Ahora</span>
+                <span>⚡ {t('scientificScope.compareScenarios')}</span>
               </>
             )}
           </button>
@@ -230,8 +219,8 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
             <Sparkles className="w-5 h-5 animate-spin" />
           </div>
           <div>
-            <strong className="text-emerald-300 block font-semibold">Resolviendo Tensores de EDPs Acopladas PINN...</strong>
-            <span className="text-[11px] text-slate-300">Comparando el balance hídrico demostrativo de 0-100 cm y la evapotranspiración parametrizada bajo tres escenarios climáticos.</span>
+            <strong className="text-emerald-300 block font-semibold">{t('scientificScope.computingScenarios', 'Calculando las simulaciones exploratorias...')}</strong>
+            <span className="text-[11px] text-slate-300">{t('scientificScope.comparingWater')}</span>
           </div>
         </div>
       )}
@@ -282,7 +271,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
                 >
                   <option value="rainfed">{t('whatIfStudio.optRainfed', 'Secano Estricto')}</option>
                   <option value="deficit_50">{t('whatIfStudio.optDeficit50', 'Riego Deficitario (50% ETc)')}</option>
-                  <option value="optimal_100">{t('whatIfStudio.optOptimal100', 'Riego Óptimo (100% ETc)')}</option>
+                  <option value="optimal_100">{t('whatIfStudio.optOptimal100', 'Riego al 100% ETc (simulado)')}</option>
                   <option value="smart_sensor">{t('whatIfStudio.optSmartSensor', 'Sensor Inteligente (VT-R1)')}</option>
                 </select>
               </div>
@@ -347,7 +336,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
             <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
               <span className="px-2.5 py-0.5 rounded-lg bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800 font-bold text-xs flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-cyan-500 inline-block" />
-                {t('whatIfStudio.scenarioBOpt1', 'Escenario B (Optimización 1)')}
+                {t('whatIfStudio.scenarioBOpt1', 'Escenario B')}
               </span>
               <span className="text-xs font-mono text-cyan-700 dark:text-cyan-400">{configB.scenario}</span>
             </div>
@@ -363,7 +352,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
                 >
                   <option value="rainfed">{t('whatIfStudio.optRainfed', 'Secano Estricto')}</option>
                   <option value="deficit_50">{t('whatIfStudio.optDeficit50', 'Riego Deficitario (50% ETc)')}</option>
-                  <option value="optimal_100">{t('whatIfStudio.optOptimal100', 'Riego Óptimo (100% ETc)')}</option>
+                  <option value="optimal_100">{t('whatIfStudio.optOptimal100', 'Riego al 100% ETc (simulado)')}</option>
                   <option value="smart_sensor">{t('whatIfStudio.optSmartSensor', 'Sensor Inteligente (VT-R1)')}</option>
                 </select>
               </div>
@@ -459,7 +448,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
                 >
                   <option value="rainfed">{t('whatIfStudio.optRainfed', 'Secano Estricto')}</option>
                   <option value="deficit_50">{t('whatIfStudio.optDeficit50', 'Riego Deficitario (50% ETc)')}</option>
-                  <option value="optimal_100">{t('whatIfStudio.optOptimal100', 'Riego Óptimo (100% ETc)')}</option>
+                  <option value="optimal_100">{t('whatIfStudio.optOptimal100', 'Riego al 100% ETc (simulado)')}</option>
                   <option value="smart_sensor">{t('whatIfStudio.optSmartSensor', 'Sensor Inteligente (VT-R1)')}</option>
                 </select>
               </div>
@@ -539,7 +528,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
         <div className="flex items-center justify-between">
           <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Scale className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-            Matriz de Comparativa Agronómica & Veredicto PINN
+            Comparación de Resultados Simulados
           </h3>
           <span className="text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">
             Contraste Relativo vs Línea Base (A)
@@ -555,7 +544,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
               </div>
               <div>
                 <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300">
-                  Estrategia Agronómica Recomendada por PINN
+                  Mayor rendimiento simulado entre A, B y C
                 </span>
                 <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
                   {winnerTitle}
@@ -574,19 +563,10 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
           </div>
 
           <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-            {winner === 'C' ? (
-              <>
-                Bajo el forzamiento climático evaluado, el <strong>Escenario C</strong> demuestra la máxima resiliencia agronómica. La adopción de una <strong>variedad de ciclo corto</strong> permite un escape fenológico de sequía antes del pico de evaporación estival, mientras que el <strong>riego de precisión por sensor en floración (VT-R1)</strong> mitiga el estrés hídrico crítico, logrando <strong>{deltaYieldVsBase.toLocaleString()} kg/ha adicionales</strong> con una eficiencia hídrica récord de <strong>{winnerWue} kg/m³</strong> y un margen adicional de <strong>+${deltaMarginVsBase} USD/ha</strong>.
-              </>
-            ) : winner === 'B' ? (
-              <>
-                El <strong>Escenario B</strong> equilibra la dotación de agua y la acumulación de biomasa de manera óptima, logrando <strong>{deltaYieldVsBase.toLocaleString()} kg/ha más</strong> que la línea base con una reducción sustancial del costo de bombeo de riego.
-              </>
-            ) : (
-              <>
-                La <strong>Línea Base (Escenario A)</strong> mantiene el mayor balance productivo bajo la configuración climática actual sin requerir ajustes en las dosis de riego o ciclo varietal.
-              </>
-            )}
+            <strong>{winnerTitle}</strong> tiene el mayor rendimiento numérico entre las tres configuraciones calculadas.
+            La selección usa solo rendimiento; no optimiza consumo de agua, costos ni resiliencia.
+            Las diferencias incluyen multiplicadores internos de riego y cultivar sin calibración experimental.
+            Esta comparación no estima efectos causales ni recomienda una intervención de campo.
           </p>
         </div>
 
@@ -597,9 +577,9 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
               <tr className="bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 font-semibold border-b border-slate-200 dark:border-slate-800">
                 <th className="p-3">Variable Agronómica & KPI</th>
                 <th className="p-3">Escenario A (Línea Base)</th>
-                <th className="p-3">Escenario B (Optimización 1)</th>
-                <th className="p-3">Escenario C (Sensor + Resiliencia)</th>
-                <th className="p-3 font-bold text-emerald-600 dark:text-emerald-400">Mejor Opción (Brecha)</th>
+                <th className="p-3">Escenario B</th>
+                <th className="p-3">Escenario C</th>
+                <th className="p-3 font-bold text-emerald-600 dark:text-emerald-400">Extremo simulado por indicador</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-mono text-slate-800 dark:text-slate-200">

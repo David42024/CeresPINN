@@ -292,6 +292,8 @@ def management_artifacts() -> tuple[pd.DataFrame, dict]:
         },
     }
     raw_bu = inference.adapter.predict_yield_bu_acre(common)
+    if raw_bu is None:
+        raise RuntimeError('Scientific management audit requires trained checkpoint inference; fallback is not evidence')
     results = {}
     rows = []
     baseline_yield = None
@@ -343,6 +345,7 @@ def management_artifacts() -> tuple[pd.DataFrame, dict]:
 
 
 def main() -> None:
+    torch.set_num_threads(1)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     train, test, meta = load_matrix()
     x_train, x_test = train[FEATURES].to_numpy(float), test[FEATURES].to_numpy(float)

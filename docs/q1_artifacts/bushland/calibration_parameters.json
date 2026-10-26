@@ -1,0 +1,66 @@
+{
+  "parameters": {
+    "max_lai": 4.3312825797310675,
+    "gdd_peak": 1262.266209993339,
+    "gdd_end": 1979.1217776101703,
+    "max_kc": 1.2051765553244709,
+    "rue_g_mj_par": 2.527933510402374,
+    "harvest_index": 0.3988648393610033
+  },
+  "calibration_years": [
+    1989,
+    1990,
+    1994,
+    2013
+  ],
+  "evaluation_years": [
+    2016,
+    2018
+  ],
+  "success": true,
+  "nfev": 21,
+  "cost": 14.035934110539127,
+  "jacobian_rank": 6,
+  "active_bounds": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "target_scales": {
+    "lai": 2,
+    "biomass_kg_ha": 10000,
+    "et_mm": 3,
+    "theta": 0.05,
+    "dry_grain_kg_ha": 3000
+  },
+  "soil_layers": [
+    {
+      "thickness_mm": 300,
+      "field_capacity": 0.3433333333333334,
+      "wilting_point": 0.18,
+      "saturation": 0.5093333333333334,
+      "residual": 0.02333333333333333,
+      "ksat_mm_day": 1719.2
+    },
+    {
+      "thickness_mm": 300,
+      "field_capacity": 0.3333333333333333,
+      "wilting_point": 0.18,
+      "saturation": 0.45,
+      "residual": 0.05,
+      "ksat_mm_day": 275.99999999999994
+    },
+    {
+      "thickness_mm": 900,
+      "field_capacity": 0.34,
+      "wilting_point": 0.1911111111111111,
+      "saturation": 0.43666666666666665,
+      "residual": 0.11666666666666667,
+      "ksat_mm_day": 211.4133333333333
+    }
+  ],
+  "protocol_sha256": "35d6c142c81456dfb409ac33691fedc15f4288ed580ddc4903bae9ff378f1690"
+}

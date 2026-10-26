@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Download, FileImage, FileText, Table } from 'lucide-react';
 import {
   downloadCsv,
@@ -20,12 +21,13 @@ export const FigureExportToolbar: React.FC<FigureExportToolbarProps> = ({
   options,
   dataRows,
 }) => {
+  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
 
   const runExport = async (action: (target: HTMLElement) => void | Promise<void>) => {
     const target = targetRef.current;
     if (!target) {
-      setError('No se encontró la figura que se desea exportar.');
+      setError(t('exportData.figureMissing'));
       return;
     }
     try {
@@ -41,13 +43,13 @@ export const FigureExportToolbar: React.FC<FigureExportToolbarProps> = ({
 
   return (
     <div className="flex flex-wrap items-center justify-end gap-1.5">
-      <button type="button" className={buttonClass} onClick={() => void runExport(target => downloadFigureSvg(target, options))} aria-label={`Exportar ${options.title} como SVG`}>
+      <button type="button" className={buttonClass} onClick={() => void runExport(target => downloadFigureSvg(target, options))} aria-label={t('exportData.exportFigure', { title: options.title, format: 'SVG' })}>
         <FileImage className="h-3 w-3" /> SVG
       </button>
-      <button type="button" className={buttonClass} onClick={() => void runExport(target => downloadFigurePng(target, options))} aria-label={`Exportar ${options.title} como PNG a 600 DPI`}>
+      <button type="button" className={buttonClass} onClick={() => void runExport(target => downloadFigurePng(target, options))} aria-label={t('exportData.exportFigure', { title: options.title, format: 'PNG 600 DPI' })}>
         <Download className="h-3 w-3" /> PNG 600 DPI
       </button>
-      <button type="button" className={buttonClass} onClick={() => void runExport(target => downloadFigurePdf(target, options))} aria-label={`Exportar ${options.title} como PDF`}>
+      <button type="button" className={buttonClass} onClick={() => void runExport(target => downloadFigurePdf(target, options))} aria-label={t('exportData.exportFigure', { title: options.title, format: 'PDF' })}>
         <FileText className="h-3 w-3" /> PDF
       </button>
       {dataRows && (
@@ -59,7 +61,7 @@ export const FigureExportToolbar: React.FC<FigureExportToolbarProps> = ({
             console.error('No se pudo exportar la tabla CSV:', exportError);
             setError(exportError instanceof Error ? exportError.message : 'Error inesperado al exportar.');
           }
-        }} aria-label={`Exportar datos de ${options.title} como CSV`}>
+        }} aria-label={t('exportData.exportTable', { title: options.title, format: 'CSV' })}>
           <Table className="h-3 w-3" /> CSV
         </button>
       )}

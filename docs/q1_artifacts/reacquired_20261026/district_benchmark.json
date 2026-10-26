@@ -1,0 +1,262 @@
+{
+  "protocol": {
+    "version": 1,
+    "design": "leave one official USDA Iowa agricultural statistics district out; train other districts through 2017, evaluate excluded district during 2018-2025",
+    "groups": "All nine official agricultural district codes, 10 through 90, as recorded in the original USDA CSV",
+    "models": {
+      "trend_only": [
+        "year"
+      ],
+      "climate_only": [
+        "season_temp_mean_c",
+        "season_precip_mm"
+      ],
+      "trend_and_climate": [
+        "year",
+        "season_temp_mean_c",
+        "season_precip_mm"
+      ]
+    },
+    "ridge_alpha": 1.0,
+    "scaling": "training rows only; StandardScaler",
+    "selection": "No hyperparameter, district, boundary or buffer chosen from evaluation scores",
+    "uncertainty": "descriptive complete-year moving-block bootstrap; block length 3, 20000 draws",
+    "independence": "Nine spatial groups share eight weather years; districts are not nine independent temporal replicates",
+    "limits": "One state; no spatial buffer; retrospective additional audit; original national neural checkpoint not fitted or validated here",
+    "official_definition_url": "https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Frequently_Asked_Questions/index.php",
+    "official_map_url": "https://www.nass.usda.gov/Statistics_by_State/Iowa/Publications/Crop_Report/IA_Ag_Districts_Map.pdf"
+  },
+  "protocol_sha256": "9e94703dfe5ba0caf7077b1c575953d00c3100ab7b1fb88ac91560539306ce99",
+  "input_rows": 3460,
+  "counties": 99,
+  "districts": 9,
+  "distinct_test_years": 8,
+  "test_county_years": 696,
+  "splits": [
+    {
+      "excluded_district": "10",
+      "name": "NORTHWEST",
+      "train_rows": 2428,
+      "test_rows": 84,
+      "excluded_counties": [
+        "19021",
+        "19035",
+        "19041",
+        "19059",
+        "19063",
+        "19119",
+        "19141",
+        "19143",
+        "19147",
+        "19149",
+        "19151",
+        "19167"
+      ]
+    },
+    {
+      "excluded_district": "20",
+      "name": "NORTH CENTRAL",
+      "train_rows": 2456,
+      "test_rows": 84,
+      "excluded_counties": [
+        "19023",
+        "19033",
+        "19067",
+        "19069",
+        "19081",
+        "19091",
+        "19109",
+        "19131",
+        "19189",
+        "19195",
+        "19197"
+      ]
+    },
+    {
+      "excluded_district": "30",
+      "name": "NORTHEAST",
+      "train_rows": 2456,
+      "test_rows": 86,
+      "excluded_counties": [
+        "19005",
+        "19013",
+        "19017",
+        "19019",
+        "19037",
+        "19043",
+        "19055",
+        "19061",
+        "19065",
+        "19089",
+        "19191"
+      ]
+    },
+    {
+      "excluded_district": "40",
+      "name": "WEST CENTRAL",
+      "train_rows": 2428,
+      "test_rows": 85,
+      "excluded_counties": [
+        "19009",
+        "19025",
+        "19027",
+        "19047",
+        "19073",
+        "19077",
+        "19085",
+        "19093",
+        "19133",
+        "19161",
+        "19165",
+        "19193"
+      ]
+    },
+    {
+      "excluded_district": "50",
+      "name": "CENTRAL",
+      "train_rows": 2428,
+      "test_rows": 85,
+      "excluded_counties": [
+        "19015",
+        "19049",
+        "19075",
+        "19079",
+        "19083",
+        "19099",
+        "19127",
+        "19153",
+        "19157",
+        "19169",
+        "19171",
+        "19187"
+      ]
+    },
+    {
+      "excluded_district": "60",
+      "name": "EAST CENTRAL",
+      "train_rows": 2484,
+      "test_rows": 75,
+      "excluded_counties": [
+        "19011",
+        "19031",
+        "19045",
+        "19095",
+        "19097",
+        "19103",
+        "19105",
+        "19113",
+        "19139",
+        "19163"
+      ]
+    },
+    {
+      "excluded_district": "70",
+      "name": "SOUTHWEST",
+      "train_rows": 2514,
+      "test_rows": 57,
+      "excluded_counties": [
+        "19001",
+        "19003",
+        "19029",
+        "19071",
+        "19129",
+        "19137",
+        "19145",
+        "19155",
+        "19173"
+      ]
+    },
+    {
+      "excluded_district": "80",
+      "name": "SOUTH CENTRAL",
+      "train_rows": 2462,
+      "test_rows": 63,
+      "excluded_counties": [
+        "19007",
+        "19039",
+        "19053",
+        "19117",
+        "19121",
+        "19125",
+        "19135",
+        "19159",
+        "19175",
+        "19181",
+        "19185"
+      ]
+    },
+    {
+      "excluded_district": "90",
+      "name": "SOUTHEAST",
+      "train_rows": 2456,
+      "test_rows": 77,
+      "excluded_counties": [
+        "19051",
+        "19057",
+        "19087",
+        "19101",
+        "19107",
+        "19111",
+        "19115",
+        "19123",
+        "19177",
+        "19179",
+        "19183"
+      ]
+    }
+  ],
+  "scores": [
+    {
+      "model": "climate_only",
+      "rmse_kg_ha": 2996.042721546156,
+      "mae_kg_ha": 2728.079705095373,
+      "r2": -4.769110296440488,
+      "bias_kg_ha": -2687.9805278757317,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          2506.7143141945717,
+          3453.289735777015
+        ],
+        "mae_kg_ha": [
+          2188.7973952026286,
+          3271.4758463904504
+        ]
+      }
+    },
+    {
+      "model": "trend_and_climate",
+      "rmse_kg_ha": 1302.8748147279139,
+      "mae_kg_ha": 1014.6192088191747,
+      "r2": -0.09098358563830922,
+      "bias_kg_ha": 327.1301591436651,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1066.356687441869,
+          1521.5456817856768
+        ],
+        "mae_kg_ha": [
+          834.2870749300656,
+          1221.2523920261633
+        ]
+      }
+    },
+    {
+      "model": "trend_only",
+      "rmse_kg_ha": 1224.7749507700355,
+      "mae_kg_ha": 962.8938570345462,
+      "r2": 0.035892570636299914,
+      "bias_kg_ha": 87.74940650451056,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1023.1883082914239,
+          1389.3305680117376
+        ],
+        "mae_kg_ha": [
+          808.5495407997241,
+          1106.7692892607752
+        ]
+      }
+    }
+  ],
+  "national_neural_checkpoint_unchanged": true
+}

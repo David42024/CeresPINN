@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "study": "USDA ARS Greeley, Colorado, 2012–2013; one site; randomized treatments within blocks",
+  "retrospective": "Source metadata and example rows were inspected before protocol; not preregistered.",
+  "design": "Four block-paired observations per treatment per year; block is plot-letter plus first plot digit.",
+  "planned_contrasts": [
+    "100/50 minus 100/100",
+    "80/80 minus 100/100"
+  ],
+  "interpretation": "Percentages denote target ET replacement during late vegetative / grain-filling periods, not 75% of total water.",
+  "yield": "Grain kg/ha at 15.5% moisture for treatment contrasts; dry mass is 0.845 times standard-moisture yield.",
+  "statistics": "Within-year complete paired block differences; paired t interval with n-1 degrees of freedom; exact two-sided sign randomization; Holm adjustment over four comparisons. Missing yields excluded explicitly; descriptive two-year study, not a new field recommendation.",
+  "state_transfer": "2013 end-of-season biomass is absent. Fit a one-feature Ridge on 2012 maximum observed LAI and dry grain; evaluate available 2013 plots. Maximum LAI uses measurements across the season, so this conditional state-to-yield comparison is not an early forecast or full process-model validation. Do not reconstruct missing biomass from observed grain and harvest index.",
+  "split": {
+    "fit_year": 2012,
+    "evaluation_year": 2013
+  },
+  "caveat": "One site and two years; 2013 already in archived source. Replicated plots are not independent sites or years. No cultivar or planting date contrast is evaluated."
+}

@@ -1,0 +1,21 @@
+{
+  "years": [
+    1989,
+    1990,
+    1994,
+    2013,
+    2016,
+    2018
+  ],
+  "field_seasons": 20,
+  "yield_observations": 104,
+  "growth_observations": 759,
+  "water_days": 7094,
+  "soil_water_observations": 27994,
+  "sources": "USDA Ag Data Commons; original raw workbooks preserved with acquisition checksums",
+  "missing": "#N/A, blanks, nonnumeric markers retained as missing; no zero substitution",
+  "weather": "96 original 15-minute records per source day; radiation W/m2 integrated to MJ/m2/day; no imputation",
+  "grain": "dry grain kg/ha is not equal to standard-moisture grain kg/ha",
+  "field_mapping": "source field when present; otherwise spans 1-5 north, 6-10 south, east/west workbook side",
+  "causal_limit": "75% and 100% sprinkler treatment groups occupy distinct NW/SW fields; field and irrigation are confounded"
+}

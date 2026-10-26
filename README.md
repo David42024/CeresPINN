@@ -29,6 +29,23 @@ CeresPINN is designed to address critical gaps identified in recent agro-climati
 
 ## Reproduce the scientific results
 
+### October 26, 2026 reviewer revision
+
+The additional audit is `python scripts/revision_scientific_audit.py`, using
+`requirements-revision.txt`. Its frozen outputs are in
+`docs/q1_artifacts/revision_20261026/`. Five expanding temporal blocks cover
+20 distinct test years (2006–2025): the regularized network obtained RMSE
+1085.04 kg/ha versus 999.04 for Ridge. The separate internal Iowa baseline
+experiment uses 3,460 processed county-years and tests 696 future observations
+in held-out counties. It does not validate the national checkpoint spatially.
+The regional current-source reconstruction now preserves a USDA CSV and 297 NOAA JSON responses; all yields match, with disclosed small 2025 climate differences. Original national acquisition provenance remains incomplete. NOAA cooling degree days and
+heuristic daily climate proxies are excluded from the county benchmark.
+
+The corrected manuscript and private editorial response are retained locally.
+The public scientific revision contains code, public source data and audit
+results as Git files. See [the revision instructions](README_PUBLIC_RELEASE.md)
+for scope, limitations and reproduction commands.
+
 The repository includes the processed datasets, active checkpoint, exact model
 metadata, Q1 scripts, generated artifacts and pinned scientific dependencies.
 No API key, database, network download or deployment secret is required for the
@@ -84,8 +101,9 @@ Primary outputs:
 - `docs/q1_artifacts/temporal/`: prospective experiment trained on 1990–2017
   and tested strictly on 2018–2025.
 
-The prospective ten-seed ensemble obtained RMSE **855.22 kg ha⁻¹**, MAE
-**683.62 kg ha⁻¹** and R² **−0.8318** across eight independent test years. This
+The prospective ten-seed ensemble regenerated for the revision obtained RMSE
+**800.58 kg ha⁻¹**, MAE **613.76 kg ha⁻¹** and R² **−0.6052** across eight
+independent test years in the environment recorded in its JSON artifact. This
 is evidence of weak temporal extrapolation, not a successful external
 validation. The complete machine-readable result and bootstrap intervals are in
 `docs/q1_artifacts/temporal/temporal_validation_1990_2017_to_2018_2025.json`.
@@ -208,9 +226,25 @@ and NASA NEX-GDDP-CMIP6 provenance and reuse notices are documented in
 `data/README.md`.
 
 
-## How to Cite
-If you use CeresPINN or its processed datasets in your research, please cite:
+## How to cite this revision
 
-> Lucano Nieves, D. A., & Rojas Villegas, G. D. (2026). Climate-Adaptive Digital Twin for Drought-Resilient Maize Production: Integration of CMIP6 Projections and a Physics-Regularized Neural Network (CeresPINN). *[Nombre de la Revista]*, *[volumen]*(número), páginas. https://doi.org/[DOI]
+Lucano Nieves, D. A., and Rojas Villegas, G. D. (2026). CeresPINN scientific
+revision of October 26 2026. Source code, public data and audit results.
+Repository: https://github.com/David42024/CeresPINN, branch
+`codex/scientific-revision-2026-10-26`. Include the full commit identifier from
+`git rev-parse HEAD` when citing a checkout. This is a software revision; no
+journal publication, DOI or editorial acceptance is claimed.
 
-Repository: https://github.com/David42024/CeresPINN, commit `6c22e543b0fefbc498f5d811732974f48c1089c2`
+### External-source measured-state extension (October 26, 2026)
+
+Public USDA Bushland raw workbooks, checksums and processed measurements are preserved for six seasons. `scripts/prepare_bushland_data.py` and `scripts/validate_bushland_coupling.py` reproduce a separate coupled-process experiment: calibration 1989/1990/1994/2013, evaluation 2016/2018. Later-season grain RMSE is 3248.07 kg/ha versus 1604.19 for Ridge. This negative result is retained; it does not validate the archived neural checkpoint or causal management recommendations. See `docs/q1_artifacts/bushland/README.md` for the fixed protocol, units, substitutions and limitations. The Git revision includes the selected original public source files.
+
+### Independent USDA Colorado irrigation observations
+
+The 2008–2011 and 2012–2013 Greeley field collections are preserved with source
+checksums. A retrospective paired-block analysis of two irrigation contrasts
+and a separate 2012-to-2013 observed-LAI-to-grain comparison are described in
+`docs/q1_artifacts/colorado_irrigation_20261026_v3/README.md`. The latter did not
+outperform the training mean, and it does not validate the Bushland process model
+or the national neural checkpoint. Small samples and missing observations prevent
+transferring these results to the application's uncalibrated management factors.
