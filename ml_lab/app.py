@@ -876,8 +876,29 @@ def render_final_comparison():
         st.error(f'No se puede leer el resultado guardado: {exc}')
         return
     st.caption(f"Ejecución guardada: {report['created_at']}. Huella del dataset: {report['dataset_sha256']}.")
-    st.json({'Particiones': report['partitions'], 'Configuración': report['configuration']})
-    st.success(f"Modelo seleccionado por validación: {report['winner']}")
+    with st.expander("Ver detalles de configuración y particiones"):
+        st.json({'Particiones': report['partitions'], 'Configuración': report['configuration']})
+    st.markdown("### 🏆 Podio de los Mejores Modelos")
+    top3 = table.head(3).to_dict('records')
+    cols = st.columns(3)
+    # 2nd Place
+    if len(top3) > 1:
+        with cols[0]:
+            st.markdown(f"<div style='text-align: center; padding: 20px; background-color: #f1f5f9; border-radius: 10px; margin-top: 40px;'><h2>🥈 2do Lugar</h2><h3>{top3[1]['model']}</h3><p>R²: {top3[1]['validation_r2']:.4f}<br>RMSE: {top3[1]['validation_rmse_kg_ha']:.2f}</p></div>", unsafe_allow_html=True)
+    # 1st Place
+    if len(top3) > 0:
+        with cols[1]:
+            st.markdown(f"<div style='text-align: center; padding: 20px; background-color: #fef08a; border-radius: 10px; border: 2px solid #eab308; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); color: #854d0e;'><h2>🥇 1er Lugar</h2><h3>{top3[0]['model']}</h3><p>R²: {top3[0]['validation_r2']:.4f}<br>RMSE: {top3[0]['validation_rmse_kg_ha']:.2f}</p></div>", unsafe_allow_html=True)
+    # 3rd Place
+    if len(top3) > 2:
+        with cols[2]:
+            st.markdown(f"<div style='text-align: center; padding: 20px; background-color: #f8fafc; border-radius: 10px; margin-top: 50px;'><h2>🥉 3er Lugar</h2><h3>{top3[2]['model']}</h3><p>R²: {top3[2]['validation_r2']:.4f}<br>RMSE: {top3[2]['validation_rmse_kg_ha']:.2f}</p></div>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Check if CeresPINN is in top 3, if not mention it specifically if user wanted it?
+    # Based on the user prompt "Al final el emjor modelo era CERESPINN creo o algo as", if it's the winner it's already highlighted.
+    
+    st.success(f"🎉 ¡El modelo seleccionado por validación es **{report['winner']}**!")
     st.dataframe(table.rename(columns={'model': 'Modelo', 'validation_r2': 'R² validación',
         'validation_rmse_kg_ha': 'RMSE validación (kg/ha)', 'test_r2': 'R² prueba',
         'test_rmse_kg_ha': 'RMSE prueba (kg/ha)', 'test_mae_kg_ha': 'MAE prueba (kg/ha)',

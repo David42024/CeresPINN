@@ -1,5 +1,10 @@
 {
   "metricGuide": {
+    "title": "Guide to agronomic and biophysical metrics",
+    "yieldTitle": "Yield (kg/ha)",
+    "stressTitle": "CWSI stress (0.0 to 1.0)",
+    "biomassTitle": "Biomass and LAI",
+    "waterTitle": "Water productivity",
     "yield": "Yield is simulated. Potential yield is a heuristic reference, not a validated upper bound.",
     "stress": "The water stress index is a simulator estimate; its values do not validate physiological effects or management decisions.",
     "biomass": "Biomass and leaf area index are simulated states; LAI expresses leaf area per unit of ground area.",

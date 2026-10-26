@@ -143,23 +143,23 @@ export const MainDashboard: React.FC<MainDashboardProps> = ({
           <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800/80 text-xs space-y-2.5 mt-2 animate-fadeIn">
             <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
               <Sparkles className="w-4 h-4" />
-              Guía de Interpretación de Métricas Agronómicas y Biofísicas:
+              {t('metricGuide.title')}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-[11px] text-slate-600 dark:text-slate-400">
               <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/60">
-                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-emerald-600 dark:text-emerald-400">🌾 Rendimiento (kg/ha)</strong>
+                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-emerald-600 dark:text-emerald-400">🌾 {t('metricGuide.yieldTitle')}</strong>
                 {t('metricGuide.yield')}
               </div>
               <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/60">
-                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-amber-600 dark:text-amber-400">☀️ Estrés CWSI (0.0 a 1.0)</strong>
+                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-amber-600 dark:text-amber-400">☀️ {t('metricGuide.stressTitle')}</strong>
                 {t('metricGuide.stress')}
               </div>
               <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/60">
-                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-cyan-600 dark:text-cyan-400">🌿 Biomasa & LAI</strong>
+                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-cyan-600 dark:text-cyan-400">🌿 {t('metricGuide.biomassTitle')}</strong>
                 {t('metricGuide.biomass')}
               </div>
               <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/60">
-                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-blue-600 dark:text-blue-400">💧 Productividad Agua</strong>
+                <strong className="text-slate-900 dark:text-slate-200 block mb-0.5 text-xs text-blue-600 dark:text-blue-400">💧 {t('metricGuide.waterTitle')}</strong>
                 {t('metricGuide.water')}
               </div>
             </div>

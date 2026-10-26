@@ -7,6 +7,23 @@ coverage/
 .env*
 !.env.example
 
+# Compressed packages, temporary review files, and private manuscripts
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tar.xz
+*.docx
+/.tmp/
+/.audit/
+/.article_revision*/
+/deliverables/
+/screenshots/
+/ml_lab/reports/
+
 # Python
 __pycache__/
 .pytest_cache/

@@ -1,5 +1,10 @@
 {
   "metricGuide": {
+    "title": "Guia de métricas agronômicas e biofísicas",
+    "yieldTitle": "Rendimento (kg/ha)",
+    "stressTitle": "Estresse CWSI (0,0 a 1,0)",
+    "biomassTitle": "Biomassa e IAF",
+    "waterTitle": "Produtividade da água",
     "yield": "A produtividade é simulada. O potencial é uma referência heurística, não um limite superior validado.",
     "stress": "O índice de estresse hídrico é uma estimativa do simulador; seus valores não validam efeitos fisiológicos nem decisões de manejo.",
     "biomass": "Biomassa e índice de área foliar são estados simulados; o IAF expressa a área foliar por área de solo.",

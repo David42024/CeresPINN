@@ -13,8 +13,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 1115,
-      "sha256": "8f507db2355e0990888359c294abb51c2a98e3677cf1416c5b4334ff992226f7"
+      "bytes": 1334,
+      "sha256": "53cf40d2c0d86ba74bdd12addf061621195d427146e47794d96bd95a9b6f009b"
     },
     {
       "path": "LICENSE",
@@ -4173,8 +4173,8 @@
     },
     {
       "path": "src/components/ExportDataTable.tsx",
-      "bytes": 1702,
-      "sha256": "6e758401c76fb172b29445d143b589c7b87c407b7f1de05e265044be375e23ba"
+      "bytes": 1810,
+      "sha256": "1fcdbb5e9f25bdef80adcb840039871fd824aca37c7fabeb30f514236245de16"
     },
     {
       "path": "src/components/FieldMapManager.tsx",
@@ -4188,8 +4188,8 @@
     },
     {
       "path": "src/components/FigureExportToolbar.tsx",
-      "bytes": 2852,
-      "sha256": "f03d9f759b6a7911475655c9edfbb0ee6e3848b663356a7d6237c799127a8693"
+      "bytes": 3033,
+      "sha256": "a4ab2e8d3b094505f4b87d82939ea495482c9a98336c60d3e1b60d56feb7552c"
     },
     {
       "path": "src/components/FigureZoomControls.tsx",
@@ -4208,8 +4208,8 @@
     },
     {
       "path": "src/components/MainDashboard.tsx",
-      "bytes": 28008,
-      "sha256": "98e181159859a03fe5a5688ef598289bac8a9fa39d64cbd1f5a8738aa667b2ce"
+      "bytes": 28012,
+      "sha256": "ee21e0eccdd777d3dfb9a60758e0c736389653d11bf0eeced37b41ac11cd077e"
     },
     {
       "path": "src/components/ReportsModule.tsx",
@@ -4228,13 +4228,13 @@
     },
     {
       "path": "src/components/TableExportButton.tsx",
-      "bytes": 1282,
-      "sha256": "485a124b7528b6ab45bcd521328476a1361d7866dde235a0cdbbee6064a1d7b2"
+      "bytes": 1372,
+      "sha256": "612b9a01c9a84d5628ac5a7e88bb28cca43746bcf237950cc48d749e4ad6012a"
     },
     {
       "path": "src/components/ThreeFieldViewer.tsx",
-      "bytes": 44577,
-      "sha256": "3c08468990fb686379a1d7fbcf90566f1724daa7b2b2b7e78fdaec782c3d0291"
+      "bytes": 44734,
+      "sha256": "715ee3775210c83d58611209a19d399b79e7e31edd28dc1c95f73d8c6351807d"
     },
     {
       "path": "src/components/UserManagement.tsx",
@@ -4263,23 +4263,23 @@
     },
     {
       "path": "src/i18n/index.ts",
-      "bytes": 660,
-      "sha256": "ced4d9562742bd1db7e37065ce6a612c0daf6fc31438e6c0f00c02f002bf4b7b"
+      "bytes": 666,
+      "sha256": "57995f6ffecdd5570a8064883dcb79f027e7614f1bde2e2c931292023ad5cba1"
     },
     {
       "path": "src/i18n/locales/en.json",
-      "bytes": 31106,
-      "sha256": "29b9940945dd7feb190e87d038508f2e2df6e1b18a3d322878a7b20419fcf01c"
+      "bytes": 31326,
+      "sha256": "2a8c8a1a73a9915c3e2afaf677a86f31316a29103d0377422d984feb87554bb1"
     },
     {
       "path": "src/i18n/locales/es.json",
-      "bytes": 32855,
-      "sha256": "d329f22a60547d128c70fc8f4134ec468c301ce4d0bdbe509f8764adb4f0561e"
+      "bytes": 33105,
+      "sha256": "2aa36923dc3f1f82adf0d5c70af57634afa2f00db13833715233bf718f6507bd"
     },
     {
       "path": "src/i18n/locales/pt.json",
-      "bytes": 32939,
-      "sha256": "87ea4e9e591469cea7bae6b6cc94312ae8d48b17ceefe7a209e2417e0ee1ae50"
+      "bytes": 33170,
+      "sha256": "7f7b5e1e8992c26974ea3d75c5e65c3a292089e3d1f10b3b3899ada38f22c577"
     },
     {
       "path": "src/index.css",
@@ -4308,8 +4308,8 @@
     },
     {
       "path": "src/utils/figureExport.ts",
-      "bytes": 11037,
-      "sha256": "eaf6b76a563fd6d5550794e34adae05694721f1fa4e2de093b20ddbdf89b5db5"
+      "bytes": 11084,
+      "sha256": "ea2d4928f44ef14488965595ef2adbe49fbe4c527a74e7d72cd5d51147996c20"
     },
     {
       "path": "tests/pinn-wiring.test.ts",

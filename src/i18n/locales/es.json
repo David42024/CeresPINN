@@ -1,5 +1,10 @@
 {
   "metricGuide": {
+    "title": "Guía de interpretación de métricas agronómicas y biofísicas",
+    "yieldTitle": "Rendimiento (kg/ha)",
+    "stressTitle": "Estrés CWSI (0,0 a 1,0)",
+    "biomassTitle": "Biomasa y LAI",
+    "waterTitle": "Productividad del agua",
     "yield": "El rendimiento es una simulación. El valor potencial es una referencia heurística, no un techo validado.",
     "stress": "El índice de estrés hídrico es una estimación del simulador; sus valores no validan efectos fisiológicos ni decisiones de manejo.",
     "biomass": "La biomasa y el índice de área foliar son estados simulados; LAI expresa superficie foliar por superficie de suelo.",
