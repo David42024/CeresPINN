@@ -28,6 +28,7 @@ import {
 import { fetchValidationReport, fetchHindcastData } from '../services/api';
 import { FigureExportToolbar } from './FigureExportToolbar';
 import { ExportRow } from '../utils/figureExport';
+import rollingAudit from '../../docs/q1_artifacts/revision_20261026/audit.json';
 
 export const ValidationReport: React.FC = () => {
   const { t } = useTranslation();
@@ -120,13 +121,26 @@ export const ValidationReport: React.FC = () => {
   const bootstrap = validationData?.bootstrap_ci || validationData?.bootstrap_ci_ssp585 || {};
   const ensemble = validationData?.ensemble_uncertainty || validationData?.ensemble_uncertainty_ssp585 || {};
   const hindcastMetrics = validationData?.hindcast_metrics || {};
+  const formatMetric = (value: unknown, digits?: number) => {
+    if (value === null || value === undefined || value === '') return '—';
+    const number = Number(value);
+    if (!Number.isFinite(number)) return '—';
+    return digits === undefined ? number.toLocaleString() : number.toFixed(digits);
+  };
+  const baselineModels = [
+    { id: 'monotonic_all', label: t('baselineAudit.regularized') },
+    { id: 'linear_all', label: t('baselineAudit.linear') },
+    { id: 'ridge_all', label: t('baselineAudit.ridge') },
+    { id: 'mlp_all', label: t('baselineAudit.mlp') },
+  ].map(model => ({ ...model, score: rollingAudit.national.scores.find(score => score.model === model.id) }));
+  const ridgeComparison = rollingAudit.national.paired_comparisons.find(comparison => comparison.comparison === 'monotonic_all minus ridge_all');
 
   if (loading) {
     return (
       <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl">
         <div className="flex flex-col items-center justify-center py-20 text-slate-500 dark:text-slate-400 gap-3">
           <RefreshCw className="w-8 h-8 animate-spin text-emerald-500" />
-          <span className="text-sm font-semibold">Cargando reporte de validación biofísica y estadística CeresPINN...</span>
+          <span className="text-sm font-semibold">{t('baselineAudit.loading')}</span>
         </div>
       </div>
     );
@@ -145,7 +159,7 @@ export const ValidationReport: React.FC = () => {
               </h2>
             </div>
             <p className="text-xs text-slate-300 max-w-3xl leading-relaxed">
-              <strong>¿Para qué sirve?</strong> Evalúa formalmente la validez biofísica del Digital Twin contra 31 años de rendimientos reales históricos (1990–2020) y contrastes de hipótesis ante cambio climático extremo (SSP5-8.5).
+              {t('baselineAudit.scope')}
             </p>
           </div>
 
@@ -179,7 +193,7 @@ export const ValidationReport: React.FC = () => {
           </div>
           <div className="flex items-center gap-2">
             <Cpu className="w-4 h-4 text-violet-400 shrink-0" />
-            <span><strong>Sensibilidad Sobol:</strong> Descompone la varianza debida a temperatura, lluvia y CO₂.</span>
+            <span>{t('baselineAudit.sobolScope')}</span>
           </div>
         </div>
       </div>
@@ -189,12 +203,12 @@ export const ValidationReport: React.FC = () => {
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">R² Score (Ajuste)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold">Validado</span>
+            <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 font-mono font-bold">{t('baselineAudit.historical')}</span>
           </div>
           <strong className="text-violet-600 dark:text-violet-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.r2_score ?? hindcastMetrics?.r2 ?? 0).toFixed(4)}
+            {formatMetric(hindcastMetrics?.r2_score ?? hindcastMetrics?.r2, 4)}
           </strong>
-          <p className="text-[11px] text-slate-500 mt-1">Explica la mayor parte de la de la varianza histórica interanual.</p>
+          <p className="text-[11px] text-slate-500 mt-1">{t('baselineAudit.metricLimit')}</p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -202,7 +216,7 @@ export const ValidationReport: React.FC = () => {
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">RMSE (Error Cuadrático)</span>
           </div>
           <strong className="text-emerald-600 dark:text-emerald-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.rmse_kg_ha ?? hindcastMetrics?.rmse ?? 0).toLocaleString()} <span className="text-xs font-normal text-slate-500">kg/ha</span>
+            {formatMetric(hindcastMetrics?.rmse_kg_ha ?? hindcastMetrics?.rmse)} <span className="text-xs font-normal text-slate-500">kg/ha</span>
           </strong>
           <p className="text-[11px] text-slate-500 mt-1">Métrica de error de precisión media.</p>
         </div>
@@ -212,7 +226,7 @@ export const ValidationReport: React.FC = () => {
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">MAE (Error Absoluto)</span>
           </div>
           <strong className="text-cyan-600 dark:text-cyan-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.mae_kg_ha ?? hindcastMetrics?.mae ?? 0).toLocaleString()} <span className="text-xs font-normal text-slate-500">kg/ha</span>
+            {formatMetric(hindcastMetrics?.mae_kg_ha ?? hindcastMetrics?.mae)} <span className="text-xs font-normal text-slate-500">kg/ha</span>
           </strong>
           <p className="text-[11px] text-slate-500 mt-1">Desviación típica promedio por ciclo de cultivo.</p>
         </div>
@@ -222,11 +236,30 @@ export const ValidationReport: React.FC = () => {
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase">NRMSE (Error Relativo)</span>
           </div>
           <strong className="text-amber-600 dark:text-amber-400 font-mono text-2xl mt-1 block">
-            {Number(hindcastMetrics?.nrmse_percent ?? 6.82).toFixed(2)}%
+            {hindcastMetrics?.nrmse_percent != null ? `${formatMetric(hindcastMetrics.nrmse_percent, 2)}%` : '—'}
           </strong>
-          <p className="text-[11px] text-slate-500 mt-1">&lt;10% indica desempeño excelente en agroclimatología.</p>
+          <p className="text-[11px] text-slate-500 mt-1">{t('baselineAudit.nrmseLimit')}</p>
         </div>
       </div>
+
+      <section aria-labelledby="baseline-audit-title" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/90">
+        <h3 id="baseline-audit-title" className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('baselineAudit.title')}</h3>
+        <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{t('baselineAudit.design')}</p>
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full text-left text-xs text-slate-700 dark:text-slate-200">
+            <thead><tr><th className="p-2">{t('baselineAudit.model')}</th><th className="p-2">RMSE (kg/ha)</th><th className="p-2">{t('baselineAudit.interval')}</th></tr></thead>
+            <tbody>{baselineModels.map(({ id, label, score }) => score && (
+              <tr key={id} className="border-t border-slate-200 dark:border-slate-700">
+                <th scope="row" className="p-2 font-medium">{label}</th>
+                <td className="p-2 tabular-nums">{score.rmse_kg_ha.toFixed(2)}</td>
+                <td className="p-2 tabular-nums">{score.block_bootstrap_95_ci.rmse_kg_ha.map(value => value.toFixed(2)).join('–')}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+        {ridgeComparison && <p className="mt-2 text-xs text-slate-600 dark:text-slate-300">{t('baselineAudit.effect', { difference: ridgeComparison.mean_absolute_error_difference_kg_ha.toFixed(2), p: ridgeComparison.holm_adjusted_p.toFixed(3) })}</p>}
+        <p className="mt-3 text-xs text-slate-600 dark:text-slate-300">{t('baselineAudit.interpretation')}</p>
+      </section>
 
       {/* Hindcast Chart */}
       <div className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
@@ -234,18 +267,18 @@ export const ValidationReport: React.FC = () => {
           <div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-emerald-500" />
-              Validación Temporal Retrospectiva (Hindcast 2011–2020)
+              {t('baselineAudit.hindcastTitle')}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Comparación anual entre el rendimiento observado en campo (verde) y el pronosticado por CeresPINN (cian discontinuo).
+              {t('baselineAudit.hindcastDescription')}
             </p>
           </div>
-          <span className="text-[11px] text-slate-500 font-mono">Ventana analizada: 10 campañas agrícolas</span>
+          <span className="text-[11px] text-slate-500 font-mono">{t('baselineAudit.availableYears', { count: hindcastChartData.length })}</span>
         </div>
 
         <p className="text-xs text-slate-600 dark:text-slate-400">La comparación muestra la correspondencia entre observaciones históricas y predicciones del modelo; su relevancia depende de la representatividad de las campañas evaluadas.</p>
         <FigureExportToolbar targetRef={hindcastChartRef} options={{
-          title: 'Validación temporal retrospectiva (hindcast 2011–2020)',
+          title: t('baselineAudit.hindcastTitle'),
           interpretation: 'Compara los rendimientos observados y predichos por año; las diferencias representan errores del modelo en la ventana histórica.',
           xAxisLabel: 'Año de cosecha',
           yAxisLabel: 'Rendimiento (kg/ha)',

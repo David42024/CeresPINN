@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import i18n from '../i18n';
 
 export type ExportRow = Record<string, string | number | boolean | null | undefined>;
 
@@ -244,7 +245,7 @@ export const downloadExcel = async (rows: ExportRow[], fileName: string) => {
   sheet['!cols'] = Object.keys(rows[0]).map(header => ({ wch: Math.max(12, Math.min(48, header.length + 2)) }));
   sheet['!autofilter'] = { ref: sheet['!ref']! };
   const book = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(book, sheet, 'Datos');
+  XLSX.utils.book_append_sheet(book, sheet, i18n.t('exportData.sheet'));
   XLSX.writeFile(book, `${fileName}.xlsx`);
 };
 

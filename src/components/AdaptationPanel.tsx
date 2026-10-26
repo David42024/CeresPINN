@@ -88,14 +88,14 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
       {
         id: 'early-planting',
         title: 'Adelanto de Siembra (−14 días)',
-        description: 'Mover la fecha de siembra 14 días antes de la ventana óptima para que la floración evite el período de máxima temperatura y déficit hídrico de mediados de verano.',
+        description: 'Comparar una siembra 14 días antes. La fecha modifica la trayectoria diaria simulada; el predictor neuronal actual no aprende su efecto sobre el rendimiento.',
         icon: Calendar,
         color: 'text-emerald-600 dark:text-emerald-400',
         bg: 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60',
         yield: earlyYield,
         delta: earlyYield - baseYield,
         deltaPct: ((earlyYield - baseYield) / baseYield * 100),
-        waterSaved: baseResult => Math.round(baseResult.summaryKPIs.totalWaterConsumedMm * 0.05),
+        waterSaved: baseResult => Math.round(baseResult.summaryKPIs.totalWaterConsumedMm - earlyResult.summaryKPIs.totalWaterConsumedMm),
         impact: earlyYield > baseYield ? 'high' : earlyYield > baseYield * 0.97 ? 'medium' : 'low',
         resilienceScore: earlyResult.summaryKPIs.droughtResilienceScore,
         economicGain: earlyResult.summaryKPIs.economicReturnUsdHa - simulation.summaryKPIs.economicReturnUsdHa,
@@ -104,14 +104,14 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
       {
         id: 'short-cycle',
         title: 'Variedad Ciclo Corto (~95 días)',
-        description: 'Sustituir la variedad de ciclo medio/largo por un híbrido de ciclo corto tolerante a sequía (FAO 300-400). El ciclo completo termina antes de los períodos críticos de estrés terminal.',
+        description: 'Comparar la parametrización de ciclo corto. La diferencia de rendimiento incluye un multiplicador interno sin calibración experimental por cultivar.',
         icon: Sprout,
         color: 'text-cyan-600 dark:text-cyan-400',
         bg: 'bg-cyan-50 dark:bg-cyan-950/40 border-cyan-200 dark:border-cyan-800/60',
         yield: shortYield,
         delta: shortYield - baseYield,
         deltaPct: ((shortYield - baseYield) / baseYield * 100),
-        waterSaved: _b => Math.round(shortResult.summaryKPIs.totalWaterConsumedMm * 0.18),
+        waterSaved: baseResult => Math.round(baseResult.summaryKPIs.totalWaterConsumedMm - shortResult.summaryKPIs.totalWaterConsumedMm),
         impact: shortYield > baseYield * 1.02 ? 'high' : shortYield > baseYield * 0.97 ? 'medium' : 'low',
         resilienceScore: shortResult.summaryKPIs.droughtResilienceScore,
         economicGain: shortResult.summaryKPIs.economicReturnUsdHa - simulation.summaryKPIs.economicReturnUsdHa,
@@ -119,15 +119,15 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
       },
       {
         id: 'supplemental-irrig',
-        title: 'Riego Suplementario en Floración (75% ETc)',
-        description: 'Aplicar 1-3 riegos estratégicos durante la ventana VT-R1 (floración-silking) para mantener la humedad del suelo sobre el 75% de capacidad de campo. Maximiza la cuaja de grano.',
+        title: 'Escenario de Riego al 75% ETc',
+        description: 'Comparar la regla de riego al 75% de ETc. Ese porcentaje de demanda no equivale al 75% de capacidad de campo; el cambio de rendimiento proviene de multiplicadores internos sin calibrar.',
         icon: Droplets,
         color: 'text-blue-600 dark:text-blue-400',
         bg: 'bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800/60',
         yield: irrigYield,
         delta: irrigYield - baseYield,
         deltaPct: ((irrigYield - baseYield) / baseYield * 100),
-        waterSaved: _b => -Math.round(irrigResult.summaryKPIs.totalIrrigationAppliedMm),
+        waterSaved: baseResult => Math.round(baseResult.summaryKPIs.totalWaterConsumedMm - irrigResult.summaryKPIs.totalWaterConsumedMm),
         impact: irrigYield > baseYield * 1.05 ? 'high' : irrigYield > baseYield * 1.0 ? 'medium' : 'low',
         resilienceScore: irrigResult.summaryKPIs.droughtResilienceScore,
         economicGain: irrigResult.summaryKPIs.economicReturnUsdHa - simulation.summaryKPIs.economicReturnUsdHa,
@@ -156,10 +156,10 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
         <div className="space-y-1">
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-amber-500" />
-            Recomendaciones de Adaptación Climática (CeresPINN)
+            Comparación Exploratoria de Manejo (CeresPINN)
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 max-w-3xl">
-            <strong>¿Para qué sirve?</strong> Cuantifica el impacto en rendimiento (Δ kg/ha) de 3 intervenciones agronómicas bajo el escenario climático activo, calculadas en tiempo real por el motor PINN.
+            Compara tres configuraciones de simulación. Las diferencias de rendimiento incluyen reglas internas de manejo sin calibración experimental; no estiman beneficios de campo ni constituyen recomendaciones agronómicas.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -171,7 +171,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
       </div>
 
       {!strategyResults && !strategyError && (
-        <div className="text-xs text-cyan-600 dark:text-cyan-300">Consultando estrategias en el PINN de Render…</div>
+        <div className="text-xs text-cyan-600 dark:text-cyan-300">{t('scientificScope.computingScenarios')}</div>
       )}
       {strategyError && (
         <div className="text-xs text-rose-600 dark:text-rose-300">No se pudieron calcular estrategias con el PINN remoto: {strategyError}</div>
@@ -183,12 +183,12 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
           <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
           Comparativa de Rendimiento: Base vs. Estrategias de Adaptación
         </p>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Compara el rendimiento proyectado del escenario base con tres estrategias; las diferencias reflejan la respuesta simulada del PINN bajo la configuración activa.</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Diferencias simuladas respecto de la base; los efectos de cultivar y riego incluyen multiplicadores programados.</p>
         <FigureExportToolbar
           targetRef={chartRef}
           options={{
             title: 'Rendimiento proyectado: escenario base y estrategias de adaptación',
-            interpretation: 'Las barras comparan el rendimiento proyectado por el motor PINN para el escenario base y las tres estrategias agronómicas.',
+            interpretation: t('scientificScope.scenarioExplanation'),
             xAxisLabel: 'Rendimiento proyectado (t/ha)',
             yAxisLabel: 'Estrategia de manejo',
             fileName: 'cerespinn_estrategias_adaptacion',
@@ -233,7 +233,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
                     <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{strategy.title}</span>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${IMPACT_BADGE[strategy.impact]}`}>
-                        Impacto {strategy.impact === 'high' ? 'Alto' : strategy.impact === 'medium' ? 'Medio' : 'Bajo'}
+                        Cambio simulado {strategy.impact === 'high' ? 'Alto' : strategy.impact === 'medium' ? 'Medio' : 'Bajo'}
                       </span>
                       <span className={`text-xs font-mono font-bold ${strategy.delta >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                         {strategy.delta >= 0 ? '+' : ''}{strategy.delta.toLocaleString()} kg/ha

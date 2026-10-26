@@ -1,0 +1,2215 @@
+[
+  {
+    "number": 1,
+    "original": "Xiao, K., Zhou, X., Gui, H., Tian, Y., Chen, X., Li, Y., Matomela, N., & Xin, Q. (2025). Drought and extreme heat reduce wheat and maize production in the United States by lowering both crop yields and harvestable fraction. Earth's Future, 13, e2024EF005557.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 2,
+    "original": "Jägermeyr, J., Müller, C., Ruane, A. C., Elliott, J., Balkovic, J., Castillo, O., et al. (2021). Climate impacts on global agriculture emerge earlier in new generation of climate and crop models. Nature Food, 2(11), 873–885.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 3,
+    "original": "Xu, Q., Liang, H., Wei, Z., et al. (2024). Assessing climate change impacts on crop yields and exploring adaptation strategies in Northeast China. Earth's Future, 12, e2023EF004063.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 4,
+    "original": "Sakthivel, S., Pazhanivelan, S., Thiruvarassan, S., Prabu, P. C., Gnanachitra, M., Rahale, C. S., Sivamurugan, A. P., Ragunath, K. P., & Satheesh, S. (2025). A comprehensive bibliometric review of DSSAT applications in maize yield prediction. Maydica, 68(1).",
+    "status": "candidate requires author-title-year check",
+    "candidates": [
+      {
+        "title": [
+          "A comprehensive bibliometric review of remote sensing and machine learning applications in maize yield prediction"
+        ],
+        "DOI": "10.14719/pst.13990",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0009-0008-8415-4002",
+            "authenticated-orcid": false,
+            "given": "S",
+            "family": "Sakthivel",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-3596-3232",
+            "authenticated-orcid": false,
+            "given": "S",
+            "family": "Pazhanivelan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-5047-1482",
+            "authenticated-orcid": false,
+            "given": "S",
+            "family": "Thiruvarassan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-7237-9481",
+            "authenticated-orcid": false,
+            "given": "P C",
+            "family": "Prabu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-5958-4643",
+            "authenticated-orcid": false,
+            "given": "M",
+            "family": "Gnanachitra",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-8539-6363",
+            "authenticated-orcid": false,
+            "given": "C S",
+            "family": "Rahale",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-7851-4437",
+            "authenticated-orcid": false,
+            "given": "K P",
+            "family": "Ragunath",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-4327-3589",
+            "authenticated-orcid": false,
+            "given": "N S",
+            "family": "Sudarmanian",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0009-0008-5139-1036",
+            "authenticated-orcid": false,
+            "given": "S",
+            "family": "Satheesh",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Plant Science Today"
+        ],
+        "volume": "13",
+        "issue": "sp1",
+        "page": null,
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              4,
+              8
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.14719/pst.13990",
+        "score": 120.6304
+      },
+      {
+        "title": [
+          "Comparative analysis of leaf area index and maize yield estimation assimilating remote sensing and DSSAT crop simulation model"
+        ],
+        "DOI": "10.14719/pst.4736",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0009-0001-0975-2482",
+            "authenticated-orcid": false,
+            "given": "Hemareddy",
+            "family": "Thimmareddy",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Pazhanivelan S",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Ragunath K P",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Sathyamoorthy N K",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Sivamurugan A P",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Vincent S",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Sudarmanian N S",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Satheesh S",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "family": "Pugazenthi K",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Plant Science Today"
+        ],
+        "volume": null,
+        "issue": null,
+        "page": null,
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2024,
+              9,
+              19
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.14719/pst.4736",
+        "score": 65.31104
+      },
+      {
+        "title": [
+          "Spatial yield estimation in rice using spectral indices derived from satellite datasets and DSSAT crop simulation model"
+        ],
+        "DOI": "10.14719/pst.6162",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0009-0009-9621-5543",
+            "authenticated-orcid": false,
+            "given": "Singaram",
+            "family": "Manikandan",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-3596-3232",
+            "authenticated-orcid": false,
+            "given": "Sellaperumal",
+            "family": "Pazhanivelan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-7851-4437",
+            "authenticated-orcid": false,
+            "given": "Kaliaperumal",
+            "family": "Ragunath",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6659-9587",
+            "authenticated-orcid": false,
+            "given": "Ramalingam",
+            "family": "Kumaraperumal",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-3567-6698",
+            "authenticated-orcid": false,
+            "given": "A P",
+            "family": "Sivamurugan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-9026-5106",
+            "authenticated-orcid": false,
+            "given": "Marimuthu",
+            "family": "Raju",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Plant Science Today"
+        ],
+        "volume": null,
+        "issue": null,
+        "page": null,
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2025,
+              2,
+              13
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.14719/pst.6162",
+        "score": 57.653763
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "original": "Shahhosseini, M., Hu, G., Huber, I., & Archontoulis, S. V. (2021). Coupling machine learning and crop modeling improves crop yield prediction in the US Corn Belt. Scientific Reports, 11, 1606.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 6,
+    "original": "Cheng, M., Peñuelas, J., McCabe, M. F., Atzberger, C., Jiao, X., Wu, W., & Jin, X. (2022). Combining multi-indicators with machine-learning algorithms for maize yield early prediction at the county-level in China. Agricultural and Forest Meteorology, 323, 109057.",
+    "status": "candidate requires author-title-year check",
+    "candidates": [
+      {
+        "title": [
+          "Combining multi-indicators with machine-learning algorithms for maize yield early prediction at the county-level in China"
+        ],
+        "DOI": "10.1016/j.agrformet.2022.109057",
+        "author": [
+          {
+            "given": "Minghan",
+            "family": "Cheng",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Josep",
+            "family": "Penuelas",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Matthew F",
+            "family": "McCabe",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-2169-8009",
+            "authenticated-orcid": false,
+            "given": "Clement",
+            "family": "Atzberger",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xiyun",
+            "family": "Jiao",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Wenbin",
+            "family": "Wu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xiuliang",
+            "family": "Jin",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Agricultural and Forest Meteorology"
+        ],
+        "volume": "323",
+        "issue": null,
+        "page": "109057",
+        "article-number": "109057",
+        "published": {
+          "date-parts": [
+            [
+              2022,
+              8
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.1016/j.agrformet.2022.109057",
+        "score": 151.45764
+      },
+      {
+        "title": [
+          "Prediction of maize cultivar yield based on machine learning algorithms for precise promotion and planting"
+        ],
+        "DOI": "10.1016/j.agrformet.2024.110123",
+        "author": [
+          {
+            "given": "Yanyun",
+            "family": "Han",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Kaiyi",
+            "family": "Wang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Feng",
+            "family": "Yang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Shouhui",
+            "family": "Pan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Zhongqiang",
+            "family": "Liu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Qiusi",
+            "family": "Zhang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Qi",
+            "family": "Zhang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Agricultural and Forest Meteorology"
+        ],
+        "volume": "355",
+        "issue": null,
+        "page": "110123",
+        "article-number": "110123",
+        "published": {
+          "date-parts": [
+            [
+              2024,
+              8
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.1016/j.agrformet.2024.110123",
+        "score": 56.741596
+      },
+      {
+        "title": [
+          "Predicting county-level winter wheat yield in Eastern China using multi-source spatiotemporal data: An explainable machine learning approach"
+        ],
+        "DOI": "10.1016/j.agrformet.2026.111236",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0002-1878-4195",
+            "authenticated-orcid": false,
+            "given": "Bihui",
+            "family": "Lu",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Kun",
+            "family": "Yu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Lin",
+            "family": "Qiu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Huayong",
+            "family": "Li",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Hongxing",
+            "family": "Wang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Wenyu",
+            "family": "Zhang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xiaohong",
+            "family": "Liu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Jie",
+            "family": "Shan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Nan",
+            "family": "Li",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Agricultural and Forest Meteorology"
+        ],
+        "volume": "386",
+        "issue": null,
+        "page": "111236",
+        "article-number": "111236",
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              7
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.1016/j.agrformet.2026.111236",
+        "score": 55.79697
+      }
+    ]
+  },
+  {
+    "number": 7,
+    "original": "Escribà-Gelonch, M., Liang, S., van Schalkwyk, P., Fisk, I., Long, N. V. D., & Hessel, V. (2024). Digital twins in agriculture: Orchestration and applications. Journal of Agricultural and Food Chemistry, 72(19), 10737–10752.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 8,
+    "original": "Zhang, R., Zhu, H., Chang, Q., & Mao, Q. (2025). A comprehensive review of digital twins technology in agriculture. Agriculture, 15(9), 903.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 9,
+    "original": "Melesse, T. Y. (2025). Digital twin-based applications in crop monitoring. Heliyon, 11(2), e42137. ",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 10,
+    "original": "Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). Physics-informed neural networks. Journal of Computational Physics, 378, 686–707.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 11,
+    "original": "Farea, A., Yli-Harja, O., & Emmert-Streib, F. (2024). Understanding physics-informed neural networks. AI, 5(3), 1534–1557.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 12,
+    "original": "Shi, Y., Han, L., Zhang, X., Sobeih, T., Gaiser, T., Thuy, N. H., Behrend, D., Srivastava, A. K., Halder, K., & Ewert, F. (2025). Deep learning meets process-based models. arXiv.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 13,
+    "original": "Shi, Y., Han, L., Zhang, X., Sobeih, T., Gaiser, T., Thuy, N. H., Behrend, D., Srivastava, A. K., Halder, K., & Ewert, F. (2026). AgriPINN. arXiv.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 14,
+    "original": "Miranda, M., Charfuelan, M., Valdenegro-Toro, M., & Dengel, A. (2025). Informed learning for estimating drought stress. ECAI 2025 (Vol. 413, pp. 5384–5391).",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 15,
+    "original": "Yu, D., Zha, Y., Zeng, Y., Lai, P., Zhu, W., Bian, J., Yang, Q., Huang, X., & Su, Z. (2025). An efficient and physics-informed regional maize yield estimation scheme. Computers and Electronics in Agriculture.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 16,
+    "original": "Zhang, H., Zhao, J., Hong, M., & Ma, L. (2025). Optimization of deficit irrigation system for drip-irrigated corn in northern Xinjiang. Frontiers in Plant Science.",
+    "status": "candidate requires author-title-year check",
+    "candidates": [
+      {
+        "title": [
+          "Optimization of deficit irrigation system for drip-irrigated corn in northern Xinjiang using dynamic reconstruction and dual physics-informed neural networks to drive AquaCrop"
+        ],
+        "DOI": "10.3389/fpls.2025.1678277",
+        "author": [
+          {
+            "given": "Haonan",
+            "family": "Zhang",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Jinghua",
+            "family": "Zhao",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Ming",
+            "family": "Hong",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Liang",
+            "family": "Ma",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Frontiers in Plant Science"
+        ],
+        "volume": "16",
+        "issue": null,
+        "page": null,
+        "article-number": "1678277",
+        "published": {
+          "date-parts": [
+            [
+              2025,
+              9,
+              19
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3389/fpls.2025.1678277",
+        "score": 93.66579
+      },
+      {
+        "title": [
+          "Expanding border space improve both yield and stability in a high-density drip-irrigated spring wheat system in Xinjiang, China"
+        ],
+        "DOI": "10.3389/fpls.2025.1655063",
+        "author": [
+          {
+            "given": "Xiaofang",
+            "family": "Li",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Yanhui",
+            "family": "Zhao",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Bianhong",
+            "family": "Ding",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Haoyu",
+            "family": "Ding",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Zhizhong",
+            "family": "Qiu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xiaoqi",
+            "family": "Ma",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Yonghui",
+            "family": "Yang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Wenliang",
+            "family": "Wan",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Frontiers in Plant Science"
+        ],
+        "volume": "16",
+        "issue": null,
+        "page": null,
+        "article-number": "1655063",
+        "published": {
+          "date-parts": [
+            [
+              2025,
+              10,
+              21
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3389/fpls.2025.1655063",
+        "score": 51.69241
+      },
+      {
+        "title": [
+          "Optimizing irrigation scheduling for winter wheat using the AquaCrop model in Xinjiang, China"
+        ],
+        "DOI": "10.3389/fpls.2025.1680820",
+        "author": [
+          {
+            "given": "Qiuping",
+            "family": "Fu",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xueru",
+            "family": "Liu",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Ming",
+            "family": "Hong",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Pengrui",
+            "family": "Ai",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Liang",
+            "family": "Ma",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Jinghua",
+            "family": "Zhao",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Quanjiu",
+            "family": "Wang",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Frontiers in Plant Science"
+        ],
+        "volume": "16",
+        "issue": null,
+        "page": null,
+        "article-number": "1680820",
+        "published": {
+          "date-parts": [
+            [
+              2025,
+              10,
+              10
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3389/fpls.2025.1680820",
+        "score": 47.531376
+      }
+    ]
+  },
+  {
+    "number": 17,
+    "original": "Chavoshi, A., Dashtian, H., Bakhshian, S., Young, M. H., & Niyogi, D. (2024). PINN-SM. Journal of Geophysical Research: Machine Learning and Computation, 2, e2024JH000547.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 18,
+    "original": "Xu, X., Gao, F., Du, X., Xiong, D., Fan, Z., Xiong, S., Dong, P., Qiao, H., & Ma, X. (2025). Digital twin-based winter wheat growth simulation and optimization. Field Crops Research, 329, 109953.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 19,
+    "original": "Xu, C., Torres-Rojas, L., Vergopolan, N., & Chaney, N. W. (2023). The benefits of using state-of-the-art digital soil properties maps. Water Resources Research, 59, e2022WR032336. ",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 20,
+    "original": "Granella, S. J. (2026). Anomalous diffusion in drying. Food Physics.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 21,
+    "original": "Purcell, W., Neubauer, T., & Mallinger, K. (2023). Digital twins in agriculture: Challenges and opportunities. Current Opinion in Environmental Sustainability, 61, 101252.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 22,
+    "original": "Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., & Taylor, K. E. (2016). Overview of CMIP6. Geoscientific Model Development, 9, 1937–1958.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 23,
+    "original": "Thrasher, B., Wang, W., Michaelis, A., Melton, F., Lee, T., & Nemani, R. (2022). NASA global daily downscaled projections, CMIP6. Scientific Data, 9, 262.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 24,
+    "original": "Maraun, D., Wetterhall, F., Ireson, A. M., Chandler, R. E., Kendon, E. J., Widmann, M., et al. (2010). Precipitation downscaling under climate change. Reviews of Geophysics, 48(3), RG3003.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 25,
+    "original": "Mbengue, A., Sultan, B., Lguensat, R., Vrac, M., Diongue-Niang, A., Ndiaye, O., & Gaye, A. T. (2026). High-resolution downscaled CMIP6 projections dataset for Senegal. Scientific Data.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 26,
+    "original": "de Souza, E. B., et al. (2026). Projected heatwave hazards in an eastern Amazonian metropolis. Scientific Reports.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 27,
+    "original": "Galmarini, S., Solazzo, E., Ferrise, R., Srivastava, A. K., et al. (2024). Assessing the impact on crop modelling of climate model bias adjustments. Agricultural Systems, 216, 103846.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 28,
+    "original": "Alsilibe, F., Bene, K., Bilal, G., Alghafli, K., & Shi, X. (2023). Accuracy assessment and validation of multi-source CHIRPS precipitation estimates. Remote Sensing, 15, 1778.",
+    "status": "candidate requires author-title-year check",
+    "candidates": [
+      {
+        "title": [
+          "Accuracy Assessment and Validation of Multi-Source CHIRPS Precipitation Estimates for Water Resource Management in the Barada Basin, Syria"
+        ],
+        "DOI": "10.3390/rs15071778",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0003-3327-262X",
+            "authenticated-orcid": false,
+            "given": "Firas",
+            "family": "Alsilibe",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Department of Transport Infrastructure and Water Resources Engineering, Széchenyi István University, 9026 Győr, Hungary"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Katalin",
+            "family": "Bene",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Department of Transport Infrastructure and Water Resources Engineering, Széchenyi István University, 9026 Győr, Hungary"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Ghada",
+            "family": "Bilal",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Higher Institute of Regional Planning, Damascus University, Damascus P.O. Box 30621, Syria"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-8888-9016",
+            "authenticated-orcid": false,
+            "given": "Khaled",
+            "family": "Alghafli",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "James Watt School of Engineering, University Glasgow, Glasgow G12 8QQ, UK"
+              },
+              {
+                "name": "The National Water and Energy Center, United Arab Emirates University, Al Ain P.O. Box 15551, United Arab Emirates"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xiaogang",
+            "family": "Shi",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "School of Interdisciplinary Studies, University of Glasgow, Dumfries DG1 4ZL, UK"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Remote Sensing"
+        ],
+        "volume": "15",
+        "issue": "7",
+        "page": "1778",
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              3,
+              27
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3390/rs15071778",
+        "score": 130.84148
+      },
+      {
+        "title": [
+          "Validation of CHIRPS Precipitation Estimates over Taiwan at Multiple Timescales"
+        ],
+        "DOI": "10.3390/rs13020254",
+        "author": [
+          {
+            "given": "Jie",
+            "family": "Hsu",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Department of Earth Sciences, National Taiwan Normal University, Taipei 11677, Taiwan"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-2171-4075",
+            "authenticated-orcid": false,
+            "given": "Wan-Ru",
+            "family": "Huang",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Department of Earth Sciences, National Taiwan Normal University, Taipei 11677, Taiwan"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Pin-Yi",
+            "family": "Liu",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Department of Earth Sciences, National Taiwan Normal University, Taipei 11677, Taiwan"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Xiuzhen",
+            "family": "Li",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Guangdong Province Key Laboratory for Climate Change and Natural Disaster Studies, School of Atmospheric Sciences, Sun Yat-sen University, Zhuhai 519082, China"
+              },
+              {
+                "name": "Southern Marine Science and Engineering Guangdong Laboratory, Zhuhai 519082, China"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Remote Sensing"
+        ],
+        "volume": "13",
+        "issue": "2",
+        "page": "254",
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2021,
+              1,
+              13
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3390/rs13020254",
+        "score": 50.51154
+      },
+      {
+        "title": [
+          "A Simple Method of Coupled Merging and Downscaling for Multi-Source Daily Precipitation Data"
+        ],
+        "DOI": "10.3390/rs15184377",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0002-4434-1726",
+            "authenticated-orcid": false,
+            "given": "Na",
+            "family": "Zhao",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "State Key Laboratory of Resources and Environmental Information System, Institute of Geographic Sciences and Natural Resources Research, Chinese Academy of Sciences, Beijing 100101, China"
+              },
+              {
+                "name": "College of Resources and Environment, University of Chinese Academy of Sciences, Beijing 100101, China"
+              },
+              {
+                "name": "Jiangsu Center for Collaborative Innovation in Geographic Information Resource Development and Application, Nanjing 210023, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Kainan",
+            "family": "Chen",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "State Key Laboratory of Resources and Environmental Information System, Institute of Geographic Sciences and Natural Resources Research, Chinese Academy of Sciences, Beijing 100101, China"
+              },
+              {
+                "name": "First Institute of Oceanography, Ministry of Natural Resources, Qingdao 266061, China"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Remote Sensing"
+        ],
+        "volume": "15",
+        "issue": "18",
+        "page": "4377",
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              9,
+              6
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3390/rs15184377",
+        "score": 42.637924
+      }
+    ]
+  },
+  {
+    "number": 29,
+    "original": "Uscamayta-Ferrano, E., et al. (2025). CHIRTS gridded air temperature downscaling. Atmosphere, 16, 1188.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 30,
+    "original": "O'Neill, B. C., Tebaldi, C., van Vuuren, D. P., Eyring, V., Friedlingstein, P., et al. (2016). The Scenario Model Intercomparison Project (ScenarioMIP) for CMIP6. Geoscientific Model Development, 9, 3461–3482.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 31,
+    "original": "Wakatsuki, H., Ju, H., Nelson, G. C., Farrell, A. D., Deryng, D., Meza, F., & Hasegawa, T. (2023). Research trends and gaps in climate change impacts and adaptation potentials. Current Opinion in Environmental Sustainability, 61, 101249.",
+    "status": "candidate requires author-title-year check",
+    "candidates": [
+      {
+        "title": [
+          "Research trends and gaps in climate change impacts and adaptation potentials in major crops"
+        ],
+        "DOI": "10.1016/j.cosust.2022.101249",
+        "author": [
+          {
+            "given": "Hitomi",
+            "family": "Wakatsuki",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Hui",
+            "family": "Ju",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Gerald C",
+            "family": "Nelson",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Aidan D",
+            "family": "Farrell",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Delphine",
+            "family": "Deryng",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Francisco",
+            "family": "Meza",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Toshihiro",
+            "family": "Hasegawa",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Current Opinion in Environmental Sustainability"
+        ],
+        "volume": "60",
+        "issue": null,
+        "page": "101249",
+        "article-number": "101249",
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              2
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.1016/j.cosust.2022.101249",
+        "score": 137.81187
+      },
+      {
+        "title": [
+          "A global dataset for the projected impacts of climate change on four major crops"
+        ],
+        "DOI": "10.1038/s41597-022-01150-7",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0001-8501-5612",
+            "authenticated-orcid": false,
+            "given": "Toshihiro",
+            "family": "Hasegawa",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-9861-5921",
+            "authenticated-orcid": false,
+            "given": "Hitomi",
+            "family": "Wakatsuki",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Hui",
+            "family": "Ju",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-9933-1269",
+            "authenticated-orcid": false,
+            "given": "Shalika",
+            "family": "Vyas",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-3626-1221",
+            "authenticated-orcid": false,
+            "given": "Gerald C.",
+            "family": "Nelson",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Aidan",
+            "family": "Farrell",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6214-7241",
+            "authenticated-orcid": false,
+            "given": "Delphine",
+            "family": "Deryng",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Francisco",
+            "family": "Meza",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6385-3703",
+            "authenticated-orcid": false,
+            "given": "David",
+            "family": "Makowski",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Scientific Data"
+        ],
+        "volume": "9",
+        "issue": "1",
+        "page": null,
+        "article-number": "58",
+        "published": {
+          "date-parts": [
+            [
+              2022,
+              2,
+              16
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.1038/s41597-022-01150-7",
+        "score": 73.59559
+      },
+      {
+        "title": [
+          "A global dataset for the projected impacts of climate change on four major crops"
+        ],
+        "DOI": "10.1101/2021.05.27.444762",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0000-0001-8501-5612",
+            "authenticated-orcid": false,
+            "given": "Toshihiro",
+            "family": "Hasegawa",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Hitomi",
+            "family": "Wakatsuki",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Hui",
+            "family": "Ju",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-9933-1269",
+            "authenticated-orcid": false,
+            "given": "Shalika",
+            "family": "Vyas",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Gerald C.",
+            "family": "Nelson",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-2347-675X",
+            "authenticated-orcid": false,
+            "given": "Aidan",
+            "family": "Farrell",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6214-7241",
+            "authenticated-orcid": false,
+            "given": "Delphine",
+            "family": "Deryng",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-9853-227X",
+            "authenticated-orcid": false,
+            "given": "Francisco",
+            "family": "Meza",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0001-6385-3703",
+            "authenticated-orcid": false,
+            "given": "David",
+            "family": "Makowski",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "container-title": null,
+        "volume": null,
+        "issue": null,
+        "page": null,
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2021,
+              5,
+              29
+            ]
+          ]
+        },
+        "type": "posted-content",
+        "URL": "https://doi.org/10.1101/2021.05.27.444762",
+        "score": 78.81863
+      }
+    ]
+  },
+  {
+    "number": 32,
+    "original": "Minoli, S., Jägermeyr, J., Asseng, S., Urfels, A., & Müller, C. (2022). Global crop yields can be lifted by timely adaptation of growing periods. Nature Communications, 13, 7079.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 33,
+    "original": "Abramoff, R. Z., Ciais, P., Zhu, P., Hasegawa, T., Wakatsuki, H., & Makowski, D. (2023). Adaptation strategies strongly reduce future impacts of climate change on crop yields. Earth's Future, 11, e2022EF003190.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 34,
+    "original": "Zhang, L., Bai, G., Evett, S. R., Colaizzi, P. D., Xue, Q., Marek, G., Dhungel, R., Zhao, H., Wan, N., & Lin, X. (2025). Increased irrigation could mitigate future warming-induced maize yield losses in the Ogallala Aquifer. Communications Earth & Environment, 6, 483.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 35,
+    "original": "Dokoohaki, H., Rai, T., Kivi, M., Lewis, P., Gómez-Dans, J. L., & Yin, F. (2022). Linking remote sensing with APSIM through emulation and Bayesian optimization. Remote Sensing, 14, 5389.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 36,
+    "original": "Pukrongta, N., Taparugssanagorn, A., & Sangpradit, K. (2023). Assessing a machine learning model for predicting maize grain yield. 2023 ICPEI. IEEE.",
+    "status": "candidate requires author-title-year check",
+    "candidates": [
+      {
+        "title": [
+          "Assessing a Machine Learning Model for Predicting Maize Grain Yield Based on Chlorophyll Content and Vegetation Indices"
+        ],
+        "DOI": "10.1109/icpei58931.2023.10473794",
+        "author": [
+          {
+            "given": "Nisit",
+            "family": "Pukrongta",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Asian Institute of Technology,Department of ICT,PathumThani,Thailand"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Attaphongse",
+            "family": "Taparugssanagorn",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Asian Institute of Technology,Department of ICT,PathumThani,Thailand"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          },
+          {
+            "given": "Kiattisak",
+            "family": "Sangpradit",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Rajamangala University of Technology Thanyaburi,Department of Agricultural Engineering,PathumThani,Thailand"
+              }
+            ],
+            "role": [
+              {
+                "role": "author",
+                "vocabulary": "crossref"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "2023 International Conference on Power, Energy and Innovations (ICPEI)"
+        ],
+        "volume": null,
+        "issue": null,
+        "page": "173-178",
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              10,
+              18
+            ]
+          ]
+        },
+        "type": "proceedings-article",
+        "URL": "https://doi.org/10.1109/icpei58931.2023.10473794",
+        "score": 110.314285
+      },
+      {
+        "title": [
+          "Enhancing Crop Yield Predictions with PEnsemble 4: IoT and ML-Driven for Precision Agriculture"
+        ],
+        "DOI": "10.20944/preprints202403.0969.v1",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0009-0004-4709-0469",
+            "authenticated-orcid": false,
+            "given": "Nisit",
+            "family": "Pukrongta",
+            "sequence": "first",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-5991-8858",
+            "authenticated-orcid": false,
+            "given": "Attaphongse",
+            "family": "Taparugssanagorn",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Kiattisak",
+            "family": "Sangpradit",
+            "sequence": "additional",
+            "affiliation": [],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": null,
+        "volume": null,
+        "issue": null,
+        "page": null,
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2024,
+              3,
+              18
+            ]
+          ]
+        },
+        "type": "posted-content",
+        "URL": "https://doi.org/10.20944/preprints202403.0969.v1",
+        "score": 55.026527
+      },
+      {
+        "title": [
+          "Enhancing Crop Yield Predictions with PEnsemble 4: IoT and ML-Driven for Precision Agriculture"
+        ],
+        "DOI": "10.3390/app14083313",
+        "author": [
+          {
+            "ORCID": "https://orcid.org/0009-0004-4709-0469",
+            "authenticated-orcid": false,
+            "given": "Nisit",
+            "family": "Pukrongta",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "name": "Department of Information and Communication Technologies, School of Engineering and Technology, Asian Institute of Technology, 58 Moo 9, Km.42, Paholyothin Highway, Klong Luang 12120, Thailand"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0002-5991-8858",
+            "authenticated-orcid": false,
+            "given": "Attaphongse",
+            "family": "Taparugssanagorn",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Department of Information and Communication Technologies, School of Engineering and Technology, Asian Institute of Technology, 58 Moo 9, Km.42, Paholyothin Highway, Klong Luang 12120, Thailand"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "given": "Kiattisak",
+            "family": "Sangpradit",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "name": "Department of Agricultural Engineering, Faculty of Engineering, Rajamangala University of Technology Thanyaburi, 39 Moo 1, Rangsit-Nakhonnayok Road, Thanyaburi 12110, Thailand"
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "container-title": [
+          "Applied Sciences"
+        ],
+        "volume": "14",
+        "issue": "8",
+        "page": "3313",
+        "article-number": null,
+        "published": {
+          "date-parts": [
+            [
+              2024,
+              4,
+              15
+            ]
+          ]
+        },
+        "type": "journal-article",
+        "URL": "https://doi.org/10.3390/app14083313",
+        "score": 51.641563
+      }
+    ]
+  },
+  {
+    "number": 37,
+    "original": "Han, Y., Wang, K., Yang, F., Pan, S., Liu, Z., Zhang, Q., & Zhang, Q. (2024). Prediction of maize cultivar yield based on machine learning algorithms. Agricultural and Forest Meteorology, 355, 110123. ",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 38,
+    "original": "Alimagham, S., van Loon, M. P., Ramirez-Villegas, J., Berghuijs, H. N. C., Rosenstock, T. S., & van Ittersum, M. K. (2025). Integrating crop models and machine learning for projecting climate change impacts in data-limited environments. Agricultural Systems.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 39,
+    "original": "Hlavinka, P., Trnka, M., Balek, J., Semerádová, D., Hayes, M., Svoboda, M., Eitzinger, J., Možný, M., Fischer, M., Hunt, E., & Žalud, Z. (2017). Impacts of water availability and drought on maize yield. Agricultural Water Management.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 40,
+    "original": "Niu, X., Yang, Z., Zhang, J., Sun, X., Liu, Z., Jin, S., Cai, J., Zhang, B., & Sun, Y. (2026). Optimizing sowing date and nitrogen management. Plants, 15, 1753.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "number": 41,
+    "original": "Yang, H., Yang, J., Ochsner, T. E., Zhang, Q., Jiao, X., Fang, S., Zhou, Y., & Zou, C. B. (2026). Increasing irrigation water requirements across croplands in the contiguous United States. Agricultural Water Management.",
+    "status": "unresolved",
+    "error": "HTTP Error 429: Too Many Requests"
+  }
+]

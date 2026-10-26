@@ -1,0 +1,80 @@
+{
+  "design": "five disjoint county groups; train other counties <=2017, test held counties 2018-2025",
+  "input_rows": 3460,
+  "counties": 99,
+  "test_county_years": 696,
+  "independent_test_years": 8,
+  "spatial_scope": "internal Iowa county transfer; not independent field validation",
+  "features_removed": {
+    "cdd": "NOAA cooling degree days; NOT consecutive dry days",
+    "gdd": "seasonal mean approximation, not daily accumulated GDD",
+    "heat_days_30c/35c": "heuristic from seasonal mean maxima, not observed daily counts",
+    "vpd_mean_kpa": "heuristic temperature formula, not measured vapor pressure deficit"
+  },
+  "season": "April-September, six months ending September; historical column names retained",
+  "input_path": "data/reacquired/cerespinn_county_rebuilt.csv",
+  "provenance": "Rebuilt from a newly downloaded full USDA CSV and 297 complete NOAA JSON responses; raw hashes verified; climate differences from frozen table disclosed",
+  "scores": [
+    {
+      "model": "climate_only",
+      "rmse_kg_ha": 2991.7558705723886,
+      "mae_kg_ha": 2737.975617310331,
+      "r2": -4.752612786131829,
+      "bias_kg_ha": -2705.2237365281408,
+      "county_rmse_median_kg_ha": 3006.705933256486,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          2499.902162823729,
+          3451.631100381415
+        ],
+        "mae_kg_ha": [
+          2200.240807109527,
+          3286.3202888954415
+        ]
+      },
+      "rmse_difference_from_frozen_kg_ha": 0.22248065968051378
+    },
+    {
+      "model": "trend_and_climate",
+      "rmse_kg_ha": 1268.8590135302306,
+      "mae_kg_ha": 987.0769170330678,
+      "r2": -0.03475986775336959,
+      "bias_kg_ha": 310.81576801427366,
+      "county_rmse_median_kg_ha": 1188.5769822721124,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1025.7310891638347,
+          1492.143285656823
+        ],
+        "mae_kg_ha": [
+          807.8805783675665,
+          1192.9527307374217
+        ]
+      },
+      "rmse_difference_from_frozen_kg_ha": 0.2427324230523027
+    },
+    {
+      "model": "trend_only",
+      "rmse_kg_ha": 1173.590099940442,
+      "mae_kg_ha": 921.5145212679248,
+      "r2": 0.11479121974276985,
+      "bias_kg_ha": 99.86063491676329,
+      "county_rmse_median_kg_ha": 1081.4339252687262,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          972.8711177009715,
+          1345.1536644962425
+        ],
+        "mae_kg_ha": [
+          771.4310415282989,
+          1065.6880637496295
+        ]
+      },
+      "rmse_difference_from_frozen_kg_ha": -2.2737367544323206e-13
+    }
+  ],
+  "source_csv_sha256": "a98fdb9c286d60af6d55700952047423abb649ca5da3613336bece6650aa9cea",
+  "original_checkpoint_unchanged": true,
+  "original_frozen_csv_unchanged": true,
+  "interpretation": "Retrospective source-version robustness check, not a pristine independent validation or test-driven model selection"
+}

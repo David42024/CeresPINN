@@ -42,6 +42,18 @@ def process_county(fips):
         })
     return records
 
+def normalize_seasonal_climate(climate_df):
+    """Convert observed CAG aggregates without inventing daily agronomic features."""
+    climate_df = climate_df.dropna().copy()
+    climate_df['season_temp_mean_c'] = (climate_df['season_temp_mean_f'] - 32) * (5/9)
+    climate_df['season_tmax_mean_c'] = (climate_df['season_tmax_mean_f'] - 32) * (5/9)
+    climate_df['season_precip_mm'] = climate_df['season_precip_in'] * 25.4
+    climate_df['cooling_degree_days_c'] = climate_df['cdd_f'] * (5/9)
+    climate_df['season_start_month'] = 4
+    climate_df['season_end_month'] = 9
+    return climate_df.drop(columns=['season_temp_mean_f', 'season_tmax_mean_f', 'season_precip_in', 'cdd_f'])
+
+
 def main():
     settings = Settings()
     out_dir = settings.paths.processed
@@ -63,19 +75,8 @@ def main():
             if idx % 10 == 0:
                 print(f"Progress: {idx}/{len(fips_list)}", flush=True)
                 
-    climate_df = pd.DataFrame(all_records).dropna().copy()
-    
-    climate_df['season_temp_mean_c'] = (climate_df['season_temp_mean_f'] - 32) * (5/9)
-    climate_df['season_tmax_mean_c'] = (climate_df['season_tmax_mean_f'] - 32) * (5/9)
-    climate_df['season_precip_mm'] = climate_df['season_precip_in'] * 25.4
-    climate_df['cdd'] = climate_df['cdd_f'] * (5/9)
-    
-    climate_df['gdd'] = np.maximum(0, climate_df['season_temp_mean_c'] - 10) * 153
-    climate_df['heat_days_30c'] = np.maximum(0, (climate_df['season_tmax_mean_c'] - 28) * 4).astype(int)
-    climate_df['heat_days_35c'] = np.maximum(0, (climate_df['season_tmax_mean_c'] - 33) * 2).astype(int)
-    climate_df['vpd_mean_kpa'] = 1.2 + (climate_df['season_temp_mean_c'] - 14) * 0.05
-    
-    climate_df = climate_df.drop(columns=['season_temp_mean_f', 'season_tmax_mean_f', 'season_precip_in', 'cdd_f'])
+    # cdd is cooling degree days; daily dry/heat counts require daily data.
+    climate_df = normalize_seasonal_climate(pd.DataFrame(all_records))
     
     out_path = out_dir / "noaa_climate.parquet"
     climate_df.to_parquet(out_path, index=False)

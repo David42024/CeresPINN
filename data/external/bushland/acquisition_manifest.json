@@ -1,0 +1,1600 @@
+{
+  "files": [
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531528,
+      "name": "1989_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 46759,
+      "url": "https://ndownloader.figshare.com/files/44531528",
+      "official_md5": "1f01e09196031b1a63a8536eeed68b4b",
+      "sha256": "e9746969453327b3677d77bb70eee8ad75038a674dc614f275f80d38f7b6609e",
+      "local_path": "data/external/bushland/24855909/1989_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:36.312224+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531531,
+      "name": "1990_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 56959,
+      "url": "https://ndownloader.figshare.com/files/44531531",
+      "official_md5": "6a0bd3ad93adfe8844456bc8c37bdc6f",
+      "sha256": "a9fbb4de1f320cdf7646169f7242c67567f6d01a3c9041b8499f19ff1a801338",
+      "local_path": "data/external/bushland/24855909/1990_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:38.606293+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531534,
+      "name": "1994_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 55720,
+      "url": "https://ndownloader.figshare.com/files/44531534",
+      "official_md5": "a996eecab2d04436680072f729e89b8e",
+      "sha256": "af6347369d94f28399c16901ba572940e343818b372b85c84d432afb15595474",
+      "local_path": "data/external/bushland/24855909/1994_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:40.038945+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531540,
+      "name": "1994_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 56494,
+      "url": "https://ndownloader.figshare.com/files/44531540",
+      "official_md5": "ca7096c9fa1bebe5bfe1d584f787aa69",
+      "sha256": "01e064113a37330b6b3afa1b8b86241b5f25aa67b29b196683daf5cb4878fdb0",
+      "local_path": "data/external/bushland/24855909/1994_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:41.427056+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531546,
+      "name": "2013_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 98534,
+      "url": "https://ndownloader.figshare.com/files/44531546",
+      "official_md5": "7e2e1dede77dc5f80355226879196f0a",
+      "sha256": "7e7b0198cd0a1ed92bcca21044c28a9257c08721be4e59b4a3696ad59d4f2515",
+      "local_path": "data/external/bushland/24855909/2013_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:42.864214+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531549,
+      "name": "2016_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 376200,
+      "url": "https://ndownloader.figshare.com/files/44531549",
+      "official_md5": "6440e804b24c8c6d7262860e21eecccb",
+      "sha256": "9a09decb1b3cb0fc88face1b65bd2fe014041be3969d014185e2acd1e9ef8132",
+      "local_path": "data/external/bushland/24855909/2016_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:44.472135+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531555,
+      "name": "2016_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 116411,
+      "url": "https://ndownloader.figshare.com/files/44531555",
+      "official_md5": "e0d30df065ae844744b919e4c5aebdb1",
+      "sha256": "07bb8678a8c40651fc9ee43e8ff9f2cb4d6c52bd250d873cacea14d2893bcddb",
+      "local_path": "data/external/bushland/24855909/2016_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:45.885365+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531561,
+      "name": "2018_East_Maize_Growth_and_Yield(ADC)_0.xlsx",
+      "bytes": 107422,
+      "url": "https://ndownloader.figshare.com/files/44531561",
+      "official_md5": "af5a1a4bf37fc752b5d6ce28233c5898",
+      "sha256": "b543363980c7c6cc4a48c6506e51d473fe692e68c26b30284df3ac1021dd3e84",
+      "local_path": "data/external/bushland/24855909/2018_East_Maize_Growth_and_Yield(ADC)_0.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:47.384384+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531564,
+      "name": "2018_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 112901,
+      "url": "https://ndownloader.figshare.com/files/44531564",
+      "official_md5": "1dd5062d3835eff4501ff68c3f8aeba9",
+      "sha256": "5e7659c6384a41fe7ef8f44a4d941e8a9550638f7ca93d7ac201dfe8926ff407",
+      "local_path": "data/external/bushland/24855909/2018_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:49.962713+00:00"
+    },
+    {
+      "article_id": 24855909,
+      "doi": "10.15482/USDA.ADC/1526328",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531567,
+      "name": "2013_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 122546,
+      "url": "https://ndownloader.figshare.com/files/44531567",
+      "official_md5": "1e886af7f7470aea7011e73fd9cadb55",
+      "sha256": "05e4e3ca645640db2b39812b97135733d5b7b7562f15bd10d3ca57cc7e7d8f78",
+      "local_path": "data/external/bushland/24855909/2013_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:51.439763+00:00"
+    },
+    {
+      "article_id": 24855957,
+      "doi": "10.15482/USDA.ADC/1526334",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531624,
+      "name": "1989_Maize_water_balance.xlsx",
+      "bytes": 3784062,
+      "url": "https://ndownloader.figshare.com/files/44531624",
+      "official_md5": "fef80e1c3df4e460f83b407839916e66",
+      "sha256": "c70cda27a70bc121c96154862a2f1780c8c8b643a0c8feb330232244edae0037",
+      "local_path": "data/external/bushland/24855957/1989_Maize_water_balance.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:55.005104+00:00"
+    },
+    {
+      "article_id": 24855957,
+      "doi": "10.15482/USDA.ADC/1526334",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531627,
+      "name": "1990_Maize_water_balance.xlsx",
+      "bytes": 3802801,
+      "url": "https://ndownloader.figshare.com/files/44531627",
+      "official_md5": "4f959bdab74334229f60bb4850547d22",
+      "sha256": "d0e6a3e1eb8a77cc3e7203ac841d9a4665e2048c768a494de10c5f55f6c39187",
+      "local_path": "data/external/bushland/24855957/1990_Maize_water_balance.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:11:58.905037+00:00"
+    },
+    {
+      "article_id": 24855957,
+      "doi": "10.15482/USDA.ADC/1526334",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531630,
+      "name": "1994_Maize_water_balance.xlsx",
+      "bytes": 3706292,
+      "url": "https://ndownloader.figshare.com/files/44531630",
+      "official_md5": "51133aee4b524b65f89a7cfc9f7e6edf",
+      "sha256": "ae38030ee67e3289f0ba4d888d759f7c6669f8fc8a8ace07201840678d688706",
+      "local_path": "data/external/bushland/24855957/1994_Maize_water_balance.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:03.456514+00:00"
+    },
+    {
+      "article_id": 24855957,
+      "doi": "10.15482/USDA.ADC/1526334",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531633,
+      "name": "2013_Maize_water_balance.xlsx",
+      "bytes": 4304931,
+      "url": "https://ndownloader.figshare.com/files/44531633",
+      "official_md5": "ff7f0b53f937394fe16f5c75c1399c3c",
+      "sha256": "d5f18f6bf4e3c84ee0d03fc4c0204f850bbcf5a290e051a221b1d7a7e6ade03c",
+      "local_path": "data/external/bushland/24855957/2013_Maize_water_balance.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:05.851408+00:00"
+    },
+    {
+      "article_id": 24855957,
+      "doi": "10.15482/USDA.ADC/1526334",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531636,
+      "name": "2016_Maize_water_balance.xlsx",
+      "bytes": 4963828,
+      "url": "https://ndownloader.figshare.com/files/44531636",
+      "official_md5": "45caa3c4dd3a2ddbfee05d12dbd47901",
+      "sha256": "c4c0cbc83802ac802e0c3649cf8a88aac9b4c30e10184f4a9c61dee4a4ec1fba",
+      "local_path": "data/external/bushland/24855957/2016_Maize_water_balance.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:09.814196+00:00"
+    },
+    {
+      "article_id": 24855957,
+      "doi": "10.15482/USDA.ADC/1526334",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531639,
+      "name": "2018_Maize_water_balance.xlsx",
+      "bytes": 4983418,
+      "url": "https://ndownloader.figshare.com/files/44531639",
+      "official_md5": "dc230e043d83ae96ba0f80edc65ab1a4",
+      "sha256": "caa54a2362911d2bfa4e0105f77d32f6a4e0720988c867c20d9cc3349b52d4b9",
+      "local_path": "data/external/bushland/24855957/2018_Maize_water_balance.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:13.001709+00:00"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750803,
+      "name": "1994_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 15593213,
+      "url": "https://ndownloader.figshare.com/files/44750803",
+      "official_md5": "123d5ad8d2eedf285ef43a659547b959",
+      "sha256": "9f74b9154ae747b8ffddf2186a7d53b47a795cd26a38db7118422d8cce249521",
+      "local_path": "data/external/bushland/25316164/1994_15-min_weather_SWMRU_CPRL.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:02.505832+00:00"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750809,
+      "name": "1996_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14573590,
+      "url": "https://ndownloader.figshare.com/files/44750809",
+      "official_md5": "9cca4e59da8723d62ccbbc4d6a6c5679"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750800,
+      "name": "1997_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14273679,
+      "url": "https://ndownloader.figshare.com/files/44750800",
+      "official_md5": "1e9458b6fa6198fe260f2d96cdd1a6e0"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750815,
+      "name": "2013_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14580381,
+      "url": "https://ndownloader.figshare.com/files/44750815",
+      "official_md5": "c1b5141dc7f5df1040e9a831327d69c5",
+      "sha256": "a4d3955d8ac7caf665ab479e0ac1fcee8cb23e4320795b65a290400b146d5b7c",
+      "local_path": "data/external/bushland/25316164/2013_15-min_weather_SWMRU_CPRL.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:05.830882+00:00"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750812,
+      "name": "2016_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14868593,
+      "url": "https://ndownloader.figshare.com/files/44750812",
+      "official_md5": "05b9190e0dc708991dbbc1846671f8b3",
+      "sha256": "87d4b59d2e162f5eee6e47de2b7da6dbc6061befca48632c8df9b031905e2f26",
+      "local_path": "data/external/bushland/25316164/2016_15-min_weather_SWMRU_CPRL.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:27.014335+00:00"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750806,
+      "name": "2018_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14492578,
+      "url": "https://ndownloader.figshare.com/files/44750806",
+      "official_md5": "a98d62b60d62f7cb7de6f70f35b652e7",
+      "sha256": "51b303878e9f60a1aab68610df5e5c4a2f0c3ab6c8443d0ac9cb01e08e38a378",
+      "local_path": "data/external/bushland/25316164/2018_15-min_weather_SWMRU_CPRL.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:49.373147+00:00"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750818,
+      "name": "1998_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14197420,
+      "url": "https://ndownloader.figshare.com/files/44750818",
+      "official_md5": "0f27a9019579453e0778072891680c5e"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750797,
+      "name": "1999_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 13317590,
+      "url": "https://ndownloader.figshare.com/files/44750797",
+      "official_md5": "bb01cbf6c48b141d4d5a244ade500cbb"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750821,
+      "name": "1989_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 15192288,
+      "url": "https://ndownloader.figshare.com/files/44750821",
+      "official_md5": "f4cd3568a95fa43aad9de9e7711c1c39",
+      "sha256": "c3a1ac9525a49d97d3ae3cbfd41ff828cd400e1d26359631d5d7a4129a7a1a56",
+      "local_path": "data/external/bushland/25316164/1989_15-min_weather_SWMRU_CPRL.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:52.292898+00:00"
+    },
+    {
+      "article_id": 25316164,
+      "doi": "10.15482/USDA.ADC/1526329",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44750824,
+      "name": "1990_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 15710605,
+      "url": "https://ndownloader.figshare.com/files/44750824",
+      "official_md5": "f29e8dfd29c862325e347d0daffe10e2",
+      "sha256": "0e1100507e568ff1993aa343bece512b3c2473ff8f92806887812483854b0b84",
+      "local_path": "data/external/bushland/25316164/1990_15-min_weather_SWMRU_CPRL.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:16:12.236914+00:00"
+    },
+    {
+      "article_id": 25316362,
+      "doi": "10.15482/USDA.ADC/1526317",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44751106,
+      "name": "Conventions for Bushland, TX, Weighing Lysimeter Datasets.xlsx",
+      "bytes": 16584,
+      "url": "https://ndownloader.figshare.com/files/44751106",
+      "official_md5": "603b5ae8b7da32515ffb1f1ee01aa407",
+      "sha256": "eb0ace111da3bb2bf7d8b43a5ebfacbf3f2a33beda463b14764ec4a08d498515",
+      "local_path": "data/external/bushland/25316362/Conventions for Bushland, TX, Weighing Lysimeter Datasets.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:16.432883+00:00"
+    },
+    {
+      "article_id": 25316362,
+      "doi": "10.15482/USDA.ADC/1526317",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44751115,
+      "name": "Geographic Coordinates, USDA, ARS, Bushland, Texas.xlsx",
+      "bytes": 11129,
+      "url": "https://ndownloader.figshare.com/files/44751115",
+      "official_md5": "7b15d0570121a608d27415907ac77b91",
+      "sha256": "0af75678e76e73525483167723efbcbea86bfa4b96ef8295bf829944cc3a0f4d",
+      "local_path": "data/external/bushland/25316362/Geographic Coordinates, USDA, ARS, Bushland, Texas.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:18.842218+00:00"
+    },
+    {
+      "article_id": 25316362,
+      "doi": "10.15482/USDA.ADC/1526317",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44751109,
+      "name": "README_Bushland_maize_for_grain_collection.pdf",
+      "bytes": 115168,
+      "url": "https://ndownloader.figshare.com/files/44751109",
+      "official_md5": "d65b7275912325afd1880fa263ec19da",
+      "sha256": "efec6da69e3ce46e760c45ce308609f404d1bb04716cfcea8cb2424cc906ccac",
+      "local_path": "data/external/bushland/25316362/README_Bushland_maize_for_grain_collection.pdf",
+      "downloaded_at_utc": "2026-10-26T15:12:20.880817+00:00"
+    },
+    {
+      "article_id": 25316362,
+      "doi": "10.15482/USDA.ADC/1526317",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44751112,
+      "name": "Symbols and Abbreviations for Bushland, TX, Weighing Lysimeter Datasets.xlsx",
+      "bytes": 13562,
+      "url": "https://ndownloader.figshare.com/files/44751112",
+      "official_md5": "914e5b3d21e0c228b71f47b5deac55f2",
+      "sha256": "8edb08a4cc86ac8256ceb8aa326dba70951577bf77c58772fe149f93cdd846c7",
+      "local_path": "data/external/bushland/25316362/Symbols and Abbreviations for Bushland, TX, Weighing Lysimeter Datasets.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:23.060187+00:00"
+    },
+    {
+      "article_id": 25316362,
+      "doi": "10.15482/USDA.ADC/1526317",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44751118,
+      "name": "Bushland_TX_soil_properties.xlsx",
+      "bytes": 29451,
+      "url": "https://ndownloader.figshare.com/files/44751118",
+      "official_md5": "ce4c4e5707e7278084786c7ad5201884",
+      "sha256": "3770155f5ac604131b210c622b7bd8e3af72105526af3bfbb1ffa15bc076e34e",
+      "local_path": "data/external/bushland/25316362/Bushland_TX_soil_properties.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:12:24.319599+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531468,
+      "name": "1989_East_Maize_Calendar.xlsx",
+      "bytes": 17769,
+      "url": "https://ndownloader.figshare.com/files/44531468",
+      "official_md5": "40b8fead35a51c0cee7c4f1846a8b9de",
+      "sha256": "6689b30ae358c88eb68e80287142b9e9a163c5cc2acc55d795f251628d36c72b",
+      "local_path": "data/external/bushland/24855873/1989_East_Maize_Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:34.110712+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531471,
+      "name": "1990_East_Maize_Calendar.xlsx",
+      "bytes": 18494,
+      "url": "https://ndownloader.figshare.com/files/44531471",
+      "official_md5": "19ae4c1b84b5c965a97883956ed32f24",
+      "sha256": "10137492d88c0c05ecc2594c46e064f6d12820d737eec13e5b7cf39e676f670c",
+      "local_path": "data/external/bushland/24855873/1990_East_Maize_Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:35.186712+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531474,
+      "name": "1994_East_Maize_Calendar.xlsx",
+      "bytes": 19291,
+      "url": "https://ndownloader.figshare.com/files/44531474",
+      "official_md5": "84a84323d79ca8758fd05a2b4dfdee4a",
+      "sha256": "95dcc833936d6b017f348dbae7422d85a6e7d5a8ff6ecb97a5ff7229af4ea13f",
+      "local_path": "data/external/bushland/24855873/1994_East_Maize_Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:36.338752+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531477,
+      "name": "1994_West_Maize_Calendar.xlsx",
+      "bytes": 17042,
+      "url": "https://ndownloader.figshare.com/files/44531477",
+      "official_md5": "168adfcebbe775b94c52d5a3a3dc5ff7",
+      "sha256": "e70e5ceb85b7f64b0bcf5026355378ce41f6a44d0100153f1c310e1845b1bd65",
+      "local_path": "data/external/bushland/24855873/1994_West_Maize_Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:40.142122+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531480,
+      "name": "2013_East_Maize-Calendar.xlsx",
+      "bytes": 16801,
+      "url": "https://ndownloader.figshare.com/files/44531480",
+      "official_md5": "a316b594198e0ca6266b3546ff3b8c51",
+      "sha256": "ba31db4d88005fb0a0fc9ca3a5d11567977a046a3a49c361240dd4c9a5ea3db4",
+      "local_path": "data/external/bushland/24855873/2013_East_Maize-Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:41.304263+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531483,
+      "name": "2013_West_Maize_Calendar.xlsx",
+      "bytes": 16626,
+      "url": "https://ndownloader.figshare.com/files/44531483",
+      "official_md5": "66c2749ce759138cd218378a6d905871",
+      "sha256": "21ed3e0fbe2164bfe02ccbd8635bfb9fe1560512cf6f0a9c3ccabe7d0dea8648",
+      "local_path": "data/external/bushland/24855873/2013_West_Maize_Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:42.445317+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531486,
+      "name": "2016_East_Maize_Calendar_0.xlsx",
+      "bytes": 18204,
+      "url": "https://ndownloader.figshare.com/files/44531486",
+      "official_md5": "4a2f79a8bcd740fdce5cbe7402ff666f",
+      "sha256": "d8720cc3af72d5595f8392079cd17f4a820f08bcebcb428f84b8763e29535fb2",
+      "local_path": "data/external/bushland/24855873/2016_East_Maize_Calendar_0.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:43.641137+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531489,
+      "name": "2016_West_Maize_Calendar_0.xlsx",
+      "bytes": 17091,
+      "url": "https://ndownloader.figshare.com/files/44531489",
+      "official_md5": "b71c7ad2a264ab8b71729c6041f8e0ca",
+      "sha256": "38aa41191a31cd13d73f207382b952520338ce68ea8370afbaf251efb002cb38",
+      "local_path": "data/external/bushland/24855873/2016_West_Maize_Calendar_0.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:44.800670+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531492,
+      "name": "2018_East_Maize_Calendar_0.xlsx",
+      "bytes": 18870,
+      "url": "https://ndownloader.figshare.com/files/44531492",
+      "official_md5": "d885676ed7cbc405efa73055e2143055",
+      "sha256": "8d9bd7eeca2031ef948f76110a32ea010b8c455ba75ea682bf46bac9f5898228",
+      "local_path": "data/external/bushland/24855873/2018_East_Maize_Calendar_0.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:45.966043+00:00"
+    },
+    {
+      "article_id": 24855873,
+      "doi": "10.15482/USDA.ADC/1526331",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531495,
+      "name": "2018_West_Maize_Calendar.xlsx",
+      "bytes": 17438,
+      "url": "https://ndownloader.figshare.com/files/44531495",
+      "official_md5": "901eb9996de62eaaf16b227dfd852ef9",
+      "sha256": "39314b27d1f827cf7143fa15230aa1f8eca80c56e8ab9b62855c875f24d4413a",
+      "local_path": "data/external/bushland/24855873/2018_West_Maize_Calendar.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:15:47.123815+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531285,
+      "name": "1989_East_Maize_Soil-water.xlsx",
+      "bytes": 460783,
+      "url": "https://ndownloader.figshare.com/files/44531285",
+      "official_md5": "a9e5655a5387f80152919ed0a2176bfb",
+      "sha256": "4845828dc3310af923a4766e2b55991c44ca0c55105ea465303194c195e64771",
+      "local_path": "data/external/bushland/24855858/1989_East_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:17:42.695561+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531288,
+      "name": "1990_East_Maize_Soil-water.xlsx",
+      "bytes": 396853,
+      "url": "https://ndownloader.figshare.com/files/44531288",
+      "official_md5": "01d851bd65e75b8c1af69eba601eae6d",
+      "sha256": "0ac7279d722fe0579b1f60f8b98e281e069bbc36eaac230dbdf9f668be196c52",
+      "local_path": "data/external/bushland/24855858/1990_East_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:17:52.731895+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531291,
+      "name": "1994_East_Maize_Soil-water.xlsx",
+      "bytes": 323419,
+      "url": "https://ndownloader.figshare.com/files/44531291",
+      "official_md5": "26d56c68b574f82a8dff4d66e1209951",
+      "sha256": "e4e9106d6ba3eb424f226aca8af9ec60ce8dcf2f32ab02b5e4c04327da167d19",
+      "local_path": "data/external/bushland/24855858/1994_East_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:17:54.453798+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531294,
+      "name": "1994_West_Maize_Soil-water.xlsx",
+      "bytes": 380176,
+      "url": "https://ndownloader.figshare.com/files/44531294",
+      "official_md5": "ed3cbe5ad0f5292584d7c09f6694a3ab",
+      "sha256": "cd04ef94ed00e01fd42dad2ec5df8164f04aaf27df06a51b32494911ddd66b7b",
+      "local_path": "data/external/bushland/24855858/1994_West_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:17:56.159060+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531297,
+      "name": "2013_East_Maize_Soil-water.xlsx",
+      "bytes": 445639,
+      "url": "https://ndownloader.figshare.com/files/44531297",
+      "official_md5": "6bd0c549369993d9c7e8a6ab8f2b6d36",
+      "sha256": "045bba26b3454df2a9c626d3a784130a761704a043c52fb9951bc77ed71f1c37",
+      "local_path": "data/external/bushland/24855858/2013_East_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:17:59.681538+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531300,
+      "name": "2013_West_Maize_Soil-water.xlsx",
+      "bytes": 461199,
+      "url": "https://ndownloader.figshare.com/files/44531300",
+      "official_md5": "e5fa74fc05c5169ac67b3104cbf67f09",
+      "sha256": "e53b5844cf2640bdd0e71617bafd4c17c9d454efb7eb0b50934215498e95c1b5",
+      "local_path": "data/external/bushland/24855858/2013_West_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:18:01.411079+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531303,
+      "name": "2016_East_Maize_Soil-water.xlsx",
+      "bytes": 557658,
+      "url": "https://ndownloader.figshare.com/files/44531303",
+      "official_md5": "f362bf6ee30b551ec813d19d4fff2ae7",
+      "sha256": "8db21576dbe1c545790e39ab6f45c22bd6fba46622c5457a18ecfea0dbc7b000",
+      "local_path": "data/external/bushland/24855858/2016_East_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:18:04.780766+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531306,
+      "name": "2016_West_Maize_Soil-water.xlsx",
+      "bytes": 537016,
+      "url": "https://ndownloader.figshare.com/files/44531306",
+      "official_md5": "ab91cc5d37efd2968ad24a20fadf96df",
+      "sha256": "1f146e28a422d27bb428dd420e33df1d832d2ff81f7b3f602f3741149c159bda",
+      "local_path": "data/external/bushland/24855858/2016_West_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:18:06.499130+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531309,
+      "name": "2018_East_Maize_Soil-water.xlsx",
+      "bytes": 574864,
+      "url": "https://ndownloader.figshare.com/files/44531309",
+      "official_md5": "3e9e4d22074c4f080f7697c5f981266c",
+      "sha256": "98f918004460c4cebc2622c63f72526bcaa5fad041410d52e8dd3250c92dba88",
+      "local_path": "data/external/bushland/24855858/2018_East_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:18:08.317204+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531312,
+      "name": "2018_West_Maize_Soil-water.xlsx",
+      "bytes": 538478,
+      "url": "https://ndownloader.figshare.com/files/44531312",
+      "official_md5": "bfe450d914e3cc9af5a011c33448bc87",
+      "sha256": "25367b71e8f139f846d4e88e79bce38ac92e9fa717049d81c7e1dd41039c5247",
+      "local_path": "data/external/bushland/24855858/2018_West_Maize_Soil-water.xlsx",
+      "downloaded_at_utc": "2026-10-26T15:18:18.484799+00:00"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531315,
+      "name": "1989-90_West_Winter-Wheat_Soil-water_0.xlsx",
+      "bytes": 321299,
+      "url": "https://ndownloader.figshare.com/files/44531315",
+      "official_md5": "008c748866fc7bd085c6d562b572bbf9"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531318,
+      "name": "1991-92_East_Winter-Wheat_Soil-water_0.xlsx",
+      "bytes": 260871,
+      "url": "https://ndownloader.figshare.com/files/44531318",
+      "official_md5": "190ef25be31c90269a4c7e644f582668"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531321,
+      "name": "1992-93_West_Winter-Wheat_Soil-water_0.xlsx",
+      "bytes": 305902,
+      "url": "https://ndownloader.figshare.com/files/44531321",
+      "official_md5": "3961639ae2e293afea6c891462b5b088"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531327,
+      "name": "2009_East_Sunflower_Soil-water.xlsx",
+      "bytes": 320407,
+      "url": "https://ndownloader.figshare.com/files/44531327",
+      "official_md5": "1108cbbd5c92b58cc76b1e2dadb79244"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531330,
+      "name": "2011_East_Sunflower_Soil-water.xlsx",
+      "bytes": 406174,
+      "url": "https://ndownloader.figshare.com/files/44531330",
+      "official_md5": "0b811ab7b41985f0e71edcdedab6b71b"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531333,
+      "name": "2003_East_Soybean_Soil-water.xlsx",
+      "bytes": 531155,
+      "url": "https://ndownloader.figshare.com/files/44531333",
+      "official_md5": "09da7d22484c7b555153e172c2f4c901"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531336,
+      "name": "2004_East_Soybean_Soil-water.xlsx",
+      "bytes": 449670,
+      "url": "https://ndownloader.figshare.com/files/44531336",
+      "official_md5": "89ca2502c1974cb0a5ee85af8e642d72"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531339,
+      "name": "2010_West_Soybean_Soil-water.xlsx",
+      "bytes": 310131,
+      "url": "https://ndownloader.figshare.com/files/44531339",
+      "official_md5": "3f18a31a5af75c247ba9326b32975170"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531342,
+      "name": "2019_East_Soybean_Soil-water.xlsx",
+      "bytes": 664123,
+      "url": "https://ndownloader.figshare.com/files/44531342",
+      "official_md5": "23307c587a20b9981f618176d2c2bc59"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531345,
+      "name": "2019_West_Soybean_Soil-water.xlsx",
+      "bytes": 567484,
+      "url": "https://ndownloader.figshare.com/files/44531345",
+      "official_md5": "ef9e99344972c572d703c7dc39ba8b2b"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531348,
+      "name": "1995_West_Soybean_Soil-water_0.xlsx",
+      "bytes": 306269,
+      "url": "https://ndownloader.figshare.com/files/44531348",
+      "official_md5": "df655bedc8ac65ff6a54a5979ba5a10a"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531357,
+      "name": "2000_East_Cotton_Soil-water.xlsx",
+      "bytes": 320798,
+      "url": "https://ndownloader.figshare.com/files/44531357",
+      "official_md5": "330d2114fa55f049d6acfc8e6fbae8a7"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531360,
+      "name": "2000_West_Cotton_Soil-water.xlsx",
+      "bytes": 310122,
+      "url": "https://ndownloader.figshare.com/files/44531360",
+      "official_md5": "12055f04c26de2f74bd86bc13c1a74e4"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531363,
+      "name": "2001_East_Cotton_Soil-water.xlsx",
+      "bytes": 327385,
+      "url": "https://ndownloader.figshare.com/files/44531363",
+      "official_md5": "74e6f89d1c6d48b5dbdbf7294d9b3d05"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531366,
+      "name": "2001_West_Cotton_Soil-water.xlsx",
+      "bytes": 306543,
+      "url": "https://ndownloader.figshare.com/files/44531366",
+      "official_md5": "70b4f0b2a0730d8a144e2eda743e2b4e"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531372,
+      "name": "2002_East_Cotton_Soil-water.xlsx",
+      "bytes": 346468,
+      "url": "https://ndownloader.figshare.com/files/44531372",
+      "official_md5": "d205eb83c8b1a354f49f9bd7216dc260"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531375,
+      "name": "2004_West_Cotton-sorghum_Soil-water.xlsx",
+      "bytes": 293190,
+      "url": "https://ndownloader.figshare.com/files/44531375",
+      "official_md5": "c7a21e0231df72466b887975558b0997"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531378,
+      "name": "2008_East_Cotton_Soil-water.xlsx",
+      "bytes": 380031,
+      "url": "https://ndownloader.figshare.com/files/44531378",
+      "official_md5": "769ef6f8705c98c4f69e884408d4d5dd"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531381,
+      "name": "2008_West_Cotton_Soil-water.xlsx",
+      "bytes": 369300,
+      "url": "https://ndownloader.figshare.com/files/44531381",
+      "official_md5": "bd1e36e988ee9ee9f6818820f9b7257e"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531384,
+      "name": "2010_East_Cotton_Soil-water.xlsx",
+      "bytes": 377763,
+      "url": "https://ndownloader.figshare.com/files/44531384",
+      "official_md5": "a01aa8a2cc8efd44cf37b97ae817f856"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531387,
+      "name": "2012_West_Cotton_Soil-water.xlsx",
+      "bytes": 585565,
+      "url": "https://ndownloader.figshare.com/files/44531387",
+      "official_md5": "48ac284d19580aaf53d604294ff014b1"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531390,
+      "name": "2020_East_Cotton_Soil-water.xlsx",
+      "bytes": 495689,
+      "url": "https://ndownloader.figshare.com/files/44531390",
+      "official_md5": "92901b7df943e2b02b6d0bfb5763fc68"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531393,
+      "name": "2020_West_Cotton_Soil-water.xlsx",
+      "bytes": 496282,
+      "url": "https://ndownloader.figshare.com/files/44531393",
+      "official_md5": "c7d855a043f949aea23e1b51c44c11f3"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531396,
+      "name": "2021_East_Cotton_Soil-water.xlsx",
+      "bytes": 560881,
+      "url": "https://ndownloader.figshare.com/files/44531396",
+      "official_md5": "56633f6cf5320dc7d5726290f40c3974"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531399,
+      "name": "2021_West_Cotton_Soil-water.xlsx",
+      "bytes": 538255,
+      "url": "https://ndownloader.figshare.com/files/44531399",
+      "official_md5": "eaa60a0d5dda99b94b81f78c22029ff7"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531402,
+      "name": "2003_West_Sorghum-cotton_Soil-water.xlsx",
+      "bytes": 307352,
+      "url": "https://ndownloader.figshare.com/files/44531402",
+      "official_md5": "56be6bb2e0e94956743bd2723e711ac8"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531405,
+      "name": "1988_West_Sorghum_Soil-water.xlsx",
+      "bytes": 517444,
+      "url": "https://ndownloader.figshare.com/files/44531405",
+      "official_md5": "3ca3e92f00d64d93cdbf1288ec352c8c"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531408,
+      "name": "1991_West_Sorghum_Soil-water.xlsx",
+      "bytes": 288045,
+      "url": "https://ndownloader.figshare.com/files/44531408",
+      "official_md5": "bf0fa1177f5bccf75944d0aae44af93a"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531411,
+      "name": "1993_East_Sorghum_Soil-water.xlsx",
+      "bytes": 315027,
+      "url": "https://ndownloader.figshare.com/files/44531411",
+      "official_md5": "936b5a6daba1d0f2535b99eae532d544"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531414,
+      "name": "1997_West_Sorghum_Soil-water.xlsx",
+      "bytes": 302116,
+      "url": "https://ndownloader.figshare.com/files/44531414",
+      "official_md5": "6118d2910d6a5c83980053adaa172ff9"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531417,
+      "name": "1998_West_Sorghum_Soil-water.xlsx",
+      "bytes": 345099,
+      "url": "https://ndownloader.figshare.com/files/44531417",
+      "official_md5": "2ea67c207565d19109a0a8e276bab774"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531420,
+      "name": "1999_West_Sorghum_Soil-water.xlsx",
+      "bytes": 307428,
+      "url": "https://ndownloader.figshare.com/files/44531420",
+      "official_md5": "ed33954fa4940bcdc773299b006f5e31"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531423,
+      "name": "2005_East_Sorghum_Soil-water.xlsx",
+      "bytes": 409878,
+      "url": "https://ndownloader.figshare.com/files/44531423",
+      "official_md5": "966164ef76c5b65b84c9cbd401a186c4"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531426,
+      "name": "2006_West_Sorghum_Soil-water.xlsx",
+      "bytes": 253510,
+      "url": "https://ndownloader.figshare.com/files/44531426",
+      "official_md5": "ae5fc9203fa048eb15c13592cdac13b0"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531429,
+      "name": "2007_East_maize-sorghum-forage_Soil-water.xlsx",
+      "bytes": 455514,
+      "url": "https://ndownloader.figshare.com/files/44531429",
+      "official_md5": "7fcde83714a9055fb9a68879afd694c3"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531432,
+      "name": "2007_West_Sorghum_Soil-water.xlsx",
+      "bytes": 331577,
+      "url": "https://ndownloader.figshare.com/files/44531432",
+      "official_md5": "85c78374ac0a328878bed5196558d0fd"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531435,
+      "name": "2014_East_Sorghum_Soil-water.xlsx",
+      "bytes": 665520,
+      "url": "https://ndownloader.figshare.com/files/44531435",
+      "official_md5": "a2c48f2fc7206edce555ebf9c7c7d41d"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531438,
+      "name": "2014_West_Sorghum_Soil-water.xlsx",
+      "bytes": 598256,
+      "url": "https://ndownloader.figshare.com/files/44531438",
+      "official_md5": "38d24222999be0b7ddfa22cd2d481ed0"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531441,
+      "name": "2015_East_Sorghum_Soil-water.xlsx",
+      "bytes": 569163,
+      "url": "https://ndownloader.figshare.com/files/44531441",
+      "official_md5": "a6354632fe4f86b18e12c3728e9d4e74"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531444,
+      "name": "2015_West_Sorghum_Soil-water.xlsx",
+      "bytes": 555651,
+      "url": "https://ndownloader.figshare.com/files/44531444",
+      "official_md5": "0c4a1c791787e80052595cfa88ae525a"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531450,
+      "name": "1996_East_Alfalfa_Soil-water (1).xlsx",
+      "bytes": 354297,
+      "url": "https://ndownloader.figshare.com/files/44531450",
+      "official_md5": "6ec5946105f8c23c5c69ec9b94077062"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531453,
+      "name": "1997_East_Alfalfa_Soil-water_0.xlsx",
+      "bytes": 290693,
+      "url": "https://ndownloader.figshare.com/files/44531453",
+      "official_md5": "76539c95c66e6310cf6dd8906630cea9"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531456,
+      "name": "1998_East_Alfalfa_Soil-water_0.xlsx",
+      "bytes": 307496,
+      "url": "https://ndownloader.figshare.com/files/44531456",
+      "official_md5": "3a61a9e3e2c13ccfa33bc2a66ad07530"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531459,
+      "name": "1999_East_Alfalfa_Soil-water_0.xlsx",
+      "bytes": 301536,
+      "url": "https://ndownloader.figshare.com/files/44531459",
+      "official_md5": "f0a8161a1581a8adf2bf1294cdf97d78"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531462,
+      "name": "1995_East_Alfalfa_Soil-water_0.xlsx",
+      "bytes": 261571,
+      "url": "https://ndownloader.figshare.com/files/44531462",
+      "official_md5": "67ecd28a778fa443cd91909d36c6e4d8"
+    },
+    {
+      "article_id": 24855858,
+      "doi": "10.15482/USDA.ADC/1526332",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "article_version": 1,
+      "file_id": 44531465,
+      "name": "README_Evett.txt",
+      "bytes": 26936,
+      "url": "https://ndownloader.figshare.com/files/44531465",
+      "official_md5": "5b95a2f5fca813c1f3128a1303011906"
+    }
+  ]
+}

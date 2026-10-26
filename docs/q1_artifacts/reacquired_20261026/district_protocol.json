@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "design": "leave one official USDA Iowa agricultural statistics district out; train other districts through 2017, evaluate excluded district during 2018-2025",
+  "groups": "All nine official agricultural district codes, 10 through 90, as recorded in the original USDA CSV",
+  "models": {
+    "trend_only": [
+      "year"
+    ],
+    "climate_only": [
+      "season_temp_mean_c",
+      "season_precip_mm"
+    ],
+    "trend_and_climate": [
+      "year",
+      "season_temp_mean_c",
+      "season_precip_mm"
+    ]
+  },
+  "ridge_alpha": 1.0,
+  "scaling": "training rows only; StandardScaler",
+  "selection": "No hyperparameter, district, boundary or buffer chosen from evaluation scores",
+  "uncertainty": "descriptive complete-year moving-block bootstrap; block length 3, 20000 draws",
+  "independence": "Nine spatial groups share eight weather years; districts are not nine independent temporal replicates",
+  "limits": "One state; no spatial buffer; retrospective additional audit; original national neural checkpoint not fitted or validated here",
+  "official_definition_url": "https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Frequently_Asked_Questions/index.php",
+  "official_map_url": "https://www.nass.usda.gov/Statistics_by_State/Iowa/Publications/Crop_Report/IA_Ag_Districts_Map.pdf"
+}

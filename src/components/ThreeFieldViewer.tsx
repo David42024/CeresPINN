@@ -44,13 +44,13 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   const stagePills = useMemo(() => {
     if (!simulation?.dailyRecords) return [];
     const stagesWanted = [
-      { code: 'VE', label: '🌱 VE Siembra' },
-      { code: 'V3', label: '🌿 V3 Plántula' },
-      { code: 'V6', label: '🌿 V6 Vegetativo' },
-      { code: 'VT', label: '🌾 VT Espiga' },
-      { code: 'R1', label: '🌽 R1 Floración' },
-      { code: 'R3', label: '🌽 R3 Llenado' },
-      { code: 'R6', label: '🚜 R6 Cosecha' },
+      { code: 'VE', label: `🌱 VE ${t('phenology.emergence')}` },
+      { code: 'V3', label: `🌿 V3 ${t('phenology.seedling')}` },
+      { code: 'V6', label: `🌿 V6 ${t('phenology.vegetative')}` },
+      { code: 'VT', label: `🌾 VT ${t('phenology.tassel')}` },
+      { code: 'R1', label: `🌽 R1 ${t('phenology.flowering')}` },
+      { code: 'R3', label: `🌽 R3 ${t('phenology.filling')}` },
+      { code: 'R6', label: `🚜 R6 ${t('phenology.harvest')}` },
     ];
     return stagesWanted.map((s) => {
       const idx = simulation.dailyRecords.findIndex((r) => r.stageCode === s.code);
@@ -60,7 +60,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
         day: idx >= 0 ? simulation.dailyRecords[idx].dap : null
       };
     }).filter((s) => s.index >= 0);
-  }, [simulation]);
+  }, [simulation, t]);
 
   // Controls state
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -90,6 +90,8 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
   });
 
   const dailyRecord: DailySimulationRecord | undefined = simulation?.dailyRecords[currentDayIndex];
+  const stageKey: Record<string, string> = { VE: 'emergence', V3: 'seedling', V6: 'vegetative', V12: 'vegetative', VT: 'tassel', R1: 'flowering', R3: 'filling', R6: 'harvest' };
+  const stageLabel = dailyRecord ? (stageKey[dailyRecord.stageCode] ? t(`phenology.${stageKey[dailyRecord.stageCode]}`) : dailyRecord.stage) : '';
 
   // Playback timer loop
   useEffect(() => {
@@ -502,7 +504,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
     const scene = sceneRef.current;
     const camera = cameraRef.current;
     if (!scene || !camera) {
-      setExportError('La escena 3D todavía no está disponible para exportar.');
+      setExportError(t('figure3d.unavailable'));
       return;
     }
     let exportRenderer: THREE.WebGLRenderer | null = null;
@@ -535,23 +537,23 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
       exportRenderer.render(scene, exportCamera);
 
       const context = outputCanvas.getContext('2d');
-      if (!context) throw new Error('No se pudo preparar la figura 3D de alta resolución.');
+      if (!context) throw new Error(t('figure3d.prepareError'));
       context.fillStyle = '#ffffff';
       context.fillRect(0, 0, width, outputCanvas.height);
       context.fillStyle = '#111827';
       context.font = 'bold 58px Arial';
       const modeTitle = {
-        soil_moisture: 'Humedad del suelo',
-        biomass: 'Biomasa del cultivo',
-        water_stress: 'Estrés hídrico del cultivo',
-        true_color: 'Vista 3D del cultivo',
+        soil_moisture: t('figure3d.soil'),
+        biomass: t('figure3d.biomass'),
+        water_stress: t('figure3d.stress'),
+        true_color: t('figure3d.view'),
       }[layerMode];
       context.fillText(`${modeTitle} — DAP ${dailyRecord?.dap ?? '—'}`, 90, 95);
       context.font = '34px Arial';
       const unitLabel = layerMode === 'soil_moisture'
-        ? 'Humedad volumétrica (%)'
-        : layerMode === 'biomass' ? 'Biomasa (kg/ha)' : layerMode === 'water_stress' ? 'Índice CWSI (0–1)' : 'Representación visual 3D';
-      context.fillText(`${unitLabel} | ${dailyRecord?.date ?? ''} | ${dailyRecord?.stage ?? ''}`, 90, 155);
+        ? t('figure3d.moistureUnit')
+        : layerMode === 'biomass' ? t('reportFigures.biomass') : layerMode === 'water_stress' ? 'CWSI (0–1)' : t('figure3d.visual');
+      context.fillText(`${unitLabel} | ${dailyRecord?.date ?? ''} | ${stageLabel}`, 90, 155);
       const selectedSoilMoisture = selectedDepth === 'top'
         ? dailyRecord?.soilMoistureTop
         : selectedDepth === 'mid' ? dailyRecord?.soilMoistureMid : dailyRecord?.soilMoistureDeep;
@@ -559,21 +561,21 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
         ? `${((selectedSoilMoisture ?? 0) * 100).toFixed(1)}%`
         : layerMode === 'biomass' ? `${dailyRecord?.biomassKgHa.toLocaleString() ?? '—'} kg/ha`
           : layerMode === 'water_stress' ? `${dailyRecord?.cwsi.toFixed(2) ?? '—'}`
-            : 'Sin variable escalar';
+            : t('figure3d.noScalar');
       const legend = {
-        soil_moisture: 'Leyenda del terreno: marrón seco → verde húmedo (≈10–35% vol.)',
-        biomass: 'Leyenda del terreno: oscuro → verde, 0–22 000 kg/ha',
-        water_stress: 'Leyenda del terreno: verde sin estrés → rojo estrés alto (CWSI 0–1)',
-        true_color: 'Leyenda: coloración visual del cultivo, sin escala cuantitativa',
+        soil_moisture: t('figure3d.soilLegend'),
+        biomass: t('figure3d.biomassLegend'),
+        water_stress: t('figure3d.stressLegend'),
+        true_color: t('figure3d.visualLegend'),
       }[layerMode];
       context.font = '28px Arial';
       context.fillText(
-        `Valor mostrado: ${scalarValue} | ${legend}`,
+        `${t('figure3d.displayedValue')}: ${scalarValue} | ${legend}`,
         90,
         210,
       );
       context.fillText(
-        'La escena representa el estado simulado del cultivo para el día seleccionado; no es una observación de campo.',
+        t('figure3d.explanation'),
         90,
         285,
       );
@@ -618,7 +620,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
           {dailyRecord && (
             <div className="px-3 py-1.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/70 backdrop-blur-md border border-emerald-200 dark:border-emerald-700/50 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center gap-1.5 shadow-lg">
               <Activity className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-              {t('threeFieldViewer.stageLabel')}: <strong className="font-bold text-slate-900 dark:text-white">{dailyRecord.stage}</strong> ({dailyRecord.stageCode})
+              {t('threeFieldViewer.stageLabel')}: <strong className="font-bold text-slate-900 dark:text-white">{stageLabel}</strong> ({dailyRecord.stageCode})
             </div>
           )}
 
@@ -640,7 +642,7 @@ export const ThreeFieldViewer: React.FC<ThreeFieldViewerProps> = ({
             type="button"
             onClick={() => void exportHighResolutionFigure()}
             className="px-3 py-1.5 rounded-xl bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1.5 shadow-xl hover:bg-slate-100 dark:hover:bg-slate-800"
-            aria-label="Exportar figura 3D como PNG a 600 DPI"
+            aria-label={t('exportData.exportFigure', { title: t('figure3d.view'), format: 'PNG 600 DPI' })}
           >
             <Download className="w-3.5 h-3.5" /> PNG 600 DPI
           </button>

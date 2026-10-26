@@ -231,6 +231,7 @@ def bootstrap_intervals(
 
 
 def main() -> None:
+    torch.set_num_threads(1)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     train, test = load_temporal_split()
     x_train = train[FEATURES].to_numpy(float)

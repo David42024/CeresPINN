@@ -7,6 +7,23 @@ coverage/
 .env*
 !.env.example
 
+# Compressed packages, temporary review files, and private manuscripts
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tar.xz
+*.docx
+/.tmp/
+/.audit/
+/.article_revision*/
+/deliverables/
+/screenshots/
+/ml_lab/reports/
+
 # Python
 __pycache__/
 .pytest_cache/
@@ -27,6 +44,14 @@ data/*
 !data/README.md
 !data/cerespinn_training_iowa.csv
 !data/cerespinn_training_preprocessed.csv
+!data/cerespinn_county_audit.csv
+!data/bushland_processed/
+!data/bushland_processed/**
+!data/external/
+data/external/*
+!data/external/bushland/
+data/external/bushland/*
+!data/external/bushland/acquisition_manifest.json
 
 # Keep arbitrary training artifacts out of Git, but ship the active production
 # checkpoint and its exact normalization metadata with the Render image.

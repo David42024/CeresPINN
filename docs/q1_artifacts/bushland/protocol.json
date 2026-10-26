@@ -1,0 +1,22 @@
+{
+  "protocol_version": "1.0",
+  "design": "retrospective external-source transportability and process-coupling experiment",
+  "registered_before_model_fitting": true,
+  "preregistration_claim": false,
+  "endpoint_preview_disclosure": "Workbook structure and some 2018 endpoint rows were inspected during extraction; no untouched-data or independent-reviewer claim is made.",
+  "calibration_years": [1989, 1990, 1994, 2013],
+  "evaluation_years": [2016, 2018],
+  "site": "USDA-ARS Bushland Texas, 35.186714 N, -102.094189 E, 1170 m",
+  "site_independence": "External measured source; one site with four adjacent fields, not four independent regions.",
+  "evaluation_policy": "Do not choose hyperparameters or refit parameters after examining evaluation model scores.",
+  "architecture": "Three-layer conservative bucket water balance, thermal-time LAI, radiation biomass, and training-calibrated state-to-yield mapping; original archived neural model remains unchanged.",
+  "parameters_to_fit": ["maximum_LAI", "thermal_time_to_peak_LAI", "thermal_time_to_senescence", "crop_ET_coefficient", "radiation_use_efficiency", "harvest_index"],
+  "calibration_targets": ["LAI", "dry_biomass", "daily_ET", "soil_water_content", "dry_grain_yield"],
+  "units": "Daily precipitation/irrigation/ET in mm; radiation MJ/m2; biomass and dry grain kg/ha; soil water m3/m3. Standard-moisture yield is a separate endpoint.",
+  "baselines": ["training_mean_yield", "weather_and_irrigation_ridge", "uncalibrated_process", "calibrated_coupled_process"],
+  "inference_units": "Field-season summaries nested within two evaluation years; daily and span records do not add independent seasons.",
+  "management_contrast": "Observed NW 75 percent versus SW 100 percent irrigation is confounded by field; no causal treatment-effect or 50-to-75-percent extrapolation claim.",
+  "missing_inputs": "Retain raw missing markers; use recorded irrigation event log when daily irrigation is missing, measured station rain when lysimeter catch is missing, and flag all substitutions. Derive unmeasured pressure from documented site elevation. Interpolate at most two isolated missing weather days; fail on longer gaps.",
+  "initial_state": "Use a pre-plant soil profile when available; otherwise declared field-capacity initialization. Do not assimilate future state observations during evaluation.",
+  "outputs": ["prediction-level CSVs", "calibration_parameters.json", "external_metrics.json", "mass_balance_residuals.csv", "acquisition_manifest.json"]
+}
