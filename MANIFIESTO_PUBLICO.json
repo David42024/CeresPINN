@@ -4208,8 +4208,8 @@
     },
     {
       "path": "src/components/MainDashboard.tsx",
-      "bytes": 28481,
-      "sha256": "e2554e73d4dcf860cd13153d08a1c8687f9701779d3099327143b4847887bb95"
+      "bytes": 28008,
+      "sha256": "98e181159859a03fe5a5688ef598289bac8a9fa39d64cbd1f5a8738aa667b2ce"
     },
     {
       "path": "src/components/ReportsModule.tsx",
@@ -4268,18 +4268,18 @@
     },
     {
       "path": "src/i18n/locales/en.json",
-      "bytes": 30575,
-      "sha256": "256efd5639ae37fdca20a15a8504664495263de959940320ec5d6aa4249f1c78"
+      "bytes": 31106,
+      "sha256": "29b9940945dd7feb190e87d038508f2e2df6e1b18a3d322878a7b20419fcf01c"
     },
     {
       "path": "src/i18n/locales/es.json",
-      "bytes": 32268,
-      "sha256": "3800d905c68e47ea43215c2985a680e978c932ae8769ca94b148d9fbb110ac8a"
+      "bytes": 32855,
+      "sha256": "d329f22a60547d128c70fc8f4134ec468c301ce4d0bdbe509f8764adb4f0561e"
     },
     {
       "path": "src/i18n/locales/pt.json",
-      "bytes": 32363,
-      "sha256": "4bca3fc445034841aaab37a9e5066633bddc67a8d52f95a29796ed3f52821af0"
+      "bytes": 32939,
+      "sha256": "87ea4e9e591469cea7bae6b6cc94312ae8d48b17ceefe7a209e2417e0ee1ae50"
     },
     {
       "path": "src/index.css",

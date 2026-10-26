@@ -1,4 +1,10 @@
 {
+  "metricGuide": {
+    "yield": "Yield is simulated. Potential yield is a heuristic reference, not a validated upper bound.",
+    "stress": "The water stress index is a simulator estimate; its values do not validate physiological effects or management decisions.",
+    "biomass": "Biomass and leaf area index are simulated states; LAI expresses leaf area per unit of ground area.",
+    "water": "Productivity relates simulated yield to estimated evapotranspired water; it does not establish a validated efficiency threshold."
+  },
   "app": {
     "headerSubtitle": "Climate simulation prototype for maize",
     "quickRunTitle": "Recalculate the simulation using current conditions",

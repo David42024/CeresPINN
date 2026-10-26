@@ -1,4 +1,10 @@
 {
+  "metricGuide": {
+    "yield": "El rendimiento es una simulación. El valor potencial es una referencia heurística, no un techo validado.",
+    "stress": "El índice de estrés hídrico es una estimación del simulador; sus valores no validan efectos fisiológicos ni decisiones de manejo.",
+    "biomass": "La biomasa y el índice de área foliar son estados simulados; LAI expresa superficie foliar por superficie de suelo.",
+    "water": "La productividad relaciona el rendimiento simulado con el agua evapotranspirada estimada; no establece un umbral de eficiencia validado."
+  },
   "app": {
     "headerSubtitle": "Prototipo de simulación climática para maíz",
     "quickRunTitle": "Recalcular la simulación con las condiciones actuales",
