@@ -1,0 +1,78 @@
+{
+  "study_doi": "10.15482/USDA.ADC/1254006",
+  "metadata_and_source_review": "retrospective; no treatment effects fitted",
+  "target_percent": {
+    "1": 100,
+    "2": 85,
+    "3": 75,
+    "4": 70,
+    "5": 55,
+    "6": 40
+  },
+  "coverage": [
+    {
+      "year": 2008,
+      "plot_years": 24,
+      "treatments": 6,
+      "blocks": 4,
+      "lai_observed": 0,
+      "biomass_observed": 24,
+      "yield_observed": 24,
+      "dry_yield_conversion_max_abs_difference_kg_ha": 0.0
+    },
+    {
+      "year": 2009,
+      "plot_years": 24,
+      "treatments": 6,
+      "blocks": 4,
+      "lai_observed": 5,
+      "biomass_observed": 24,
+      "yield_observed": 24,
+      "dry_yield_conversion_max_abs_difference_kg_ha": 0.0
+    },
+    {
+      "year": 2010,
+      "plot_years": 24,
+      "treatments": 6,
+      "blocks": 4,
+      "lai_observed": 16,
+      "biomass_observed": 24,
+      "yield_observed": 24,
+      "dry_yield_conversion_max_abs_difference_kg_ha": 0.0
+    },
+    {
+      "year": 2011,
+      "plot_years": 24,
+      "treatments": 6,
+      "blocks": 4,
+      "lai_observed": 24,
+      "biomass_observed": 24,
+      "yield_observed": 24,
+      "dry_yield_conversion_max_abs_difference_kg_ha": 0.0
+    }
+  ],
+  "source_workbooks": [
+    {
+      "file": "LIRF Maize 2008 r1_0.xlsx",
+      "sha256": "c892a002d1ece2b96a3c5f6c577edd402f646c50483d9d131566a42fad238add"
+    },
+    {
+      "file": "LIRF Maize 2009 r1_0.xlsx",
+      "sha256": "d046d0795e5a977d9aedaa018a3d5c9ab456768f9427204379b8d63a44f94b46"
+    },
+    {
+      "file": "LIRF Maize 2010 r1_0.xlsx",
+      "sha256": "6f795043f40fb0f9d47af8c1aab9ac67ec23d8607d0bd01893c6f0c3ef93ce1f"
+    },
+    {
+      "file": "LIRF Maize 2011 r1_0.xlsx",
+      "sha256": "44b31f38675169c0c7f500dee77f03d08e3e9f30f3cd7588232e2bbcf46543d0"
+    }
+  ],
+  "source_methodology_sha256": "1f1b7fbbb2098992bf7ea589c3801786f6ef6b160ce0fcfb70599eaf159d915a",
+  "yield_unit": "kg/ha at 15.5% grain moisture and kg/ha dry mass, separate columns",
+  "compatibility": "common site, randomized-block design and yield units; treatment definitions differ, no automatic code or percentage mapping",
+  "limitations": "one research site; four years; 2011 nitrogen differs for some treatments; observed LAI missing by design; 2012–2013 stage-specific treatments differ",
+  "total_plot_years": 96,
+  "inventory_sha256": "1e5b493b9b7728e6245a2936dd13c358cf321b5ee355fa03bb0348e77fe77653"
+}

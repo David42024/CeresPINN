@@ -72,6 +72,11 @@
       "sha256": "d568a68c8fa8565225bec070c8d59b01776ea144595885327fb1469855852f20"
     },
     {
+      "path": "backend/tests/test_colorado_early_study.py",
+      "bytes": 1030,
+      "sha256": "663b95150b5e5e0f384ce60f5db6a88de5f3c3d3fa81b3b515fbf0cffd0c4f3e"
+    },
+    {
       "path": "backend/tests/test_colorado_irrigation_audit.py",
       "bytes": 1606,
       "sha256": "244ee32815ec2922654d2b37056f9daffa54e50a74093f3f43ea543fa4a21b55"
@@ -3647,6 +3652,21 @@
       "sha256": "9c6507e7c596278062308a5717bece661770645548dc0c7f5cc09eee7cb7585b"
     },
     {
+      "path": "docs/q1_artifacts/colorado_early_comparability_20261026/README.md",
+      "bytes": 3513,
+      "sha256": "f319552ccd56c2487c9b3ffba92f3fbebe30feb8b81aa7d73b829b0138fb4464"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_early_comparability_20261026/inventory.json",
+      "bytes": 2496,
+      "sha256": "da55a3b6acb1b0d2029faacb8649a353957afcb6ae98631ec929a54c86eb9b57"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_early_comparability_20261026/plot_inventory.csv",
+      "bytes": 13016,
+      "sha256": "1e5b493b9b7728e6245a2936dd13c358cf321b5ee355fa03bb0348e77fe77653"
+    },
+    {
       "path": "docs/q1_artifacts/colorado_irrigation_20261026/protocol.json",
       "bytes": 1466,
       "sha256": "1f172930ebbc1d7609bc16901617be6b54caa415dd2baa1ea4f24cb3a603d49d"
@@ -4040,6 +4060,11 @@
       "path": "scripts/acquire_colorado_irrigation.py",
       "bytes": 2832,
       "sha256": "a1e74e51d8f073e4e40bc0944d1d1702303ac9b2b15226daf7e59843e386bf81"
+    },
+    {
+      "path": "scripts/audit_colorado_early_study.py",
+      "bytes": 4885,
+      "sha256": "b2a93b41cdaa42086fc8d6ae9c68fac0d30bc2b226e41b75e69da0e0f1542ff7"
     },
     {
       "path": "scripts/audit_colorado_irrigation.py",
