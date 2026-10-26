@@ -171,7 +171,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
       </div>
 
       {!strategyResults && !strategyError && (
-        <div className="text-xs text-cyan-600 dark:text-cyan-300">Consultando estrategias en el PINN de Render…</div>
+        <div className="text-xs text-cyan-600 dark:text-cyan-300">{t('scientificScope.computingScenarios')}</div>
       )}
       {strategyError && (
         <div className="text-xs text-rose-600 dark:text-rose-300">No se pudieron calcular estrategias con el PINN remoto: {strategyError}</div>
@@ -188,7 +188,7 @@ export const AdaptationPanel: React.FC<AdaptationPanelProps> = ({
           targetRef={chartRef}
           options={{
             title: 'Rendimiento proyectado: escenario base y estrategias de adaptación',
-            interpretation: 'Las barras comparan el rendimiento proyectado por el motor PINN para el escenario base y las tres estrategias agronómicas.',
+            interpretation: t('scientificScope.scenarioExplanation'),
             xAxisLabel: 'Rendimiento proyectado (t/ha)',
             yAxisLabel: 'Estrategia de manejo',
             fileName: 'cerespinn_estrategias_adaptacion',

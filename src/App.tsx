@@ -464,7 +464,7 @@ export const App: React.FC = () => {
                   ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
                   : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/40'
               }`}>
-                {modelOnline ? `PyTorch PINN · datos reales${runtimeModelStatus.r2Score !== undefined ? ` (R² ${runtimeModelStatus.r2Score.toFixed(4)})` : ''}` : 'No disponible'}
+                {modelOnline ? `${t('baselineAudit.pytorchModel')}${runtimeModelStatus.r2Score !== undefined ? ` (R² ${runtimeModelStatus.r2Score.toFixed(4)})` : ''}` : t('baselineAudit.unavailable')}
               </span>
             </div>
             {dbHealth && (
@@ -519,7 +519,7 @@ export const App: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Sprout className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                     <h2 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
-                      Gemelo Digital 3D & Dinámica Fenológica (Zea mays L.)
+                      {t('baselineAudit.prototypeView')}
                     </h2>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-300 max-w-3xl">

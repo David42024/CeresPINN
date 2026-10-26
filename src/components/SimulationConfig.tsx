@@ -109,7 +109,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
         <div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Sliders className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            Configuración de Simulación & Forzamiento Biofísico PINN
+            {t('baselineAudit.simulationConfig')}
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 max-w-2xl">
             <strong>¿Para qué sirve?</strong> Permite parametrizar el forzamiento climático, la fenología varietal y el balance hídrico demostrativo de tres capas para <strong className="text-slate-800 dark:text-slate-200">{field.name}</strong>.

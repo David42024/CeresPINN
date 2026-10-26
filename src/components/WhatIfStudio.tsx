@@ -74,7 +74,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
         simulateScenario(field, configC),
       ]);
 
-      // Satisfying PINN tensor calculation latency for perceived physics calculation
+      // Keep the loading indicator visible briefly during the comparison.
       await new Promise((r) => setTimeout(r, 600));
 
       setResultA(resA);
@@ -175,7 +175,7 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
             {t('whatIfStudio.title', 'Módulo de Análisis Comparativo "¿Qué pasa si?" (What-If Studio)')}
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-            <strong>¿Para qué sirve?</strong> Evalúa y contrasta 3 estrategias agronómicas simultáneas bajo forzamiento climático PINN. Permite comparar la Línea Base con dos alternativas de adaptación observando la brecha de rendimiento (Δ kg/ha), el ahorro de agua y el margen económico en tiempo real.
+            {t('scientificScope.scenarioExplanation')}
           </p>
         </div>
 
@@ -190,17 +190,17 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
                 ? 'bg-slate-700 cursor-not-allowed opacity-80'
                 : 'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 shadow-emerald-500/25 hover:shadow-emerald-500/40 ring-2 ring-emerald-400/30'
             }`}
-            title="Lanzar simulación comparativa de los 3 escenarios mediante tensores PINN"
+            title={t('scientificScope.compareScenarios')}
           >
             {isComparing ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Simulando Redes PINN...</span>
+                <span>{t('scientificScope.computingScenarios')}</span>
               </>
             ) : (
               <>
                 <Zap className="w-4 h-4 text-amber-300 fill-amber-300 animate-pulse" />
-                <span>⚡ Comparar 3 Escenarios Ahora</span>
+                <span>⚡ {t('scientificScope.compareScenarios')}</span>
               </>
             )}
           </button>
@@ -219,8 +219,8 @@ export const WhatIfStudio: React.FC<WhatIfStudioProps> = ({ field, baseConfig, i
             <Sparkles className="w-5 h-5 animate-spin" />
           </div>
           <div>
-            <strong className="text-emerald-300 block font-semibold">Resolviendo Tensores de EDPs Acopladas PINN...</strong>
-            <span className="text-[11px] text-slate-300">Comparando el balance hídrico demostrativo de 0-100 cm y la evapotranspiración parametrizada bajo tres escenarios climáticos.</span>
+            <strong className="text-emerald-300 block font-semibold">{t('scientificScope.computingScenarios', 'Calculando las simulaciones exploratorias...')}</strong>
+            <span className="text-[11px] text-slate-300">{t('scientificScope.comparingWater')}</span>
           </div>
         </div>
       )}

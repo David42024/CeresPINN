@@ -91,7 +91,37 @@ test('ethics and equity limitations are enforced in API, UI, and exports', () =>
   assert.match(api, /scientific_scope\?\.use_classification !== 'exploratory_research_only'/);
   assert.match(app, /<ScientificScopeNotice \/>/);
   assert.match(notice, /scientificScope\.prohibited/);
-  assert.match(reports, /ÉTICA, EQUIDAD Y ALCANCE DE DECISIÓN/);
-  assert.match(reports, /Alcance_cientifico/);
+  assert.match(reports, /scientificScope\.title/);
+  assert.match(reports, /reportFigures\.scopeSheet/);
+  for (const lang of ['es', 'en', 'pt']) {
+    const translations = JSON.parse(source(`src/i18n/locales/${lang}.json`));
+    for (const key of ['title', 'summary', 'limitSoil', 'prohibited', 'required']) {
+      assert.ok(translations.scientificScope[key], `${lang} is missing scientificScope.${key}`);
+    }
+    assert.ok(translations.reportFigures.scopeSheet, `${lang} is missing the scope worksheet label`);
+  }
   assert.doesNotMatch(backend, /mitigar hasta 45%|Variedad recomendada|Adelantar fecha de siembra 12 días/);
+});
+
+test('rolling baseline results match predictions and expose limitations in all languages', () => {
+  const audit = JSON.parse(source('docs/q1_artifacts/revision_20261026/audit.json'));
+  const rows = source('docs/q1_artifacts/revision_20261026/rolling_origin_predictions.csv').trim().split(/\r?\n/);
+  const headers = rows.shift()!.split(',');
+  const records = rows.map(line => Object.fromEntries(line.split(',').map((value, index) => [headers[index], Number(value)])));
+  assert.equal(new Set(records.map(row => row.year)).size, 20);
+  for (const model of ['monotonic_all', 'linear_all', 'ridge_all', 'mlp_all']) {
+    const score = audit.national.scores.find((item: { model: string }) => item.model === model);
+    const rmse = Math.sqrt(records.reduce((sum, row) => sum + (row[model] - row.observed) ** 2, 0) / records.length);
+    assert.ok(Math.abs(rmse - score.rmse_kg_ha) < 0.001, `${model} differs from frozen predictions`);
+    assert.equal(score.block_bootstrap_95_ci.rmse_kg_ha.length, 2);
+  }
+  assert.ok(audit.national.scores.find((item: { model: string }) => item.model === 'ridge_all').rmse_kg_ha <
+    audit.national.scores.find((item: { model: string }) => item.model === 'monotonic_all').rmse_kg_ha);
+  for (const lang of ['es', 'en', 'pt']) {
+    const translations = JSON.parse(source(`src/i18n/locales/${lang}.json`));
+    for (const key of ['scope', 'design', 'interpretation', 'effect', 'sobolScope']) {
+      assert.ok(translations.baselineAudit[key], `${lang} is missing baselineAudit.${key}`);
+    }
+  }
+  assert.doesNotMatch(source('src/components/WhatIfStudio.tsx'), /Resolviendo Tensores de EDPs Acopladas/i);
 });

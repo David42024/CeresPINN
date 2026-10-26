@@ -3939,12 +3939,12 @@
     {
       "path": "src/App.tsx",
       "bytes": 42714,
-      "sha256": "e70836de2b683d88076a8fd74ef45dc927867ec8059af1afc7f20e9e72b12888"
+      "sha256": "566d1ea15fe5b7db7952bd672e4b426b510c61ab9667c32a3929e00a0536e343"
     },
     {
       "path": "src/components/AdaptationPanel.tsx",
-      "bytes": 16690,
-      "sha256": "c46469722e29e32a1f11f3444d625c0595ceead6657a3f0a0da441bf21c67c18"
+      "bytes": 16599,
+      "sha256": "a30c17da2d5225fa1cdc6041e240d3a201fae66ce14d5be08770545bd85aef1d"
     },
     {
       "path": "src/components/ChatbotWidget.tsx",
@@ -3998,8 +3998,8 @@
     },
     {
       "path": "src/components/ReportsModule.tsx",
-      "bytes": 26116,
-      "sha256": "35271d897001e8013cff1b4db72ab2a9fe3e702da03cb6aaae852f5d70f3483b"
+      "bytes": 26506,
+      "sha256": "3fe330da2da709a1da0c6c4920a55f8a7fda3b8e69e7ad986f0f78861b45ee9f"
     },
     {
       "path": "src/components/ScientificScopeNotice.tsx",
@@ -4008,8 +4008,8 @@
     },
     {
       "path": "src/components/SimulationConfig.tsx",
-      "bytes": 33444,
-      "sha256": "938af434b9cc520c3c8997accaff710c6f246205a06c4c8b78e90d89b57058fe"
+      "bytes": 33422,
+      "sha256": "f99912337e5f74c6c8bfb144b3c1f09a6bca2ead043b19e9aaa206cbd5f08b8b"
     },
     {
       "path": "src/components/TableExportButton.tsx",
@@ -4028,13 +4028,13 @@
     },
     {
       "path": "src/components/ValidationReport.tsx",
-      "bytes": 22749,
-      "sha256": "1d326cb72a162de5e267d73d97d3e5f8812951f418472b53102a9dcce089c189"
+      "bytes": 24857,
+      "sha256": "097539bcc5b54733fce1c9e1499829af5563f75d86925f74ad4761f47a7ab069"
     },
     {
       "path": "src/components/WhatIfStudio.tsx",
-      "bytes": 43832,
-      "sha256": "b0e50921586ad5d185fed30cb3b006f255ad4169d37cb189ec9d492268de2f59"
+      "bytes": 43507,
+      "sha256": "c719b293167f05f6bbd299097441278e015c768c847687b5b33ebd5bc1520ac6"
     },
     {
       "path": "src/context/ThemeContext.tsx",
@@ -4053,18 +4053,18 @@
     },
     {
       "path": "src/i18n/locales/en.json",
-      "bytes": 25577,
-      "sha256": "b429268bd7f0b02e3d4be7f6d0cd3abe6d4b8539bf5f88a4a48b81d8111781d9"
+      "bytes": 30575,
+      "sha256": "256efd5639ae37fdca20a15a8504664495263de959940320ec5d6aa4249f1c78"
     },
     {
       "path": "src/i18n/locales/es.json",
-      "bytes": 26894,
-      "sha256": "3237e9e75ff2a6b435a3af1fa52cf03b748807fb129350b75248ff25f635ffbd"
+      "bytes": 32268,
+      "sha256": "3800d905c68e47ea43215c2985a680e978c932ae8769ca94b148d9fbb110ac8a"
     },
     {
       "path": "src/i18n/locales/pt.json",
-      "bytes": 27033,
-      "sha256": "aea64d69daa93629c671feccf5b203a975fd48988a613afb4a15921d97c715bf"
+      "bytes": 32363,
+      "sha256": "4bca3fc445034841aaab37a9e5066633bddc67a8d52f95a29796ed3f52821af0"
     },
     {
       "path": "src/index.css",
@@ -4098,8 +4098,8 @@
     },
     {
       "path": "tests/pinn-wiring.test.ts",
-      "bytes": 4631,
-      "sha256": "66045349fb6fd715a5179d10f71792239fcb2e6ae673367d882bb26038e77633"
+      "bytes": 6682,
+      "sha256": "09babd636274528a597391b27b8296bd79b3516e5b28d557e5689c6db6a3e739"
     },
     {
       "path": "tsconfig.json",
