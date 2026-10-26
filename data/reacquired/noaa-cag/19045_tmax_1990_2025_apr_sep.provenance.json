@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-045/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:04.543910+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:05 GMT"
+  },
+  "sha256": "171a068dd7137bf2f0165d26d2f9c5c2a3ef7b2b7a3918a9d99d4b99bb020a81",
+  "bytes": 978,
+  "path": "data/reacquired/noaa-cag/19045_tmax_1990_2025_apr_sep.json",
+  "fips": "19045",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Clinton County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

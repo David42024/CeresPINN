@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-169/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:47.486980+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:48 GMT"
+  },
+  "sha256": "1dda7cc2a5ab2190f7eec009e299ba7e0982f3b59418207c270088ff187cea51",
+  "bytes": 976,
+  "path": "data/reacquired/noaa-cag/19169_tmax_1990_2025_apr_sep.json",
+  "fips": "19169",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Story County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

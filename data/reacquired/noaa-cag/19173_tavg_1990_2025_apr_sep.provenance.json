@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-173/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:48.103201+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:48 GMT"
+  },
+  "sha256": "2cce7ad6f17033b3bbbf37cb5eb40e37ad3bd6a0dbf7b9024ef2b5e0c41c9155",
+  "bytes": 981,
+  "path": "data/reacquired/noaa-cag/19173_tavg_1990_2025_apr_sep.json",
+  "fips": "19173",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Taylor County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

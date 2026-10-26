@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-025/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:58.234686+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:58 GMT"
+  },
+  "sha256": "57abd985e99c34d2c4c7a77b2a617a5b9e20339854a3471374b53da5b919d938",
+  "bytes": 1003,
+  "path": "data/reacquired/noaa-cag/19025_pcp_1990_2025_apr_sep.json",
+  "fips": "19025",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Calhoun County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

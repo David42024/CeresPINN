@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-191/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:53.372442+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:54 GMT"
+  },
+  "sha256": "833a65d86e5e62a6480f2710b064cb2149bc1333c5e96da84f509fcf124f1204",
+  "bytes": 983,
+  "path": "data/reacquired/noaa-cag/19191_tmax_1990_2025_apr_sep.json",
+  "fips": "19191",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Winneshiek County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

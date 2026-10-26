@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-039/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:02.519016+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:02 GMT"
+  },
+  "sha256": "c4d3d2a9ba5fd1f256a20e559918d90d91968d8c438e7da70255b7a26cf09548",
+  "bytes": 981,
+  "path": "data/reacquired/noaa-cag/19039_tmax_1990_2025_apr_sep.json",
+  "fips": "19039",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Clarke County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

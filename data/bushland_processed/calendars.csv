@@ -1,0 +1,21 @@
+year,field,planting_date,planting_doy,source_file,source_sheet,source_row,source_event
+1989,NE,1989-04-26,116,1989_East_Maize_Calendar.xlsx,1989 E Maize Calendar,9,Planted maize (Pioneer 3321 variety) at 7 inch (17.8 cm) plant spacing and hand planted lysimeters
+1989,SE,1989-04-26,116,1989_East_Maize_Calendar.xlsx,1989 E Maize Calendar,9,Planted maize (Pioneer 3321 variety) at 7 inch (17.8 cm) plant spacing and hand planted lysimeters
+1990,NE,1990-05-09,129,1990_East_Maize_Calendar.xlsx,1990 E Maize Calendar,10,"Planted maize (Pioneer 3124) at 7-8"" (17.8- 20.3 cm) spacing)"
+1990,SE,1990-05-09,129,1990_East_Maize_Calendar.xlsx,1990 E Maize Calendar,10,"Planted maize (Pioneer 3124) at 7-8"" (17.8- 20.3 cm) spacing)"
+1994,NE,1994-04-14,104,1994_East_Maize_Calendar.xlsx,1994 E Maize Calendar,8,104 Planted NE field - Pioneer 3737 short season hybrid maize
+1994,SE,1994-04-14,104,1994_East_Maize_Calendar.xlsx,1994 E Maize Calendar,9,104 Planted SE field - Pioneer 3245 long season hybrid maize
+1994,NW,1994-04-13,103,1994_West_Maize_Calendar.xlsx,1994 W Maize Calendar,6,103 Planted NW field & Lysimeter with Pioneer 3737 short season hybrid maize as a dryland crop
+1994,SW,1994-04-14,104,1994_West_Maize_Calendar.xlsx,1994 W Maize Calendar,7,104 Planted SW Lysimeter and field with Pioneer 3737 short season hybrid maize as a dryland crop
+2013,NE,2013-05-22,142,2013_East_Maize-Calendar.xlsx,2013 E Maize Calendar,6,"Started planting east drip with Pioneer Maize variety 1151HR aqua max at a rate of 33000 seeds/acre (81,544 seeds/ha)"
+2013,SE,2013-05-22,142,2013_East_Maize-Calendar.xlsx,2013 E Maize Calendar,6,"Started planting east drip with Pioneer Maize variety 1151HR aqua max at a rate of 33000 seeds/acre (81,544 seeds/ha)"
+2013,NW,2013-05-16,136,2013_West_Maize_Calendar.xlsx,2013 W Maize Calendar,7,"Started planting west field with Pioneer Maize (maize) variety 1151HR Aqua Max at a rate of 33000 seeds per acre (81,545 seeds/ha)"
+2013,SW,2013-05-16,136,2013_West_Maize_Calendar.xlsx,2013 W Maize Calendar,7,"Started planting west field with Pioneer Maize (maize) variety 1151HR Aqua Max at a rate of 33000 seeds per acre (81,545 seeds/ha)"
+2016,NE,2016-05-10,131,2016_East_Maize_Calendar_0.xlsx,2016 E Maize Calendar,23,"Planted east lysimeter field and lysimeter boxes with Pioneer 1151 Acre Max at 35,000 seeds/acre (86,450 seeds/ha)"
+2016,SE,2016-05-10,131,2016_East_Maize_Calendar_0.xlsx,2016 E Maize Calendar,23,"Planted east lysimeter field and lysimeter boxes with Pioneer 1151 Acre Max at 35,000 seeds/acre (86,450 seeds/ha)"
+2016,NW,2016-05-11,132,2016_West_Maize_Calendar_0.xlsx,2016 W Maize Calendar,19,"Planted Pioneer 1151 AcreMax hybrid maize at 35,400 seeds/acre (87,438 seeds/ha)"
+2016,SW,2016-05-11,132,2016_West_Maize_Calendar_0.xlsx,2016 W Maize Calendar,19,"Planted Pioneer 1151 AcreMax hybrid maize at 35,400 seeds/acre (87,438 seeds/ha)"
+2018,NE,2018-05-23,143,2018_East_Maize_Calendar_0.xlsx,2018 E Maize Calendar,21,"Planted field with Pioneer 1151 (<80%Bt)/ Roundup Ready 2/ AquaMax at a rate of 35,000 seeds/ac (86,450 seeds/ha)"
+2018,SE,2018-05-23,143,2018_East_Maize_Calendar_0.xlsx,2018 E Maize Calendar,21,"Planted field with Pioneer 1151 (<80%Bt)/ Roundup Ready 2/ AquaMax at a rate of 35,000 seeds/ac (86,450 seeds/ha)"
+2018,NW,2018-05-24,144,2018_West_Maize_Calendar.xlsx,2018 W Maize Calendar,15,"Planted field with Pioneer 1151 (<80%Bt)/ Roundup Ready 2/ AquaMax @ a rate of 35,000 seeds/ac (86,450 seeds/ha)"
+2018,SW,2018-05-24,144,2018_West_Maize_Calendar.xlsx,2018 W Maize Calendar,15,"Planted field with Pioneer 1151 (<80%Bt)/ Roundup Ready 2/ AquaMax @ a rate of 35,000 seeds/ac (86,450 seeds/ha)"

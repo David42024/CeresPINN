@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-037/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:01.963959+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:02 GMT"
+  },
+  "sha256": "5e8c5f2f5b70e269db8044c696a43ee843280ebc9a21756e4515bf1910ac9c42",
+  "bytes": 1002,
+  "path": "data/reacquired/noaa-cag/19037_pcp_1990_2025_apr_sep.json",
+  "fips": "19037",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Chickasaw County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

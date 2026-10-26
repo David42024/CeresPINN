@@ -580,7 +580,7 @@ export const App: React.FC = () => {
                     <option value="rainfed">🌧️ Secano Estricto (Temporal)</option>
                     <option value="deficit_50">💧 Déficit Controlado (50%)</option>
                     <option value="deficit_75">💧 Déficit Moderado (75%)</option>
-                    <option value="optimal_100">💦 Riego Óptimo (100% ETc)</option>
+                    <option value="optimal_100">💦 Riego al 100% ETc (simulado)</option>
                     <option value="smart_sensor">📡 Sensores Inteligentes</option>
                   </select>
                 </div>

@@ -41,17 +41,9 @@ def main():
     # Excluimos variables text y outliers para el entrenamiento
     df = df[~df['is_outlier']].copy()
     
-    features = [
-        "year",
-        "season_temp_mean_c",
-        "season_tmax_mean_c",
-        "season_precip_mm",
-        "gdd",
-        "cdd",
-        "heat_days_30c",
-        "heat_days_35c",
-        "vpd_mean_kpa"
-    ]
+    # CAG cdd denotes cooling degree days, not consecutive dry days.
+    # Seasonal means cannot supply observed GDD, heat-day counts or VPD.
+    features = ["year", "season_temp_mean_c", "season_precip_mm"]
     target = "yield_kg_ha"
     
     # Fase 4: Diseño de Validación (Train <= 2017, Test >= 2018)
@@ -72,6 +64,21 @@ def main():
         "HistGradientBoosting": HistGradientBoostingRegressor(max_iter=100, min_samples_leaf=4, random_state=42),
         "MLP_Small": MLPRegressor(hidden_layer_sizes=(16, 8), max_iter=500, random_state=42)
     }
+
+    # Choose the algorithm without inspecting any 2018-2025 target. The
+    # historical tuning window is separate from the final evaluation window.
+    selection_train = train_df[train_df['year'] <= 2013]
+    selection_valid = train_df[train_df['year'].between(2014, 2017)]
+    if selection_train.empty or selection_valid.empty or test_df.empty:
+        raise ValueError("Training, 2014-2017 selection, and future evaluation data are required")
+    from sklearn.base import clone
+    selection_rmse = {}
+    for name, estimator in models.items():
+        candidate = Pipeline([('scaler', StandardScaler()), ('model', clone(estimator))])
+        candidate.fit(selection_train[features].values, selection_train[target].values)
+        prediction = candidate.predict(selection_valid[features].values)
+        selection_rmse[name] = float(np.sqrt(mean_squared_error(selection_valid[target], prediction)))
+    selected_name = min(selection_rmse, key=selection_rmse.get)
     
     results = {}
     best_model_name = None
@@ -112,16 +119,17 @@ def main():
         
         print(f"  Resultados: R2={r2:.4f}, MAE={mae:.2f}, RMSE={rmse:.2f}, RMSE Espacial={spatial_rmse_mean:.2f}")
         
-        if rmse < best_rmse:
+        if name == selected_name:
             best_rmse = rmse
             best_model_name = name
             best_pipeline = pipeline
 
     print(f"\nMejor modelo seleccionado para Producción: {best_model_name}")
     
-    # Fase 7: Empaquetar el mejor modelo entrenándolo sobre todo el dataset (1990-2025)
-    X_all = df[features].values
-    y_all = df[target].values
+    # Keep the evaluated training boundary in the exported artifact. Including
+    # the future targets would invalidate the artifact's reported holdout scope.
+    X_all = train_df[features].values
+    y_all = train_df[target].values
     best_pipeline.fit(X_all, y_all)
     
     domain = {}
@@ -136,7 +144,7 @@ def main():
     metadata = {
         "model_name": "CeresYield-Spatial",
         "model_version": "4.0.0",
-        "model_verified": True,
+        "model_verified": False,
         "framework": "scikit-learn",
         "algorithm": best_model_name,
         "dataset_sha256": hash_dataframe(df),
@@ -146,10 +154,14 @@ def main():
         "geographic_scope": "iowa_statewide",
         "metrics": results[best_model_name],
         "metrics_all_models": results,
+        "algorithm_selection": {"train_end": 2013, "validation_years": [2014, 2015, 2016, 2017],
+                                "rmse_kg_ha": selection_rmse, "uses_final_test_for_selection": False},
+        "artifact_fit_period": "1990-2017",
         "training_commit": get_git_commit(),
         "created_at": datetime.now(timezone.utc).isoformat(),
         "limitations": [
             "Exploratory research only",
+            "Processed source provenance incomplete; no independent field validation",
             "Spatial calibration available but unverified for public policy",
             "Management variables are deterministic overrides"
         ],

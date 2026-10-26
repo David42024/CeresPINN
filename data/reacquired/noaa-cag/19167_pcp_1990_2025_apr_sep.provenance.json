@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-167/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:46.971398+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:47 GMT"
+  },
+  "sha256": "4b3f7827be01cb03b8d2563c0cf67841fe52b1a64c06d1267a9cf1f4c6217b4a",
+  "bytes": 999,
+  "path": "data/reacquired/noaa-cag/19167_pcp_1990_2025_apr_sep.json",
+  "fips": "19167",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Sioux County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-013/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:52.592218+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:53 GMT"
+  },
+  "sha256": "45164ec18c3ac85a22605c2b6c690699cfc7ad8e982310085e6c80052c0ca932",
+  "bytes": 983,
+  "path": "data/reacquired/noaa-cag/19013_tavg_1990_2025_apr_sep.json",
+  "fips": "19013",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Black Hawk County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

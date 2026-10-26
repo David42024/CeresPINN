@@ -386,7 +386,7 @@ export const SimulationConfigPanel: React.FC<SimulationConfigProps> = ({
             >
               <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{t('simConfig.cycleMedium')}</h4>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Balance óptimo entre biomasa acumulada y escape a estrés hídrico (1750 °C·d).
+                Parametrización de ciclo medio (1750 °C·d); sin optimización experimental por cultivar.
               </p>
               <div className="mt-3 text-[11px] font-mono text-emerald-600 dark:text-emerald-400">
                 Potencial: 13,500 kg/ha

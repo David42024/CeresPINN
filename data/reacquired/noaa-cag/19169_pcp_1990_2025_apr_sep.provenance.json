@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-169/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:47.331958+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:48 GMT"
+  },
+  "sha256": "67ec2019bb8359bf4a61b0d31b2952e126c6c69fb9ef653de82990de5530a820",
+  "bytes": 998,
+  "path": "data/reacquired/noaa-cag/19169_pcp_1990_2025_apr_sep.json",
+  "fips": "19169",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Story County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

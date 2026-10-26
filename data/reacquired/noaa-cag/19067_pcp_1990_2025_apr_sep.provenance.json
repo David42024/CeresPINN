@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-067/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:12.457305+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:12 GMT"
+  },
+  "sha256": "868d0afb98a275394a597db3d4a6b2f14ffc3ce058991e7c8fbf26e88aa56972",
+  "bytes": 993,
+  "path": "data/reacquired/noaa-cag/19067_pcp_1990_2025_apr_sep.json",
+  "fips": "19067",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Floyd County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

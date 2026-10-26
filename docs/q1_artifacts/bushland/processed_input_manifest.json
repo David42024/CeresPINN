@@ -1,0 +1,62 @@
+[
+  {
+    "path": "data/bushland_processed/calendars.csv",
+    "bytes": 3681,
+    "sha256": "84b5b32703415519ff5a6efd2c09aa6ab62d2f583dccf7cc83be022cdc419b44"
+  },
+  {
+    "path": "data/bushland_processed/daily_water_observed.csv",
+    "bytes": 871324,
+    "sha256": "f5cb8884f4178718d9ba3101d1dcabfaf3174fe662793492693174465945f16c"
+  },
+  {
+    "path": "data/bushland_processed/daily_weather.csv",
+    "bytes": 425804,
+    "sha256": "bc2b0c041c082d3c22824f0069e76d95ff58ca7686c85bc755b955c330b18184"
+  },
+  {
+    "path": "data/bushland_processed/grain_yield_observed.csv",
+    "bytes": 14817,
+    "sha256": "ec7aa8f8de0721333f44ad7d2348742b53b091bc17e10ed1b28c5bf075198590"
+  },
+  {
+    "path": "data/bushland_processed/growth_observed.csv",
+    "bytes": 88802,
+    "sha256": "0776f31f5f46b8f694036961f314c5d092a1cda82b6ec3d43ffe37242f1bcfbf"
+  },
+  {
+    "path": "data/bushland_processed/irrigation_events_1989.csv",
+    "bytes": 8437,
+    "sha256": "d51746b2eb795f42df2cd7aeee6203a42beedd02e6fd174a17ba58ba05629082"
+  },
+  {
+    "path": "data/bushland_processed/irrigation_events_1990.csv",
+    "bytes": 8573,
+    "sha256": "a0dcf1ca2684728a1c419e97ddbf0aff0d7d653d467a0c63f5ff1199a96a02b6"
+  },
+  {
+    "path": "data/bushland_processed/irrigation_events_1994.csv",
+    "bytes": 6073,
+    "sha256": "43b57a4d2402ab10eba81e21739aa6fb932aca4891a78044eaeff17ba07791f2"
+  },
+  {
+    "path": "data/bushland_processed/irrigation_events_2013.csv",
+    "bytes": 17695,
+    "sha256": "e61aaf0b3aad5f8e062c9c309cd89c5a033e492f08d00eb39504ed96ae32b6b2"
+  },
+  {
+    "path": "data/bushland_processed/irrigation_events_2016.csv",
+    "bytes": 7269,
+    "sha256": "9e297b08420f7d8b559ccdb6a02a90e4c5c6483e477f54cca8a493656845e804"
+  },
+  {
+    "path": "data/bushland_processed/irrigation_events_2018.csv",
+    "bytes": 8666,
+    "sha256": "902f96edd6f25488fd2ea3ab11a3b1bba6f63c9b1b5330d8ac2ce18724d818a0"
+  },
+  {
+    "path": "data/bushland_processed/soil_water_observed.csv",
+    "bytes": 3065906,
+    "sha256": "172e11847a2c5e6ae7e76906f18eb2c02219a583dcac0985f138a02179eee575"
+  }
+]

@@ -251,6 +251,7 @@ def fit_unconstrained_mlp(
 
 
 def main() -> None:
+    torch.set_num_threads(1)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     metadata = json.loads(METADATA.read_text(encoding="utf-8"))
     raw = pd.read_csv(DATASET)

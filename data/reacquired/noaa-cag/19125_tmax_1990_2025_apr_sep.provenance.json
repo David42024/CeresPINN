@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-125/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:31.574662+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:32 GMT"
+  },
+  "sha256": "a19f092b7b509eabb143e3c856ca24a961c423bf936f6534683276a8c7d4f22e",
+  "bytes": 973,
+  "path": "data/reacquired/noaa-cag/19125_tmax_1990_2025_apr_sep.json",
+  "fips": "19125",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Marion County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-195/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:54.640301+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:55 GMT"
+  },
+  "sha256": "2d97d0c43824d0f6975aaf455aed89c721762ae09b4d1a8a77259b45bd591ed2",
+  "bytes": 1001,
+  "path": "data/reacquired/noaa-cag/19195_pcp_1990_2025_apr_sep.json",
+  "fips": "19195",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Worth County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

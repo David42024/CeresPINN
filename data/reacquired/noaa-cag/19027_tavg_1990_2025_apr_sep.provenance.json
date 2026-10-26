@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-027/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:58.202159+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:58 GMT"
+  },
+  "sha256": "5eebd5ebf1ff532df87941fd364dff4bdcc712e93d515bfdcee09ffb7edb123a",
+  "bytes": 980,
+  "path": "data/reacquired/noaa-cag/19027_tavg_1990_2025_apr_sep.json",
+  "fips": "19027",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Carroll County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

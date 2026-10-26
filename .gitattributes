@@ -8,3 +8,12 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 *.pt binary
+
+# Frozen research inputs, original agency downloads and audit outputs retain
+# exact bytes on every platform so source-integrity hashes remain meaningful.
+data/** -text
+docs/q1_artifacts/** -text
+backend/models/** -text
+output/** -text
+*.txt text eol=lf
+LICENSE text eol=lf

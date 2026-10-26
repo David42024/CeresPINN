@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-009/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:51.066055+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:51 GMT"
+  },
+  "sha256": "44b2846db1124af9a991e299ebb5ee1755637dcd6d538df9f403262df1551c66",
+  "bytes": 993,
+  "path": "data/reacquired/noaa-cag/19009_pcp_1990_2025_apr_sep.json",
+  "fips": "19009",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Audubon County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

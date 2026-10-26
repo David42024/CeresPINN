@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-001/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:31.958655+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:32 GMT"
+  },
+  "sha256": "4de3b49dcda8a5c27a405f9e9ff1da4913fbb8e52a98d17c1b9c5d7b71381d02",
+  "bytes": 997,
+  "path": "data/reacquired/noaa-cag/19001_pcp_1990_2025_apr_sep.json",
+  "fips": "19001",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Adair County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

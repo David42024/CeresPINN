@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-095/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:21.286262+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:22 GMT"
+  },
+  "sha256": "02895c3f48be4a09dd23156d10a91df38f2ee9401957f3deb709977d8cc6d658",
+  "bytes": 973,
+  "path": "data/reacquired/noaa-cag/19095_tavg_1990_2025_apr_sep.json",
+  "fips": "19095",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Iowa County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

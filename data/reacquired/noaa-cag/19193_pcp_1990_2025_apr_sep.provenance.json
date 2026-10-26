@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-193/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:54.039525+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:54 GMT"
+  },
+  "sha256": "59ac75b7080c104b2cd468fd2bec2bf86a47a8d9759ca6ad3e72cab3e0cd567b",
+  "bytes": 1001,
+  "path": "data/reacquired/noaa-cag/19193_pcp_1990_2025_apr_sep.json",
+  "fips": "19193",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Woodbury County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

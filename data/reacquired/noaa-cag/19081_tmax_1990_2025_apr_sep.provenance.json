@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-081/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:16.754313+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:17 GMT"
+  },
+  "sha256": "b93fe13e0e9aa071a93db887952e598a687dccd218fa67d4e2efa0c6abb83b1d",
+  "bytes": 978,
+  "path": "data/reacquired/noaa-cag/19081_tmax_1990_2025_apr_sep.json",
+  "fips": "19081",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Hancock County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-121/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:30.609323+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:31 GMT"
+  },
+  "sha256": "ea2ef7bf59041515d97215d9b55cc104a6ead375945acdf32a8e992dae688a8c",
+  "bytes": 984,
+  "path": "data/reacquired/noaa-cag/19121_tmax_1990_2025_apr_sep.json",
+  "fips": "19121",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Madison County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

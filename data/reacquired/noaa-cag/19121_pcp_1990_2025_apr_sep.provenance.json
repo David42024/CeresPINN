@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-121/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:30.882486+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:31 GMT"
+  },
+  "sha256": "8dd70d6556d4355def029ab0f0731d1bfed4cd563b39c23a707a1788620401a4",
+  "bytes": 997,
+  "path": "data/reacquired/noaa-cag/19121_pcp_1990_2025_apr_sep.json",
+  "fips": "19121",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Madison County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

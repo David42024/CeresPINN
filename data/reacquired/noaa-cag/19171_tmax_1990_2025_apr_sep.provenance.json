@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-171/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:47.909925+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:48 GMT"
+  },
+  "sha256": "0167d05ff7e96a7d2897fbe9612774145175bc9b2521a4b1591534aa40c4d941",
+  "bytes": 975,
+  "path": "data/reacquired/noaa-cag/19171_tmax_1990_2025_apr_sep.json",
+  "fips": "19171",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Tama County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

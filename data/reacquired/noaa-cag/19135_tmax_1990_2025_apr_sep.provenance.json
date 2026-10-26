@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-135/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:35.844658+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:35 GMT"
+  },
+  "sha256": "1b07a3f68dfe413b2a492cdcfe6e50d83037df8407e568ca4cd63b1ec4f13cda",
+  "bytes": 975,
+  "path": "data/reacquired/noaa-cag/19135_tmax_1990_2025_apr_sep.json",
+  "fips": "19135",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Monroe County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

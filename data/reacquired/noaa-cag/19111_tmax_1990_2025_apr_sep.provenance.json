@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-111/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:27.028860+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:27 GMT"
+  },
+  "sha256": "71a3b4cd20ba89803659e59d34a90786d3ea36b905f068b041b7a2d67774e308",
+  "bytes": 978,
+  "path": "data/reacquired/noaa-cag/19111_tmax_1990_2025_apr_sep.json",
+  "fips": "19111",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Lee County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

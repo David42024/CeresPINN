@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-123/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:30.921727+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:31 GMT"
+  },
+  "sha256": "01057ad18ee50005e8d96a0fe493c617ad1f76bcb59152fac5a417caf969774a",
+  "bytes": 982,
+  "path": "data/reacquired/noaa-cag/19123_tavg_1990_2025_apr_sep.json",
+  "fips": "19123",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Mahaska County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

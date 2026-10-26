@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-117/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:29.634562+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:30 GMT"
+  },
+  "sha256": "1925a29004a147d6267870984fb6cd6a617e8a03fd8ff969a8c29749208ab004",
+  "bytes": 996,
+  "path": "data/reacquired/noaa-cag/19117_pcp_1990_2025_apr_sep.json",
+  "fips": "19117",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Lucas County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

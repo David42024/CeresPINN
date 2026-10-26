@@ -1,0 +1,4132 @@
+{
+  "schema_version": 1,
+  "prepared_date": "2026-10-26",
+  "status": "Git scientific revision",
+  "repository": "https://github.com/David42024/CeresPINN",
+  "base_commit": "23cc51ef788239269301790da11e36aa17314e7d",
+  "manuscripts_and_private_editorial_response_included": false,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1079,
+      "sha256": "6351802bafdaa0a6a523b5d63607f535eb74f340c2a8d45f8145764c79f66603"
+    },
+    {
+      "path": "README.md",
+      "bytes": 10498,
+      "sha256": "500b3c27830e57db739b0459ffd1d67bed6949d610769baaa78e0fa42310532c"
+    },
+    {
+      "path": "README_PUBLIC_RELEASE.md",
+      "bytes": 2262,
+      "sha256": "4c091c43d068d0601fa9f59c72113389580d918a1bc7b90a4add8a2b1f5f809b"
+    },
+    {
+      "path": "backend/app.py",
+      "bytes": 25061,
+      "sha256": "1309da04ed824a07fed31356d7d121cdb5a2d3e59548b55287239df3af202c15"
+    },
+    {
+      "path": "backend/coupled_crop.py",
+      "bytes": 8105,
+      "sha256": "0839264e9a65fefa66c528860c54af2ddadf0cb600209be3e12738f23a7a2da9"
+    },
+    {
+      "path": "backend/data/config.py",
+      "bytes": 5591,
+      "sha256": "6136cfd378d328cec83f092c495d464dbcccbbbf7f9a19977bf667646b06c7e6"
+    },
+    {
+      "path": "backend/data/noaa_cag.py",
+      "bytes": 3453,
+      "sha256": "0180678f67ab31a238cd7ceefe500d067fb7ccbaf5e33cad8a61fe81ebabce48"
+    },
+    {
+      "path": "backend/inference.py",
+      "bytes": 31247,
+      "sha256": "e4b5684af06471b1088ff02659feb60b856fdb45af3e3808fe01f135942eb5a8"
+    },
+    {
+      "path": "backend/models/cerespinn_metadata.json",
+      "bytes": 5176,
+      "sha256": "19f365fb854118fbed8e88b51701c096130ad4d58106a10954144225bf9f8cb6"
+    },
+    {
+      "path": "backend/models/cerespinn_pinn.pt",
+      "bytes": 258098,
+      "sha256": "600f4a2bfd8c8f3a4ce08e623cebed4087d64bae341ebd5fe71c32507abde7e4"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "bytes": 1418,
+      "sha256": "d568a68c8fa8565225bec070c8d59b01776ea144595885327fb1469855852f20"
+    },
+    {
+      "path": "backend/tests/test_coupled_crop.py",
+      "bytes": 1818,
+      "sha256": "5a2e184446053da3c36a3e41e81c94ad5837b16600beb09314e4b0cec3503a4b"
+    },
+    {
+      "path": "backend/tests/test_inference.py",
+      "bytes": 2052,
+      "sha256": "cb4ffef4ee809e15290afbfc104d93bc3a30453785882ae1e605fe8f8aad4875"
+    },
+    {
+      "path": "backend/tests/test_physics_monotonicity.py",
+      "bytes": 1531,
+      "sha256": "e84c185edf160d927c39821023bd727c2cc98119aa025e449271abc1b3693157"
+    },
+    {
+      "path": "backend/tests/test_reacquired_source_integrity.py",
+      "bytes": 2732,
+      "sha256": "c3c31bfbf0538e3d8f0bbdb71646d4328ceadee80c42fcc73a0d1699e3acc0ed"
+    },
+    {
+      "path": "backend/tests/test_revision_scientific_integrity.py",
+      "bytes": 1443,
+      "sha256": "1d244ebc43adf46525141cace00b0ff49102f0acdc27a45af13583d78b5dd77d"
+    },
+    {
+      "path": "backend/tests/test_spatial_training_holdout.py",
+      "bytes": 2311,
+      "sha256": "c94b309373ea08f4c7c71682e31e6c0a16be522ccc904da95a4d063e3c7b0cf7"
+    },
+    {
+      "path": "backend/tests/test_training.py",
+      "bytes": 2339,
+      "sha256": "512fbdc7b994dbaad9238a501edb2a2d33d9e71784d8b01ffa1d9bed2691fcd1"
+    },
+    {
+      "path": "backend/training/__init__.py",
+      "bytes": 1059,
+      "sha256": "f62a7287c2f1c7d2a5b89122b2104072a2e3e08602ae9644b9756caa95e781c6"
+    },
+    {
+      "path": "backend/training/config.py",
+      "bytes": 3620,
+      "sha256": "95d7e687735ad7d9cb44e004748f3f9c3ac7f34ce76b48419567833489582071"
+    },
+    {
+      "path": "backend/training/dataset.py",
+      "bytes": 13978,
+      "sha256": "1ec37433d5023763e9b11b537fc7b3fd75536801fd8202582d2173675635576a"
+    },
+    {
+      "path": "backend/training/pinn.py",
+      "bytes": 4533,
+      "sha256": "bde84a75c8a7ce6d913a3ca243e033271cf565aaa779870d0b52694991e1df6e"
+    },
+    {
+      "path": "backend/training/train_v4_spatial.py",
+      "bytes": 7286,
+      "sha256": "8edfd6fa9f8ee73927a3bd808e79f5291bbe0dd895644dca9f1db9d4a0f8cfba"
+    },
+    {
+      "path": "data/README.md",
+      "bytes": 3613,
+      "sha256": "485939d9ef571310f4b8299f36a29e98092ba5832763a06be53818b840dbd01e"
+    },
+    {
+      "path": "data/bushland_processed/calendars.csv",
+      "bytes": 3681,
+      "sha256": "84b5b32703415519ff5a6efd2c09aa6ab62d2f583dccf7cc83be022cdc419b44"
+    },
+    {
+      "path": "data/bushland_processed/daily_water_observed.csv",
+      "bytes": 871324,
+      "sha256": "f5cb8884f4178718d9ba3101d1dcabfaf3174fe662793492693174465945f16c"
+    },
+    {
+      "path": "data/bushland_processed/daily_weather.csv",
+      "bytes": 425804,
+      "sha256": "bc2b0c041c082d3c22824f0069e76d95ff58ca7686c85bc755b955c330b18184"
+    },
+    {
+      "path": "data/bushland_processed/grain_yield_observed.csv",
+      "bytes": 14817,
+      "sha256": "ec7aa8f8de0721333f44ad7d2348742b53b091bc17e10ed1b28c5bf075198590"
+    },
+    {
+      "path": "data/bushland_processed/growth_observed.csv",
+      "bytes": 88802,
+      "sha256": "0776f31f5f46b8f694036961f314c5d092a1cda82b6ec3d43ffe37242f1bcfbf"
+    },
+    {
+      "path": "data/bushland_processed/irrigation_events_1989.csv",
+      "bytes": 8437,
+      "sha256": "d51746b2eb795f42df2cd7aeee6203a42beedd02e6fd174a17ba58ba05629082"
+    },
+    {
+      "path": "data/bushland_processed/irrigation_events_1990.csv",
+      "bytes": 8573,
+      "sha256": "a0dcf1ca2684728a1c419e97ddbf0aff0d7d653d467a0c63f5ff1199a96a02b6"
+    },
+    {
+      "path": "data/bushland_processed/irrigation_events_1994.csv",
+      "bytes": 6073,
+      "sha256": "43b57a4d2402ab10eba81e21739aa6fb932aca4891a78044eaeff17ba07791f2"
+    },
+    {
+      "path": "data/bushland_processed/irrigation_events_2013.csv",
+      "bytes": 17695,
+      "sha256": "e61aaf0b3aad5f8e062c9c309cd89c5a033e492f08d00eb39504ed96ae32b6b2"
+    },
+    {
+      "path": "data/bushland_processed/irrigation_events_2016.csv",
+      "bytes": 7269,
+      "sha256": "9e297b08420f7d8b559ccdb6a02a90e4c5c6483e477f54cca8a493656845e804"
+    },
+    {
+      "path": "data/bushland_processed/irrigation_events_2018.csv",
+      "bytes": 8666,
+      "sha256": "902f96edd6f25488fd2ea3ab11a3b1bba6f63c9b1b5330d8ac2ce18724d818a0"
+    },
+    {
+      "path": "data/bushland_processed/model_forcing.csv",
+      "bytes": 1064880,
+      "sha256": "0f665bcb6b51ba67572a3ee13fea89d8ae42c82a030b49bf22825c912116a0aa"
+    },
+    {
+      "path": "data/bushland_processed/preparation_summary.json",
+      "bytes": 859,
+      "sha256": "409ce39b7f73156adb740bbdfbaa2d3460a3104bdba2caf7d38d0c53f468c22a"
+    },
+    {
+      "path": "data/bushland_processed/soil_layers.json",
+      "bytes": 634,
+      "sha256": "2f06ea8bb4824fdf4fb1460638764c96842eec5a8bfd9265900de2cffaf8cd2e"
+    },
+    {
+      "path": "data/bushland_processed/soil_water_observed.csv",
+      "bytes": 3065906,
+      "sha256": "172e11847a2c5e6ae7e76906f18eb2c02219a583dcac0985f138a02179eee575"
+    },
+    {
+      "path": "data/cerespinn_county_audit.csv",
+      "bytes": 217621,
+      "sha256": "899f621a22b50ed4cc1534617e4bcc4a15eb3d7c0243c17e14756df6c6375550"
+    },
+    {
+      "path": "data/cerespinn_training_iowa.csv",
+      "bytes": 5329366,
+      "sha256": "618e3e05d7edcad4a54701bf118891907ab1eeb2295691d028bc13e2255b5dbb"
+    },
+    {
+      "path": "data/cerespinn_training_preprocessed.csv",
+      "bytes": 8152580,
+      "sha256": "4b122f6c7b21721c385708ff8596a901f91a898c2153a44cdd1913f323eedc6f"
+    },
+    {
+      "path": "data/external/bushland/24855858/1989_East_Maize_Soil-water.xlsx",
+      "bytes": 460783,
+      "sha256": "4845828dc3310af923a4766e2b55991c44ca0c55105ea465303194c195e64771"
+    },
+    {
+      "path": "data/external/bushland/24855858/1990_East_Maize_Soil-water.xlsx",
+      "bytes": 396853,
+      "sha256": "0ac7279d722fe0579b1f60f8b98e281e069bbc36eaac230dbdf9f668be196c52"
+    },
+    {
+      "path": "data/external/bushland/24855858/1994_East_Maize_Soil-water.xlsx",
+      "bytes": 323419,
+      "sha256": "e4e9106d6ba3eb424f226aca8af9ec60ce8dcf2f32ab02b5e4c04327da167d19"
+    },
+    {
+      "path": "data/external/bushland/24855858/1994_West_Maize_Soil-water.xlsx",
+      "bytes": 380176,
+      "sha256": "cd04ef94ed00e01fd42dad2ec5df8164f04aaf27df06a51b32494911ddd66b7b"
+    },
+    {
+      "path": "data/external/bushland/24855858/2013_East_Maize_Soil-water.xlsx",
+      "bytes": 445639,
+      "sha256": "045bba26b3454df2a9c626d3a784130a761704a043c52fb9951bc77ed71f1c37"
+    },
+    {
+      "path": "data/external/bushland/24855858/2013_West_Maize_Soil-water.xlsx",
+      "bytes": 461199,
+      "sha256": "e53b5844cf2640bdd0e71617bafd4c17c9d454efb7eb0b50934215498e95c1b5"
+    },
+    {
+      "path": "data/external/bushland/24855858/2016_East_Maize_Soil-water.xlsx",
+      "bytes": 557658,
+      "sha256": "8db21576dbe1c545790e39ab6f45c22bd6fba46622c5457a18ecfea0dbc7b000"
+    },
+    {
+      "path": "data/external/bushland/24855858/2016_West_Maize_Soil-water.xlsx",
+      "bytes": 537016,
+      "sha256": "1f146e28a422d27bb428dd420e33df1d832d2ff81f7b3f602f3741149c159bda"
+    },
+    {
+      "path": "data/external/bushland/24855858/2018_East_Maize_Soil-water.xlsx",
+      "bytes": 574864,
+      "sha256": "98f918004460c4cebc2622c63f72526bcaa5fad041410d52e8dd3250c92dba88"
+    },
+    {
+      "path": "data/external/bushland/24855858/2018_West_Maize_Soil-water.xlsx",
+      "bytes": 538478,
+      "sha256": "25367b71e8f139f846d4e88e79bce38ac92e9fa717049d81c7e1dd41039c5247"
+    },
+    {
+      "path": "data/external/bushland/24855858/metadata.json",
+      "bytes": 39101,
+      "sha256": "b79210b37bdaa83a752e3e04fe7b8246a435b5d16f44177f94af4f4c95d66f29"
+    },
+    {
+      "path": "data/external/bushland/24855873/1989_East_Maize_Calendar.xlsx",
+      "bytes": 17769,
+      "sha256": "6689b30ae358c88eb68e80287142b9e9a163c5cc2acc55d795f251628d36c72b"
+    },
+    {
+      "path": "data/external/bushland/24855873/1990_East_Maize_Calendar.xlsx",
+      "bytes": 18494,
+      "sha256": "10137492d88c0c05ecc2594c46e064f6d12820d737eec13e5b7cf39e676f670c"
+    },
+    {
+      "path": "data/external/bushland/24855873/1994_East_Maize_Calendar.xlsx",
+      "bytes": 19291,
+      "sha256": "95dcc833936d6b017f348dbae7422d85a6e7d5a8ff6ecb97a5ff7229af4ea13f"
+    },
+    {
+      "path": "data/external/bushland/24855873/1994_West_Maize_Calendar.xlsx",
+      "bytes": 17042,
+      "sha256": "e70e5ceb85b7f64b0bcf5026355378ce41f6a44d0100153f1c310e1845b1bd65"
+    },
+    {
+      "path": "data/external/bushland/24855873/2013_East_Maize-Calendar.xlsx",
+      "bytes": 16801,
+      "sha256": "ba31db4d88005fb0a0fc9ca3a5d11567977a046a3a49c361240dd4c9a5ea3db4"
+    },
+    {
+      "path": "data/external/bushland/24855873/2013_West_Maize_Calendar.xlsx",
+      "bytes": 16626,
+      "sha256": "21ed3e0fbe2164bfe02ccbd8635bfb9fe1560512cf6f0a9c3ccabe7d0dea8648"
+    },
+    {
+      "path": "data/external/bushland/24855873/2016_East_Maize_Calendar_0.xlsx",
+      "bytes": 18204,
+      "sha256": "d8720cc3af72d5595f8392079cd17f4a820f08bcebcb428f84b8763e29535fb2"
+    },
+    {
+      "path": "data/external/bushland/24855873/2016_West_Maize_Calendar_0.xlsx",
+      "bytes": 17091,
+      "sha256": "38aa41191a31cd13d73f207382b952520338ce68ea8370afbaf251efb002cb38"
+    },
+    {
+      "path": "data/external/bushland/24855873/2018_East_Maize_Calendar_0.xlsx",
+      "bytes": 18870,
+      "sha256": "8d9bd7eeca2031ef948f76110a32ea010b8c455ba75ea682bf46bac9f5898228"
+    },
+    {
+      "path": "data/external/bushland/24855873/2018_West_Maize_Calendar.xlsx",
+      "bytes": 17438,
+      "sha256": "39314b27d1f827cf7143fa15230aa1f8eca80c56e8ab9b62855c875f24d4413a"
+    },
+    {
+      "path": "data/external/bushland/24855873/metadata.json",
+      "bytes": 36859,
+      "sha256": "1c178d9052c2e48b73b5803bc2c34a3d2c0ee10102673ca1286a69200675a30d"
+    },
+    {
+      "path": "data/external/bushland/24855909/1989_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 46759,
+      "sha256": "e9746969453327b3677d77bb70eee8ad75038a674dc614f275f80d38f7b6609e"
+    },
+    {
+      "path": "data/external/bushland/24855909/1990_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 56959,
+      "sha256": "a9fbb4de1f320cdf7646169f7242c67567f6d01a3c9041b8499f19ff1a801338"
+    },
+    {
+      "path": "data/external/bushland/24855909/1994_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 55720,
+      "sha256": "af6347369d94f28399c16901ba572940e343818b372b85c84d432afb15595474"
+    },
+    {
+      "path": "data/external/bushland/24855909/1994_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 56494,
+      "sha256": "01e064113a37330b6b3afa1b8b86241b5f25aa67b29b196683daf5cb4878fdb0"
+    },
+    {
+      "path": "data/external/bushland/24855909/2013_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 122546,
+      "sha256": "05e4e3ca645640db2b39812b97135733d5b7b7562f15bd10d3ca57cc7e7d8f78"
+    },
+    {
+      "path": "data/external/bushland/24855909/2013_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 98534,
+      "sha256": "7e7b0198cd0a1ed92bcca21044c28a9257c08721be4e59b4a3696ad59d4f2515"
+    },
+    {
+      "path": "data/external/bushland/24855909/2016_East_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 376200,
+      "sha256": "9a09decb1b3cb0fc88face1b65bd2fe014041be3969d014185e2acd1e9ef8132"
+    },
+    {
+      "path": "data/external/bushland/24855909/2016_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 116411,
+      "sha256": "07bb8678a8c40651fc9ee43e8ff9f2cb4d6c52bd250d873cacea14d2893bcddb"
+    },
+    {
+      "path": "data/external/bushland/24855909/2018_East_Maize_Growth_and_Yield(ADC)_0.xlsx",
+      "bytes": 107422,
+      "sha256": "b543363980c7c6cc4a48c6506e51d473fe692e68c26b30284df3ac1021dd3e84"
+    },
+    {
+      "path": "data/external/bushland/24855909/2018_West_Maize_Growth_and_Yield(ADC).xlsx",
+      "bytes": 112901,
+      "sha256": "5e7659c6384a41fe7ef8f44a4d941e8a9550638f7ca93d7ac201dfe8926ff407"
+    },
+    {
+      "path": "data/external/bushland/24855909/metadata.json",
+      "bytes": 33224,
+      "sha256": "e8c24eba525c999bbaaf56ea4a94fbd3c5e8f5a8eabb4318a484a629b7b9106c"
+    },
+    {
+      "path": "data/external/bushland/24855957/1989_Maize_water_balance.xlsx",
+      "bytes": 3784062,
+      "sha256": "c70cda27a70bc121c96154862a2f1780c8c8b643a0c8feb330232244edae0037"
+    },
+    {
+      "path": "data/external/bushland/24855957/1990_Maize_water_balance.xlsx",
+      "bytes": 3802801,
+      "sha256": "d0e6a3e1eb8a77cc3e7203ac841d9a4665e2048c768a494de10c5f55f6c39187"
+    },
+    {
+      "path": "data/external/bushland/24855957/1994_Maize_water_balance.xlsx",
+      "bytes": 3706292,
+      "sha256": "ae38030ee67e3289f0ba4d888d759f7c6669f8fc8a8ace07201840678d688706"
+    },
+    {
+      "path": "data/external/bushland/24855957/2013_Maize_water_balance.xlsx",
+      "bytes": 4304931,
+      "sha256": "d5f18f6bf4e3c84ee0d03fc4c0204f850bbcf5a290e051a221b1d7a7e6ade03c"
+    },
+    {
+      "path": "data/external/bushland/24855957/2016_Maize_water_balance.xlsx",
+      "bytes": 4963828,
+      "sha256": "c4c0cbc83802ac802e0c3649cf8a88aac9b4c30e10184f4a9c61dee4a4ec1fba"
+    },
+    {
+      "path": "data/external/bushland/24855957/2018_Maize_water_balance.xlsx",
+      "bytes": 4983418,
+      "sha256": "caa54a2362911d2bfa4e0105f77d32f6a4e0720988c867c20d9cc3349b52d4b9"
+    },
+    {
+      "path": "data/external/bushland/24855957/metadata.json",
+      "bytes": 35059,
+      "sha256": "ccc4ddf6b5b652ade4e08cfc360cd2e69359aa6b2387e74415322ae3886b139a"
+    },
+    {
+      "path": "data/external/bushland/25316164/1989_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 15192288,
+      "sha256": "c3a1ac9525a49d97d3ae3cbfd41ff828cd400e1d26359631d5d7a4129a7a1a56"
+    },
+    {
+      "path": "data/external/bushland/25316164/1990_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 15710605,
+      "sha256": "0e1100507e568ff1993aa343bece512b3c2473ff8f92806887812483854b0b84"
+    },
+    {
+      "path": "data/external/bushland/25316164/1994_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 15593213,
+      "sha256": "9f74b9154ae747b8ffddf2186a7d53b47a795cd26a38db7118422d8cce249521"
+    },
+    {
+      "path": "data/external/bushland/25316164/2013_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14580381,
+      "sha256": "a4d3955d8ac7caf665ab479e0ac1fcee8cb23e4320795b65a290400b146d5b7c"
+    },
+    {
+      "path": "data/external/bushland/25316164/2016_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14868593,
+      "sha256": "87d4b59d2e162f5eee6e47de2b7da6dbc6061befca48632c8df9b031905e2f26"
+    },
+    {
+      "path": "data/external/bushland/25316164/2018_15-min_weather_SWMRU_CPRL.xlsx",
+      "bytes": 14492578,
+      "sha256": "51b303878e9f60a1aab68610df5e5c4a2f0c3ab6c8443d0ac9cb01e08e38a378"
+    },
+    {
+      "path": "data/external/bushland/25316164/metadata.json",
+      "bytes": 32130,
+      "sha256": "651a99ac420b7c99ddfa359d9a4f4be0cc0134bb5718b0a85a0db148327063ce"
+    },
+    {
+      "path": "data/external/bushland/25316362/Bushland_TX_soil_properties.xlsx",
+      "bytes": 29451,
+      "sha256": "3770155f5ac604131b210c622b7bd8e3af72105526af3bfbb1ffa15bc076e34e"
+    },
+    {
+      "path": "data/external/bushland/25316362/Conventions for Bushland, TX, Weighing Lysimeter Datasets.xlsx",
+      "bytes": 16584,
+      "sha256": "eb0ace111da3bb2bf7d8b43a5ebfacbf3f2a33beda463b14764ec4a08d498515"
+    },
+    {
+      "path": "data/external/bushland/25316362/Geographic Coordinates, USDA, ARS, Bushland, Texas.xlsx",
+      "bytes": 11129,
+      "sha256": "0af75678e76e73525483167723efbcbea86bfa4b96ef8295bf829944cc3a0f4d"
+    },
+    {
+      "path": "data/external/bushland/25316362/README_Bushland_maize_for_grain_collection.pdf",
+      "bytes": 115168,
+      "sha256": "efec6da69e3ce46e760c45ce308609f404d1bb04716cfcea8cb2424cc906ccac"
+    },
+    {
+      "path": "data/external/bushland/25316362/Symbols and Abbreviations for Bushland, TX, Weighing Lysimeter Datasets.xlsx",
+      "bytes": 13562,
+      "sha256": "8edb08a4cc86ac8256ceb8aa326dba70951577bf77c58772fe149f93cdd846c7"
+    },
+    {
+      "path": "data/external/bushland/25316362/metadata.json",
+      "bytes": 36605,
+      "sha256": "b8474ee40b4f15703eb9bcda7e35ba6eb48c38bb5c14364655759b265727d9b2"
+    },
+    {
+      "path": "data/external/bushland/acquisition_manifest.json",
+      "bytes": 59011,
+      "sha256": "ff95d890d2f841fe67ef1e6a44a80d7d1c106ae39c02d330467701747febd39f"
+    },
+    {
+      "path": "data/reacquired/cerespinn_county_rebuilt.csv",
+      "bytes": 275116,
+      "sha256": "a98fdb9c286d60af6d55700952047423abb649ca5da3613336bece6650aa9cea"
+    },
+    {
+      "path": "data/reacquired/iowa_county_districts.csv",
+      "bytes": 2139,
+      "sha256": "8a885a41f40202ef91d421c63b56880f356aa17d5a912d0b75c9de4def3bb1b5"
+    },
+    {
+      "path": "data/reacquired/nass/AE084D36-42AA-3067-991E-EADA1DBDD465.csv",
+      "bytes": 654566,
+      "sha256": "dad12f4202e7bec6e549b3964d0a5027f98d2370811c37c9591fdf8207f95cf5"
+    },
+    {
+      "path": "data/reacquired/nass/acquisition_manifest.json",
+      "bytes": 1745,
+      "sha256": "6d214accce911013dce81f160a7a84724cb7076314dd9f4d62459a75da5bb39b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19001_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "4de3b49dcda8a5c27a405f9e9ff1da4913fbb8e52a98d17c1b9c5d7b71381d02"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19001_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "0e74cab99b2e33a060d184abea1aa3d4e8e24fb3ef7f7e29854d99347eb8df82"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19001_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "368460ee4ea8b604246c99f0a7c36bb3a8f7bb1768f7e0efdeb7c5db19ea6955"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19001_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "724efcfb2050cc2b1b9b2b0568c26f698b7999a8aed56e8dad42f99b23de3f81"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19001_tmax_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "f284b9c956e86085fb94e98ba23ed846a5aec856b274dfab1da68d0ed7f2b6bb"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19001_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "92addb1d6ed8f6ced878d756ab4c74206111d9f4a515d62a069b14faefe166ed"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19003_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "060489d6e8de316be5838e2b8489d161dbee6e5a30ec1dca54b50ede4792b414"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19003_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "b0383262142709feaef3227be8a152971c4ce63a0884401813f6f5e1c4b243ae"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19003_tavg_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "f0a18294e39be84edd65a1807004f967d0cb7a27b6846f74bf7f5787f6939541"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19003_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "d72109a8e1bc0c37f11f7c95660d00fd2416b72f69ae707bdbca4ccf08a05941"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19003_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "e26dc9e81faf265674949db7efa03da18be75ca5e0afb6b4e47c2101d4b6bff4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19003_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "50282783520af51ff9588552efffc88b502c500a29926bd01b16210852134dc0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19005_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "6fd903ecc0967674862bb409330d35a160f9dde5792efd87d7da725012677802"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19005_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "aefa8848a31fdc8c7a9205d00defbdbb24e57527eba47d07a812113bf610d253"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19005_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "37611eebd2651f722cd7e2b6f108346b9528dfc1a6251aa56c5cd762a26f35c5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19005_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "0520f3e54e47dba55b6f1e28221049e4d6838cdabab3140461af66ea87cd37fa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19005_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "75aa52c568fd8a7dd5bcb59d2f303d6b5fc12d8fb06c24b8f4ee61c1da51217a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19005_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "ef128ac10ae260aacd639be55d9eb3ea2cfef55a8dd901394ac6cd37d2d8c485"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19007_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "4b296b72eb800dfe5271179a52e57f83867cc59e1016a8c969fe9776ce59308e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19007_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "35b2221f6014161d5531372c0740ad9f61c011a7dbeac54b4e331c36020c8555"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19007_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "e99c7d310bc6dcd3978ea44a4cf81f46201515832e7aa4edf6181afa5d1df64c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19007_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "d060a7951935f3f70c00e634316d1fe3b174bc5e588e899af859c587ec164cc2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19007_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "2c000804b42e40aaa144d40f44cd0b31219082c910dd4c819227a13d1a4f1bdf"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19007_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "3b8966f3e32847eed2f4781e72d13ca103b10e87255dc2248857ddee6ad3af34"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19009_pcp_1990_2025_apr_sep.json",
+      "bytes": 993,
+      "sha256": "44b2846db1124af9a991e299ebb5ee1755637dcd6d538df9f403262df1551c66"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19009_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "47a0602376c3876ab4816682766c5ca6fb4bdbaa88f9cde6ab0553c4f2aea92f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19009_tavg_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "461205ea9823a7641d8abbea5d7e705c73c7d5060a74a218c6457d9cb2254e72"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19009_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "e7035997bd37893dea683244c15f58b6a846b2c2af0f4797a6e4d9e9f8175573"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19009_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "43fdc9700a758207ec4c3b8680371adde83da9f60d3ca0485f92c80ea97eb35d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19009_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "55f74309fbecccb21d4ebd09b7848f77d922d9b069635b341b759c8d759f3b06"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19011_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "47b495f085fea0f3eef60fa479c1829b281170682c0510dfda448506a76ac320"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19011_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "5bc4d25c17e1137ac66bca1ebe11133542feb1c8d0efe8e5f4391e1839b21aa6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19011_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "09a9b1a1ba9626aab324eec81d5f76dbe0ebe937485621b1cdf4c3f2282f26ec"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19011_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "8d687b675a40b79e81a6315b83dbe8e4415bd089c6afe3253faabe20a2c06ba0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19011_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "e131c2a0ec4a623bf19e3710827e968dd55183e35cb1124a5210f1193fb9ee01"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19011_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "daf81e1f33ad76589aa831e0a8fc9a921ad5ba70459cb705976c6a6cdc247893"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19013_pcp_1990_2025_apr_sep.json",
+      "bytes": 1004,
+      "sha256": "807f3c13f7040e3f7850eaa97cd9570bef1e03547c097163eff616cc8ef1b9b5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19013_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 815,
+      "sha256": "865378cb06a290347b2d0028d6bf31e95f22610592163eb758516cd794c14395"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19013_tavg_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "45164ec18c3ac85a22605c2b6c690699cfc7ad8e982310085e6c80052c0ca932"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19013_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "efcf78c89873284b1afe30c0abdda4cfeb652c14cb60dcfd06e058986b6e0f40"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19013_tmax_1990_2025_apr_sep.json",
+      "bytes": 985,
+      "sha256": "a013ddfb385b0461bb7d64f43b91954cd783ced16a52b87ae560770270139aee"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19013_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "291e444c5a0867c3da1c584ac00e7dab55e0f20cccfa67690942b58abd5e5d12"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19015_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "4cadff129aeb60d633f9fc14685de49470e7a76d6c1dafcf8a12b3c6cb5832e2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19015_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "2d77a3a3edac3d7f4bb4f04ca9e37aa35c40d03408432b658f7b72d026e6f4a9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19015_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "c64ea6e33b91e8acabc3ca2eed4c8de0717c1739d56f9de2ee1237a596d6014b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19015_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "bc2738b3168344e170b63765f2a6ffc3d1ba7d9c72c0bf0f45a863371b857865"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19015_tmax_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "7a31b16dbf906b3d50eb4a2d260efdb37233996fa10ae809aae7461b1bcb106b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19015_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "94600f24b9fc32cab1428c3453f5b2ca0cfc21237e8ac7d924c6e6ed5df4a031"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19017_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "fdff780379c4168f0ce9998041714f09b2107deb9a7e8e192b924d694bb7860e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19017_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "2dc9ad29df541e98f2fe6dd26a573096ad0afb532d6d905352bb0e339ce415db"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19017_tavg_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "dd8fef86de7120b3b6ef26a9f5ec6d22fdd703d4ef6cda4e8d4b6c494fe66be5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19017_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "9f09bdb84019019c573bbd39c667b69705012ef574122eaba6b9fca73432eab8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19017_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "5b756446a359a6a35a4f3a4337b48c306e42b2fec7c09322be441912f1035fb6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19017_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "974656eeaf07b3540c6ed9ef0366fecfe00b16049403766d84bc43d62254c837"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19019_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "4ce11b1aba81b0a7738f733b30e94192ad06eba98817bacd814d19741ffe6dc3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19019_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "8a118b643808afdfe8621605bdaa29ff65189b061b34d3e553e71142a084fc8f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19019_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "e8683573a168140f760715ec55f7a674d38902c2b1c2fb49fd6407094337e591"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19019_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "947e27ada2ef274647812b3c1595597fb0e39c0818cf582a797ce485fa5c78ec"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19019_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "0e7b0ef20e222c0dca7401ecc7b5e45e6fe376e5ffa4dd046fa79fbfe1ceb60b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19019_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "88abe7bd4cbb09956f458ef1d5d3d70bd12a4a23ddd1c18d0fba45df47197918"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19021_pcp_1990_2025_apr_sep.json",
+      "bytes": 1005,
+      "sha256": "c4b859e6e2c6d0a98ded6c6e9fb606cdcfa4bc64bde16f8f4cc54bb520eb6891"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19021_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 816,
+      "sha256": "18ca7fdf313c1b8efb38cd020093040c9641d1b4c0ac1f8ea3ad07025c39f069"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19021_tavg_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "16162d2e2f499006f797eb0d93dd3a8eee015dd4a60f6a1b304667d8418a7cb9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19021_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 836,
+      "sha256": "003728b06ba32ae7826a80a94407c51087783ac9e39850714d61650a2b1e9573"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19021_tmax_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "c6ff147dbd5d316de1f12749487248b4815917c60f650ae3ea804115b82d0d2a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19021_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 836,
+      "sha256": "10445248342de7dcb775c4c6475b474400e54f2bc0d7f6c1f36cb83e2169bca6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19023_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "f36df082e07df19caf61c3b36e2c152dabda8243ec07e52e2ff908c82a8bc20c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19023_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "8bb53769a7167ff1bfc4e24a2a7cdb24f888b5319f8328df8e53b8095508182f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19023_tavg_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "386ae10d2833562ab605962d2c4841eb5ae87b9d5cbf1a47002b311d81313f18"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19023_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "58f02d076bc3eb0e0e27447f563600c4579d6d862a6510a8c1d14776fbcc0718"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19023_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "cbd560a5f55b2093d06201c2ab701062978887177a8a73e47a6fdbccb60dbb79"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19023_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "570a6869e5d4f484d3c5c4a1de63d67f2165449d5c44449180f6ae7d76ba3cc6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19025_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "57abd985e99c34d2c4c7a77b2a617a5b9e20339854a3471374b53da5b919d938"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19025_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "0e67dfc7a8fc069a406e7dc4fb1158d36115f397f15c9ba72bd8708605e58241"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19025_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "c50ed9f0b7eda240321d4f9f1dac35fc765bf382e6a6d31818e2a100b7237696"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19025_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "792c86908ec8e6e22922f9733a7c51e9938f2e5ddeb137829b337917fb71328c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19025_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "8eba96ed8dc0f382932aaadbe28715e96cb7592c928ed2e5bf50fabe3c24545e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19025_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "63283b610eff77ed61933afbab043f7dd0fe8a203e613f161b6d5761d12b5f59"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19027_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "13ea36011f6c12ca6a034507ba18645fc7d5da223546bce1c6e32e03b29782f8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19027_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "6a0c346562b2ebaae3b41de5ad67ca2ceef4767ad1dc2b882953fce5c45a96bb"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19027_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "5eebd5ebf1ff532df87941fd364dff4bdcc712e93d515bfdcee09ffb7edb123a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19027_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "3cf521e793fbb52eb70ec94b171e4952640c849b4fd499ca68dda5a4c0418cc7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19027_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "c563115a16788e4d33aac233d992dc903bd75b6dfd0ff06249f6f26704231e3b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19027_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "8a652e77cd277c862f5548c643c0505a4f4a5530f5559cdcd7cb3cb8fbf01851"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19029_pcp_1990_2025_apr_sep.json",
+      "bytes": 995,
+      "sha256": "e8cb2c4557b102aa27a100f4c794a47774f5b7329d0b33257a3099b15b47447e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19029_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "faf7a9daef5c3b38008e2c58a2fe68fb07fd21c2eb7288e874126d8e5fe16273"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19029_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "19f90f70e1fedddeae893dea91fe00692fa55641dab6d56c41760e77a1d18008"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19029_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "35152086897f8c703ae10afd0f7a6c8486c2c524763878f3c42643017229e52f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19029_tmax_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "b816178bd83e1603a84e474de7ac6bc915116ff7a693682dce00d6db6d65dc81"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19029_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "3ec1d6c1616de894008f3da0b61c8f85fea648a16bc2b2e3ae5b7e3ee0067545"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19031_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "8a430af5e849398ae6ece083a32f9ec9001e7b2d56daa11255bfd5724e7dfab8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19031_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "195dd77084d39158cb3abd9d4eb2efd5a755d5b29dc5be584cc33881d5dafb92"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19031_tavg_1990_2025_apr_sep.json",
+      "bytes": 968,
+      "sha256": "6a05872ddfc41ad3a5ce2afe65517e9c218977f5f5f46d542c9341965c069824"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19031_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "53b0be01a206dc83e46337ae7e08320cd657e898176af0a34b763229012a6f39"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19031_tmax_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "7d7a2e2450fd1bf914a39679fb64915d3a6365d348582163335ad8c14f551fc6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19031_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "f7bcd62d40a985fff71a67b7ab812ed837d5442d89d98132149c1aa75ef05e43"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19033_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "58f3b7a8d07678293119e77e6728d73059a43cc42d5364fc9d39642721bdcdc1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19033_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 816,
+      "sha256": "6038ef3337b31dc68a959c70496d9ccbfc20ca0da916b8dc56bcbe17f1900b33"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19033_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "f765bbc1e0bb537c50dff3c051b4729af1fc094b073bc0745b2e8df94a150ff8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19033_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 836,
+      "sha256": "72495c609dd5dc4eb5148795cc0fa8e190eb1d07302ed348023f9a753c347959"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19033_tmax_1990_2025_apr_sep.json",
+      "bytes": 988,
+      "sha256": "de1b9db03d4aa41e3cbc51825e552c99ed19cd6707e46548fed203bcecdbe835"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19033_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 836,
+      "sha256": "af249fdce875076251448b8e9425e4c58d9e2431ea6c7353016cdfb06ff16f6f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19035_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "c99b7ad324b400cd994f8d360867f75b1c89a29baafb5cdc5c8381c42bdbda32"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19035_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "f57909ac11ad366e85f143de7900aa8719191a2aa28f8b25e24c0568b7daeacf"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19035_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "61cd69e5f7d6e7b5ea54ca73da5839539bf26c03a3903a48c727bd87b7894a64"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19035_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "d0755d390d4fe617466358cf4ae25b83098d124f322aafd3cff71abe6c9f232f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19035_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "b3cf1739b4fa9c6dcc3212954096f26cb16283e891b94327aa486e188af0a014"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19035_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "94beacc02bb9f029804a068fbba03edf06148b889c9c87e39599f46e92ff84cc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19037_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "5e8c5f2f5b70e269db8044c696a43ee843280ebc9a21756e4515bf1910ac9c42"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19037_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "ed08623b899ac65dcabf0225fdfb5c4c2d52151a6f6db862c00bd83abd325a83"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19037_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "1cb9e747051a05c0d6bdefa160ae3ebb5332cb5329f52448f9bfeb9eeca5f3bc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19037_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "9f96ad912f7239453212bc6d5755260e8432430a0dbdd802b4f6e7ee9081b443"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19037_tmax_1990_2025_apr_sep.json",
+      "bytes": 986,
+      "sha256": "e323a1176b435d2d314861fff7c335b143705a1ba4f6ce0a5e76b7f6a4df9aaf"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19037_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "68b2c17aabcac2c01d6754c624c2844d6876eda832f442b6541b1c523ec422d1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19039_pcp_1990_2025_apr_sep.json",
+      "bytes": 996,
+      "sha256": "7114e39f4be80fd8f096764a9efabd133282a1c2b719e4689ee2e034ac3a06f1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19039_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "d6a03d320d3ec3cf7863bfa6d60dcaff26407d6dfb099227ec120e1d05b0c67e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19039_tavg_1990_2025_apr_sep.json",
+      "bytes": 985,
+      "sha256": "886dc56b16dc5352d6902c5faa1a70da02bb3cbf026354c6bc65481d9a7afdda"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19039_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "3ec035825a1cbd849f29d9044862a29e32e777afd8b291c1a7951f192bd5948b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19039_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "c4d3d2a9ba5fd1f256a20e559918d90d91968d8c438e7da70255b7a26cf09548"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19039_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "8d312464cf2f6bf58422b781b551facfce045fc6333f97db6c3199284f1e67e1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19041_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "751b01531180e1b2883191d53cda99367b6c0eb6332abe752de83d3f6114ea22"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19041_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "3d60b383acf53a8d94aaa167700e10ec9cf0bca5dbad461bb311daeaa65a52fe"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19041_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "2fb3c45ec6679df75bb0d50a658cc7e4f85127212805001045c9832c53f2d437"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19041_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "93e9d9e1be02c686378450832e27be5b9e4c2cf07be8de39dcd7934727e0ff54"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19041_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "bd987e534af0f826cf5adfe862b22e6c1f30e85c42c887a18f89515437ed1912"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19041_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "3ddf368ff27ddc9a891fc3f3d0431ab42af56566a8de921d5e7c5458c19b2254"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19043_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "13516b35ed498221dec4e41cc5f801ee71b03867f437f88b22d16ca675954205"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19043_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "763dd44443113c5dc7625da9ae4637e18adc0256152734e86c2b4d5fd6256afe"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19043_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "839cc63a313edc54dda8046f456fd21bd634a23864c1bba22cfb4e4661007cde"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19043_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "865137dd6ad6642cffbc4999042baa35f09c4f334c1f1a6b7ee20036dc53e68c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19043_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "ace162ff9ce77dcc3aefdd117b99d4294a279c4159bb4b81898d996da2ac84a3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19043_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "fe2f3e0be7e1d0584d5f9ebe9c7e6d44259f6b5386b8abbb1b90f401191e8851"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19045_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "e4e55840b93bb5a4edf2447edfd3ab600a1880eb7e14e94f41cfac33768edbc1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19045_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "135292d580f2b3f073ca2777700c2e5ffc8f73f878592d4b3b1031080b5dc6f1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19045_tavg_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "622502ace0ebd8b9d0fbf508812d6e32a60d002cf1fddd95c2c4f94872a8e27e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19045_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "bcf7ea377c8b6c895de0c34ea8d9089aee2671c764f69c099c7592e33d9d0b70"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19045_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "171a068dd7137bf2f0165d26d2f9c5c2a3ef7b2b7a3918a9d99d4b99bb020a81"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19045_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "a109446dbfdbfedc21872548dcc1006858b95531aba9a7eb2fac123125ce842e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19047_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "862ebb5b64c8d59952fb31095d87adc6cc8cd1d2f7f64fec422443045bba90a8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19047_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "d68f102cf6524144e042791bff8c9a72572d8148ad3c9e1c12ff5483911789b3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19047_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "2efc5c7faa2cd14eea9dbbdfd17f1410089cf7aaf4c8eebb96903cac321efe39"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19047_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "24961351d3345409abe84b026b56047e6c02a04b1269e84ba28586936bfb63b6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19047_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "45fc88bc0100f422b796ff6bae45686cc485dfd14eba212189594b58c7c7c859"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19047_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "5796e2251e150041e6e7586fde27b1396970302e3f970893de2ed3df9626076b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19049_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "e6b3c017824c457ddf456f233be2067c75e2114485e29cec7a511c989071798b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19049_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "af90b1b512df0b5224227bc4d3ff538e5d356a79c70ac9cb62995b4f0eb54db0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19049_tavg_1990_2025_apr_sep.json",
+      "bytes": 969,
+      "sha256": "cad29aeb899d267eea69d003062eb6414e13763615d04e62a0c5e5fb91e12ec7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19049_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "aef4ce307d618dc3499a58663276cbb057a44c58030bf1fee4b36670b5835ea0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19049_tmax_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "50a06635f0bce997d59fcac9de2985695a6485d4c72892a1496cf27ed9709dc5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19049_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "4166564bbef93523fab1adfcd277710507095cff79b44feb21e3ef10d3d2b324"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19051_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "bf9799f70475c0bdb42e59e188bddf2f0e149c7913f5c8f24d1b335761be9f65"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19051_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "9ebd2a3cd1616d8ac1734cadfeb8267f37203d2fbd0ddd98630c81e34cbb552b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19051_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "aba82c9f66f48d031e58aeb38778b17bb5c4401b2f4c2ea368e715966a9bca85"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19051_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "479ac388f633ce9154159eba43187ef577cdcf53e6e95cacdaf54ebac51e99ad"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19051_tmax_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "1fbfd423039ca27ce267430be55a01d741c8e61619c3039e405ca12ec9995633"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19051_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "4f52d5d808c1336c372e78928132c19d394cf9888c4d9a6a590a5b302d01bc4f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19053_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "59df61165a44b915e35e45a59476a7e92a890e451766bf90ee481741ea04aa5c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19053_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "cd26ec30f5846c2f28c8eaee58b945cd3463ca27adf2caed8b9f952bd59bee3c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19053_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "f3ab90ea38f2b01ae6e71ed5c3ff1a001873822f786816f7fa58fa0823664656"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19053_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "5d3cb691c16e869cb654692570dce617c0360db270a48ea620672f481de77ea3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19053_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "bd47522554df5ca3dc734db79ad386616569ad8d1aa27c18bcd029d077b6cf89"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19053_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "386d242aa9930ec84af9905e7fd12a0aa673a06f6094b6fef38f9dfd4a4560f6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19055_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "bc5f8776cca70c507698afaba7e8b8207e94a1131ccc8e18faf97bf8d15081ff"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19055_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "82d80c175276573aec8b43a8b112ee1551e511660bb7d06a64c2d2ab66897b63"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19055_tavg_1990_2025_apr_sep.json",
+      "bytes": 987,
+      "sha256": "3e01b65005f9e0f832b0a452c8ddc4e7c460b7903fddc1c00980da9e6982b90d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19055_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "d6edd1c55c6177c7dbd2e51c231c9564257d062711e199297e5651cb6e8856b8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19055_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "1513d7b0f02f99feb79452eeb4db0a29e4c9e26103eb3399ed5c00d6f2a71ff2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19055_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "9f35f84e1e41bdbc6a8f0e4ca02bafe6f4960ce5cd348be0e6cbab871023a663"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19057_pcp_1990_2025_apr_sep.json",
+      "bytes": 1004,
+      "sha256": "31ad1d417082d6bfe4a8a9671ba810bdba721da17c33c75871f86f057b49e2bd"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19057_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 815,
+      "sha256": "169ded6ac2615924cdec13936434e1a0e43d0ab1c601719681f01d35be7de22b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19057_tavg_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "0a562ee2b6678e19afd396178f65961ebcb10aa92a10d46ae12e6fc955f9cc91"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19057_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "cd17a004d1768785bae4e78146a0d0f99bfd0d1ff0f8fc9e3367a3f9a197df39"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19057_tmax_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "b69db829dd6018b259ce3e91653ec3a1dc86f5f28b30003d2acecf4c5f72cc51"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19057_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "ec6039bc4e83c1459b7c3aa8374f7ede50ad4b1c60e9250af62e67ab12c72e83"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19059_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "ee340ce672c1389ad2de085f0944d7664e05d2b4ca0e921be8180513f5d242a0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19059_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "545cb88d71d161f7a4b57990fcda97f489a312c14a0da7280723c91af62958fa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19059_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "3ca11be65a4fbb507a35da9c24bda710788699f488c6418e6e0777cb5065f202"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19059_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "0629a861cb11b56cb63b119df68aea0663db36e2c1519c13ff7ad470a8c09fad"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19059_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "ebfeded1867f84436539342f6b34211fd6de72995e9d2973d92acec410e315f6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19059_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "8ad4764957dff04896be00c59cda046c9422c826bcd43795a4bc1f3de28ce5b0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19061_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "a0f1e8a8e895e6cdb1a82b436c8bc379e09b5cd00b5391498867832f30247092"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19061_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "460d3bdb39bdfa687034ba106e1581986e98dc464eb091af4725a7aa6e8a6846"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19061_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "131ad0bcbf2dcd6177a89f10f23ec6130b58162e96c37e37993c9a0a3947330b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19061_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "b2dc0e73a019e56841d244e2c7b0f842142971b90f27bb477ca75f61169a5f30"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19061_tmax_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "ec6e5f3c89958c227f9d0057266be8724b0f819d5f9c924c6b2ded437cc88f68"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19061_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "760ce4bbd2c8479ab6c1b179deb89c071ebd070c1f13b83027fd4d2249421a91"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19063_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "485b031e2690d65361f51ce353acede8412a7e6aa4ba171e5f0f2bb8540b9ec7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19063_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "560b98e88b8234b24b5258b2c52fd7c9d7567b5e865c6eaedc7c2a0648320fd0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19063_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "9d02412eb2475232c65250b2bd4f83d7b33db45e23080e023bedd37471df55d9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19063_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "45b43fbaa85b40d43ccf8df42a7e83a4f142ece019cb22fd19b19abc7e622a4c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19063_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "28ed26b6d37a99b68b44de1faec878d163077127c6da10945ddf164dd2fff71f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19063_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "d49718a9b983de05f62b0df1d8a43fda8861cca555ac94aa232b96b14778c734"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19065_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "91be1b84df18af2ad5727b291323ae67dd5a132fcb4b1efcc1746213ae01ef38"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19065_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "c7dd740514e4baec5033de14f3024bae772ad916927563c7232a4def6b7dc910"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19065_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "7917fda2a2ddbf51a944773874996b8a0182796af44df7404d2a9dc8f770c808"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19065_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "b80c44fa498e857b7807bcdff236b04960189ac0f4ad210d51c4627afc780f46"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19065_tmax_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "8537ff8c92e94dbd32baa0ec81f9ac4bb71458eba12c15371c915abf899541d3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19065_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "bf7ba003a653dd8fb282e5e230176d25c2ab0ffa3d7543bac8fc2c295d1f7572"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19067_pcp_1990_2025_apr_sep.json",
+      "bytes": 993,
+      "sha256": "868d0afb98a275394a597db3d4a6b2f14ffc3ce058991e7c8fbf26e88aa56972"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19067_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "b62484828b43b45b2a816e809614034329ef14fb8f2e0a0a994a1c6c40574622"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19067_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "cd1cce0d9c78a28298f357c74978dca25b67b81680cf6c20e04b383fc99315aa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19067_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "381a01ff1cf1e69199d437930509ac51d2c6b19971822e0928b663f0a7809bfc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19067_tmax_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "d4795d03d09ba5c41173698ff58a2a6d1e7698ad644ff634dc9034341d8413db"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19067_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "a1f681776b09f7cae5fd34eb464db64f79b25544c31a068d85b0eccf6aff00e5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19069_pcp_1990_2025_apr_sep.json",
+      "bytes": 994,
+      "sha256": "e17942d804f4c07afb750534bb8f59b010b23c600afe3fcbc042af0a4d6a2587"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19069_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "73cfe633b243ed780d2aeb322da1269c235252c075b046f9ff3d60342e7615cb"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19069_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "df814d4c5ca19768738664fd2f6a2ff3094cf152978c3ac02a8e102b83e71f5c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19069_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "f0ccc7ab8335862855d1115cbd1a1ae1e72e921227cd5e74b675973289b8b044"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19069_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "e7d7fb4e326f78768741a91f0a6971c27aa2974108f90f78b8bde0cb7786404a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19069_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "539d051144efff010f7ad2b22e45ea649fc2494f60c315f2a99f6fdd2f6e7e5a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19071_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "55c991ee94dd3f834c80cf3c0a2bff4a042bd940af1ea9d1b5eda159be69a138"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19071_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "aa1f061b011b5046000ad8023d8e947455eff16c9168e9a2d636ffa431d4ef26"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19071_tavg_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "b410db2607f711a87b88c6dbd2dc930438aa29fcf66f32a0b31e92b5d9f36083"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19071_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "3a3aab314d7e1edad1991140511afc42d0ffec39a5a917f07b5b091122036d83"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19071_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "6c2fab162d588d6283ab3f4bf6bcd5b68931c86f6ad2d655cf8e39f44eb298dc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19071_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "a66176b8c2cc58ed685809032a555c8ac90ae157573ec3ed9fdb44330914b76f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19073_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "d086d0afdef9f1f798061b9d2e7cbeca348fc6030de802703149041784b3b4cc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19073_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "551d1f2bf279e865d72e3c35d80ed20ebd5a9fd0c208fbb282ddb51fd355aa4a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19073_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "45d041b841baecd54b1322419c3dfba1337874354489caee9676bcf5bf503540"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19073_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "66933d671398ac40168b1f2385dc893a089a214596c9066b0c4605edc6f8f204"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19073_tmax_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "8f37ed2cc5897382768a0e891645cfe980030a70ce62ce56dbab5d4fd8b101d9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19073_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "b50921022683699a19248be67ac69426076a0a0ce161a70ef6cced118cc2bdb8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19075_pcp_1990_2025_apr_sep.json",
+      "bytes": 991,
+      "sha256": "68e31991e1bde055f219ee8ef42212883e27e61f35f94c34c2915b55839554b7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19075_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "4c6f472d452f6f572820acdbc19af480a3e4d1bfdc4e9371636b44c80574eac0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19075_tavg_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "b52ecf34e545597ec1500a8a9449091499e0b51f51d7cbf7253d206f245e8f14"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19075_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "87ebaf1065f2500c86a107ef2559734e9c4a6fa96a3d2ba0e84113ab77590e39"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19075_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "219b07c753dd82627089c890e06153b286c6763afb521a07f86b01dcc4db7cac"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19075_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "b466f0a22b27846707ce959105e6f9de8464198d84ab68bf340b53f35c371767"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19077_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "ad4b51d35e0cec60a8b2c81b79c80f5525526f4e44e57b07b73fdc05671911e0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19077_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "b67706ed614e6f542b994592ee6f132e53852b7bc9117b21ebed42e5c584f0e2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19077_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "51cb3487720c33e2a493b95cf8e3f103b1568ca0e6806b24818e7dec7454801b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19077_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "42d37f59ce165625ef8b5cf109b1e97092ff9b997ea86424364c87fde3e0af6e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19077_tmax_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "b510150f032a95b37d1a281efb44f58bfe0a2dcc782652fa813c9eb9c9689f0a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19077_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "5969ab52c49225266cd631c3f0317f44c253683d50ab0755998fdbf96602feb2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19079_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "2a613d4d2ee9f46bec2e974ba15884e4792477064f069afc26e3f4b67fe33a8c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19079_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "ba039d6cf6ab0b13c7ec3f9a1754be331f44539826f5b19a20f0d35f5d120798"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19079_tavg_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "92ec2330c1cb89ad315f00a61dbfbbc8c1e09f840de229096d3df6cc75d1f0a9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19079_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "4a494c1ef7b6d7abbb7b4da9f17691bb99a170011ff21c687ecf92dd724e7320"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19079_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "8606e269308f9c2a03b6abbbc1a5bd6b9e78855e49c2228321653522fa1f3241"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19079_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "5b266bd7897a130db4571d5a73226d4e5626558e424055487c27a7467ab456bf"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19081_pcp_1990_2025_apr_sep.json",
+      "bytes": 996,
+      "sha256": "c832e7a6c2d14d03990fbb54bf35b95d2a705e9e8bf463547b22d7551d09dcfc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19081_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "285916541dc3cf57cdc840a820a7438841349e807e90007390eb6627e4f1ec17"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19081_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "89f8d7c193d08dad4fb5bbe814fca8a40a3e922c1973eb3c4d62731beaee5134"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19081_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "e37fc05ab5ca470a5eb4603ae9f52e9f43e7899cb8b20521258779c21091c69b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19081_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "b93fe13e0e9aa071a93db887952e598a687dccd218fa67d4e2efa0c6abb83b1d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19081_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "1af79ff8201447a25b46532448f193b5beae2289426dbb2f255c0f824432a83a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19083_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "13ee07982cc09e8d2ede92dc86399d8308ec9c7aac66c664dd7e6b8bc5e15663"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19083_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "86dda1f1eb2105d97d78c516fc73d8a61b6a8b7eca45077cbd8d647997ad3aa8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19083_tavg_1990_2025_apr_sep.json",
+      "bytes": 969,
+      "sha256": "5dfccd4be706df0accb27368b91e508dadcef36ad970ba02dc40cba291b2d5ce"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19083_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "318b5292e447f4752ae0bb80f8561df32a72f01df9715a0d140586d3aa66af75"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19083_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "00e85a920e50d3af767dd3183b85a72189bc77af3e97fa23b330b71585c4dcf9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19083_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "05e0625a578a21aba9a5b5b587f90bc7ef1977435ce455ac1c50ae649550feab"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19085_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "f1e320c35a88daad497c7b9960776a71f24ec3513ad1daa4bc1851a55af16d56"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19085_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "2baa6bc22baccddf33bb0d4766098d0c8f81f6c9dfd6ddab3d2304423a8f5787"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19085_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "b27285b30be88de046ae04dd94e899785d4651086102c10340335efb561a0888"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19085_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "69c9e3377b4ad897bdb71131b9d00ca5bbd91723c5ffa75436d0d1189fa210df"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19085_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "2d23efd5f7130f080ac35a36c847552a636dee3fcece7c54d94426a4f0346af0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19085_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "2b354c7314722755532497b5fc9e57615e93f8dbfcf947b5a57c17b6cd5a98b1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19087_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "894dc1741af527fcc2759cec1ec0aef0fa771d1a95aa2629e6c81086b14d6c89"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19087_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "7aaacf62e1d3869a8f571cbcd9c59d0013107515d61184cb388e0cf769417d6d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19087_tavg_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "d80ec23cad43acf3bafee21d072b657b28bd58eccc1afbff40c0be28dd1b8772"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19087_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "d9ce81a0e9e8c01705dd06f190ba85149b3f294bb37f91ce83b6e5dd7646005c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19087_tmax_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "08f9b1add5f13b65b61900f3a8a4c5fcbfe2f49e2d1df6582968d029f928b77c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19087_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "f05813e146ea6581fdb0a49e69213445ca2392953f803e8311aa7c9f0319d33a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19089_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "1e80e71a8f45065e6d1508ad2c3af62d826a72ab97dc153ec9297cdc0b134aa5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19089_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "873b4fc433f971377e490553ce89f68fdba4ec807b3f98cc9994f264840f0234"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19089_tavg_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "2d1dd7e165939bc9f36a509cd03fb63d446cc7ca34edd8ead0381b33468c73ff"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19089_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "b882d7c064fc36688e711e2a1a239d700b87f998872cccd9b5e85697bed882da"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19089_tmax_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "733cbb64c672436a69597d234890d598f32e58b85c5cbdddd57e1f120f4253d1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19089_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "e00989790ab58986bdcf7377aa7946ef85951cba0b959658b399564c0f3d776f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19091_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "dd06c917ce0c5c13d7dd9d7fc9d31c792a8849926eb082bc25748349c811d21f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19091_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "f746516f54a5d3fb127230078617c9d2460fb581bc141865004c0285b71639d3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19091_tavg_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "e07f0bac2491d3d5686f336bcbb7aaef6e620eb1dcd5d09206654554c2807a1f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19091_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "3c2141ff8f11f42fbd5225f07c8413a7300bd15ecc95d81a32499564aa5d0a4e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19091_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "4718729d88a9f05056c1e766055202c2be07110c6d85183790a9e0af77c7bdad"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19091_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "fb20c16abf8f0b43ca687ebe2d8df09a7cb61206c2e90c48f40dce04e04e61a1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19093_pcp_1990_2025_apr_sep.json",
+      "bytes": 992,
+      "sha256": "d5a7558e61de2da45f9e7fb194ab273af65e8ea433e9caed77d9f72e9e7ccdcc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19093_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 807,
+      "sha256": "cf81f1c92b6353e9c268ca3a0b6af845a1e140a1e5ca6a92b236c45c2b37ac11"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19093_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "81a12eb1f95c52c5c17161f25c38903bff225618ca554e573f6b4d31308d05d3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19093_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 828,
+      "sha256": "83e5230385db340d71b9fefd8fb536ea176b15dd6c51707a8e8cca2885f4fcee"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19093_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "5d13c171d662129211e8091ee88e42b5c420e9f560e9a6d8e20e72cbbb02c979"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19093_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 828,
+      "sha256": "c965299b292bdf3786d89e6142037878b72e3918d3c38839f889b48912601bf4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19095_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "1dbe94b3a493c02ab16c952aba7a85b937a3e06a5d865595185b47a28ad101b7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19095_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "fe8fc2b2a9993677a26f706a03ca139cdf3a0f7149e9a24ac4d52dd1128c11c7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19095_tavg_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "02895c3f48be4a09dd23156d10a91df38f2ee9401957f3deb709977d8cc6d658"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19095_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "7356bcaf69ca6297b5da29f2b917c09344daf27e2b3c72bc42615bbd63b3bbd4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19095_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "a7d09bba47b0b358943441af4da23842f9d1eab16960d3c9080c0ce0fd997f3e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19095_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "e9753e61ae0216057e2e8c6b370724a2d5a6c7ce2fe36fc6954fc5480bef5921"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19097_pcp_1990_2025_apr_sep.json",
+      "bytes": 994,
+      "sha256": "e2718fb410dcd72ed58215c7de9c6252c0549d14da39c9971375bf5916e0c8b3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19097_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "035c5b1cddf5a08fc44b9c5687533cf23026f6ccd0feb8ef5d26711e6cbdb9ff"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19097_tavg_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "68a372eb0dca84dc46e0309cb081a8cbfab4ae06b4083e812e9a330c76094b3f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19097_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "bd8943ab3465340db7e5c20e2366465ed69919f0bf62c5b6314eea851e808f87"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19097_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "6bc06ee80b2aaa606aaab3ff3316bd43a4cd3a11374f0da980875c87656561af"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19097_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "7639bb3b5dd27226bf2da4d1a5c9ea184515efcacd5d6f95d6a34b7cd1f612c8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19099_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "712b9af876ae0f314be64f6c6b3f30117ad5f33ab123491b58db1fa172f7d3ad"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19099_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "1639f3296ab65878176416d130ced752414bb55ce91f24e7e779c1573c1a6a79"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19099_tavg_1990_2025_apr_sep.json",
+      "bytes": 971,
+      "sha256": "c77642d265977f25802e7fcd343375285cd49c40a3619f69eca95190bd99d571"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19099_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "58a4783301cc8c204e567fd22e83d19f3666a15da4df47928c3d925cbc8f70b7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19099_tmax_1990_2025_apr_sep.json",
+      "bytes": 969,
+      "sha256": "bf526c3213ea37e9e1847d31fcc94cbd1e3b3d369ce221aab88c78abab3b67ed"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19099_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "e1eea6d333fb2c575c97c2c3d1c9192bd3bc1ca3ddf594d3eee2cff499eb64d7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19101_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "8f9c5b4e666bffb37172d0010907c2c47f515693ccb08d3288d37910eca8b8f0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19101_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "04269d7fb8d33b4376cb3adde1ff61df6b9606b553850e2183e335c873bc021a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19101_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "0c4280a04d9b8c8d0cc97e44b1b147cd49c166f85e02482bfb30e496027f3522"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19101_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "066aeebcd7d4558531f4afe5f8765d3bab31358e8d5089e5591b6b10ed86f504"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19101_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "fe19c6fb83ace4560fbe4e57757ed914b295398edd9a570d2b928e64d2ab44b9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19101_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "b0413fa38f82140c64f84849711977eb58b8d57fd98784be8f978e0d569db257"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19103_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "3192bc4dcac8310a119bdbdbe8c71d620615eb075cc254ebd2290dfbaae89dc9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19103_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "002d297f1a8995388559a989c5649902adffcff3759e6b7a907bee922245fcee"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19103_tavg_1990_2025_apr_sep.json",
+      "bytes": 986,
+      "sha256": "2ec54aa21d1ffef90493450c972db1b615c8df900ec9bdafd5a22ce9d94f5982"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19103_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "9fb56758b0b0b5b46efc58d68bc1903ba0d64bdc5d7756711d0062351faae7a7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19103_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "6b62093c4f404501fe153efe6bc576a4eaf1a690972e775f02de2f72b7abbe43"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19103_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "87b4e70dc264eabfaf43e4eea61a139b2dc9d0bdd8bb5427db969eea1b33a848"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19105_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "63c77701e55dfa3ec3e2cbf481e90923f75c793b2936e68fba5e688d3e7c476e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19105_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "9d6c0753ee307f5f2ab457087445e8b6e637c858ab4d6fb69e84ef58dd5c4d12"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19105_tavg_1990_2025_apr_sep.json",
+      "bytes": 968,
+      "sha256": "9cd8bfe6b7a711f762189e02134e567246212b3cb001222f7762f77962ac1376"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19105_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "0e2dccc27df77c99e078444492bbbae2756d1a2a3a1d7dc364052650ef0e5f9a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19105_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "3176bd64aef83a6a9c2e5001bf4dd4f8362d3ed353c866e023dc540bb576d105"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19105_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "d404d0f6086325aba01ca4b5efc6483f8e0aa5994e24854c264149c0f8c3a345"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19107_pcp_1990_2025_apr_sep.json",
+      "bytes": 996,
+      "sha256": "2bad2bbf2ac043f5e0f7fda56ead8df32f3bd379fc2b8ef70a7b49d10295259d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19107_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "671d8e12dcb9eef6d98a265841ed960fcc718dc4dc38e42ddbca7b90f155fc8e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19107_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "e22dc784e9cf0d17677f9320abe713234ca9319dc5552cd47420c5e48a8b8b85"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19107_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "461fd3871cc8ce50d345cfe89e209dede4282b98f31dfe02a5ba71b2aaac9f4d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19107_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "5bccdb372ff48559e1364fc8c1ce3033be668cdd59dcc14a84d69026fe2dab67"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19107_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "d11813445d47ccae399e001d02037a955be1572c08391c7bcc0d1e16aa405710"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19109_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "ac31fd935e9a5d71defa1b0ea86820a37412ac2c5bd9d5ed810232bbe2320fa9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19109_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "a213bb40a994e22bae83315472a41887fe859a9a2b5259ebf6c275ec52b3e97d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19109_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "e6843688df55f827bc43daf08c2ef8b1a2d2e2fb219fc694322e3bd3f8b14f0c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19109_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "a4eb3025818b66dcfebd3910b45a3126e19123b42cc082bd1a5ad28bee713c8b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19109_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "4bc1810ae942fee25331eecebcb77a25b0214b794151bf8f28a54cf4bb007469"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19109_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "bc6b3333140d3e93f7938ab85acf96046b5d6078e42d1a91c854f8e2e941dc3d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19111_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "ddddaa9305062cbf57ee7ae96d27a45af9fd72bb5f13cb0dcb3edf9f48a96b2b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19111_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 807,
+      "sha256": "7e610fbbee844d94fab61a20eb3a114f1bcc5f63ec2ec7e96436db9bb3d7e20c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19111_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "a50e02f116a7c493d61ef72d9e324c256a626e804ea753105d0e1f498d53232a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19111_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 828,
+      "sha256": "f34a6e1c87be946c2ad59e269f40c311616cc6e78338eb69fe3454e979bfcbf6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19111_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "71a3b4cd20ba89803659e59d34a90786d3ea36b905f068b041b7a2d67774e308"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19111_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 828,
+      "sha256": "f3051f5b9e1ab4dea7e9da29c621a20dab6dac328a2c4e817ba660d4eec5fa5b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19113_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "661b1419517b45d887c919fd60d039a82ea5e50c92fb405b02a3abaca100872a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19113_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "7ecf02cda866c45c680505b27f0e6e6e9190698d92cf91cccf5cc916ebca1daa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19113_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "9e4cb93685f3fc13c853bd3451c0cb9bf19129a9157db045d2b1a16a035f6c1d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19113_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "51f729d139cd09838dce6009600289b4ffff0ec89c3b1f79853042cfbb06321a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19113_tmax_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "e4cc6ee85567667c197a129be3a8535ff1e39a8c84c956e4db7b203be7e5cb8e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19113_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "3ef2c914deb3c1b0aa3bd30c17b79e85512446f51196319d8a4798be060dce84"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19115_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "a34bf4f957976b9d99a0ce9b1f0054a2a2f6a1b648cdd60804855c90cef9ce5c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19115_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "3a5cfeb810aaf6b63384d000cbdb4a78292f2af06db6f3edf0173272ee5738c6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19115_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "e8bf339478fbeb0655b4a39c005226eb3e7b6cb5d6656b48d11ccff32e119cb0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19115_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "46e0a8b17594f1bd49f347b8a6e507c2e7cd57893279c83ddd71396009b9d660"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19115_tmax_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "572ab78b814eaf5778b7095279acfc342688e6bac5ac7742eac86bf4d78077e9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19115_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "2357e3f137defefbf7b1d6c6654f69c7a7aca9235c594947b8512966a66bec78"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19117_pcp_1990_2025_apr_sep.json",
+      "bytes": 996,
+      "sha256": "1925a29004a147d6267870984fb6cd6a617e8a03fd8ff969a8c29749208ab004"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19117_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "25810890f51c32e30d880683fda45ee1020e41a434040bbc1348963f57b9065b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19117_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "54df6377f096333de0a25ec1fb7e5ac60c0f3ae7c8d23f9021a98acf1f60a85d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19117_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "2610d9f7e0860e5d0ddf021b4d1f073aa1e049320c0ca2cd3fcec4a4c8323dcd"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19117_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "76d1c700c2d722693a8257bcddd8af4453a30ba8de5a34914e2c54368f79a453"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19117_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "8892b0ef620c4e261bbe85a7676ea3a77d6cf380b855c2cc43542f5936531aec"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19119_pcp_1990_2025_apr_sep.json",
+      "bytes": 994,
+      "sha256": "4486e48de427f4dc04cfd3071df5ff7bc7cf58ff015ab50238223a5da4d1f7b2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19119_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "a4d5f2696b1eab47a265fa7a24fe6597aba50206b5347040204c6e974faac96a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19119_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "77833ebcaa93f2da28319e2dd264b83464593b8940a4bf5307386991f2a19831"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19119_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "8d4ede836caface9088912402258b915a5b100cd9b1fa81910d7f8c760d29d5c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19119_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "2540154d148dcd17e794637a86af7eace477eef8861efeb6a508584706e798ce"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19119_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "8e82b37d8d49d78e334dcde29efcc026c11d544b6ed9e3f76b26df5ec1494118"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19121_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "8dd70d6556d4355def029ab0f0731d1bfed4cd563b39c23a707a1788620401a4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19121_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "474266a4d5a4e34a5af58a65d124cb2bba2dec2a929a29e1025a025a579eca44"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19121_tavg_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "bbe37391b9af796e50c70486e83305c2311a2bfedc9f8921f98d13343438115b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19121_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "60479ca4edc6c072cfdc3bc933606ffe4a86c2abbf7f5c00f36d4b3b65d5d32c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19121_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "ea2ef7bf59041515d97215d9b55cc104a6ead375945acdf32a8e992dae688a8c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19121_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "845cf66131e36cfc1601cf02810e12d34097fd35dc35b996d92e8df6fad06c87"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19123_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "5cba96631e7e98e3dfde9f5fbbe7cac04b15f5ecda298164b9ffa19f4343aad6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19123_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "8458ee72737ff0ac2645f8ba4f12608e25f71ada6abce23a6dbd7cd141e456b6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19123_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "01057ad18ee50005e8d96a0fe493c617ad1f76bcb59152fac5a417caf969774a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19123_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "75a816d983c46b4b2964e1d642941cae16935eeb96a69d14dad3c13103e0fa8a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19123_tmax_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "f4ad2240d8f2a244af63a223a976a2d134926e8a401e7e1ec9ecff09b80da650"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19123_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "a31002366b75e01700d55cbec36f525d59520844342c6dcd4cc3a930604f0b1e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19125_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "b0f307a6d5ec3bf5640c724ab426bb671d2300e4c8e66ebc5ddeed4dbf7b14f8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19125_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "6dfa1b630d770931ab04981404decdaa1cb23b0f4d31747d190f48e81ac43cce"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19125_tavg_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "04adcdb6884b0f789ab7435397b7ab7f9d78e83e6d845a34afe6293732d737a7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19125_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "f8af2d757b91bf029afdd23d89db6a9f84d7d65ffe3c5340a7e15e6c40fc0da2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19125_tmax_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "a19f092b7b509eabb143e3c856ca24a961c423bf936f6534683276a8c7d4f22e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19125_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "79d3c046cdbfc5d4d5d96ae269c8d1e0936f74b90a7bf1213fa0991dda576849"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19127_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "20621f7840e64be4b6eebd53cadbc3cd57bcae5599ba147cff1bde28aac8ce11"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19127_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "38578200d63d7a846edb4f9e998e6fea55fbdb0a84963e5ddb7e5885b83f153c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19127_tavg_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "df705155440ee9d469a70d0f09860b5059f4d942da6a57541a7ca90dcfb50519"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19127_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "c22abebaf192914d409195966c262e215dc705c44a85e1fdb731005149a7fc47"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19127_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "9d27a8029aaa36c4ba2801ab02c53131b7d90e0c65390a78c52c8e970db1bc0d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19127_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "d73c4b5976891a50c3cea9477ab307bbf27e812d1dbd4870d1343eb7bff85ae8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19129_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "4908f40ea59ffc9959051e0609f46d77de3bf74f7655463fd352d87fa51a62c0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19129_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "b57cfc6811b389c4d80c350703abd6327fce9d5b6745c253d55c0862b99c059e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19129_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "4e3b6157ebba9f20765625f904b606af6d60d2c9db2f5f6b22a536e25a2bdfc2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19129_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "6e086285884b99feb0606035c37078b7ec60e5ee9d1e38fe31f626255ccc336c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19129_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "b61bdbef228550944af14045c9b71d03c7420ac8a7d6ee8644f6902f2ac3d21f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19129_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "faa2519abf1099e85b3641c33aec704dad9ca142cba19ccda8e74df932ccdbf1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19131_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "f894872570b3508934d349063b88c22c8f7c0861e3e3144ecc26098e7f72786c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19131_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "fa2f1f636afd7200329fd6371fcfdc51a5c94ade44c723ad5496967240405184"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19131_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "cc3e2996e247bc90f58215e6ec0173c300d2ee54ad94b58ab68d217188270165"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19131_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "c677f67b0e40c34caae55c4d74970f3c69a5fbe0dde32500472c897ab6a92eb6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19131_tmax_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "7b4e07709acd000dcb213bc0d5cf0393739291e01dd3de7e1db0cf1d5d0e3e64"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19131_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "14c2c6b7c2f9dc6a0e05e7ab7fef38f03be010a212c300ca91ceda508882afa1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19133_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "f2eb1d46c29d849d04885a18daebdc8092041aba05e2c55773fadbb35bcfe76e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19133_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "8e34a67027b81005c5ea45a1f1d9d9c3f85f2368f12549868618971156a0b295"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19133_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "c0f171011f76637955d754f931052268dc5627b2756768dc0966058ff1cbb51c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19133_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "bd3921d6f709990a1bbeebe49cac36c2c993cdf6544c20b66ca1d166866d0da2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19133_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "ff55ff0f7c01f71edc36fafb7901180364fbceb627fed58d9fafe1b16faf026f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19133_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "26cfcd3119caac89b94e1db57b14e5955ae11e219e3ca6ea2cafd50be2e647e3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19135_pcp_1990_2025_apr_sep.json",
+      "bytes": 994,
+      "sha256": "592d5b45ed8e4b0c587bce7c45e3927dc408b884fc1806ff01567108d896be32"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19135_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "61273a3cdbe6eae86a1a822ba7542930a8f7ac7610fa9c57d526c4b357b6a2b1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19135_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "bc7fc4c8f5ad7d081de6295a5da28fe5eab6c59277f2bafc499f150f465a4f22"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19135_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "c3bfcd276856005270433eb2f76dfe7258791b10158852e6cad1d43746b3f176"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19135_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "1b07a3f68dfe413b2a492cdcfe6e50d83037df8407e568ca4cd63b1ec4f13cda"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19135_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "a9c4f3973e34e38183d107947fe1f53d1da8cf68ce595fd4b5aba56705ca2e41"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19137_pcp_1990_2025_apr_sep.json",
+      "bytes": 1004,
+      "sha256": "2322a00f2157b911ecb33f21c4cc1b2fa2a4205510d184789450e905d317bc87"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19137_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 815,
+      "sha256": "f2360138ae792dd77e239e3ed8d9fee7bf6d76ba2dbfa1e55becc22c54753278"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19137_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "cc8be4769642954d57a0de65b36ba8a5e9b565b03a144fd12280f2c611af04df"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19137_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "09006c89659409f39429c8f0a628ae7725eebe94bd619d8afcebf7e5b19b41a5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19137_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "09c0ef1e3e6a7d083d3cc025b101f3ad35255c31b1ef511a9cf8fbfd77c68b55"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19137_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "a7139e9f27244e49a2738a6e6873074c2e91265ffb1f6dbc23fc21e575660c2a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19139_pcp_1990_2025_apr_sep.json",
+      "bytes": 997,
+      "sha256": "18c608dabd9b71b18c529498e90d62dd6c4426cdc30f69fe4186e520390a2d16"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19139_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "9df6321fb59eed957b089de1ce636040c3f6829a21f8c152682b6ea54918f14d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19139_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "6f26e569098748845e612a5be355a5588a14ce656122ba7d0921609a2a92baa7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19139_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "e55c07807b5c9f6ed20f7a9fb56464354c8de0066cd5494bd8645b3f77d797f7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19139_tmax_1990_2025_apr_sep.json",
+      "bytes": 988,
+      "sha256": "e968d506714e9c288e34e2509108fa4f001a4c758e5e00df8d4dc1906681782c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19139_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "70875055e5538e55b75c85ff89fc82e6638ee8997e43fa720419f6759149b22e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19141_pcp_1990_2025_apr_sep.json",
+      "bytes": 1006,
+      "sha256": "441249e9ab84e3c5aac395d1ff08e9741746f85c1e7b6b1f2fa30d3fb72c7e5b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19141_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 817,
+      "sha256": "e24ff94da21740ff71939f4cf3b20876e78d056123ff16642688bc30ba8f0a3c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19141_tavg_1990_2025_apr_sep.json",
+      "bytes": 979,
+      "sha256": "d60f369f39c87f489cb5fbb8d1f74c41a4ea43c4d698cb24e9bb4c6bd7dcfe53"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19141_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 837,
+      "sha256": "ceba665879040832e751ad4d10ff6a52ee44b0043bfa629408e9cb661f348b66"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19141_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "da6ef944c404cb04c19cca1da24788ef48a2fa94ad1f0b12e43b49b39af60a93"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19141_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 837,
+      "sha256": "4eb8bd0f62e9c396dedec7f60d703cf3d904f33c99d43f7c3a43b9ed58e6c7b3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19143_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "871353113333a9ed79e040373f738acc92092d9bd41b087a87f3d8fbfc842ebb"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19143_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "4519f0789f6ccee3cd51e15b5a3077ec3c395893089bc9afccad397642aa7e5c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19143_tavg_1990_2025_apr_sep.json",
+      "bytes": 974,
+      "sha256": "e9c38fae2a91776f9eea54267a664370cd78700ea5d2c47f7715248e0203b9a5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19143_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "a778e702656fbd82357a9e0de52aff045b383e98138c4c7b25028f51ec5a0ab7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19143_tmax_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "42ddbd625d758f91c3ea7367de3cf76b9f4230eab33f93b700e8540d708e6b9d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19143_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "738c382f87c73ef81c6ec6e65aab9fe134fdf1e9cdc35f022238edeea0cc0f78"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19145_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "5a1cbd84f0a4b82817524028b8869e43da000eeb322819978a546a688e8ff00a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19145_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "c9a53bbc449e66672549d2e8af72deaaeaaff9e3de7d9d10e80eea7750eec687"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19145_tavg_1990_2025_apr_sep.json",
+      "bytes": 973,
+      "sha256": "259d8927e49bab309cf8841043937bffe3cd5021587fe74d5dd6174a86a0367e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19145_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "c095b23f2518c095511b158774050ff74c173fbe248f458baafaded51367c078"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19145_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "2875587a73a6cbb927b0efd296063acea08187e917aca122ef617a8d870b95d7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19145_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "7de160af6c267fb8758f1a85f836808209c2ab7b00a7bf271f2460bdcf56ed11"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19147_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "731275acc43df21aa3eb7d7a03c2d2a50b33a0e9be16e0d8848cb0d788e214ae"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19147_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "1235da2ece05565c839b5bcda89f82564e4b9e8828098a1748b4f8969a8687ed"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19147_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "ac5ec57160b00f957e414a6100ba5ca86d9bf732b5bb9087acfe3c8468db1078"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19147_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "b9f071632aab32e15cc6c7212b128c58240827ee55802602c724aa99d7756dea"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19147_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "f32ceca9d438c2a32e4c77fe36fbafc5656b097fab5c6679ad5d885ac6c7cba0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19147_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "167a2254b7cf865414e89cda0c19c9b2cbaaadaf987de1a2bb9aa78f5dd552f7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19149_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "5b9f1b97622c75c45b8ab209ee2f5a17871ff865a1b7e114d0d3e2928e19035c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19149_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "e00ffac49c9e899539f287f4585aff394175f27a90afdd6565c788ab4ec040ff"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19149_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "57d3fb5cdc6c5bc30f6faba9e1b46fdc8ba13bc2e9641bb753c901c5b09f93c1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19149_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "0382e8e20dbb7869e316bdb3e64c97f74561bc9c59ddd583fbb6a7fe67fa6073"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19149_tmax_1990_2025_apr_sep.json",
+      "bytes": 985,
+      "sha256": "bb947c5c0ab5911b6db3bd9a8f47df8e771137470b9a7f2bf960057469a87513"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19149_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "824331bef4907139b7b68ab40df98e695ba866258830b98d3820c9d15b4846f0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19151_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "49ae92f047da095ec6dafca4d143a2607fe38c80b66194cd4d1d62b55c980709"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19151_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 815,
+      "sha256": "d11f455a43ad518fc6b1b3a7107f45e8d8de2c923e669f64059ce881d020cf00"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19151_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "9faa09d7a1f48a08c6cf39aa4234525fa61952a223ebb576a80f0ebfb31c9819"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19151_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "eaf8f35c205c85975b706d666103ebe9a2ce2cb7d90e5e0319ebbd81ad5986db"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19151_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "9fad13b23fed0936a48175d32b3e32ec7152e7c7599d79d283af1d9651eefd71"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19151_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "0fd92e191b23467586bc33fabed662808a248516a79914ab0a52247b204943fc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19153_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "cd5b09eb85b72c6cbc724037934840d4e9c235c60bdcc3ab7856723229ae86a1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19153_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "bb719e936805ec21a4a14716059346dad06c5ae030178fd580ac218935b735ab"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19153_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "70e7e1a23f1e1f0f0ff228af2d2f473a2c05b803940bc8315b7f4d3695196f3d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19153_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "398a8eaa226ce0ab2f2fd4b9e1ae19014591ecdd4e15d2495dc73eb4c99172c3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19153_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "22d1c733184d2c0ae9f73de17f6203fc9a8fdf8d64c84e2b38a9e763b6bdb15f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19153_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "5badc0072e9bddd43df07637d6e4a66e7e0cc6c2de1ceaa0e02af4f2f82e988e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19155_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "24f68088b48da281bfd61b9e332e6b6c11afd3422eec84dc2ea7f89ebc26cd6d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19155_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 817,
+      "sha256": "a803ecf4897c1769d7ff4f56210689b9a9efc3550f655cb134b013ae1e12401e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19155_tavg_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "81c7ecaa54aaa96bf550c75d9ae7d7eac1801a34ca5e178abfcde4cd49057886"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19155_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 838,
+      "sha256": "4e1bf332c99348ccf54b9d12e1ba8225c6e2effbedeae0fa31b96657a2e74b7c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19155_tmax_1990_2025_apr_sep.json",
+      "bytes": 988,
+      "sha256": "27b8387dd6b6b49b9d6bfd970c622eabdf0f7eed1bafc1f60e3158fd1a1d340d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19155_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 838,
+      "sha256": "f43e5303261018725c713b703dfb727d3f2be2bf9cec1832f3ca6b30578f7aaa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19157_pcp_1990_2025_apr_sep.json",
+      "bytes": 1004,
+      "sha256": "5bf945a432f2809187c208be0371fe1b89596053c1549617c3ade6201783da87"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19157_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "7bf1de62c8e96d51e34d2a22ccf7a32e2757e55dc992f6f1096ea30379cc43c7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19157_tavg_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "7c5a79c994a82a5f9a37f2516f2118c233c8db9374544312ec07059bed54918e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19157_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "3cb36ff57457480803ca4bc5dce43dcd2b6e85de6b1d2768a2755a31f4d322dd"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19157_tmax_1990_2025_apr_sep.json",
+      "bytes": 984,
+      "sha256": "ed4863e36589cb16746962d81753056bf7b1b82fd3070fdcb31e4a5cbdeb347e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19157_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "e1d18ff5a283cecbc5a4a765ae125f7fe150092b4d2e9cfe14ae78f0f8aedd9d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19159_pcp_1990_2025_apr_sep.json",
+      "bytes": 1004,
+      "sha256": "c2c0b1db36cb3b58a7cb6887bc5fa14449d01032ed55bfdae58dddc5a1d284c6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19159_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "60a419d1c32c97ad88d9e778383fbf6ae37de0fa6708d3ef1968c0199c3c355b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19159_tavg_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "ea56ac90584fcba5e68cd6781aa3ddf5fa0ebd187c3fee66607174e7f6d623cc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19159_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "923ddbe77027e9e9f5740aed42c1e4e861c23a672228bc4902d28d6d5e26f5c1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19159_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "14690640717d6ace20139fcdde44e5575a3d8f67b6569bf9e07ea66753473a1b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19159_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "dd302e53117b895400debfea9d5b3cf2104f421bd7e19820d1954744f58db6a1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19161_pcp_1990_2025_apr_sep.json",
+      "bytes": 995,
+      "sha256": "2f38706eddcf4774fb780c4993ef8d9cf99c28c03f9124bec59f10cf4e2c94dc"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19161_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 807,
+      "sha256": "c3d562d98d2ade6996beb9f292b25719a327fef3e36c70b4feab3ef53234a281"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19161_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "1663943bffdf742a719abce3ed9157e007aea42819d1b65ed5e482d455094002"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19161_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 828,
+      "sha256": "3925aba57f214c02d7b6a9a974312df5e8a86e53466c89015d303fa68941cf04"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19161_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "8b6f1a54c02ea258d87b88ae0f3e857a65545b8e50915dc621ab14071a410174"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19161_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 828,
+      "sha256": "9b231c1aab48801170190c01fef475a63a51dd0201448966ede0e0d9e64f3cf6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19163_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "a8e50d9e3dc23db47445424c34e1a63bc9052a2eb2a663d35ea5eca71c09eee2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19163_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "6445cb0dc278aab5775d097d519072c4fd4b20e4931b359aa34aca9b52acece9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19163_tavg_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "ae8d877654d206d7960ce67f145cc0617694e0800b5c89a7dd89b8af1d75e846"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19163_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "090a0f5e182559db853537465500e0c1e7c9a5918bfcec32a9a63e7714c087f1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19163_tmax_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "d6c2e1a45cd1281b3023283f42d267a6971f1fe9a774d3562e33b73a034416b8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19163_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "753e0a2b5c969677bc3d397d70cacecdb5f302c91337f5bbcafee4e4447a114d"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19165_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "7c30175bad29b4174ea1888cf3e0b0ae10c46ebc4f4edacfe81c3e37de2a40fa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19165_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "6aaa2ff6d87ddad082a0e924eb5fe6d187d2c840a9ce59cfced61a9bed65c049"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19165_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "ca5ecf41185ec41926e34d93bcb562b9d756a48d072bfdfabe0fe13652621d41"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19165_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "5216a04ec2c620b35957007731883a9e2cb8942287c85100e818cedfa9549f12"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19165_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "c49be369ef2bfb1adf61c9e3d70fdc4b1d83ba5e8d3f3507d38da3232f32f730"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19165_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "506e0b9bab7318e677ca998d277324f1d78b9aed2414674c23f92f258f8dcb42"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19167_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "4b3f7827be01cb03b8d2563c0cf67841fe52b1a64c06d1267a9cf1f4c6217b4a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19167_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "1bc7901f94dd507b692bebc792cfa909f2efaed8cbdc34665400d6534a698b72"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19167_tavg_1990_2025_apr_sep.json",
+      "bytes": 970,
+      "sha256": "8f87b8a494ba7c669a459e3656f1d7adea97491afa3110523de859cfead60ab9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19167_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "dbc5479c697f585bc0631dc460763b22fde1c3dc249e0041134c475d9683fa09"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19167_tmax_1990_2025_apr_sep.json",
+      "bytes": 972,
+      "sha256": "d30751a0268f518a32ebe139e2790d881eabf2cb24deeada37b42ebfb238d5c9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19167_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "f5780331cc788fb85e27daaf7719987c898815f909cb376230f13083cdbff9e3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19169_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "67ec2019bb8359bf4a61b0d31b2952e126c6c69fb9ef653de82990de5530a820"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19169_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "4f542b35baa3e54a4b73f670b5916a047f7e2e21d2ec032b8963c341b3b3914a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19169_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "9d8ab1e77274c7dd4a757e7b4926a1ad293af74663da827cea87e5a93ad1378e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19169_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "fd3a04eeebd829d0999bb14e9f4df41d03ab9d08641317e58d7b936f5d44f469"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19169_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "1dda7cc2a5ab2190f7eec009e299ba7e0982f3b59418207c270088ff187cea51"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19169_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "2c782b5793b4f2e667a39e7b9d3026c41bcca8bf2b81da275e35f8bdef4427aa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19171_pcp_1990_2025_apr_sep.json",
+      "bytes": 991,
+      "sha256": "54a57d6e19f27ab3191642ea9bbafa3320b45e61baed6ef5137a68b1ccd44fad"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19171_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 808,
+      "sha256": "2d2044a96674563cf83376279940747729164659b4726dbf9b585da41db6cc6a"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19171_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "749416899aab963b28ab200d10a0fb318a52eb79ade5f72810b86e8e0b06966f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19171_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "0375617d5a599bf8e2d6361ab76c3b588c4e79c66c3117cd71710fa4bb8b38a4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19171_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "0167d05ff7e96a7d2897fbe9612774145175bc9b2521a4b1591534aa40c4d941"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19171_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 829,
+      "sha256": "614bf4321079af7b2f08761f1af11d1f95ba73729224296738f183e3fb3a98ab"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19173_pcp_1990_2025_apr_sep.json",
+      "bytes": 1000,
+      "sha256": "e630e0d9d01016a21b121f5779876011c655d01ccb4b9077b708311244ac7825"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19173_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "49ad2ff64c7725e8056d47d21561f4c6a1cc6c406f0f1035f54e3181f3f5ef6c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19173_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "2cce7ad6f17033b3bbbf37cb5eb40e37ad3bd6a0dbf7b9024ef2b5e0c41c9155"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19173_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "eb36d3be90546a6773c551d175286e2df62274c627680d6d9857561b569b9535"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19173_tmax_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "4ce618ed9054f443d1535f074ace6f5e090e5de145086a6581072d40f1e718a7"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19173_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "266f8fd0e0d29cc5397ca8fb8c596c831c62873b43faabcf2d65855d5a69fe84"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19175_pcp_1990_2025_apr_sep.json",
+      "bytes": 995,
+      "sha256": "8028c5e8592ac7b4f69f52bed02a29acaa433b75adb844a890cb5026819aa5d0"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19175_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "1e67581cc66f358eb5a35ab40d282686ef1c8ad01317a3e42e3687710a97e431"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19175_tavg_1990_2025_apr_sep.json",
+      "bytes": 970,
+      "sha256": "56c9eb603c9987afb0272e371cc573f2cc95e18eccf88eaa659ac1c25271a2d6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19175_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "6cb9b0d2ccf2b83c6c52d9f03cd86609094ddab781228185c6fe4110b4243cb5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19175_tmax_1990_2025_apr_sep.json",
+      "bytes": 976,
+      "sha256": "2bed2e7c62e2dd2cc7bc090a718fe7ebdda7c2c1820e9c7b83d1fc2a1d6556e6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19175_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "255b13d633928da7f6600506bf3c69f3e1c672eeb00e11c901cde43f98b00372"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19177_pcp_1990_2025_apr_sep.json",
+      "bytes": 1003,
+      "sha256": "cd951555c8b502453418237ef410338c675c7c0fa8b816e7b595899c2170d57e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19177_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "1bb8e3b9fafc51e49f60c7552b9275d5a2575ec67e7d5c432a8119533a2b9909"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19177_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "61941462ee51f432ffde60e8a31c413a4db7714b417b18e2d3dc668a38f39714"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19177_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "45a60c69beab3ef96887dc28160ccb7ed603f87f6e2f13d3f7ea9d4a1456fd2c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19177_tmax_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "625c93dd6cbaa2a51305db99410e04428cc26dba45f766b0a3363c499051ade4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19177_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "0f372506c0d2d8f61defd92802d0281ebd38349f796c0d5db683e6de864f140b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19179_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "94c0771b6da8afba3944a12c68a959f2f990d0f15040fdbbc544c29af0e729ce"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19179_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 812,
+      "sha256": "0d3e4946ab7df9871c3ba110bf05c4d46afe3b14cd8708d901567a93ff03f1d3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19179_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "99db2dd0a96595f64de8b392e11e5334f11b1680b301361107dcbf79c643953c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19179_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "92b719fe4b4802fe8b6b8403a698008509af1d9c43f0f61a5b47b5e73464c4b9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19179_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "9dbfdcaf26ec7fa12f866d900d355288844e2baccd71d8d27fe07395189eb18f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19179_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "35a676c502006b848cdcc5d43916772cc84926251dc3a26abca75e5d32955321"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19181_pcp_1990_2025_apr_sep.json",
+      "bytes": 998,
+      "sha256": "a020493f9d7c4bc153c60785d3607b18c4f1e2faebb949230e6a036078049c9e"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19181_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "617647a4e509b34bd435f5540672e44d392b907a559b281fe1582eb8d83b0e35"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19181_tavg_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "0afe144a8402b11a7467ff944fc905c76154c6a87facb189a396db29bc595297"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19181_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "8d602224304c20762e660d9828dd06c5c5f68e200db479dca92a87f6d04e44d3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19181_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "fdf6ef4076a76660ec3a3a66b9254acd3c14eb444e0b16f2f2d2e6417b0dfc97"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19181_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "5e6ff29e631096e09bb8401f2805bd860273b076ac678dae4eba5530305ff5b5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19183_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "073f49f6849e6de896338e1d068fcdb5f4e5f91473660663407276ce99b8b760"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19183_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 815,
+      "sha256": "96bc235664390b3bae5c5e7e32c4f1897786609b7083bbb7e37216078b0a5c28"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19183_tavg_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "e06312ad3313083bab3de1bd4a7a60ef42c2506268587a92b520e2ad85a15ccb"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19183_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "abbacbe1c4f3319436b60451bebbf897ce4d2b2ecea1404fb593604b3cdd07b9"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19183_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "33848f92dbd59e849e4ab0071afe9f3dc66d829623c9e7559140ec681fe6968f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19183_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "bbaca890fd4ff22e2014c06a96635eeea189d669d6e3ca914083fb468b1fb03b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19185_pcp_1990_2025_apr_sep.json",
+      "bytes": 996,
+      "sha256": "109e86964df694e4e1b1f37ba5abb09777d814ec5b5af5dda19a8f51b167b8aa"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19185_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 809,
+      "sha256": "0d194e2f02f488c32d8b69034f26a15e7bc636873f3563af353ba3777bbdb8ee"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19185_tavg_1990_2025_apr_sep.json",
+      "bytes": 982,
+      "sha256": "a70086e7e281bf7a89f3defb229b76af507b9ca3f801de7ed43c309c1d74ef38"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19185_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "bdb519bfb0501835f7896e713e57e4d48b83c4e46f661bf6a51e6158e615dc1c"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19185_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "b11f414119a35ff417a979a52e942e4c22d8ca84d5de43157350b6953506b185"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19185_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "87fb529519ddbfa5c6e746f42676650d8fd80f988f4ff971f027a3dc16055bd5"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19187_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "b6dbdcb4288739fb3f756428c21fc0a75ad130e0b092f5214d1c7698a4ea41a8"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19187_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 811,
+      "sha256": "07eb5b42020839e1a25829ea683b4cf0077213bb169341ebe6e9bcd59b8fd472"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19187_tavg_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "d2308f78b3bfcca555574ee4235ca552642b22fd46b455a713170ccdc27cebb4"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19187_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "e0a3cda9384ad9fb05ff29f8adaeb59b0bed651bee5116752513d0d727d6741b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19187_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "a9c15c195caad30c5e070c957f2e30f60e870c522ed1bda12760c9b6ccc181c1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19187_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 832,
+      "sha256": "3625f790137a86fa850901675783ff89d1cfe6d3ef989027760036b01b7a444f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19189_pcp_1990_2025_apr_sep.json",
+      "bytes": 1005,
+      "sha256": "12cc0f9bb398ec71d2241970d3e207995902724d07415e694bc6f2a1cfba92b6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19189_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 814,
+      "sha256": "416a663ee2da2d667cc5b66dd56ffe4b695024d5f93204955119e48d782dfe24"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19189_tavg_1990_2025_apr_sep.json",
+      "bytes": 986,
+      "sha256": "ae6ddbe18be53ad5f9aeb7548adce0a86eb662325304cf746a88463ece76c4f6"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19189_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "fbbcd220f464ace4c945d5dfca2b6647f4e7700b46e75b9f617ccbfbbafd70ea"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19189_tmax_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "c09ed565807bc2a6c036d72a278d9d4a052ae07487e533f042e9b5da8c7d442f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19189_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 834,
+      "sha256": "609dbf0d9d51c52feea6991ecbcab7bd8de4b913b661f31f8c3c6c345948392b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19191_pcp_1990_2025_apr_sep.json",
+      "bytes": 1002,
+      "sha256": "7a75ef64701ed1f6883bf2e8be911ace9df46897687533f95c1aa2560f4d8270"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19191_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 815,
+      "sha256": "8656b9ae4a61f543749b13a0bdb89f947dc4ca360924dbe4bf8b628e36034da3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19191_tavg_1990_2025_apr_sep.json",
+      "bytes": 975,
+      "sha256": "6b6e9ceed32d4d233f64679ed78adb8fbb357dbabe3f867903f3573237284c72"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19191_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "1d2cce809abea48c71ea70baabcdfeaf72467125a6677be552dc78e3017f09ab"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19191_tmax_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "833a65d86e5e62a6480f2710b064cb2149bc1333c5e96da84f509fcf124f1204"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19191_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 835,
+      "sha256": "5172870ff80bf82ed6e78ad91e70f582f9567a8cf9ad25b6817cbd156a5aba54"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19193_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "59ac75b7080c104b2cd468fd2bec2bf86a47a8d9759ca6ad3e72cab3e0cd567b"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19193_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 813,
+      "sha256": "ab3ae473b26da617ecdb7b2558a5b34a1e27e8c0e5cfb6c17d9dbf80dc707a26"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19193_tavg_1990_2025_apr_sep.json",
+      "bytes": 983,
+      "sha256": "6b6bcaa8d9f3d483f08e32c7d5b359b6bae4594ef0167e27ba077c9f39dab4e2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19193_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "7fd4b26d07c4994cd7a467e1739f082e08631d11c8d1c1905745f1e1532562ec"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19193_tmax_1990_2025_apr_sep.json",
+      "bytes": 981,
+      "sha256": "575b34ce7131277e21a599a83ada3b011b934b96cea4171337cc482a70b36b59"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19193_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 833,
+      "sha256": "f8a54e95f2b5ef18e12a2fa802c850cb1fb203985954b9ee1ef901a188464fd1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19195_pcp_1990_2025_apr_sep.json",
+      "bytes": 1001,
+      "sha256": "2d97d0c43824d0f6975aaf455aed89c721762ae09b4d1a8a77259b45bd591ed2"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19195_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "e140e8d5c3a7de6bed806167426d935989452b30e71fbdc8c75ebeda4c01aa42"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19195_tavg_1990_2025_apr_sep.json",
+      "bytes": 978,
+      "sha256": "e0e09baf772f7ba5f7510eb74345f91b5873bd59be13d96cfa1e6e3eaf1df0f3"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19195_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "a5d3a44a35214b7d8f12cf63a0049264c9b20a76f8355177ccb48d2be6bd905f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19195_tmax_1990_2025_apr_sep.json",
+      "bytes": 980,
+      "sha256": "feb09b4b3e3250e102fee32af16ebfc5b9ee3b842e661fd387de0807c2556996"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19195_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 830,
+      "sha256": "7e2876801e79a89d2403be35b6d923254508e07552ac79f4f95d77e87ddec042"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19197_pcp_1990_2025_apr_sep.json",
+      "bytes": 999,
+      "sha256": "d061e774143017b267cd9560124e1ad54ccc434a79fe59b0d59b6bac4ab1f425"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19197_pcp_1990_2025_apr_sep.provenance.json",
+      "bytes": 810,
+      "sha256": "d5f2bf07c4bf25e549d4db800683e3cbb0b248d987b76e30f6ebe89e3461f8a1"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19197_tavg_1990_2025_apr_sep.json",
+      "bytes": 985,
+      "sha256": "25acf887485ceea17e74b53492ce1e940c11575aad3af8e90dfc5ad0c02e8cde"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19197_tavg_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "d6b90f0a151ef1ae36bd54efd51f9a74f2a9893e5868060df9c75ffc5417a803"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19197_tmax_1990_2025_apr_sep.json",
+      "bytes": 977,
+      "sha256": "9f7f0733c535ebe342a28ee7f1a4ba7b6046f94970545247310f9d16066c8957"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/19197_tmax_1990_2025_apr_sep.provenance.json",
+      "bytes": 831,
+      "sha256": "3f11f6716ed5de0215b5a51ef5678bd87362a80ca55666dc9d55d8057ca1b710"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/acquisition_manifest.json",
+      "bytes": 273425,
+      "sha256": "ba97ecaef20adefb2cdec952cf3143c376737bb49013d9b3176e5c995a8d012f"
+    },
+    {
+      "path": "data/reacquired/noaa-cag/seasonal_source_values.csv",
+      "bytes": 862189,
+      "sha256": "d1e72db9a3f31fdf411bbbe759a96dab0e4e8230e5a543b4db27d6dec8c70a52"
+    },
+    {
+      "path": "docs/q1_artifacts/README.md",
+      "bytes": 3167,
+      "sha256": "44f5ad0c73700207d33cfb7b200af09d3cb0b237cdb71a0f340449d49f6c6c62"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/README.md",
+      "bytes": 6446,
+      "sha256": "57ef86e225f421234bf1dd4d2c5fc928406860376abb2b1cd1cebc5dfb6f6673"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/calibration_parameters.json",
+      "bytes": 1475,
+      "sha256": "8394a29d1f8f3cd325594e066d244fcfece0c16859d6bf604e152cfc67910759"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/daily_predictions.csv",
+      "bytes": 979702,
+      "sha256": "05f64603672c763983acb8fe8c5b84d5590572233bf5edb358076b3c2447707e"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/external_metrics.json",
+      "bytes": 4610,
+      "sha256": "66a3c885c0bdc7a8ddca4b14700ee386307e1342906a9d4d8c7d04425a6c64e5"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/field_season_predictions.csv",
+      "bytes": 4746,
+      "sha256": "ab4aaa589d0e92996033a25a357d374911fed9c4cb4a7005ff50eb2e323841e7"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/mass_balance_residuals.csv",
+      "bytes": 460545,
+      "sha256": "c79314df086e8cc2a7503594613ad57d6b007ead7b1a186125779f91d97070ae"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/processed_input_manifest.json",
+      "bytes": 2137,
+      "sha256": "30223638e85e1ef9631fc79d345b628f11ef24898835889eacfac99e6a2c03cf"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/protocol.json",
+      "bytes": 2520,
+      "sha256": "35d6c142c81456dfb409ac33691fedc15f4288ed580ddc4903bae9ff378f1690"
+    },
+    {
+      "path": "docs/q1_artifacts/bushland/state_observation_pairs.csv",
+      "bytes": 282395,
+      "sha256": "9c6507e7c596278062308a5717bece661770645548dc0c7f5cc09eee7cb7585b"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/baseline_metrics_full_precision.csv",
+      "bytes": 647,
+      "sha256": "90ec34990ecc1a8cdacae742e98cac995c1674b1c1cda7c76a6633be29592c11"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/data_lineage_counts.csv",
+      "bytes": 325,
+      "sha256": "27565b357f6b2701b075138a01856729b6192d1a63a9c5ae5fedbedfa5ca0115"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/extended_audit.json",
+      "bytes": 1858,
+      "sha256": "631b835dfb949a4510a6fa9fecedcc4b67101805d48e5a62b70476330e6f167a"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/field_soil_constants.csv",
+      "bytes": 318,
+      "sha256": "664aafbe9f043a8b764f3b72e9020d9c04247bf2ed25fc416698c8c5a65598b6"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/hindcast_all_models.csv",
+      "bytes": 1663,
+      "sha256": "dd27010a571ab25e14a5365704c74e4ae5c8006f8557a43a6cb94b2c0af6128f"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/hyperparameters.csv",
+      "bytes": 416,
+      "sha256": "20bb09d0d8995ae4fc38fd0e92ec8136b9004032b2083da4dcf1a3f4a94dd8af"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/management_scenarios.csv",
+      "bytes": 532,
+      "sha256": "021e6c6fb8bd5ed4fd2182131628ca604743482004646b5f34fd12e03e532faa"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/model_difference_bootstrap.csv",
+      "bytes": 776,
+      "sha256": "a4593d0a25d0475c1bfd44f8c5bbcf41cb82bf94eae6879955b7a0cf1fd7d386"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/multiseed_neural_results.csv",
+      "bytes": 2747,
+      "sha256": "a2d1ac1852f999d342ff325262644d81971e746bc4c091c889e2be691800de29"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/multiseed_neural_summary.csv",
+      "bytes": 697,
+      "sha256": "5fba742a02c72a54b2eefdd8e70508807ca085b0bd0caf282dbc307584b18315"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/normalization_stats.csv",
+      "bytes": 435,
+      "sha256": "92010d9bf8c87f734e9c0f3193697de80332270eeace04b3fa5eaac795f6effb"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/sobol_checkpoint.csv",
+      "bytes": 764,
+      "sha256": "90b95da2b095bccb5ab1a504b756ca2b9b43c8bf48e1c84dee7fdcfdd68b3077"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/temporal_coverage.csv",
+      "bytes": 911,
+      "sha256": "333bc3f1e9f5363beb60b8faaf7c78b886fada56a8d0941611711db2763de036"
+    },
+    {
+      "path": "docs/q1_artifacts/extended/training_feature_correlations.csv",
+      "bytes": 846,
+      "sha256": "393b89a676c28ed59a4c2cd4c60670e3741626306e7a09e984348b6d4192d08b"
+    },
+    {
+      "path": "docs/q1_artifacts/hindcast_independent_years.csv",
+      "bytes": 467,
+      "sha256": "c9331d6b3d28912987e2d648e3f763a86c708b8a92e469c17bbfb753594db948"
+    },
+    {
+      "path": "docs/q1_artifacts/q1_statistics.json",
+      "bytes": 6005,
+      "sha256": "352e2a9c34efb67ea49b849ede3613d6cb8e081c69221ec04aa9e5f097a72602"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/README.md",
+      "bytes": 5378,
+      "sha256": "e5455c6454939c9ee672b7676ec010979b45b683c2d23268f66eeca96c18f6f6"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/agency_source_comparison.csv",
+      "bytes": 695023,
+      "sha256": "5448afe7e7d203bad63fcaf6bdb34c95808930e9d7459f67998f43ee9a26d183"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/district_benchmark.json",
+      "bytes": 6343,
+      "sha256": "8937a89acf6b700aa74ebf1eb68478e037f05843f48dcb1ec2f6cfb412fdbd29"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/district_protocol.json",
+      "bytes": 1351,
+      "sha256": "9e94703dfe5ba0caf7077b1c575953d00c3100ab7b1fb88ac91560539306ce99"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/held_county_future_predictions.csv",
+      "bytes": 120156,
+      "sha256": "51732c86b24d3c076781cdf5ceda817c349bc209cf493e7a8c91a8036b56c597"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/held_district_errors.csv",
+      "bytes": 2667,
+      "sha256": "ebbd7d064021dec0a1bb62061dfa60229445eb144f07959b22d020381218c512"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/held_district_future_predictions.csv",
+      "bytes": 145891,
+      "sha256": "94f98cbc99776aa23959653f0f86ff3d00893ad20ce5ce60bd598ca429468feb"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/nass_excluded_aggregate_rows.csv",
+      "bytes": 3623,
+      "sha256": "0058671606c6831e7b59156b7b0d3441b5952eff3cfc667ecf7c793cd742bff0"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/nass_original_table_comparison.csv",
+      "bytes": 279310,
+      "sha256": "f341ef589d1f4741636534689fa979aa95baf6da4eb69bd7ae45676d9ff1e510"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/nass_query_result.png",
+      "bytes": 144796,
+      "sha256": "7165bc91745a9efd65d83db86cacb43b4f3eb606f130e5bbc2b0ca1faa6617bb"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/reacquired_county_benchmark.json",
+      "bytes": 3006,
+      "sha256": "3fc7defa1856800c6ae19d3d7f582a1c0d7381a0492314ca330e7b3232e92ab6"
+    },
+    {
+      "path": "docs/q1_artifacts/reacquired_20261026/source_fidelity.json",
+      "bytes": 2103,
+      "sha256": "b53c70ccd0202cf8b1b128624b25d1fbc05ce873ce1b66896372e197f5d8cd1f"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/README.md",
+      "bytes": 3216,
+      "sha256": "f0db23904a23ac73e0baffc848f2388b0b61ec0f954b2dea8bce761600521fff"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/audit.json",
+      "bytes": 9279,
+      "sha256": "fd481acc87a2deaccc0c9c5dc9976738c8a7d9fccab69bab00459b602758d3ab"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/correlations_initial_training_only.csv",
+      "bytes": 878,
+      "sha256": "528fc437612f1b58d93a2179d4e15931622cdadb6e68ab6b2b57d24cb93d96d5"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure1_lineage.png",
+      "bytes": 124872,
+      "sha256": "11abd257011f4aceb3280ccd90a6fc6e80c27e1db64d03f625d027d578c02ddc"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure1_lineage.svg",
+      "bytes": 50313,
+      "sha256": "a6adc4d0f2063012343c22a7b362359fde20373073e22456a281b53908ec34ba"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure2_hindcast.png",
+      "bytes": 99345,
+      "sha256": "f8efaf6e38b161afb301dddfd7ae931a175b8c118fe8cdd343e0e2f809f544d7"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure2_hindcast.svg",
+      "bytes": 33608,
+      "sha256": "44659577238652876e5fb3d84192c42e51aebc6eb55806fc0f3f77f9ef3005a9"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure3_multiseed.png",
+      "bytes": 51365,
+      "sha256": "4a0a762401c539affd8be5d478a677fab55cab47625b7ed4d21c2e0d447a5a32"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure3_multiseed.svg",
+      "bytes": 28821,
+      "sha256": "ad0334386700ef8ecd42785727c32f4e6ad98f4d7f410b54b797511bfb204594"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure4_daily_demonstration.png",
+      "bytes": 164625,
+      "sha256": "ad0e25feb8aad76cc0e4fa38600f946cdbbca0a86eb4f5a0ab26274d8c23ec77"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure4_daily_demonstration.svg",
+      "bytes": 78783,
+      "sha256": "e0292fe9f3ef069b03050a5a09cb33f5d82ff4c39cafcb281354c0c84fcf81c8"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure5_rolling_origin.png",
+      "bytes": 192170,
+      "sha256": "9825715492071650f44b5b654ce23ba456ea114fec8b4ae59fa6dcdc2617e9db"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure5_rolling_origin.svg",
+      "bytes": 45635,
+      "sha256": "19134882a202b9c686f4cb25b3d9750dc72735e68152b0379dd389be8f40f37b"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure6_confounding.png",
+      "bytes": 142200,
+      "sha256": "e9a6138c6fcd7a7dbe7bc16d77e7e244e0a93bef18b2d9c7f604017b137a1e04"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure6_confounding.svg",
+      "bytes": 61260,
+      "sha256": "e346d4fef17047858754323df6ab38e8948c6567cf2241be7ad108a72ab5c55d"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure7_external_states.png",
+      "bytes": 123269,
+      "sha256": "9dd0ee752c7f4b42a6e9bc336a81036623efbeb7802362adfbd4bc164e2d44aa"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/figures/figure7_external_states.svg",
+      "bytes": 54701,
+      "sha256": "09f9f5a348636531dab53aa7b4f321e61ee2cfaa55a83ad560f50ca24609e352"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/held_county_future_predictions.csv",
+      "bytes": 117621,
+      "sha256": "a8f9502035d88e1b92a5f5a76faa5525a1e99ae0b7d25fd7afd5398e62add776"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/reference_candidates.json",
+      "bytes": 68455,
+      "sha256": "164632f0d3df659a8382360b253d26f1ec2baf0f51328126f00be2d2aba6fc27"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/reference_verification.csv",
+      "bytes": 21272,
+      "sha256": "8470db2cb450b266ba14817d0442b4a3a68d7da1fd4258ae564d1aa5738e3fdb"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/rolling_origin_predictions.csv",
+      "bytes": 3145,
+      "sha256": "a0e3fa9065538ee4e3cfefd56927fdd5acfdff47b0d6a3783f55c5c908829962"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/vif_initial_training_only.csv",
+      "bytes": 304,
+      "sha256": "6c3019e5a4ded53b0542cd53d22f8824c91fd78c6112a5f179102dab1fac91d6"
+    },
+    {
+      "path": "docs/q1_artifacts/revision_20261026/vif_reduced_initial_training_only.csv",
+      "bytes": 106,
+      "sha256": "09ec6fc7f60ef238a743be29d031c8b7087d34ba3b56764340d0562cbd03552b"
+    },
+    {
+      "path": "docs/q1_artifacts/robustness_results.csv",
+      "bytes": 919,
+      "sha256": "91522c3b2e5ad7924338cac03e95f2b10d499931dc7a14f4c38e01d79575f871"
+    },
+    {
+      "path": "docs/q1_artifacts/same_split_baseline_comparison.csv",
+      "bytes": 672,
+      "sha256": "cbdaeda4179a6383c689372cc381e459ab9cfdf0387bdeab49464abed663f681"
+    },
+    {
+      "path": "docs/q1_artifacts/temporal/temporal_predictions_2018_2025.csv",
+      "bytes": 1024,
+      "sha256": "05dded42b655254eabd2725e5e0fd87cab48bd549c3064db223ff97954fecd91"
+    },
+    {
+      "path": "docs/q1_artifacts/temporal/temporal_seed_metrics.csv",
+      "bytes": 1063,
+      "sha256": "f31b27124eb956a1502df458b4bdf8c9ba6a92e04cb666f8e89b12fb089a97d0"
+    },
+    {
+      "path": "docs/q1_artifacts/temporal/temporal_validation_1990_2017_to_2018_2025.json",
+      "bytes": 3053,
+      "sha256": "4238d0ce6318b61edcd7447b01c890a3482ca0e5e7ce295b0a3fd5de4cdcc7eb"
+    },
+    {
+      "path": "index.html",
+      "bytes": 2595,
+      "sha256": "b8a60f1b346dd16d4d5e391cb44ea8e5f2d251b71dca4b39d2bfe880afdc5af5"
+    },
+    {
+      "path": "output/cerespinn_reporte_balance_hidrico.xlsx",
+      "bytes": 28988,
+      "sha256": "fbee014cec83995c46b9642e4a5ee12bf17cd9fc6bc3dbc2be80c82732d81974"
+    },
+    {
+      "path": "output/cerespinn_reporte_biomasa_lai.xlsx",
+      "bytes": 26693,
+      "sha256": "691f62760af3a69dcbf79fb5efa689444dcd71a579f6af311d41301545874e82"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 167784,
+      "sha256": "5f1b58dccc6a7bd2741d25fb62e034e35c6e672e3b5ed2df6f380446d84504e9"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1299,
+      "sha256": "03859ecdedd3831363ffff4daa61078dd0bf7735ff54a65f20bad5eda99665d3"
+    },
+    {
+      "path": "reproducibility/manifest.json",
+      "bytes": 1473,
+      "sha256": "63d89d2857b98585e52d8880521b86e3fe0c7f6c04a522a762f934a3282e5b2a"
+    },
+    {
+      "path": "requirements-repro.txt",
+      "bytes": 107,
+      "sha256": "026d3db3425bc1fdeb263068a41cdc463c32a980708080eebee341c447d71269"
+    },
+    {
+      "path": "requirements-revision-test.txt",
+      "bytes": 60,
+      "sha256": "7b2fc58b0fc26ccfd183927faafcc6dd738ba88d3be26a526ddd3676a621d0af"
+    },
+    {
+      "path": "requirements-revision.txt",
+      "bytes": 336,
+      "sha256": "c71ab4b84c18cd87b50aeca32fae346ce14e1732b7353c2295407e7379dac1d8"
+    },
+    {
+      "path": "scripts/acquire_bushland_data.py",
+      "bytes": 3703,
+      "sha256": "fb9016fec394feee9ebfb1122582240c3afb950417f9c25a0ee28c5308a7732d"
+    },
+    {
+      "path": "scripts/audit_geographic_districts.py",
+      "bytes": 5435,
+      "sha256": "bfb58fac673c7be767946cfedbbb5dd679587fee059b2973c9d77b61792e5006"
+    },
+    {
+      "path": "scripts/audit_reacquired_county.py",
+      "bytes": 1933,
+      "sha256": "dc73f046d1d90c14b50d922dd0a19b2e60ff9ddd127bd7939c5e14ccc350b176"
+    },
+    {
+      "path": "scripts/generate_q1_extended_audit.py",
+      "bytes": 24323,
+      "sha256": "ed349d105f2610c13d3fc2be3552cb29ce9e6381b967247e3c3224784bac8f49"
+    },
+    {
+      "path": "scripts/generate_q1_revision_artifacts.py",
+      "bytes": 17004,
+      "sha256": "a34fe8f8d4e8c4c19dcd41d5aa6912e327368abeeaa69b735bceb6125616c706"
+    },
+    {
+      "path": "scripts/package_public_research.py",
+      "bytes": 4859,
+      "sha256": "76057362fe1fee3c51a1a64df3bd33841b5b9ea2d50640838c263e4976a4a4e5"
+    },
+    {
+      "path": "scripts/prepare_bushland_data.py",
+      "bytes": 14384,
+      "sha256": "ee38b965de08bac85da8935b9a41bb9837a5cdbdfad3e280135fb1f8c6d700e1"
+    },
+    {
+      "path": "scripts/reacquire_county_climate.py",
+      "bytes": 4628,
+      "sha256": "237c71960970ebc21c2dd14951d778093543bb9315356473be81cf48398385f5"
+    },
+    {
+      "path": "scripts/reproduce.py",
+      "bytes": 3790,
+      "sha256": "5b05ecad3ba02baf2f61be6149e6ee3f17dff0b6cf968e46dc069cfdd45c3596"
+    },
+    {
+      "path": "scripts/revision_figures.py",
+      "bytes": 6709,
+      "sha256": "bb4d5d34f7852698309d39415a92a0a2fe695f9ef8f0c12eae423f9d81d941ab"
+    },
+    {
+      "path": "scripts/revision_scientific_audit.py",
+      "bytes": 12116,
+      "sha256": "da2f9fd14a867b4fc5a77381364e3f769863dd0792667b34376bc99eebbf0e7f"
+    },
+    {
+      "path": "scripts/run_temporal_validation.py",
+      "bytes": 12021,
+      "sha256": "ea75f874d9d42dddbd848d3143441608a1b1b80ee9a68872073d4baa34091b18"
+    },
+    {
+      "path": "scripts/validate_bushland_coupling.py",
+      "bytes": 13877,
+      "sha256": "f9cc30e072fb1246f3badb7ad30c9fe18558dfcd41efe3f33ed5d9b3c5b48cff"
+    },
+    {
+      "path": "scripts/verify_bushland_sources.py",
+      "bytes": 1086,
+      "sha256": "a889440b5bb3311ef7a9eca83ff8e1dd618bd60685e347ee3a3e922c1771faaf"
+    },
+    {
+      "path": "scripts/verify_reacquired_county.py",
+      "bytes": 7337,
+      "sha256": "f6f3f0f0b823efeb90d1ce7df67b3fc2353a209f7bd1348cf05f6d727487c080"
+    },
+    {
+      "path": "src/App.tsx",
+      "bytes": 42714,
+      "sha256": "e70836de2b683d88076a8fd74ef45dc927867ec8059af1afc7f20e9e72b12888"
+    },
+    {
+      "path": "src/components/AdaptationPanel.tsx",
+      "bytes": 16690,
+      "sha256": "c46469722e29e32a1f11f3444d625c0595ceead6657a3f0a0da441bf21c67c18"
+    },
+    {
+      "path": "src/components/ChatbotWidget.tsx",
+      "bytes": 7400,
+      "sha256": "7bf8dd11f4db5ce3e88a74c4da96fe54bfb55221d055dbddccf6126e82a92cf8"
+    },
+    {
+      "path": "src/components/DataPipelinesView.tsx",
+      "bytes": 10790,
+      "sha256": "29f1644e10e27330a205928995f614a3ddfb9ba7ef54fe6a0c86be86a1d1bb20"
+    },
+    {
+      "path": "src/components/ExportDataTable.tsx",
+      "bytes": 1702,
+      "sha256": "6e758401c76fb172b29445d143b589c7b87c407b7f1de05e265044be375e23ba"
+    },
+    {
+      "path": "src/components/FieldMapManager.tsx",
+      "bytes": 24171,
+      "sha256": "2c9588adaee4f40f03b72c0a64458c1d350977c831305a5a0cb767ef47eb7bf3"
+    },
+    {
+      "path": "src/components/FieldScenarioComparison.tsx",
+      "bytes": 13881,
+      "sha256": "73d025e691120a3ca6c2434e2dc04d2dc30819ee0a831f6af205f2778d52ea12"
+    },
+    {
+      "path": "src/components/FigureExportToolbar.tsx",
+      "bytes": 2852,
+      "sha256": "f03d9f759b6a7911475655c9edfbb0ee6e3848b663356a7d6237c799127a8693"
+    },
+    {
+      "path": "src/components/FigureZoomControls.tsx",
+      "bytes": 2432,
+      "sha256": "2796d7efb200aac21fc20718e2c48fca581f279e4d01b89fa56c83aecbbe9044"
+    },
+    {
+      "path": "src/components/LoginScreen.tsx",
+      "bytes": 13355,
+      "sha256": "091094a57edfe0b8c282fd02fda59501402bb14fa2fc9b268ca6815c822a486f"
+    },
+    {
+      "path": "src/components/MLOpsDashboard.tsx",
+      "bytes": 7019,
+      "sha256": "f8b6542f0292174d10361efd08ca7f257dcc1cea355e67617bc7c5641d26f050"
+    },
+    {
+      "path": "src/components/MainDashboard.tsx",
+      "bytes": 28481,
+      "sha256": "e2554e73d4dcf860cd13153d08a1c8687f9701779d3099327143b4847887bb95"
+    },
+    {
+      "path": "src/components/ReportsModule.tsx",
+      "bytes": 26116,
+      "sha256": "35271d897001e8013cff1b4db72ab2a9fe3e702da03cb6aaae852f5d70f3483b"
+    },
+    {
+      "path": "src/components/ScientificScopeNotice.tsx",
+      "bytes": 2172,
+      "sha256": "d83f3b7f51840ad71e32592caebede27893e284e731561e48c7f5720de8e5650"
+    },
+    {
+      "path": "src/components/SimulationConfig.tsx",
+      "bytes": 33444,
+      "sha256": "938af434b9cc520c3c8997accaff710c6f246205a06c4c8b78e90d89b57058fe"
+    },
+    {
+      "path": "src/components/TableExportButton.tsx",
+      "bytes": 1282,
+      "sha256": "485a124b7528b6ab45bcd521328476a1361d7866dde235a0cdbbee6064a1d7b2"
+    },
+    {
+      "path": "src/components/ThreeFieldViewer.tsx",
+      "bytes": 44577,
+      "sha256": "3c08468990fb686379a1d7fbcf90566f1724daa7b2b2b7e78fdaec782c3d0291"
+    },
+    {
+      "path": "src/components/UserManagement.tsx",
+      "bytes": 12081,
+      "sha256": "f2209f66c2d27c16a44dc3aab30422ec22d598b975cc0fd69240eb8f2efed9c6"
+    },
+    {
+      "path": "src/components/ValidationReport.tsx",
+      "bytes": 22749,
+      "sha256": "1d326cb72a162de5e267d73d97d3e5f8812951f418472b53102a9dcce089c189"
+    },
+    {
+      "path": "src/components/WhatIfStudio.tsx",
+      "bytes": 43832,
+      "sha256": "b0e50921586ad5d185fed30cb3b006f255ad4169d37cb189ec9d492268de2f59"
+    },
+    {
+      "path": "src/context/ThemeContext.tsx",
+      "bytes": 1578,
+      "sha256": "5a9c7d0db322b1176e24126d06ffccde7cb3b62a6ab47c082e42c23536edaf61"
+    },
+    {
+      "path": "src/data/mockData.ts",
+      "bytes": 8355,
+      "sha256": "993e3f3114834451a347fe0ccaf19a2f3c2203b953b5d32a6b029fdf2371b2c4"
+    },
+    {
+      "path": "src/i18n/index.ts",
+      "bytes": 660,
+      "sha256": "ced4d9562742bd1db7e37065ce6a612c0daf6fc31438e6c0f00c02f002bf4b7b"
+    },
+    {
+      "path": "src/i18n/locales/en.json",
+      "bytes": 25577,
+      "sha256": "b429268bd7f0b02e3d4be7f6d0cd3abe6d4b8539bf5f88a4a48b81d8111781d9"
+    },
+    {
+      "path": "src/i18n/locales/es.json",
+      "bytes": 26894,
+      "sha256": "3237e9e75ff2a6b435a3af1fa52cf03b748807fb129350b75248ff25f635ffbd"
+    },
+    {
+      "path": "src/i18n/locales/pt.json",
+      "bytes": 27033,
+      "sha256": "aea64d69daa93629c671feccf5b203a975fd48988a613afb4a15921d97c715bf"
+    },
+    {
+      "path": "src/index.css",
+      "bytes": 883,
+      "sha256": "325e980aa8333432e78730c5e23ba47503a9ef14427768936226ee7b416e7bbd"
+    },
+    {
+      "path": "src/main.tsx",
+      "bytes": 347,
+      "sha256": "c77a207e1642e11cbf6265d8882666f371cc5219acf2c065f2fb2631444fae27"
+    },
+    {
+      "path": "src/services/api.ts",
+      "bytes": 26055,
+      "sha256": "b3ff425a4f67ef78bdf30ede9d6c7d2e7159cdf9d1ffb017b8be68670645625a"
+    },
+    {
+      "path": "src/services/pinnEngine.ts",
+      "bytes": 20015,
+      "sha256": "498209ec68dbfd34fda8002796980c71a01a6afb7ea1c5917182d1dcfc6936b3"
+    },
+    {
+      "path": "src/types/index.ts",
+      "bytes": 6413,
+      "sha256": "ef28f0d4478e5915c768ec978c9af2baad25dce38b0d8456d79636ec33af080f"
+    },
+    {
+      "path": "src/utils/figureExport.ts",
+      "bytes": 11037,
+      "sha256": "eaf6b76a563fd6d5550794e34adae05694721f1fa4e2de093b20ddbdf89b5db5"
+    },
+    {
+      "path": "tests/pinn-wiring.test.ts",
+      "bytes": 4631,
+      "sha256": "66045349fb6fd715a5179d10f71792239fcb2e6ae673367d882bb26038e77633"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 538,
+      "sha256": "de9516e8483c1599871ed6150ac1fb0a2fc47efc41eb6df4f7060ef635f353b8"
+    },
+    {
+      "path": "vite.config.ts",
+      "bytes": 653,
+      "sha256": "839d175892b22ee336c0a46b56c3fc25a6f8b00212bbb3343f537ee5969a099f"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 442,
+      "sha256": "921aaa92ed7f77a885ba32d716f0829c5f06c94596efc5092dbaa0df5e38759c"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 1115,
+      "sha256": "8f507db2355e0990888359c294abb51c2a98e3677cf1416c5b4334ff992226f7"
+    },
+    {
+      "path": "scripts/run_nass.py",
+      "bytes": 526,
+      "sha256": "1c02b4a7c9130d6ca61abfb6a8f78c033172faf74ad0f7b54090cde90e1c81f0"
+    }
+  ],
+  "publication_method": "git commit",
+  "branch": "codex/scientific-revision-2026-10-26"
+}

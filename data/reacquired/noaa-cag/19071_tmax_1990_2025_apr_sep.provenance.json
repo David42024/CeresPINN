@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-071/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:13.335095+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:13 GMT"
+  },
+  "sha256": "6c2fab162d588d6283ab3f4bf6bcd5b68931c86f6ad2d655cf8e39f44eb298dc",
+  "bytes": 976,
+  "path": "data/reacquired/noaa-cag/19071_tmax_1990_2025_apr_sep.json",
+  "fips": "19071",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Fremont County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

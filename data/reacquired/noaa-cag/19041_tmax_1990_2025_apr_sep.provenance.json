@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-041/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:03.077903+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:03 GMT"
+  },
+  "sha256": "bd987e534af0f826cf5adfe862b22e6c1f30e85c42c887a18f89515437ed1912",
+  "bytes": 977,
+  "path": "data/reacquired/noaa-cag/19041_tmax_1990_2025_apr_sep.json",
+  "fips": "19041",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Clay County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

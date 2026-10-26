@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-033/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:00.286625+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:00 GMT"
+  },
+  "sha256": "f765bbc1e0bb537c50dff3c051b4729af1fc094b073bc0745b2e8df94a150ff8",
+  "bytes": 978,
+  "path": "data/reacquired/noaa-cag/19033_tavg_1990_2025_apr_sep.json",
+  "fips": "19033",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Cerro Gordo County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

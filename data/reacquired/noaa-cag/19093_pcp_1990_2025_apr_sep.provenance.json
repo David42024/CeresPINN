@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-093/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:21.314183+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:21 GMT"
+  },
+  "sha256": "d5a7558e61de2da45f9e7fb194ab273af65e8ea433e9caed77d9f72e9e7ccdcc",
+  "bytes": 992,
+  "path": "data/reacquired/noaa-cag/19093_pcp_1990_2025_apr_sep.json",
+  "fips": "19093",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Ida County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}
