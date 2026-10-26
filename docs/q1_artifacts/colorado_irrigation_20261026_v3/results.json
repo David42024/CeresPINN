@@ -1,0 +1,163 @@
+{
+  "protocol": {
+    "version": 1,
+    "study": "USDA ARS Greeley, Colorado, 2012–2013; one site; randomized treatments within blocks",
+    "retrospective": "Source metadata and example rows were inspected before protocol; not preregistered.",
+    "design": "Four block-paired observations per treatment per year; first plot digit is the block. The letter identifies field section and treatments were randomized across sections, per the source dictionary.",
+    "planned_contrasts": [
+      "100/50 minus 100/100",
+      "80/80 minus 100/100"
+    ],
+    "interpretation": "Percentages denote target ET replacement during late vegetative / grain-filling periods, not 75% of total water.",
+    "yield": "Grain kg/ha at 15.5% moisture for treatment contrasts; dry mass is 0.845 times standard-moisture yield.",
+    "statistics": "Within-year complete paired block differences; paired t interval with n-1 degrees of freedom; exact two-sided sign randomization; Holm adjustment over four comparisons. Missing yields excluded explicitly; descriptive two-year study, not a new field recommendation.",
+    "state_transfer": "2013 end-of-season biomass is absent. Fit a one-feature Ridge on 2012 maximum observed LAI and dry grain; evaluate available 2013 plots. Maximum LAI uses measurements across the season, so this conditional state-to-yield comparison is not an early forecast or full process-model validation. Do not reconstruct missing biomass from observed grain and harvest index.",
+    "split": {
+      "fit_year": 2012,
+      "evaluation_year": 2013
+    },
+    "caveat": "One site and two years; 2013 already in archived source. Replicated plots are not independent sites or years. No cultivar or planting date contrast is evaluated."
+  },
+  "protocol_sha256": "a852a588fc3d4626e643cc95ea81ffcb6d1eb869b14773072269a665b10b62ff",
+  "source_sha256": "90cdefe84e4c5092d8dd217f8cf4dc5fabac38731844290fdee9ade523a95e31",
+  "n_plot_years": 96,
+  "n_sites": 1,
+  "independent_years": 2,
+  "missing_values": {
+    "grain_yield": 2,
+    "biomass_2013": 48
+  },
+  "contrast_results": [
+    {
+      "year": 2012,
+      "treatment": "100/50",
+      "control": "100/100",
+      "n_blocks": 4,
+      "difference_kg_ha": -3060.2862817305195,
+      "paired_t_95_ci_kg_ha": [
+        -7984.808667076429,
+        1864.2361036153898
+      ],
+      "exact_sign_p": 0.25,
+      "control_mean_kg_ha": 15733.992159616875,
+      "treated_mean_kg_ha": 12673.705877886356,
+      "paired_blocks": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "missing_blocks": [],
+      "paired_differences_kg_ha": [
+        -4612.397879830896,
+        -6584.771133359283,
+        -1234.8904022954175,
+        190.91428856351922
+      ],
+      "holm_adjusted_p": 1.0
+    },
+    {
+      "year": 2012,
+      "treatment": "80/80",
+      "control": "100/100",
+      "n_blocks": 4,
+      "difference_kg_ha": -787.6652649116081,
+      "paired_t_95_ci_kg_ha": [
+        -4746.200775443767,
+        3170.8702456205515
+      ],
+      "exact_sign_p": 0.5,
+      "control_mean_kg_ha": 15733.992159616875,
+      "treated_mean_kg_ha": 14946.326894705267,
+      "paired_blocks": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "missing_blocks": [],
+      "paired_differences_kg_ha": [
+        -2514.252481358133,
+        -3097.361386631268,
+        2256.3488731104735,
+        204.60393523249513
+      ],
+      "holm_adjusted_p": 1.0
+    },
+    {
+      "year": 2013,
+      "treatment": "100/50",
+      "control": "100/100",
+      "n_blocks": 3,
+      "difference_kg_ha": -2457.4507042574387,
+      "paired_t_95_ci_kg_ha": [
+        -5938.061645040771,
+        1023.1602365258927
+      ],
+      "exact_sign_p": 0.25,
+      "control_mean_kg_ha": 15699.400422165467,
+      "treated_mean_kg_ha": 13241.949717908028,
+      "paired_blocks": [
+        "1",
+        "2",
+        "4"
+      ],
+      "missing_blocks": [
+        "3"
+      ],
+      "paired_differences_kg_ha": [
+        -4058.9817668090127,
+        -1855.4349023528466,
+        -1457.9354436104568
+      ],
+      "holm_adjusted_p": 1.0
+    },
+    {
+      "year": 2013,
+      "treatment": "80/80",
+      "control": "100/100",
+      "n_blocks": 3,
+      "difference_kg_ha": -306.27546302325817,
+      "paired_t_95_ci_kg_ha": [
+        -2387.0061664779696,
+        1774.4552404314534
+      ],
+      "exact_sign_p": 0.75,
+      "control_mean_kg_ha": 15699.400422165467,
+      "treated_mean_kg_ha": 15393.12495914221,
+      "paired_blocks": [
+        "1",
+        "2",
+        "4"
+      ],
+      "missing_blocks": [
+        "3"
+      ],
+      "paired_differences_kg_ha": [
+        -1057.545298663019,
+        -458.163454750209,
+        596.8823643434534
+      ],
+      "holm_adjusted_p": 1.0
+    }
+  ],
+  "conditional_state_results": {
+    "training_mean": {
+      "n": 46,
+      "rmse_kg_ha": 1779.3092736479923,
+      "mae_kg_ha": 1511.5915217902857,
+      "bias_kg_ha": -128.39320461070682,
+      "r2": -0.005234177410427421
+    },
+    "ridge_lai": {
+      "n": 46,
+      "rmse_kg_ha": 1886.401060597234,
+      "mae_kg_ha": 1585.586660614969,
+      "bias_kg_ha": -489.38793679499724,
+      "r2": -0.12988027052445328
+    }
+  },
+  "process_model_evaluated": false,
+  "national_checkpoint_evaluated": false,
+  "deployed_management_calibrated": false
+}

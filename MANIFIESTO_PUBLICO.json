@@ -23,8 +23,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10498,
-      "sha256": "500b3c27830e57db739b0459ffd1d67bed6949d610769baaa78e0fa42310532c"
+      "bytes": 11120,
+      "sha256": "74cde8f361af7a0dd19542398f0b0ba11076e3a3ec6193aaa03cb2a447c11f7f"
     },
     {
       "path": "README_PUBLIC_RELEASE.md",
@@ -70,6 +70,11 @@
       "path": "backend/tests/conftest.py",
       "bytes": 1418,
       "sha256": "d568a68c8fa8565225bec070c8d59b01776ea144595885327fb1469855852f20"
+    },
+    {
+      "path": "backend/tests/test_colorado_irrigation_audit.py",
+      "bytes": 1606,
+      "sha256": "244ee32815ec2922654d2b37056f9daffa54e50a74093f3f43ea543fa4a21b55"
     },
     {
       "path": "backend/tests/test_coupled_crop.py",
@@ -500,6 +505,96 @@
       "path": "data/external/bushland/acquisition_manifest.json",
       "bytes": 59011,
       "sha256": "ff95d890d2f841fe67ef1e6a44a80d7d1c106ae39c02d330467701747febd39f"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/DataDictionary r1.xlsx",
+      "bytes": 702331,
+      "sha256": "eb971a756bc09220fb98521e30ed28eb92c7e2dd0b12931f6273914bec81d8c1"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Maize 2008 r1_0.xlsx",
+      "bytes": 994077,
+      "sha256": "c892a002d1ece2b96a3c5f6c577edd402f646c50483d9d131566a42fad238add"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Maize 2009 r1_0.xlsx",
+      "bytes": 989203,
+      "sha256": "d046d0795e5a977d9aedaa018a3d5c9ab456768f9427204379b8d63a44f94b46"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Maize 2010 r1_0.xlsx",
+      "bytes": 981346,
+      "sha256": "6f795043f40fb0f9d47af8c1aab9ac67ec23d8607d0bd01893c6f0c3ef93ce1f"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Maize 2011 r1_0.xlsx",
+      "bytes": 982880,
+      "sha256": "44b31f38675169c0c7f500dee77f03d08e3e9f30f3cd7588232e2bbcf46543d0"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Methodology r1.pdf",
+      "bytes": 513225,
+      "sha256": "1f1b7fbbb2098992bf7ea589c3801786f6ef6b160ce0fcfb70599eaf159d915a"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Photo Log.pdf",
+      "bytes": 2280009,
+      "sha256": "08a48804feef6a8648d85839474da57d5c5befa35144cc085fd63183bcc9fb6d"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Soils.xlsx",
+      "bytes": 3882143,
+      "sha256": "c6ff157bd85648b20c9dc853b48799db56dbca4b9c94bfb7c8b1a7123151ee18"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Weather 2008.xlsx",
+      "bytes": 2154202,
+      "sha256": "8b9a40b068c5ca60d7652c3f36caf794c481064df4b245844c0fdfdbbd91641b"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Weather 2009.xlsx",
+      "bytes": 2251966,
+      "sha256": "74a06347f992523a427cbac45b5413c26075c534c1af179c5a96332defa8f053"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Weather 2010.xlsx",
+      "bytes": 2207164,
+      "sha256": "8ca4e6738be8cd15e64438794aadf0199d45c6eca2cef031d5365cc35a24c06e"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/LIRF Weather 2011.xlsx",
+      "bytes": 2172325,
+      "sha256": "1d27f24fa1afff0da117c71e0e8db07b46661813640550bd647f8506f4461cce"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2008_2011/acquisition_manifest.json",
+      "bytes": 4425,
+      "sha256": "b357c96d6c78560c7d1f1b500e33a3b05bafd8388d5261832ed0a5d78c68424a"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2012_2013/2012-2013_Maize_Compiled database 06012018.xlsx",
+      "bytes": 4312151,
+      "sha256": "90cdefe84e4c5092d8dd217f8cf4dc5fabac38731844290fdee9ade523a95e31"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2012_2013/Data Description 06012018.xlsx",
+      "bytes": 18893,
+      "sha256": "a8526980b581802464a0a6ddaf7fbf73c9cbc9b8c40bb05a0d7d58bc6d4a2228"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2012_2013/Data_Dictionary_Water_Prod_2012.csv",
+      "bytes": 16017,
+      "sha256": "645c3340afbf19920c577cd41b84bf956970704a78393f7c3e7300a2f291180a"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2012_2013/Plot map 2012 2013.pdf",
+      "bytes": 325724,
+      "sha256": "cc85af4467998d9fc58bdabd3d8581d46edd4ecadaf885a6df7ce135a287c72d"
+    },
+    {
+      "path": "data/external/colorado_irrigation_2012_2013/acquisition_manifest.json",
+      "bytes": 1934,
+      "sha256": "6b06eddb410519353022328e3d79ab9ec5a039888b641a53c37e34a4735107e8"
     },
     {
       "path": "data/reacquired/cerespinn_county_rebuilt.csv",
@@ -3552,6 +3647,46 @@
       "sha256": "9c6507e7c596278062308a5717bece661770645548dc0c7f5cc09eee7cb7585b"
     },
     {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026/protocol.json",
+      "bytes": 1466,
+      "sha256": "1f172930ebbc1d7609bc16901617be6b54caa415dd2baa1ea4f24cb3a603d49d"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v2/plot_observations.csv",
+      "bytes": 12217,
+      "sha256": "23df237d37728c9d4216c3597cb5a3d1a25683a823b3d16c2754c0e364a8c2e0"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v2/protocol.json",
+      "bytes": 1614,
+      "sha256": "94f666e83a614f613a25db33f62116e7e23d54a73f214f54d54b67f76dec64e4"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v3/README.md",
+      "bytes": 5527,
+      "sha256": "f9ae165a61a47ad5ba889b582f686afec5ec8d82b512f9380886f5e20771a71b"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v3/conditional_state_predictions.csv",
+      "bytes": 4328,
+      "sha256": "3b87b3d52a833d6b5e8f3f212fd97052bfaad32628ab0b07213df75b5f191883"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v3/plot_observations.csv",
+      "bytes": 12321,
+      "sha256": "b0f3001abcd5126c1f0347726f0e7abae51332920034c3dcfe76c4d4af98ed45"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v3/protocol.json",
+      "bytes": 1712,
+      "sha256": "a852a588fc3d4626e643cc95ea81ffcb6d1eb869b14773072269a665b10b62ff"
+    },
+    {
+      "path": "docs/q1_artifacts/colorado_irrigation_20261026_v3/results.json",
+      "bytes": 5457,
+      "sha256": "e7174e2a18af212245c00f519a096fb098ad8c1282fa36bbcd3a4ddc5ec6dff1"
+    },
+    {
       "path": "docs/q1_artifacts/extended/baseline_metrics_full_precision.csv",
       "bytes": 647,
       "sha256": "90ec34990ecc1a8cdacae742e98cac995c1674b1c1cda7c76a6633be29592c11"
@@ -3893,13 +4028,23 @@
     },
     {
       "path": "requirements-revision.txt",
-      "bytes": 336,
-      "sha256": "c71ab4b84c18cd87b50aeca32fae346ce14e1732b7353c2295407e7379dac1d8"
+      "bytes": 353,
+      "sha256": "c83affd0212d5df6dc97a926b8424bc0cd0e9e6b4ba3a071e0df9343e21457c7"
     },
     {
       "path": "scripts/acquire_bushland_data.py",
       "bytes": 3703,
       "sha256": "fb9016fec394feee9ebfb1122582240c3afb950417f9c25a0ee28c5308a7732d"
+    },
+    {
+      "path": "scripts/acquire_colorado_irrigation.py",
+      "bytes": 2832,
+      "sha256": "a1e74e51d8f073e4e40bc0944d1d1702303ac9b2b15226daf7e59843e386bf81"
+    },
+    {
+      "path": "scripts/audit_colorado_irrigation.py",
+      "bytes": 8002,
+      "sha256": "31362f2eb955ac1cac45837cf0874dd5e584f19b1c400689d4e101cce23fa307"
     },
     {
       "path": "scripts/audit_geographic_districts.py",

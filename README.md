@@ -238,3 +238,13 @@ journal publication, DOI or editorial acceptance is claimed.
 ### External-source measured-state extension (October 26, 2026)
 
 Public USDA Bushland raw workbooks, checksums and processed measurements are preserved for six seasons. `scripts/prepare_bushland_data.py` and `scripts/validate_bushland_coupling.py` reproduce a separate coupled-process experiment: calibration 1989/1990/1994/2013, evaluation 2016/2018. Later-season grain RMSE is 3248.07 kg/ha versus 1604.19 for Ridge. This negative result is retained; it does not validate the archived neural checkpoint or causal management recommendations. See `docs/q1_artifacts/bushland/README.md` for the fixed protocol, units, substitutions and limitations. The Git revision includes the selected original public source files.
+
+### Independent USDA Colorado irrigation observations
+
+The 2008–2011 and 2012–2013 Greeley field collections are preserved with source
+checksums. A retrospective paired-block analysis of two irrigation contrasts
+and a separate 2012-to-2013 observed-LAI-to-grain comparison are described in
+`docs/q1_artifacts/colorado_irrigation_20261026_v3/README.md`. The latter did not
+outperform the training mean, and it does not validate the Bushland process model
+or the national neural checkpoint. Small samples and missing observations prevent
+transferring these results to the application's uncalibrated management factors.

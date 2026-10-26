@@ -1,0 +1,106 @@
+Spreadsheet tab,Element or value display name,Units,Description,Data type,Character length,Acceptable values,Required,Accepts null value
+Crop Log,NA,NA,Log of cropping operations,NA,NA,NA,NA,NA
+Crop Log,Date,mo/day/yr,Date of operation,DATE,10,NA,Y,N
+Crop Log,Operation,NA,Operation carried out,VARCHAR,25,NA,Y,N
+Crop Log,Description,NA,General description,VARCHAR,25,NA,Y,N
+Crop Log,Details,NA,Details of the management practice or measurement,VARCHAR,300,NA,Y,N
+Annual Data by Plot,NA,NA,"Harvest Index, Maximum Leaf Area Index, Plant Density, Grain Yield, Annual ETc",NA,NA,NA,Y,N
+Annual Data by Plot,Year,NA,Year of measurement,YEAR,4,NA,Y,N
+Annual Data by Plot,Plot,NA,"Plot codes; the letter refers to sections in an older structure of the field; sections A & B and C & D are now parts to the same field, respectively, with treatments randomized across these sections; Letter is the field section, first number is the block, second number combined with the letter designates one of 12 plots in each block",VARCHAR,5,NA,Y,N
+Annual Data by Plot,Trt_code,NA,The treatment code (1-12) assigned to each of the 12 treatments,INT,3,NA,Y,N
+Annual Data by Plot,Treatment,NA,"The treatment levels with the percent of full ET given in each of the two stress periods, the late vegetative and grain-filling periods, with the percent of full ET in late vegetative period given to the left of the slash and that of the grain-filling period to the right.",VARCHAR,10,NA,Y,N
+Annual Data by Plot,HI,kg/kg,"Harvest index (kg/kg), unitless, calculated as grain dry mass divided by total shoot biomass dry mass, both with moisture content of the grain dried and adjusted to 0%",DECIMAL,5,NA,Y,N
+Annual Data by Plot,TotShtBiom Kg ha-1,kg/ha,Total plant aboveground dry biomass (seed moisture adjusted to 0%),INT,10,NA,N,N
+Annual Data by Plot,Max_LAI,NA,Leaf area index (cm^2 leaf area per cm^2 ground area) unitless; maximum value from four  sampling dates taken over the season,DECIMAL,5,NA,Y,N
+Annual Data by Plot,Plant density plants ha-1,plants/ha,Plant density (plants/Ha) at the end of the season,INT,10,NA,Y,N
+Annual Data by Plot,Grain Yield_15.5%mc Kg ha-1,kg/ha,Grain Yield (Kg/ha) adjusted to 15.5% grain moisture,INT,10,NA,N,N
+Annual Data by Plot,Annual_ETc mm,mm,Annual plot ET (mm) from planting through physiological maturity (R6 growth stage),INT,5,NA,Y,N
+Annual Data by Plot,Growth_stage,NA,"Average growth stage of five plants per plot and four plots per treatment; growth stages were documented with standard notation of stages for maize (see Abendroth, L.J., Elmore, R.W., Boyer, M.J., Marlay, S.K. 2011. Corn growth and development. PMR 1009. Iowa State University Extension, Ames, Iowa.)",VARCHAR,25,NA,Y,N
+Daily Water Balance Parameters,NA,NA,NA,NA,NA,NA,NA,NA
+Daily Water Balance Parameters,Year,NA,Year,YEAR,4,NA,Y,N
+Daily Water Balance Parameters,DOY,NA,Day of Year,INT,5,NA,Y,N
+Daily Water Balance Parameters,Date,mo/day/yr,month/day/year,DATE,10,NA,Y,N
+Daily Water Balance Parameters,Trt_code,NA,treatment,INT,5,NA,Y,N
+Daily Water Balance Parameters,Growth_stage,NA,"Average growth stage of five plants per plot and four plots per treatment; growth stages were documented with standard notation of stages for maize (see Abendroth, L.J., Elmore, R.W., Boyer, M.J., Marlay, S.K. 2011. Corn growth and development. PMR 1009. Iowa State University Extension, Ames, Iowa.)",VARCHAR,5,NA,N,Y
+Daily Water Balance Parameters,Nitrogen_Appl (kg/ha),kg/ha,nitrogen applications (kg N/ha),INT,5,NA,N,Y
+Daily Water Balance Parameters,LAI,NA,Leaf Area Index (treatment means),DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,Plant_height (cm),cm,Plant Height (cm) (treatment means),INT,5,NA,Y,N
+Daily Water Balance Parameters,root_depth (cm),cm,Estimated rooting depth (cm);  used to estimate available soil water to the plant,INT,5,NA,Y,N
+Daily Water Balance Parameters,canopy_cover,NA,Canopy ground cover; fraction of ground surface covered by the plant; daily data is interpolated from measured data in the Canopy Cover worksheet); used to adjust Kcb,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,SWC_15,%,Soil water content in the 0 - 15 cm depth layer (%);  measured by TDR,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWC_30,%,Soil water content in the 15 - 45 cm depth layer (%);  measured by neutron moisture meter at 30 cm depth,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWC_60,%,Soil water content in the 45 - 75 cm depth layer (%);  measured by neutron moisture meter at 60 cm depth,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWC_90,%,Soil water content in the 75 - 105 cm depth layer (%);  measured by neutron moisture meter at 90 cm depth,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWC_120,%,Soil water content in the 105 - 135 cm depth layer (%);  measured by neutron moisture meter at 120 cm depth,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWC_150,%,Soil water content in the 135 - 175 cm depth layer (%);  measured by neutron moisture meter at 150 cm depth,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWC_200,%,Soil water content measured at 200 cm depth (%);  measured by neutron moisture meter at 200 cm depth,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWD_105,mm,Soil water deficit to 105 cm depth (mm);  calculated as the field capacity minus soil water content in each soil layer,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWD_RZ,mm,Soil water deficit in the current root zone depth (mm);  calculated as the field capacity minus soil water content in each soil layer in the current root zone,DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,precip_gross (mm),mm,Precipitation (mm),INT,5,NA,Y,N
+Daily Water Balance Parameters,precip_eff (mm),mm,Effective precipitation (mm); precipitation minus surface evaporation of the precipitation,INT,5,NA,Y,N
+Daily Water Balance Parameters,irr_gross (mm),mm,Irrigation (mm),DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,irr_eff (mm),mm,Effective Irrigation (mm); irrigation munus surface evaporation of the irrigation water,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,ETr (mm),mm,Reference evapotranspiration for a tall crop (alfalfa) (mm/d),DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,Kcb_cc,NA,Basal crop coefficient based on literature values adjusted by canopy cover; used to schedule irrigation,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,Ks,NA,Stress coefficient; used to adjust crop coefficient based on soil water deficit,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,deep_perc (mm),mm,Deep percolation (mm); amount of precipitation or irrigation estimated to be lost from the bottom of the full root zone; calculated by water balance,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,Soil_Evap (mm),mm,Soil evaporation (mm); estimated amount of evaporation water loss from wet soil through the soil surface,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,ETc_WB (mm),mm,Crop evapotranspiration (mm); estimated by water balance,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,ETc_BREB (mm),mm,Crop evapotranspiration (mm); estimated by Bowen Ration Energy Balance on the adjoining field (only for tmnt 1 in 2012),DECIMAL,5,NA,N,Y
+Daily Water Balance Parameters,SWD_Pred_105,mm,Predicted soil water deficit to 105 cm depth (mm) by the water balance calculations,DECIMAL,5,NA,Y,N
+Daily Water Balance Parameters,SWD_Pred_RZ,mm,Predicted soil water deficit in the current root zone (mm) by the water balance calculations,DECIMAL,5,NA,Y,N
+LAI by Plot,NA,NA,leaf area index for each measurement date by plot,NA,NA,NA,NA,NA
+LAI by Plot,Year,NA,Year,YEAR,4,NA,Y,N
+LAI by Plot,DOY,NA,Day of Year,INT,3,NA,Y,N
+LAI by Plot,Date,mo/day/yr,month/day/year,DATE,10,NA,Y,N
+LAI by Plot,Trt_code,NA,Treatment code (1 - 12),INT,2,1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,Y,N
+LAI by Plot,Treatment,NA,"The treatment levels with the percent of full ET given in each of the two stress periods, the late vegetative and grain-filling periods, with the percent of full ET in late vegetative period given to the left of the slash and that of the grain-filling period to the right.",VARCHAR,7,NA,Y,N
+LAI by Plot,Plot,NA,"Plot codes; the letter refers to sections in an older structure of the field; sections A & B and C & D are now parts to the same field, respectively, with treatments randomized across these sections; Letter is the field section, first number is the block, second number combined with the letter designates one of 12 plots in each block",VARCHAR,5,NA,Y,N
+LAI by Plot,LAI,NA,Leaf Area Index (leaf area per plant divided by ground area per plant (1/population),DECIMAL,10,NA,Y,N
+LAI by Plot,LAI_Tmnt,NA,Leaf Area Index - mean for the treament,DECIMAL,10,NA,N,Y
+Plant Height by Plot,NA,NA,plant height for each measurement date by plot,NA,NA,NA,NA,NA
+Plant Height by Plot,Year,NA,Year,YEAR,4,NA,Y,N
+Plant Height by Plot,DOY,NA,Day of Year,INT,3,NA,Y,N
+Plant Height by Plot,Date,mo/day/yr,month/day/year,DATE,10,NA,Y,N
+Plant Height by Plot,Trt_code,NA,Treatment code (1 - 12),INT,2,1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,Y,N
+Plant Height by Plot,Treatment,NA,"The treatment levels with the percent of full ET given in each of the two stress periods, the late vegetative and grain-filling periods, with the percent of full ET in late vegetative period given to the left of the slash and that of the grain-filling period to the right.",VARCHAR,7,NA,Y,N
+Plant Height by Plot,Plot,NA,"Plot codes; the letter refers to sections in an older structure of the field; sections A & B and C & D are now parts to the same field, respectively, with treatments randomized across these sections; Letter is the field section, first number is the block, second number combined with the letter designates one of 12 plots in each block",VARCHAR,5,NA,Y,N
+Plant Height by Plot,Plant_Ht,cm,Plant height (cm); measured to the top of canopy in 2012 and top of tassle in 2013,DECIMAL,10,NA,Y,N
+Plant Height by Plot,Plant_Ht_Tmnt,cm,Plant Height (cm) - mean for the treatment,DECIMAL,10,NA,N,Y
+Canopy Cover by Plot,NA,NA,canopy cover for each measurement date by plot,NA,NA,NA,NA,NA
+Canopy Cover by Plot,Year,NA,Year,YEAR,4,NA,Y,N
+Canopy Cover by Plot,DOY,NA,Day of Year,INT,3,NA,Y,N
+Canopy Cover by Plot,Date,mo/day/yr,month/day/year,DATE,10,NA,Y,N
+Canopy Cover by Plot,Trt_code,NA,Treatment code (1 - 12),INT,2,1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,Y,N
+Canopy Cover by Plot,Treatment,NA,"The treatment levels with the percent of full ET given in each of the two stress periods, the late vegetative and grain-filling periods, with the percent of full ET in late vegetative period given to the left of the slash and that of the grain-filling period to the right.",VARCHAR,7,NA,Y,N
+Canopy Cover by Plot,Plot,NA,"Plot codes; the letter refers to sections in an older structure of the field; sections A & B and C & D are now parts to the same field, respectively, with treatments randomized across these sections; Letter is the field section, first number is the block, second number combined with the letter designates one of 12 plots in each block",VARCHAR,5,NA,Y,N
+Canopy Cover by Plot,Canopy_Cover,NA,Canopy cover; fraction of ground surface cover by crop canopy; measured with nadir photo images,INT,5,NA,Y,N
+Canopy Cover by Plot,CanCov_Tmnt,NA,Canopy cover by treatment; mean of 4 plots,INT,5,NA,N,Y
+Soil Field Capacity,NA,NA,Soil field capacity (%) by treatment and depth,NA,NA,NA,NA,NA
+Soil Field Capacity,Year,NA,Year,YEAR,4,NA,Y,N
+Soil Field Capacity,Trt_code,NA,Treatment code (1 - 12),INT,2,1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,Y,N
+Soil Field Capacity,Depth,cm,depth in the soil,VARCHAR,10,NA,Y,N
+Soil Field Capacity,Field_Capacity,%,percent soil water content (vol/vol) in the soil 24 hrs following an irrigation or precipitation that caused soil water content to exceed this value.,DECIMAL,5,NA,Y,N
+Weather Data (hourly),NA,NA,Hourly weather parameters plus daily precipitation and reference evapotranspiration,NA,NA,NA,NA,NA
+Weather Data (hourly),Year,NA,Year,YEAR,4,NA,Y,N
+Weather Data (hourly),DOY,NA,Day of Year,INT,3,NA,Y,N
+Weather Data (hourly),TIMESTAMP,mo/day/yr/hr,"Date and time (Mountain Standard Time, recorded at the end of the hour) (Note:  final daily reading is time 0:00 the following day.)",DATETIME,25,NA,Y,N
+Weather Data (hourly),AirTemp_C,deg C,"Air Temperature (deg C), average for period, measured 1.5 m above ground (Vaisala HMP45C; thermister)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),RH_fraction,NA,"Relative Humidity (fraction), average for period, measured 1.5 m above ground (Vaisala HMP45C)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),Vap_Press_kPa,kPa,"Vapor Pressure (kPa), Calculated",DECIMAL,10,NA,Y,N
+Weather Data (hourly),HrlySolRad_kJ_m^2_min^1,kJ/m^2/min,"Solar Radiation  (kJ/m^2/min), average for period, measured 2 m above ground (Licor LI-200X pyranometer)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),WindSpeed_m_s^1,m/s,"Wind Speed (m/s), average for period, measured 2 m above ground (R.M. Young Wind Sentry anemometer)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),WindDir_Deg,deg,"Wind Direction (deg), average for period, measured 2 m above ground (R.M. Young Wind Sentry)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),WindDir_STDD_Deg,deg,"Wind Direction (deg), standard deviation for period, measured 2 m above ground (R.M. Young Wind Sentry)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),Rain-Tot,mm,"Precipitation (mm), total for period, measured 1.5 m above ground (TE525 Tipping bucket raingage).  Note that this gage does not accurately measure snow or freezing rain, and these data are not accurate when air temperature is below or near 0 deg C.  See Daily data for best estimates of precipitation.",DECIMAL,10,NA,Y,N
+Weather Data (hourly),SoilTemp_5cm_C,deg C,"Soil Temperature (deg C), average for period, measured 5 cm below a sod covered soil surface (CSI Model 107 Soil Temp Probe (thermister)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),SoilTemp_15cm_C,deg C,"Soil Temperature (deg C), average for period, measured 15 cm below a sod covered soil surface (CSI Model 107 Soil Temp Probe (thermister)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),HWG_maxspeed_m_s^1,m/s,"High Wind Gust (m/s), maximum wind gust for period, measured 2 m above ground (R.M. Young Wind Sentry anemometer)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),HWG_time,min of day,"High Wind Gust time (minute of day),time of maximum wind gust for period, measured 2 m above ground (R.M. Young Wind Sentry anemometer)",INT,5,NA,Y,N
+Weather Data (hourly),HWG_Dir,deg,"High Wind Gust direction (deg), direction of maximum wind gust for period, measured 2 m above ground (R.M. Young Wind Sentry anemometer)",DECIMAL,10,NA,Y,N
+Weather Data (hourly),BaPress_kPa,kPa,"Barametric Pressure (kPa), average for period, (not a standard CoAgMet measurement, used for slight improvement to ET calculations). Default value for the location is 85.5 kPa.  This measurement is not available for GLY04 until 12/6/08.",DECIMAL,10,NA,Y,N
+Weather Data (hourly),ETr,mm/h,ASCE Standardized Penman Monteith Reference Evapotranspiration for a tall (alfalfa) reference crop (mm h^-1). Calculated.,DECIMAL,10,NA,Y,N
+Weather Data (hourly),ETo,mm/h,ASCE Standardized Penman Monteith Reference Evapotranspiration for a short (grass) reference crop (mm h^-1). Calculated.,DECIMAL,10,NA,Y,N
+Weather Data (hourly),ETr - Daily,mm/d,ASCE Standardized Penman Monteith Reference Evapotranspiration for a tall (alfalfa) reference crop. Sum of hourly. (mm d^-1),DECIMAL,10,NA,N,Y
+Weather Data (hourly),ETo-Daily,mm/d,ASCE Standardized Penman Monteith Reference Evapotranspiration for a short (grass) reference crop. Sum of hourly. (mm d^-1),DECIMAL,10,NA,N,Y
+Weather Data (hourly),Rain-Daily,mm/day,"Precipitation (mm), total for the day. These are best estimates for the site based on 3 guages in or near the plots (including GLY04), and using nearby rain and snow measurements for wintertime precipitation.",INT,5,NA,N,Y
