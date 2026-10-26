@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "design": "nine leave-one-district-out folds; train other districts through 2017; test excluded district 2018-2025",
+  "source": "previously reacquired USDA NASS yields and NOAA Climate at a Glance county seasonal data",
+  "models": [
+    "ridge_trend",
+    "ridge_trend_climate",
+    "ridge_climate",
+    "mlp_trend_climate",
+    "mlp_climate",
+    "mlp_detrended_climate"
+  ],
+  "features": {
+    "trend": [
+      "year"
+    ],
+    "climate": [
+      "season_temp_mean_c",
+      "season_precip_mm"
+    ],
+    "trend_climate": [
+      "year",
+      "season_temp_mean_c",
+      "season_precip_mm"
+    ]
+  },
+  "excluded": [
+    "co2_ppm",
+    "heatwave_risk",
+    "scenario",
+    "precip_anomaly_pct",
+    "seasonal_cdd"
+  ],
+  "detrending": "OLS year trend fitted on each fold training rows only; MLP sees only climate and learns training residuals",
+  "training": {
+    "hidden_layers": [
+      16,
+      8
+    ],
+    "activation": "tanh",
+    "alpha": 0.0001,
+    "max_iter": 300,
+    "seeds": [
+      0,
+      1,
+      42
+    ],
+    "scaling": "fit feature and target scalers on training rows only"
+  },
+  "uncertainty": "descriptive 95% moving-block bootstrap of complete test years, block length 3",
+  "limitations": "Iowa only; eight shared weather years; no spatial buffer; retrospective after earlier outcome inspection; regional MLP is distinct from the national checkpoint",
+  "model_selection": "None based on evaluation outcomes; no algorithm or hyperparameter selection"
+}

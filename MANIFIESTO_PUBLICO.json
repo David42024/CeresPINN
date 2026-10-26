@@ -7,6 +7,16 @@
   "manuscripts_and_private_editorial_response_included": false,
   "files": [
     {
+      "path": ".gitattributes",
+      "bytes": 442,
+      "sha256": "921aaa92ed7f77a885ba32d716f0829c5f06c94596efc5092dbaa0df5e38759c"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 1115,
+      "sha256": "8f507db2355e0990888359c294abb51c2a98e3677cf1416c5b4334ff992226f7"
+    },
+    {
       "path": "LICENSE",
       "bytes": 1079,
       "sha256": "6351802bafdaa0a6a523b5d63607f535eb74f340c2a8d45f8145764c79f66603"
@@ -80,6 +90,11 @@
       "path": "backend/tests/test_reacquired_source_integrity.py",
       "bytes": 2732,
       "sha256": "c3c31bfbf0538e3d8f0bbdb71646d4328ceadee80c42fcc73a0d1699e3acc0ed"
+    },
+    {
+      "path": "backend/tests/test_regional_neural_transfer.py",
+      "bytes": 2089,
+      "sha256": "68f937f5ca719aa7a1e8fd02218cc098934e0484cf71406e86914b1b529eb270"
     },
     {
       "path": "backend/tests/test_revision_scientific_integrity.py",
@@ -3677,6 +3692,26 @@
       "sha256": "b53c70ccd0202cf8b1b128624b25d1fbc05ce873ce1b66896372e197f5d8cd1f"
     },
     {
+      "path": "docs/q1_artifacts/regional_neural_20261026/README.md",
+      "bytes": 3982,
+      "sha256": "1882f5b6bda6f62fedd14aef4e6eeb7d06e7273ff7c5175ccb89c2aed283029e"
+    },
+    {
+      "path": "docs/q1_artifacts/regional_neural_20261026/metrics.json",
+      "bytes": 17309,
+      "sha256": "db2432209ebb03d7142f09d85731b962132b5c9290f2d39b0e4ed4a137d53908"
+    },
+    {
+      "path": "docs/q1_artifacts/regional_neural_20261026/predictions.csv",
+      "bytes": 254405,
+      "sha256": "efeda052d988c00b674970993d69616f8b33ee57947b575dffdb140b97a90820"
+    },
+    {
+      "path": "docs/q1_artifacts/regional_neural_20261026/protocol.json",
+      "bytes": 1560,
+      "sha256": "d46edc54faa807a5e86eb662b1357cf6ff0a25bd70959d2da856169875a180c8"
+    },
+    {
       "path": "docs/q1_artifacts/revision_20261026/README.md",
       "bytes": 3216,
       "sha256": "f0db23904a23ac73e0baffc848f2388b0b61ec0f954b2dea8bce761600521fff"
@@ -3877,6 +3912,11 @@
       "sha256": "dc73f046d1d90c14b50d922dd0a19b2e60ff9ddd127bd7939c5e14ccc350b176"
     },
     {
+      "path": "scripts/audit_regional_neural_transfer.py",
+      "bytes": 7459,
+      "sha256": "3626722d7cd1d84c9f103451a226480551e6dbb9157f66562d0a2e2957513b3b"
+    },
+    {
       "path": "scripts/generate_q1_extended_audit.py",
       "bytes": 24323,
       "sha256": "ed349d105f2610c13d3fc2be3552cb29ce9e6381b967247e3c3224784bac8f49"
@@ -3915,6 +3955,11 @@
       "path": "scripts/revision_scientific_audit.py",
       "bytes": 12116,
       "sha256": "da2f9fd14a867b4fc5a77381364e3f769863dd0792667b34376bc99eebbf0e7f"
+    },
+    {
+      "path": "scripts/run_nass.py",
+      "bytes": 526,
+      "sha256": "1c02b4a7c9130d6ca61abfb6a8f78c033172faf74ad0f7b54090cde90e1c81f0"
     },
     {
       "path": "scripts/run_temporal_validation.py",
@@ -4110,21 +4155,6 @@
       "path": "vite.config.ts",
       "bytes": 653,
       "sha256": "839d175892b22ee336c0a46b56c3fc25a6f8b00212bbb3343f537ee5969a099f"
-    },
-    {
-      "path": ".gitattributes",
-      "bytes": 442,
-      "sha256": "921aaa92ed7f77a885ba32d716f0829c5f06c94596efc5092dbaa0df5e38759c"
-    },
-    {
-      "path": ".gitignore",
-      "bytes": 1115,
-      "sha256": "8f507db2355e0990888359c294abb51c2a98e3677cf1416c5b4334ff992226f7"
-    },
-    {
-      "path": "scripts/run_nass.py",
-      "bytes": 526,
-      "sha256": "1c02b4a7c9130d6ca61abfb6a8f78c033172faf74ad0f7b54090cde90e1c81f0"
     }
   ],
   "publication_method": "git commit",
