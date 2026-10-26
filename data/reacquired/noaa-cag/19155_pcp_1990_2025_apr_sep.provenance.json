@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-155/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:43.521963+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:44 GMT"
+  },
+  "sha256": "24f68088b48da281bfd61b9e332e6b6c11afd3422eec84dc2ea7f89ebc26cd6d",
+  "bytes": 998,
+  "path": "data/reacquired/noaa-cag/19155_pcp_1990_2025_apr_sep.json",
+  "fips": "19155",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Pottawattamie County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

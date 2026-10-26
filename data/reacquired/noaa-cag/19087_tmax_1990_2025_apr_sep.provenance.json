@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-087/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:18.841574+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:19 GMT"
+  },
+  "sha256": "08f9b1add5f13b65b61900f3a8a4c5fcbfe2f49e2d1df6582968d029f928b77c",
+  "bytes": 974,
+  "path": "data/reacquired/noaa-cag/19087_tmax_1990_2025_apr_sep.json",
+  "fips": "19087",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Henry County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

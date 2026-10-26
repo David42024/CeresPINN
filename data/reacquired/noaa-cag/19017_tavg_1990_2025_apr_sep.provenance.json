@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-017/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:54.628906+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:55 GMT"
+  },
+  "sha256": "dd8fef86de7120b3b6ef26a9f5ec6d22fdd703d4ef6cda4e8d4b6c494fe66be5",
+  "bytes": 973,
+  "path": "data/reacquired/noaa-cag/19017_tavg_1990_2025_apr_sep.json",
+  "fips": "19017",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Bremer County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-165/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:46.352674+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:46 GMT"
+  },
+  "sha256": "7c30175bad29b4174ea1888cf3e0b0ae10c46ebc4f4edacfe81c3e37de2a40fa",
+  "bytes": 1000,
+  "path": "data/reacquired/noaa-cag/19165_pcp_1990_2025_apr_sep.json",
+  "fips": "19165",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Shelby County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

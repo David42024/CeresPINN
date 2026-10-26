@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-003/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:48.237912+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:48 GMT"
+  },
+  "sha256": "060489d6e8de316be5838e2b8489d161dbee6e5a30ec1dca54b50ede4792b414",
+  "bytes": 999,
+  "path": "data/reacquired/noaa-cag/19003_pcp_1990_2025_apr_sep.json",
+  "fips": "19003",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Adams County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

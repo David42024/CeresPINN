@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-059/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:09.103891+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:09 GMT"
+  },
+  "sha256": "3ca11be65a4fbb507a35da9c24bda710788699f488c6418e6e0777cb5065f202",
+  "bytes": 978,
+  "path": "data/reacquired/noaa-cag/19059_tavg_1990_2025_apr_sep.json",
+  "fips": "19059",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Dickinson County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

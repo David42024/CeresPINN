@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-127/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:32.089146+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:32 GMT"
+  },
+  "sha256": "df705155440ee9d469a70d0f09860b5059f4d942da6a57541a7ca90dcfb50519",
+  "bytes": 979,
+  "path": "data/reacquired/noaa-cag/19127_tavg_1990_2025_apr_sep.json",
+  "fips": "19127",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Marshall County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

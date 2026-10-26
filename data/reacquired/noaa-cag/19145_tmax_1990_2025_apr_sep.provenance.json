@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-145/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:40.005723+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:40 GMT"
+  },
+  "sha256": "2875587a73a6cbb927b0efd296063acea08187e917aca122ef617a8d870b95d7",
+  "bytes": 975,
+  "path": "data/reacquired/noaa-cag/19145_tmax_1990_2025_apr_sep.json",
+  "fips": "19145",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Page County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

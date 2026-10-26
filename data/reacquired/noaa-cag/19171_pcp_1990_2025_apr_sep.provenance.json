@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-171/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:48.043258+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:48 GMT"
+  },
+  "sha256": "54a57d6e19f27ab3191642ea9bbafa3320b45e61baed6ef5137a68b1ccd44fad",
+  "bytes": 991,
+  "path": "data/reacquired/noaa-cag/19171_pcp_1990_2025_apr_sep.json",
+  "fips": "19171",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Tama County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

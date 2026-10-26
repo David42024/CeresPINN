@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-113/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:28.442079+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:28 GMT"
+  },
+  "sha256": "661b1419517b45d887c919fd60d039a82ea5e50c92fb405b02a3abaca100872a",
+  "bytes": 998,
+  "path": "data/reacquired/noaa-cag/19113_pcp_1990_2025_apr_sep.json",
+  "fips": "19113",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Linn County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

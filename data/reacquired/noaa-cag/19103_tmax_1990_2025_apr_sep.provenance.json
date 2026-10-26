@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-103/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:24.206229+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:24 GMT"
+  },
+  "sha256": "6b62093c4f404501fe153efe6bc576a4eaf1a690972e775f02de2f72b7abbe43",
+  "bytes": 980,
+  "path": "data/reacquired/noaa-cag/19103_tmax_1990_2025_apr_sep.json",
+  "fips": "19103",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Johnson County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

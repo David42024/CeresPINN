@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-083/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:17.462669+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:17 GMT"
+  },
+  "sha256": "00e85a920e50d3af767dd3183b85a72189bc77af3e97fa23b330b71585c4dcf9",
+  "bytes": 981,
+  "path": "data/reacquired/noaa-cag/19083_tmax_1990_2025_apr_sep.json",
+  "fips": "19083",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Hardin County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

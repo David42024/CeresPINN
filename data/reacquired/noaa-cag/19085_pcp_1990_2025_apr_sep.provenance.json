@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-085/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:18.523715+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:19 GMT"
+  },
+  "sha256": "f1e320c35a88daad497c7b9960776a71f24ec3513ad1daa4bc1851a55af16d56",
+  "bytes": 1003,
+  "path": "data/reacquired/noaa-cag/19085_pcp_1990_2025_apr_sep.json",
+  "fips": "19085",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Harrison County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

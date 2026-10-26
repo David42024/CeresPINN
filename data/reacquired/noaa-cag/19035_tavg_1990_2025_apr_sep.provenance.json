@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-035/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:00.970763+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:01 GMT"
+  },
+  "sha256": "61cd69e5f7d6e7b5ea54ca73da5839539bf26c03a3903a48c727bd87b7894a64",
+  "bytes": 981,
+  "path": "data/reacquired/noaa-cag/19035_tavg_1990_2025_apr_sep.json",
+  "fips": "19035",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Cherokee County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

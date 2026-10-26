@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-047/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:05.316515+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:05 GMT"
+  },
+  "sha256": "862ebb5b64c8d59952fb31095d87adc6cc8cd1d2f7f64fec422443045bba90a8",
+  "bytes": 1000,
+  "path": "data/reacquired/noaa-cag/19047_pcp_1990_2025_apr_sep.json",
+  "fips": "19047",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Crawford County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-197/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:55.204437+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:55 GMT"
+  },
+  "sha256": "d061e774143017b267cd9560124e1ad54ccc434a79fe59b0d59b6bac4ab1f425",
+  "bytes": 999,
+  "path": "data/reacquired/noaa-cag/19197_pcp_1990_2025_apr_sep.json",
+  "fips": "19197",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Wright County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

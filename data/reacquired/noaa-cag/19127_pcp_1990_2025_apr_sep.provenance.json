@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-127/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:32.670475+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:33 GMT"
+  },
+  "sha256": "20621f7840e64be4b6eebd53cadbc3cd57bcae5599ba147cff1bde28aac8ce11",
+  "bytes": 1003,
+  "path": "data/reacquired/noaa-cag/19127_pcp_1990_2025_apr_sep.json",
+  "fips": "19127",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Marshall County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

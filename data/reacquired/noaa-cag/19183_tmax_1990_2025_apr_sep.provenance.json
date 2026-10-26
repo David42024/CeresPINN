@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-183/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:51.188431+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:51 GMT"
+  },
+  "sha256": "33848f92dbd59e849e4ab0071afe9f3dc66d829623c9e7559140ec681fe6968f",
+  "bytes": 983,
+  "path": "data/reacquired/noaa-cag/19183_tmax_1990_2025_apr_sep.json",
+  "fips": "19183",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Washington County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-055/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:07.736039+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:08 GMT"
+  },
+  "sha256": "3e01b65005f9e0f832b0a452c8ddc4e7c460b7903fddc1c00980da9e6982b90d",
+  "bytes": 987,
+  "path": "data/reacquired/noaa-cag/19055_tavg_1990_2025_apr_sep.json",
+  "fips": "19055",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Delaware County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

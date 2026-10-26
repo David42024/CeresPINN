@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-181/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:50.807377+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:51 GMT"
+  },
+  "sha256": "a020493f9d7c4bc153c60785d3607b18c4f1e2faebb949230e6a036078049c9e",
+  "bytes": 998,
+  "path": "data/reacquired/noaa-cag/19181_pcp_1990_2025_apr_sep.json",
+  "fips": "19181",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Warren County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

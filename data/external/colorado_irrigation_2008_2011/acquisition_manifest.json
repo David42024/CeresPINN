@@ -1,0 +1,111 @@
+{
+  "source": "https://api.figshare.com/v2/articles/24660372",
+  "dataset_url": "https://agdatacommons.nal.usda.gov/articles/dataset/USDA-ARS_Colorado_Maize_Water_Productivity_Dataset_2008-2011/24660372",
+  "doi": "10.15482/USDA.ADC/1254006",
+  "title": "USDA-ARS Colorado Maize Water Productivity Dataset 2008-2011",
+  "license": {
+    "value": 96,
+    "name": "U.S. Public Domain",
+    "url": "https://www.usa.gov/publicdomain/label/1.0/"
+  },
+  "retrieved_utc": "2026-10-26T21:40:19.533225+00:00",
+  "scope": "New independent public source; not the historical national training download",
+  "files": [
+    {
+      "name": "DataDictionary r1.xlsx",
+      "file_id": 44334605,
+      "url": "https://ndownloader.figshare.com/files/44334605",
+      "bytes": 702331,
+      "official_md5": "af94e18375a04547ac0513c327e872fe",
+      "sha256": "eb971a756bc09220fb98521e30ed28eb92c7e2dd0b12931f6273914bec81d8c1"
+    },
+    {
+      "name": "LIRF Methodology r1.pdf",
+      "file_id": 44334608,
+      "url": "https://ndownloader.figshare.com/files/44334608",
+      "bytes": 513225,
+      "official_md5": "d90a9d2bef4ec5bb97ff1c84a4691262",
+      "sha256": "1f1b7fbbb2098992bf7ea589c3801786f6ef6b160ce0fcfb70599eaf159d915a"
+    },
+    {
+      "name": "LIRF Photo Log.pdf",
+      "file_id": 44334611,
+      "url": "https://ndownloader.figshare.com/files/44334611",
+      "bytes": 2280009,
+      "official_md5": "5aea8b92a8400054e0d01f5596a55ead",
+      "sha256": "08a48804feef6a8648d85839474da57d5c5befa35144cc085fd63183bcc9fb6d"
+    },
+    {
+      "name": "LIRF Maize 2008 r1_0.xlsx",
+      "file_id": 44334614,
+      "url": "https://ndownloader.figshare.com/files/44334614",
+      "bytes": 994077,
+      "official_md5": "6526ec7bf96307df8d2f3f53df52f3c1",
+      "sha256": "c892a002d1ece2b96a3c5f6c577edd402f646c50483d9d131566a42fad238add"
+    },
+    {
+      "name": "LIRF Maize 2009 r1_0.xlsx",
+      "file_id": 44334617,
+      "url": "https://ndownloader.figshare.com/files/44334617",
+      "bytes": 989203,
+      "official_md5": "14d06a0b56df9c0fab019d72d6a9ef94",
+      "sha256": "d046d0795e5a977d9aedaa018a3d5c9ab456768f9427204379b8d63a44f94b46"
+    },
+    {
+      "name": "LIRF Maize 2010 r1_0.xlsx",
+      "file_id": 44334623,
+      "url": "https://ndownloader.figshare.com/files/44334623",
+      "bytes": 981346,
+      "official_md5": "34dec8da9d88e5a89c9c4552d3b43517",
+      "sha256": "6f795043f40fb0f9d47af8c1aab9ac67ec23d8607d0bd01893c6f0c3ef93ce1f"
+    },
+    {
+      "name": "LIRF Maize 2011 r1_0.xlsx",
+      "file_id": 44334626,
+      "url": "https://ndownloader.figshare.com/files/44334626",
+      "bytes": 982880,
+      "official_md5": "74eb81765fbcf64d37ad9dbd903035c6",
+      "sha256": "44b31f38675169c0c7f500dee77f03d08e3e9f30f3cd7588232e2bbcf46543d0"
+    },
+    {
+      "name": "LIRF Weather 2008.xlsx",
+      "file_id": 44334629,
+      "url": "https://ndownloader.figshare.com/files/44334629",
+      "bytes": 2154202,
+      "official_md5": "da3478fddaf7f6e86b280ae5ba9f5daf",
+      "sha256": "8b9a40b068c5ca60d7652c3f36caf794c481064df4b245844c0fdfdbbd91641b"
+    },
+    {
+      "name": "LIRF Weather 2009.xlsx",
+      "file_id": 44334641,
+      "url": "https://ndownloader.figshare.com/files/44334641",
+      "bytes": 2251966,
+      "official_md5": "74a4e7d3ea767dfcaa8b091129f168b7",
+      "sha256": "74a06347f992523a427cbac45b5413c26075c534c1af179c5a96332defa8f053"
+    },
+    {
+      "name": "LIRF Weather 2010.xlsx",
+      "file_id": 44334647,
+      "url": "https://ndownloader.figshare.com/files/44334647",
+      "bytes": 2207164,
+      "official_md5": "af5de618c40f4930439b623570544eaa",
+      "sha256": "8ca4e6738be8cd15e64438794aadf0199d45c6eca2cef031d5365cc35a24c06e"
+    },
+    {
+      "name": "LIRF Weather 2011.xlsx",
+      "file_id": 44334650,
+      "url": "https://ndownloader.figshare.com/files/44334650",
+      "bytes": 2172325,
+      "official_md5": "70a9b8674a857d4c6f75782520e5f90a",
+      "sha256": "1d27f24fa1afff0da117c71e0e8db07b46661813640550bd647f8506f4461cce"
+    },
+    {
+      "name": "LIRF Soils.xlsx",
+      "file_id": 44334653,
+      "url": "https://ndownloader.figshare.com/files/44334653",
+      "bytes": 3882143,
+      "official_md5": "35405ada402d92d93960a0057e08b512",
+      "sha256": "c6ff157bd85648b20c9dc853b48799db56dbca4b9c94bfb7c8b1a7123151ee18"
+    }
+  ]
+}

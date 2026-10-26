@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-183/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:51.405112+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:51 GMT"
+  },
+  "sha256": "073f49f6849e6de896338e1d068fcdb5f4e5f91473660663407276ce99b8b760",
+  "bytes": 1002,
+  "path": "data/reacquired/noaa-cag/19183_pcp_1990_2025_apr_sep.json",
+  "fips": "19183",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Washington County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

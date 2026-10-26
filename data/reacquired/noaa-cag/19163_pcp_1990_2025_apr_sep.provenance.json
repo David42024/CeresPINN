@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-163/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:45.790896+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:46 GMT"
+  },
+  "sha256": "a8e50d9e3dc23db47445424c34e1a63bc9052a2eb2a663d35ea5eca71c09eee2",
+  "bytes": 999,
+  "path": "data/reacquired/noaa-cag/19163_pcp_1990_2025_apr_sep.json",
+  "fips": "19163",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Scott County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-031/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:59.826210+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:00 GMT"
+  },
+  "sha256": "7d7a2e2450fd1bf914a39679fb64915d3a6365d348582163335ad8c14f551fc6",
+  "bytes": 974,
+  "path": "data/reacquired/noaa-cag/19031_tmax_1990_2025_apr_sep.json",
+  "fips": "19031",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Cedar County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

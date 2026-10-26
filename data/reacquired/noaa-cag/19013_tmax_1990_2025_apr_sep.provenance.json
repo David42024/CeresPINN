@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-013/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:44:53.116336+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:44:53 GMT"
+  },
+  "sha256": "a013ddfb385b0461bb7d64f43b91954cd783ced16a52b87ae560770270139aee",
+  "bytes": 985,
+  "path": "data/reacquired/noaa-cag/19013_tmax_1990_2025_apr_sep.json",
+  "fips": "19013",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Black Hawk County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

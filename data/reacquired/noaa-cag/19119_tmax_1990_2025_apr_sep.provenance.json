@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-119/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:29.913807+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:30 GMT"
+  },
+  "sha256": "2540154d148dcd17e794637a86af7eace477eef8861efeb6a508584706e798ce",
+  "bytes": 975,
+  "path": "data/reacquired/noaa-cag/19119_tmax_1990_2025_apr_sep.json",
+  "fips": "19119",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Lyon County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

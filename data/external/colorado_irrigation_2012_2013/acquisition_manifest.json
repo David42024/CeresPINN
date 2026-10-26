@@ -1,0 +1,47 @@
+{
+  "source": "https://api.figshare.com/v2/articles/24662391",
+  "dataset_url": "https://agdatacommons.nal.usda.gov/articles/dataset/USDA-ARS_Colorado_Maize_Water_Productivity_Dataset_2012-2013/24662391",
+  "doi": "10.15482/USDA.ADC/1439968",
+  "title": "USDA-ARS Colorado Maize Water Productivity Dataset 2012-2013",
+  "license": {
+    "value": 96,
+    "name": "U.S. Public Domain",
+    "url": "https://www.usa.gov/publicdomain/label/1.0/"
+  },
+  "retrieved_utc": "2026-10-26T21:31:59.905045+00:00",
+  "scope": "New independent public source; not the historical national training download",
+  "files": [
+    {
+      "name": "Plot map 2012 2013.pdf",
+      "file_id": 44526239,
+      "url": "https://ndownloader.figshare.com/files/44526239",
+      "bytes": 325724,
+      "official_md5": "ba97725995ad292c7d0debebef8424a2",
+      "sha256": "cc85af4467998d9fc58bdabd3d8581d46edd4ecadaf885a6df7ce135a287c72d"
+    },
+    {
+      "name": "Data Description 06012018.xlsx",
+      "file_id": 44526242,
+      "url": "https://ndownloader.figshare.com/files/44526242",
+      "bytes": 18893,
+      "official_md5": "5cbb6972b62144bb003b9684c2187827",
+      "sha256": "a8526980b581802464a0a6ddaf7fbf73c9cbc9b8c40bb05a0d7d58bc6d4a2228"
+    },
+    {
+      "name": "2012-2013_Maize_Compiled database 06012018.xlsx",
+      "file_id": 44526245,
+      "url": "https://ndownloader.figshare.com/files/44526245",
+      "bytes": 4312151,
+      "official_md5": "350d76673022fda33c30ffd710411340",
+      "sha256": "90cdefe84e4c5092d8dd217f8cf4dc5fabac38731844290fdee9ade523a95e31"
+    },
+    {
+      "name": "Data_Dictionary_Water_Prod_2012.csv",
+      "file_id": 44526248,
+      "url": "https://ndownloader.figshare.com/files/44526248",
+      "bytes": 16017,
+      "official_md5": "3eeb0dc007e0b968d18b8cece8a10ed3",
+      "sha256": "645c3340afbf19920c577cd41b84bf956970704a78393f7c3e7300a2f291180a"
+    }
+  ]
+}

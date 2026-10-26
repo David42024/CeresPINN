@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-161/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:45.200418+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:45 GMT"
+  },
+  "sha256": "8b6f1a54c02ea258d87b88ae0f3e857a65545b8e50915dc621ab14071a410174",
+  "bytes": 976,
+  "path": "data/reacquired/noaa-cag/19161_tmax_1990_2025_apr_sep.json",
+  "fips": "19161",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Sac County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

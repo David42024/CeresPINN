@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-185/pcp/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:52.192271+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:52 GMT"
+  },
+  "sha256": "109e86964df694e4e1b1f37ba5abb09777d814ec5b5af5dda19a8f51b167b8aa",
+  "bytes": 996,
+  "path": "data/reacquired/noaa-cag/19185_pcp_1990_2025_apr_sep.json",
+  "fips": "19185",
+  "variable": "pcp",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Wayne County, Iowa April-September Precipitation",
+      "units": "Inches"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-151/tmax/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:42.274303+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:42 GMT"
+  },
+  "sha256": "9fad13b23fed0936a48175d32b3e32ec7152e7c7599d79d283af1d9651eefd71",
+  "bytes": 981,
+  "path": "data/reacquired/noaa-cag/19151_tmax_1990_2025_apr_sep.json",
+  "fips": "19151",
+  "variable": "tmax",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Pocahontas County, Iowa April-September Maximum Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}

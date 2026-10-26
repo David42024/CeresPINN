@@ -1,0 +1,23 @@
+{
+  "url": "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/county/time-series/IA-187/tavg/6/9/1990-2025.json",
+  "downloaded_at_utc": "2026-10-26T16:45:51.859292+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "Content-Type": "application/json",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Mon, 26 Oct 2026 16:45:52 GMT"
+  },
+  "sha256": "d2308f78b3bfcca555574ee4235ca552642b22fd46b455a713170ccdc27cebb4",
+  "bytes": 980,
+  "path": "data/reacquired/noaa-cag/19187_tavg_1990_2025_apr_sep.json",
+  "fips": "19187",
+  "variable": "tavg",
+  "season": "6-month aggregate ending September (April-September)",
+  "source_metadata": {
+    "description": {
+      "title": "Webster County, Iowa April-September Average Temperature",
+      "units": "Degrees Fahrenheit"
+    }
+  }
+}
