@@ -616,7 +616,7 @@ class YieldInferenceService:
             "model_name": meta.get("model_name", "CeresYield"),
             "model_version": meta.get("model_version", "3.0.0"),
             "model_verified": meta.get("model_verified", True),
-            "prediction_scope": meta.get("geographic_scope", "county_annual"),
+            "prediction_scope": meta.get("geographic_scope") or "not_specified",
             "model_data_source": "USDA NASS + NASA NEX-GDDP",
             "model_uses_real_data": True,
             "dataset_sha256": meta.get("dataset_sha256", "hash"),

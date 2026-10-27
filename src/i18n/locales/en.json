@@ -584,6 +584,7 @@
     "aspect": "Aspect",
     "status": "Status",
     "classification": "Use classification",
+    "spatialScope": "Geographic scope",
     "soil": "Soil",
     "excludedUses": "Excluded uses",
     "requirements": "Requirements"

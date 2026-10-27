@@ -238,6 +238,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       const scopeParagraphs = [
         t('scientificScope.badge'),
         t('scientificScope.summary'),
+        t('scientificScope.limitSpatial'),
         t('scientificScope.limitSoil'),
         t('scientificScope.prohibited'),
         t('scientificScope.required'),
@@ -326,6 +327,7 @@ export const ReportsModule: React.FC<ReportsModuleProps> = ({ simulation, curren
       const scopeRows = [
         { [t('reportFigures.aspect')]: t('reportFigures.classification'), [t('reportFigures.status')]: t('scientificScope.badge') },
         { [t('reportFigures.aspect')]: t('scientificScope.title'), [t('reportFigures.status')]: t('scientificScope.summary') },
+        { [t('reportFigures.aspect')]: t('reportFigures.spatialScope'), [t('reportFigures.status')]: t('scientificScope.limitSpatial') },
         { [t('reportFigures.aspect')]: t('reportFigures.soil'), [t('reportFigures.status')]: t('scientificScope.limitSoil') },
         { [t('reportFigures.aspect')]: t('reportFigures.excludedUses'), [t('reportFigures.status')]: t('scientificScope.prohibited') },
         { [t('reportFigures.aspect')]: t('reportFigures.requirements'), [t('reportFigures.status')]: t('scientificScope.required') },
