@@ -1,0 +1,693 @@
+{
+  "protocol": {
+    "version": 2,
+    "design": "nine leave-one-district-out folds; train other districts through 2017; test excluded district 2018-2025",
+    "source": "previously reacquired USDA NASS yields and NOAA Climate at a Glance county seasonal data",
+    "models": [
+      "ridge_trend",
+      "ridge_trend_climate",
+      "ridge_climate",
+      "mlp_trend_climate",
+      "mlp_climate",
+      "mlp_detrended_climate"
+    ],
+    "features": {
+      "trend": [
+        "year"
+      ],
+      "climate": [
+        "season_temp_mean_c",
+        "season_precip_mm"
+      ],
+      "trend_climate": [
+        "year",
+        "season_temp_mean_c",
+        "season_precip_mm"
+      ]
+    },
+    "excluded": [
+      "co2_ppm",
+      "heatwave_risk",
+      "scenario",
+      "precip_anomaly_pct",
+      "seasonal_cdd"
+    ],
+    "detrending": "OLS year trend fitted on each fold training rows only; MLP sees only climate and learns training residuals",
+    "training": {
+      "hidden_layers": [
+        16,
+        8
+      ],
+      "activation": "tanh",
+      "alpha": 0.0001,
+      "max_iter": 1000,
+      "seeds": [
+        0,
+        1,
+        42
+      ],
+      "scaling": "fit feature and target scalers on training rows only"
+    },
+    "uncertainty": "descriptive 95% moving-block bootstrap of complete test years, block length 3",
+    "limitations": "Iowa only; eight shared weather years; no spatial buffer; retrospective after earlier outcome inspection; regional MLP is distinct from the national checkpoint; previously evaluated outcomes; convergence does not establish predictive validity or county calibration",
+    "model_selection": "None based on evaluation outcomes; no algorithm or hyperparameter selection",
+    "comparison": "Retrospective sensitivity to iteration ceiling; same folds, seeds, inputs and test years as the 300-iteration audit; no model selection."
+  },
+  "protocol_sha256": "6dc7557d250032ce6c1ab0adbc68c309bba622fd197dd5446f0ebaa9fbdaf335",
+  "input_sha256": {
+    "data\\reacquired\\cerespinn_county_rebuilt.csv": "a98fdb9c286d60af6d55700952047423abb649ca5da3613336bece6650aa9cea",
+    "data\\reacquired\\iowa_county_districts.csv": "8a885a41f40202ef91d421c63b56880f356aa17d5a912d0b75c9de4def3bb1b5"
+  },
+  "folds": [
+    {
+      "district": "10",
+      "training_rows": 2428,
+      "test_rows": 84,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 431,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 373,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 398,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 204,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 244,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 235,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 438,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 268,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 191,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "20",
+      "training_rows": 2456,
+      "test_rows": 84,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 372,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 414,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 480,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 206,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 323,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 200,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 379,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 236,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 202,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "30",
+      "training_rows": 2456,
+      "test_rows": 86,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 416,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 422,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 439,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 305,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 314,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 216,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 407,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 255,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 204,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "40",
+      "training_rows": 2428,
+      "test_rows": 85,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 381,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 362,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 421,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 267,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 365,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 221,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 224,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 354,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 226,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "50",
+      "training_rows": 2428,
+      "test_rows": 85,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 426,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 376,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 446,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 227,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 242,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 232,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 351,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 268,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 226,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "60",
+      "training_rows": 2484,
+      "test_rows": 75,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 428,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 474,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 411,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 239,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 338,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 240,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 383,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 351,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 262,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "70",
+      "training_rows": 2514,
+      "test_rows": 57,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 419,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 467,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 381,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 252,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 305,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 199,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 283,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 247,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 233,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "80",
+      "training_rows": 2462,
+      "test_rows": 63,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 344,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 317,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 402,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 228,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 247,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 223,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 266,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 208,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 192,
+            "convergence_warning": false
+          }
+        ]
+      }
+    },
+    {
+      "district": "90",
+      "training_rows": 2456,
+      "test_rows": 77,
+      "convergence": {
+        "mlp_trend_climate": [
+          {
+            "seed": 0,
+            "iterations": 429,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 629,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 388,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_climate": [
+          {
+            "seed": 0,
+            "iterations": 281,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 220,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 287,
+            "convergence_warning": false
+          }
+        ],
+        "mlp_detrended_climate": [
+          {
+            "seed": 0,
+            "iterations": 228,
+            "convergence_warning": false
+          },
+          {
+            "seed": 1,
+            "iterations": 267,
+            "convergence_warning": false
+          },
+          {
+            "seed": 42,
+            "iterations": 249,
+            "convergence_warning": false
+          }
+        ]
+      }
+    }
+  ],
+  "test_county_years_per_model": 696,
+  "distinct_test_years": 8,
+  "national_checkpoint_evaluated": false,
+  "national_checkpoint_replaced": false,
+  "scores": [
+    {
+      "model": "mlp_climate",
+      "rmse_kg_ha": 3149.330909236163,
+      "mae_kg_ha": 2852.2255144987676,
+      "r2": -5.374548498437282,
+      "bias_kg_ha": -2820.856872982536,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          2650.448671946938,
+          3568.0680275583823
+        ],
+        "mae_kg_ha": [
+          2285.1334900341435,
+          3404.179901553371
+        ]
+      }
+    },
+    {
+      "model": "mlp_detrended_climate",
+      "rmse_kg_ha": 1294.805021528453,
+      "mae_kg_ha": 1022.32477697547,
+      "r2": -0.07751069243782838,
+      "bias_kg_ha": -100.80191116640904,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1157.042673480901,
+          1421.3288701345728
+        ],
+        "mae_kg_ha": [
+          908.329096799544,
+          1133.5304001105596
+        ]
+      }
+    },
+    {
+      "model": "mlp_trend_climate",
+      "rmse_kg_ha": 1801.3235911119853,
+      "mae_kg_ha": 1421.1196053064102,
+      "r2": -1.085433338560883,
+      "bias_kg_ha": 1239.9563188040854,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1390.8246843058862,
+          2184.3740711238106
+        ],
+        "mae_kg_ha": [
+          1062.9207977725725,
+          1793.2391689998367
+        ]
+      }
+    },
+    {
+      "model": "ridge_climate",
+      "rmse_kg_ha": 2996.042721546156,
+      "mae_kg_ha": 2728.079705095373,
+      "r2": -4.769110296440488,
+      "bias_kg_ha": -2687.9805278757317,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          2506.7143141945717,
+          3453.289735777015
+        ],
+        "mae_kg_ha": [
+          2188.7973952026286,
+          3271.4758463904504
+        ]
+      }
+    },
+    {
+      "model": "ridge_trend",
+      "rmse_kg_ha": 1224.7749507700355,
+      "mae_kg_ha": 962.8938570345462,
+      "r2": 0.035892570636299914,
+      "bias_kg_ha": 87.74940650451056,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1023.1883082914239,
+          1389.3305680117376
+        ],
+        "mae_kg_ha": [
+          808.5495407997241,
+          1106.7692892607752
+        ]
+      }
+    },
+    {
+      "model": "ridge_trend_climate",
+      "rmse_kg_ha": 1302.8748147279139,
+      "mae_kg_ha": 1014.6192088191747,
+      "r2": -0.09098358563830922,
+      "bias_kg_ha": 327.1301591436651,
+      "annual_cluster_bootstrap_ci": {
+        "rmse_kg_ha": [
+          1066.356687441869,
+          1521.5456817856768
+        ],
+        "mae_kg_ha": [
+          834.2870749300656,
+          1221.2523920261633
+        ]
+      }
+    }
+  ]
+}

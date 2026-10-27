@@ -1,0 +1,44 @@
+[
+  {
+    "model": "mlp_climate",
+    "rmse_300": 3145.025833876465,
+    "rmse_1000": 3149.330909236163,
+    "warnings_300": 6,
+    "warnings_1000": 0
+  },
+  {
+    "model": "mlp_detrended_climate",
+    "rmse_300": 1292.2383260402646,
+    "rmse_1000": 1294.805021528453,
+    "warnings_300": 7,
+    "warnings_1000": 0
+  },
+  {
+    "model": "mlp_trend_climate",
+    "rmse_300": 1772.7766149254971,
+    "rmse_1000": 1801.3235911119853,
+    "warnings_300": 27,
+    "warnings_1000": 0
+  },
+  {
+    "model": "ridge_climate",
+    "rmse_300": 2996.042721546156,
+    "rmse_1000": 2996.042721546156,
+    "warnings_300": 0,
+    "warnings_1000": 0
+  },
+  {
+    "model": "ridge_trend",
+    "rmse_300": 1224.7749507700355,
+    "rmse_1000": 1224.7749507700355,
+    "warnings_300": 0,
+    "warnings_1000": 0
+  },
+  {
+    "model": "ridge_trend_climate",
+    "rmse_300": 1302.8748147279139,
+    "rmse_1000": 1302.8748147279139,
+    "warnings_300": 0,
+    "warnings_1000": 0
+  }
+]
