@@ -93,12 +93,14 @@ test('ethics and equity limitations are enforced in API, UI, and exports', () =>
   assert.match(notice, /scientificScope\.prohibited/);
   assert.match(reports, /scientificScope\.title/);
   assert.match(reports, /reportFigures\.scopeSheet/);
+  assert.equal((reports.match(/t\('scientificScope\.limitSpatial'\)/g) ?? []).length, 2);
   for (const lang of ['es', 'en', 'pt']) {
     const translations = JSON.parse(source(`src/i18n/locales/${lang}.json`));
     for (const key of ['title', 'summary', 'limitSoil', 'prohibited', 'required']) {
       assert.ok(translations.scientificScope[key], `${lang} is missing scientificScope.${key}`);
     }
     assert.ok(translations.reportFigures.scopeSheet, `${lang} is missing the scope worksheet label`);
+    assert.ok(translations.reportFigures.spatialScope, `${lang} is missing the geographic scope label`);
   }
   assert.doesNotMatch(backend, /mitigar hasta 45%|Variedad recomendada|Adelantar fecha de siembra 12 días/);
 });

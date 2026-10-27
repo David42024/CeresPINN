@@ -90,6 +90,7 @@ def test_simulation_declares_exploratory_decision_scope(test_client, simulation_
     assert scope["county_level_validation"] is False
     assert scope["soil_affects_yield_network"] is False
     assert scope["territorial_prioritization_supported"] is False
+    assert response.json()["prediction_scope"] == "not_specified"
     assert "public_policy" in scope["prohibited_decision_uses"]
     assert "water_allocation" in scope["prohibited_decision_uses"]
     assert "transparent_uncertainty_quantification" in scope["required_before_decision_use"]

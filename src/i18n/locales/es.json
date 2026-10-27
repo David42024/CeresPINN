@@ -584,6 +584,7 @@
     "aspect": "Aspecto",
     "status": "Estado",
     "classification": "Clasificación de uso",
+    "spatialScope": "Alcance territorial",
     "soil": "Suelo",
     "excludedUses": "Usos excluidos",
     "requirements": "Requisitos pendientes"
